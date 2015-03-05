@@ -8,7 +8,7 @@ Scenario: Logging out
   Given I am signed in
   And I am on any page
   When I press the “Sign Out” button
-  I should be on the “Sign In” page
+  Then I should be on the “Sign In” page
 
 Scenario: Logging in with the correct credentials
   Given I am on the sign in page

@@ -4,13 +4,13 @@ Feature: Changing password
   So that I can change my account setting
   I want to be able to change my password
 
+Background:
+  Given I am logged in and on the “User Settings” page
+
 Scenario: Accessing the user settings page
   Given I am logged in
   When I press the “Settings” button
   Then I should be on the “User Settings” page
-
-Background:
-  Given I am logged in and on the “User Settings” page
 
 Scenario: Changing password - happy path
   When I fill in the “Current Password” field with my current password
