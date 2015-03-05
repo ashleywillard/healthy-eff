@@ -77,6 +77,7 @@ GEM
     multi_test (0.1.2)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
+    pg (0.18.1)
     polyglot (0.3.5)
     rack (1.4.5)
     rack-cache (1.2)
@@ -134,6 +135,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   jquery-rails
+  pg
   rails (= 3.2.16)
   sass-rails (~> 3.2.3)
   sqlite3
