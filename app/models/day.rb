@@ -1,3 +1,5 @@
 class Day < ActiveRecord::Base
-  attr_accessible :datetime, :integer
+  belongs_to :user
+  has_many :activities
+  attr_accessible :date, :total_time
 end

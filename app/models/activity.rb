@@ -1,3 +1,5 @@
 class Activity < ActiveRecord::Base
-  attr_accessible :boolean, :integer, :string
+  belongs_to :day
+  belongs_to :user, :through => :day
+  attr_accessible :name, :duration, :approved
 end
