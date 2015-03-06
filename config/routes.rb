@@ -1,4 +1,12 @@
 Healthyeff::Application.routes.draw do
+
+  #added by devise -allan
+  devise_for :users
+
+  #required for devise to work, redirects to path below after user logs in
+  #change home#index to whatever need be -allan
+  root to: "home#index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
