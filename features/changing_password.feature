@@ -6,7 +6,7 @@ Feature: Changing password
 
 Background:
   Given I am logged in
-    And I am on the user settings page
+  And I am on the user settings page
 
 Scenario: Changing password - happy path
   When I fill in the “Current Password” field with my current password
