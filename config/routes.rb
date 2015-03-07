@@ -9,7 +9,8 @@ Healthyeff::Application.routes.draw do
 
   #route for single activity -ashley
   match 'today' => 'activities#today', :as => :today
-  match 'profile' => 'user#profile', :as => :profile
+  match 'add_activity' => 'activities#add_activity', :as => :add_activity
+  match 'profile' => 'users#profile', :as => :profile
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

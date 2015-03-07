@@ -7,7 +7,9 @@ class ActivitiesController < ApplicationController
 	end
 
 	def add_activity
-		
+		@activity = Activity.create!(params[:activity])
+		flash[:notice] = "#{@activity.name} for #{@activity.duration} hours has been recorded"
+		redirect_to profile_path
 	end
 
 end
