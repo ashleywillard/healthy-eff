@@ -7,6 +7,10 @@ Healthyeff::Application.routes.draw do
   #change home#index to whatever need be -allan
   root to: "home#index"
 
+  #route for single activity -ashley
+  match 'today' => 'activities#today', :as => :today
+  match 'profile' => 'user#profile', :as => :profile
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
