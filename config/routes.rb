@@ -5,7 +5,7 @@ Healthyeff::Application.routes.draw do
 
   #required for devise to work, redirects to path below after user logs in
   #change home#index to whatever need be -allan
-  root to: "home#index"
+  root to: "activities#today"
 
   #route for single activity -ashley
   match 'today' => 'activities#today', :as => :today

@@ -8,7 +8,7 @@ gem 'rails', '3.2.16'
 gem 'pg'
 gem 'devise'
 gem 'haml'
-gem 'simple_form'
+# gem 'simple_form'
 
 # Gems used only for assets and not required
 # in production environments by default.
