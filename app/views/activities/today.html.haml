@@ -1,0 +1,55 @@
+/ = simple_form_for @today do |f|
+/ 	= f.input :name
+/ 	= f.input :duration
+/ 	= f.button :submit
+
+%p Today, 
+%p= @date
+%p , I
+
+= form_tag add_activity_path, :method => :put do
+
+  = label :activity, :name, 'Workout', :class => 'activity1'
+  = text_field :activity, 'name', :class => 'activity1'
+
+  = label :activity, :duration, 'How long', :class => 'activity1'
+  = number_field :activity, 'duration', :class => 'activity1'
+  / %br
+  / = label :activity, :name, 'Workout', :class => 'activity2 hidden'
+  / = text_field :activity, 'name', :class => 'activity2 hidden'
+
+  / = label :activity, :duration, 'How long', :class => 'activity2 hidden'
+  / = text_field :activity, 'duration', :class => 'activity2 hidden'
+  / %br
+  / = label :activity, :name, 'Workout', :class => 'activity3 hidden'
+  / = text_field :activity, 'name', :class => 'activity3 hidden'
+
+  / = label :activity, :duration, 'How long', :class => 'activity3 hidden'
+  / = text_field :activity, 'duration', :class => 'activity3 hidden'
+  / %br
+  / = label :activity, :name, 'Workout', :class => 'activity4 hidden'
+  / = text_field :activity, 'name', :class => 'activity4 hidden'
+
+  / = label :activity, :duration, 'How long', :class => 'activity4 hidden'
+  / = text_field :activity, 'duration', :class => 'activity4 hidden'
+  / %br
+  / = label :activity, :name, 'Workout', :class => 'activity5 hidden'
+  / = text_field :activity, 'name', :class => 'activity5 hidden'
+
+  / = label :activity, :duration, 'How long', :class => 'activity5 hidden'
+  / = text_field :activity, 'duration', :class => 'activity5 hidden'
+  / %br
+  = button_tag 'Add Exercise', :id => 'add'
+  = submit_tag 'Submit'
+
+=link_to 'I would like to add multiple days', today_path
+
+%script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"}
+
+:javascript
+  $(document).ready(function() {
+    var count = 0;
+    $("#add").click(function() {
+      $("p").hide();
+    });
+  });
