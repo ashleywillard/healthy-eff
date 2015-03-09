@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(:version => 20150306202529) do
 
   create_table "activities", :force => true do |t|
-    t.string   "type"
+    t.string   "name"
     t.integer  "duration"
     t.boolean  "approved"
     t.datetime "created_at", :null => false
