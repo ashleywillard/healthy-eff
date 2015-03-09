@@ -8,7 +8,6 @@ gem 'rails', '3.2.16'
 gem 'pg'
 gem 'devise'
 
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -22,9 +21,11 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'sqlite3'	
+  gem 'sqlite3'
   gem 'database_cleaner'
   gem 'cucumber-rails', :require => false
+  gem 'rspec-rails', '~> 3.0'
+  gem 'simplecov', :require => false
 end
 
 gem 'jquery-rails'
