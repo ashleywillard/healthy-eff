@@ -1,3 +1,3 @@
 class Day < ActiveRecord::Base
-  attr_accessible :datetime, :integer
+  attr_accessible :date, :total
 end
