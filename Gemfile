@@ -26,6 +26,8 @@ group :development, :test do
   gem 'sqlite3'	
   gem 'database_cleaner'
   gem 'cucumber-rails', :require => false
+  gem "better_errors", '1.1.0'
+  gem 'binding_of_caller'
 end
 
 gem 'jquery-rails'

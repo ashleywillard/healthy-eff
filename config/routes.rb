@@ -5,7 +5,7 @@ Healthyeff::Application.routes.draw do
 
   #required for devise to work, redirects to path below after user logs in
   #change home#index to whatever need be -allan
-  root to: "activities#today"
+  # root to: "activities#today"
 
   #route for single activity -ashley
   match 'today' => 'activities#today', :as => :today
@@ -61,7 +61,7 @@ Healthyeff::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'activities#today'
 
   # See how all your routes lay out with "rake routes"
 
