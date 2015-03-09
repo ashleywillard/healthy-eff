@@ -10,6 +10,6 @@ class User < ActiveRecord::Base
 
   has_many :days
   has_many :activities, :through => :days
-  attr_accessible :is_admin
+  attr_protected :is_admin
 
 end
