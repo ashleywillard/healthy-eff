@@ -28,6 +28,7 @@ group :development, :test do
   gem 'cucumber-rails', :require => false
   gem 'rspec-rails', '~> 3.0'
   gem 'simplecov', :require => false
+  gem 'erb2haml'
 end
 
 gem 'jquery-rails'
