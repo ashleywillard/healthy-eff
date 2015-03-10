@@ -33,7 +33,7 @@
 
 = form_tag add_activity_path, :method => :put do
   %p
-    = label :name, 'Workout Form'
+    = label :name, 'form', 'Workout Form'
     %br
   = label :name, "Today #{@date}", :class => 'day'
   = fields_for :activities do |builder|
@@ -42,3 +42,5 @@
   = label :_destroy, :day, 'Remove Date'
   %p 
     = submit_tag 'Submit'
+
+= link_to "I need to go back and input previous days", multiple_days_path

@@ -1,5 +1,5 @@
 %p.day
-  = label :name, 'On', :class => 'day'
+  = label :name, :day, 'On', :class => 'day'
   = text_field :day, :name, :placeholder => 'mm/dd/yyyy'
   = fields_for :activities do |builder|
     = render :partial => 'activity_fields'
