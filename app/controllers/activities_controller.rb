@@ -7,10 +7,25 @@ class ActivitiesController < ApplicationController
 	end
 
 	def add_activity
-		@activity = Activity.create!(params[:activity])
-		Day.create!({:date => DateTime.now, :total => @activity.duration})
-		flash[:notice] = "#{@activity.name} for #{@activity.duration} hours has been recorded"
-		redirect_to profile_path
+		if params[:activity][:name].lstrip == ""
+			params[:activity][:name] = "A Healthy Activity"
+		end
+		@activity = Activity.create(
+			{:name => params[:activity][:name].lstrip, :duration => params[:activity][:duration], :approved => true})
+		@day = Day.create({:date => DateTime.now, :total => params[:activity][:duration]})
+		if @activity.valid? && @day.valid?
+			@activity.save
+			@day.save
+			flash[:notice] = "#{@activity.name} for #{@activity.duration} minutes has been recorded"
+			redirect_to profile_path
+		else
+			if @activity.errors.full_messages[0] != nil
+				flash[:notice] = @activity.errors.full_messages[0] 
+			else
+				flash[:notice] = @day.errors.full_messages[0]
+			end
+			redirect_to today_path
+		end
+		
 	end
-
 end
