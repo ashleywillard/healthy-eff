@@ -1,0 +1,8 @@
+= form_tag add_activity_path, :method => :put do
+  %p
+    = label :name, 'Workout Form'
+    %br
+  = fields_for :days do |builder|
+    = render :partial => "day_fields"
+  %p 
+    = submit_tag 'Submit'

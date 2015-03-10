@@ -2,7 +2,6 @@ class Activity < ActiveRecord::Base
   attr_accessible :name, :duration, :approved
   validates :name, :duration, :approved, presence: true
   validate :valid_duration
-  belongs_to :user
   belongs_to :day
 
   def valid_duration

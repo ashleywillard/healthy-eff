@@ -1,0 +1,7 @@
+%p.day
+  = label :name, 'On', :class => 'day'
+  = text_field :day, :name, :placeholder => 'mm/dd/yyyy'
+  = fields_for :activities do |builder|
+    = render :partial => 'activity_fields'
+  = check_box :_destroy, :day
+  = label :_destroy, :day, 'Remove Date'
