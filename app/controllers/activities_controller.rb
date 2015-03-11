@@ -2,40 +2,44 @@ class ActivitiesController < ApplicationController
     
     before_filter :check_logged_in
 
-	def today
-		#@activity = Activity.find params[:id]
-		now = DateTime.now
-		@date = now.strftime("%m/%d/%Y")
-	end
+    def today
+        #@activity = Activity.find params[:id]
+        now = DateTime.now
+        @date = now.strftime("%m/%d/%Y")
+    end
 
-	def add_activity
-		params[:activity][:name] = params[:activity][:name].lstrip
+    def check_simple_captcha
+      simple_captcha_valid?
+    end
 
-		if params[:activity][:name] == ""
-			params[:activity][:name] = "A Healthy Activity"
-		end
-		@activity = Activity.new(params[:activity])
-		@day = Day.new({:date => DateTime.now.strftime("%m/%d/%Y"), :total_time => params[:activity][:duration], :approved => true})
-		if @activity.valid? && @day.valid?
-			@activity.day = @day
-			@day.user = current_user
-			@activity.save
-			@day.save
-	
-			flash[:notice] = "#{@activity.name} for #{@activity.duration} minutes has been recorded"
-			redirect_to profile_path
-		else
-			if @activity.errors.full_messages[0] != nil
-				flash[:notice] = @activity.errors.full_messages[0] 
-			else
-				flash[:notice] = @day.errors.full_messages[0]
-			end
-			redirect_to today_path
-		end
-		
-	end
+    def add_activity
+        if check_simple_captcha
+          params[:activity][:name] = params[:activity][:name].lstrip
 
-	private
+          if params[:activity][:name] == "" then params[:activity][:name] = "A Healthy Activity" end
+          
+          @day = Day.new({:date => DateTime.now.strftime("%m/%d/%Y"), :total_time => params[:activity][:duration], :approved => true})
+          @day.user = current_user
+          @activity = Activity.new(params[:activity])
+          @activity.day = @day
+          
+          if @activity.valid? && @day.valid?
+              @activity.save
+              @day.save
+              flash[:notice] = "#{@activity.name} for #{@activity.duration} minutes has been recorded"
+              redirect_to profile_path
+          else
+              flash[:notice] = @activity.errors.full_messages[0] != nil ? @activity.errors.full_messages[0] : @day.errors.full_messages[0]
+              redirect_to today_path
+          end
+        
+        else
+          flash[:notice] = "Bro, your captcha was so wrong dude."
+          redirect_to today_path
+        end
+    end
+
+    private
     def check_logged_in
       if not user_signed_in?
         redirect_to new_user_session_path

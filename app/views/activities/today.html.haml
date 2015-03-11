@@ -41,6 +41,7 @@
   = check_box :_destroy, :day
   = label :_destroy, :day, 'Remove Date'
   %p 
+    = show_simple_captcha(:label => "Enter before submitting", :placeholder => "", :refresh_button_text => "Refresh text")
     = submit_tag 'Submit'
 
 = link_to "I need to go back and input previous days", multiple_days_path
