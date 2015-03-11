@@ -21,7 +21,7 @@ When /I fill in the user_current_password field .*/ do
 end
 
 Then /I should be on the user settings page/ do
-  assert page.current_path == new_user_session_path
+  assert page.current_path == edit_user_registration_path
 end
 
 # For some reason "And I press Update only matches with this one...not the one in login_steps.rb"

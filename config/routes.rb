@@ -8,11 +8,8 @@ Healthyeff::Application.routes.draw do
   devise_for :users, :skip => [:registrations] 
   as :user do
     get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
-    post 'users' => 'devise/registrations#update', :as => 'user_registration'
+    put 'users' => 'devise/registrations#update', :as => 'user_registration'
   end
-
-  #redirect to edit page after changing your account settings
-  match 'users' => redirect('/users/edit')
 
   #required for devise to work, redirects to path below after user logs in
   #change home#index to whatever need be -allan
