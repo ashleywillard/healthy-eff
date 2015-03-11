@@ -11,6 +11,9 @@ Healthyeff::Application.routes.draw do
     post 'users' => 'devise/registrations#update', :as => 'user_registration'
   end
 
+  #redirect to edit page after changing your account settings
+  match 'users' => redirect('/users/edit')
+
   #required for devise to work, redirects to path below after user logs in
   #change home#index to whatever need be -allan
   root to: 'activities#today'
