@@ -15,9 +15,9 @@ class ActivitiesController < ApplicationController
 			params[:activity][:name] = "A Healthy Activity"
 		end
 		@activity = Activity.create(params[:activity])
-		@day = Day.create({:date => DateTime.now, :total_time => params[:activity][:duration], , :approved => true})
+		@day = Day.create({:date => DateTime.now, :total_time => params[:activity][:duration], :approved => true})
 		@activity.day = @day
-		#@day.user = current_user
+		@day.user = current_user
 		if @activity.valid? && @day.valid?
 			@activity.save
 			@day.save
