@@ -7,7 +7,9 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
   # attr_accessible :title, :body
+
   has_many :days, :dependent => :destroy
   has_many :activities, through: :days
   accepts_nested_attributes_for :days, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true
+
 end

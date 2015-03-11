@@ -11,21 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150306202529) do
+ActiveRecord::Schema.define(:version => 20150311022836) do
 
   create_table "activities", :force => true do |t|
     t.string   "type"
     t.integer  "duration"
-    t.boolean  "approved"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   create_table "days", :force => true do |t|
     t.datetime "date"
-    t.integer  "total"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "total_time"
+    t.boolean  "approved"
   end
 
   create_table "users", :force => true do |t|
