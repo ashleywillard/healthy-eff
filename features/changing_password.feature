@@ -31,4 +31,3 @@ Scenario: Changing password - sad path, wrong retyped password
 
   Then I should be on the user settings page
   And I should see a message that says “Wrong password”
-  
