@@ -7,12 +7,15 @@ class ActivitiesController < ApplicationController
 	end
 
 	def add_activity
-		if params[:activity][:name].lstrip == ""
+		params[:activity][:name] = params[:activity][:name].lstrip
+
+		if params[:activity][:name] == ""
 			params[:activity][:name] = "A Healthy Activity"
 		end
-		@activity = Activity.create(
-			{:name => params[:activity][:name].lstrip, :duration => params[:activity][:duration], :approved => true})
-		@day = Day.create({:date => DateTime.now, :total => params[:activity][:duration]})
+		@activity = Activity.create(params[:activity])
+		@day = Day.create({:date => DateTime.now, :total_time => params[:activity][:duration], , :approved => true})
+		@activity.day = @day
+		#@day.user = current_user
 		if @activity.valid? && @day.valid?
 			@activity.save
 			@day.save
