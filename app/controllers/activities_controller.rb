@@ -14,13 +14,14 @@ class ActivitiesController < ApplicationController
 		if params[:activity][:name] == ""
 			params[:activity][:name] = "A Healthy Activity"
 		end
-		@activity = Activity.create(params[:activity])
-		@day = Day.create({:date => DateTime.now, :total_time => params[:activity][:duration], :approved => true})
-		@activity.day = @day
-		@day.user = current_user
+		@activity = Activity.new(params[:activity])
+		@day = Day.new({:date => DateTime.now.strftime("%m/%d/%Y"), :total_time => params[:activity][:duration], :approved => true})
 		if @activity.valid? && @day.valid?
+			@activity.day = @day
+			@day.user = current_user
 			@activity.save
 			@day.save
+	
 			flash[:notice] = "#{@activity.name} for #{@activity.duration} minutes has been recorded"
 			redirect_to profile_path
 		else
