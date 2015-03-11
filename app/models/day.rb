@@ -1,5 +1,5 @@
 class Day < ActiveRecord::Base
-  attr_accessible :date, :total
+  attr_accessible :date, :total_time
   validate :valid_total
   belongs_to :user
   has_many :activites, :dependent => :destroy
