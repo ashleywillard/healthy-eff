@@ -1,9 +1,4 @@
 {
-  "RSpec": {
-    "coverage": {
-    },
-    "timestamp": 1425871776
-  },
   "Cucumber Features": {
     "coverage": {
       "/home/saasbook/Documents/EFF/healthy-eff/features/step_definitions/change_password_steps.rb": [
@@ -356,6 +351,6 @@
         null
       ]
     },
-    "timestamp": 1426113598
+    "timestamp": 1426113908
   }
 }
