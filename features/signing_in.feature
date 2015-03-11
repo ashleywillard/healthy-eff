@@ -11,7 +11,7 @@ Background: users in database
 Scenario: Logging out
   Given I am signed in
   And I am on any page
-  When I press the “Sign Out” button
+  When I follow "Sign Out"
   Then I should be on the “Sign In” page
 
 Scenario: Logging in with the correct credentials

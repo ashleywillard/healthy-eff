@@ -15,6 +15,10 @@ And /I am on any page/ do
 	# Undefined for now 
 end
 
+When /^(?:|I )follow "([^"]*)"$/ do |link|
+  click_link(link)
+end
+
 
 
 
