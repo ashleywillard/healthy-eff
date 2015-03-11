@@ -8,13 +8,15 @@
     "coverage": {
       "/Users/mjlin/Documents/UC Berkeley/! 2014-2015/Spring 2015/CS 169/healthy-eff/features/step_definitions/flash_steps.rb": [
         1,
-        1,
+        2,
         null
       ],
       "/Users/mjlin/Documents/UC Berkeley/! 2014-2015/Spring 2015/CS 169/healthy-eff/features/step_definitions/login_steps.rb": [
+        null,
+        null,
         1,
-        0,
-        0,
+        3,
+        3,
         null,
         null,
         null,
@@ -35,11 +37,20 @@
         null,
         null,
         1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        2,
+        null,
+        null,
+        1,
         null,
         null,
         null,
         1,
-        0,
+        2,
         null,
         null,
         1,
@@ -305,6 +316,6 @@
         null
       ]
     },
-    "timestamp": 1426045874
+    "timestamp": 1426047444
   }
 }
