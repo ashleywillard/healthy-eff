@@ -8,6 +8,8 @@ gem 'rails', '3.2.16'
 gem 'pg'
 gem 'devise'
 
+gem 'haml'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -26,6 +28,7 @@ group :development, :test do
   gem 'cucumber-rails', :require => false
   gem 'rspec-rails', '~> 3.0'
   gem 'simplecov', :require => false
+  gem 'erb2haml'
 end
 
 gem 'jquery-rails'
@@ -45,5 +48,3 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'debugger'
 
-gem 'haml'
-gem 'simple_form'

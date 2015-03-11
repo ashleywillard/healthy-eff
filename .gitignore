@@ -16,3 +16,6 @@
 
 # Ignore Michelle's other work folder
 ../cs169
+
+# Ignore .DS_Store because Macs
+*.DS_Store

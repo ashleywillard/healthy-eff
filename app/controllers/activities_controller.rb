@@ -1,4 +1,6 @@
 class ActivitiesController < ApplicationController
+    
+    before_filter :check_logged_in
 
 	def today
 		#@activity = Activity.find params[:id]
@@ -31,4 +33,11 @@ class ActivitiesController < ApplicationController
 		end
 		
 	end
+
+	private
+    def check_logged_in
+      if not user_signed_in?
+        redirect_to new_user_session_path
+      end
+    end
 end
