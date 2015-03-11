@@ -1,11 +1,24 @@
 Healthyeff::Application.routes.draw do
 
   #added by devise -allan
-  devise_for :users
+  #devise_for :users
+
+  # manually add user registration routes to prevent users from registering
+  # themselves - Michelle
+  devise_for :users, :skip => [:registrations] 
+  as :user do
+    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
+    post 'users' => 'devise/registrations#update', :as => 'user_registration'
+  end
 
   #required for devise to work, redirects to path below after user logs in
   #change home#index to whatever need be -allan
-  root to: "home#index"
+  root to: 'activities#today'
+
+  #route for single activity -ashley
+  match 'today' => 'activities#today', :as => :today
+  match 'add_activity' => 'activities#add_activity', :as => :add_activity
+  match 'profile' => 'users#profile', :as => :profile
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
