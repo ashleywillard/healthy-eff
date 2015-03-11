@@ -32,14 +32,17 @@
 /   });
 
 = form_tag add_activity_path, :method => :put do
-  %p
-    = label :name, 'form', 'Workout Form'
+  %p.form
+    Healthy Activity Form
     %br
-  = label :name, "Today #{@date}", :class => 'day'
-  = fields_for :activities do |builder|
-    = render :partial => 'activity_fields'
-  = check_box :_destroy, :day
-  = label :_destroy, :day, 'Remove Date'
+  %div.today.field
+    = label :day, :date, "Today #{@date}"
+    = fields_for :activities do |builder|
+      = render :partial => 'activity_fields'
+    %p
+      = link_to_add_activity "Add Activity"
+    = hidden_field :_destroy, :day
+    = link_to_function "Remove Activity", "remove_fields(this)"
   %p 
     = submit_tag 'Submit'
 

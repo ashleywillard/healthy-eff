@@ -6,7 +6,7 @@ Feature: Enter workouts for multiple days
 
 Scenario: Adding multiple exercises for multiple days
   Given I am logged in
-    And I am on the multiple day input page
+  And I am on the multiple day input page
   When I click "Add day"
   And I fill out "Activity"
   And I fill out "Date"

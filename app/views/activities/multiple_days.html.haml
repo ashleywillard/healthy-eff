@@ -1,11 +1,11 @@
 = form_tag add_activity_path, :method => :put do
   %p
-    = label :name, 'form', 'Workout Form'
+    Healthy Activity Form
     %br
   = fields_for :days do |builder|
     = render :partial => "day_fields"
-  = label 'reason', :days, 'Reason for inputting multiple days'
-  = text_field 'reason', 'meow'
+  = label :days, :reason, 'Reason for inputting multiple days'
+  = text_field :days, :reason
   %br
   (Note: activity for all days besides the current day will be sent to admin for approval)
   %p 

@@ -1,7 +1,9 @@
-%p.day
-  = label :name, :day, 'On', :class => 'day'
-  = text_field :day, :name, :placeholder => 'mm/dd/yyyy'
+%div.day.field
+  = label :day, :date, 'On'
+  = text_field :day, :date, :placeholder => 'mm/dd/yyyy'
   = fields_for :activities do |builder|
     = render :partial => 'activity_fields'
-  = check_box :_destroy, :day
-  = label :_destroy, :day, 'Remove Date'
+  %p
+    = link_to_add_activity "Add Activity"
+  = hidden_field :_destroy, :day
+  = link_to_function "Remove Day", "remove_fields(this)"
