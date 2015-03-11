@@ -12,4 +12,7 @@ class User < ActiveRecord::Base
   has_many :activities, through: :days
   accepts_nested_attributes_for :days, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true
 
+  attr_protected :is_admin
+
+
 end

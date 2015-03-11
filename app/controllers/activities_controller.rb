@@ -1,4 +1,6 @@
 class ActivitiesController < ApplicationController
+    
+    before_filter :check_logged_in
 
 	def today
 		#@activity = Activity.find params[:id]
@@ -7,12 +9,15 @@ class ActivitiesController < ApplicationController
 	end
 
 	def add_activity
-		if params[:activity][:name].lstrip == ""
+		params[:activity][:name] = params[:activity][:name].lstrip
+
+		if params[:activity][:name] == ""
 			params[:activity][:name] = "A Healthy Activity"
 		end
-		@activity = Activity.create(
-			{:name => params[:activity][:name].lstrip, :duration => params[:activity][:duration], :approved => true})
-		@day = Day.create({:date => DateTime.now, :total => params[:activity][:duration]})
+		@activity = Activity.create(params[:activity])
+		@day = Day.create({:date => DateTime.now, :total_time => params[:activity][:duration], , :approved => true})
+		@activity.day = @day
+		#@day.user = current_user
 		if @activity.valid? && @day.valid?
 			@activity.save
 			@day.save
@@ -28,4 +33,11 @@ class ActivitiesController < ApplicationController
 		end
 		
 	end
+
+	private
+    def check_logged_in
+      if not user_signed_in?
+        redirect_to new_user_session_path
+      end
+    end
 end
