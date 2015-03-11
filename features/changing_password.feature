@@ -4,14 +4,19 @@ Feature: Changing password
   So that I can change my account setting
   I want to be able to change my password
 
-Background:
+Background: users in database
+  Given the following users exist:
+  | email                       | password              | password_confirmation |    
+  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       | 
   Given I am logged in
   And I am on the user settings page
 
 Scenario: Changing password - happy path
-  When I fill in the “Current Password” field with my current password
-  And I fill in the “New Password” field with my new password
-  And I fill in the “Re-enter” field with my new password
+  When I fill in the user_email field with my email
+  And I fill in the user_password field with my new password
+  And I fill in the user_password_confirmation field with my new password
+  And I fill in the user_current_password field with my old password
+  And I press "Update"
 
   Then I should be on the user settings page
   And I should see a message that says “Successfully changed password”
@@ -31,3 +36,4 @@ Scenario: Changing password - sad path, wrong retyped password
 
   Then I should be on the user settings page
   And I should see a message that says “Wrong password”
+  
