@@ -14,12 +14,11 @@
 //= require jquery_ujs
 //= require_tree .
 function remove_fields(link) {
-  $(link).prev("input[type=hidden]").value = "1";
-  $(link).closest(".field").hide();
+  $(link).closest(".field").remove();
 }
 
-function add_fields(link) {
+function add_fields(link, association, content) {
   time = new Date().getTime()
-  regexp = new RegExp($(link).data('id'), 'g')
-  $(link).before($(link).data('fields').replace(regexp, time))
+  regexp = new RegExp("new_" + association, 'g')
+  $(link).parent().before(content.replace(regexp, time))
 }

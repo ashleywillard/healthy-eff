@@ -4,9 +4,12 @@
     %br
   = fields_for :days do |builder|
     = render :partial => "day_fields"
-  = label :days, :reason, 'Reason for inputting multiple days'
-  = text_field :days, :reason
+  %p
+    = link_to_add_day "Add Day"
+  = label :day, :reason, 'Reason for inputting multiple days'
+  = text_field :day, :reason
   %br
   (Note: activity for all days besides the current day will be sent to admin for approval)
   %p 
+    = show_simple_captcha(:label => "Enter before submitting", :placeholder => "", :refresh_button_text => "Refresh text")
     = submit_tag 'Submit'

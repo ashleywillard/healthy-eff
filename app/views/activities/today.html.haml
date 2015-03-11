@@ -41,8 +41,6 @@
       = render :partial => 'activity_fields'
     %p
       = link_to_add_activity "Add Activity"
-    = hidden_field :_destroy, :day
-    = link_to_function "Remove Activity", "remove_fields(this)"
   %p 
     = show_simple_captcha(:label => "Enter before submitting", :placeholder => "", :refresh_button_text => "Refresh text")
     = submit_tag 'Submit'

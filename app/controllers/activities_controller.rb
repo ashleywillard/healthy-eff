@@ -10,10 +10,14 @@ class ActivitiesController < ApplicationController
 
     def check_simple_captcha
       simple_captcha_valid?
+      #true
     end
 
     def add_activity
-        if check_simple_captcha
+        unless check_simple_captcha
+          flash[:notice] = "Bro, your captcha was so wrong dude."
+          redirect_to today_path
+        else
           params[:activity][:name] = params[:activity][:name].lstrip
 
           if params[:activity][:name] == "" then params[:activity][:name] = "A Healthy Activity" end
@@ -35,10 +39,6 @@ class ActivitiesController < ApplicationController
               flash[:notice] = @activity.errors.full_messages[0] != nil ? @activity.errors.full_messages[0] : @day.errors.full_messages[0]
               redirect_to today_path
           end
-        
-        else
-          flash[:notice] = "Bro, your captcha was so wrong dude."
-          redirect_to today_path
         end
     end
 
