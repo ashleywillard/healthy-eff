@@ -18,7 +18,10 @@ class ActivitiesController < ApplicationController
 
           if params[:activity][:name] == "" then params[:activity][:name] = "A Healthy Activity" end
           
-          @day = Day.new({:date => DateTime.now.strftime("%m/%d/%Y"), :total_time => params[:activity][:duration], :approved => true})
+          @day = Day.new({:date => DateTime.now.strftime("%m/%d/%Y"), 
+                          :total_time => params[:activity][:duration], 
+                          :reason => "", 
+                          :approved => true})
           @day.user = current_user
           @activity = Activity.new(params[:activity])
           @activity.day = @day
