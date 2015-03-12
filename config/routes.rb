@@ -17,6 +17,7 @@ Healthyeff::Application.routes.draw do
 
   #route for single activity -ashley
   match 'today' => 'activities#today', :as => :today
+  match 'multiple_days' => 'activities#multiple_days', :as => :multiple_days
   match 'add_activity' => 'activities#add_activity', :as => :add_activity
   match 'profile' => 'users#profile', :as => :profile
 

@@ -7,8 +7,8 @@ gem 'rails', '3.2.16'
 
 gem 'pg'
 gem 'devise'
+
 gem 'haml'
-# gem 'simple_form'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -26,14 +26,13 @@ group :development, :test do
   gem 'sqlite3'
   gem 'database_cleaner'
   gem 'cucumber-rails', :require => false
-  gem "better_errors"
-  gem 'binding_of_caller'
   gem 'rspec-rails', '~> 3.0'
   gem 'simplecov', :require => false
   gem 'erb2haml'
 end
 
 gem 'jquery-rails'
+gem 'simple_captcha', :git => 'git://github.com/galetahub/simple-captcha.git'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -49,3 +48,4 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
+

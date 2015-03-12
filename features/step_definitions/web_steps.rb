@@ -226,8 +226,6 @@
 #     end
 #   end
 # end
-# 
-# 
 #  
 # Then /^(?:|I )should be on (.+)$/ do |page_name|
 #   current_path = URI.parse(current_url).path
