@@ -31,18 +31,25 @@
 /     });
 /   });
 
-= form_tag add_activity_path, :method => :put do
-  %p.form
-    Healthy Activity Form
-    %br
-  %div.today.field
-    = label :day, :date, "Today #{@date}"
-    = fields_for :activities do |builder|
-      = render :partial => 'activity_fields'
-    %p
-      = link_to_add_activity "Add Activity"
-  %p 
-    = show_simple_captcha(:label => "Enter before submitting", :placeholder => "", :refresh_button_text => "Refresh text")
-    = submit_tag 'Submit'
+= form_tag profile_path, :method => :put do
+
+  = label :movie, :title, 'Title'
+  = text_field :movie, 'title'#, :hidden => true
+
+  = submit_tag 'Update Movie Info'
+
+/ = form_tag add_activity_path, :method => :put do
+/   %p.form
+/     Healthy Activity Form
+/     %br
+/   %div.today.field
+/     = label :day, :date, "Today #{@date}"
+/     = fields_for :activities do |builder|
+/       = render :partial => 'activity_fields'
+/     %p
+/       = link_to_add_activity "Add Activity"
+/   %p 
+/     = show_simple_captcha(:label => "Enter before submitting", :placeholder => "", :refresh_button_text => "Refresh text")
+/     = submit_tag 'Submit'
 
 = link_to "I need to go back and input previous days", multiple_days_path
