@@ -16,9 +16,9 @@ class ActivitiesController < ApplicationController
 
   def check_simple_captcha
     if Rails.env.production?
-      simple_captcha_valid?
+      return simple_captcha_valid?
     else
-      true
+      return true
     end
   end
 
@@ -35,16 +35,20 @@ class ActivitiesController < ApplicationController
       bad_captcha
       redirect_to today_path
     else
-      unless params[:day] == nil || params[:day][:activities_attributes] == nil
-        if add_single_day(params[:day][:activities_attributes], true, params[:day][:date])
-          redirect_to profile_path
-        else
-          redirect_to today_path
-        end
+      check_today()
+    end
+  end
+
+  def check_today
+    unless params[:day] == nil || params[:day][:activities_attributes] == nil
+      if add_single_day(params[:day][:activities_attributes], true, params[:day][:date])
+        redirect_to profile_path
       else
-        empty_fields_notice()
         redirect_to today_path
       end
+    else
+      empty_fields_notice()
+      redirect_to today_path
     end
   end
 
@@ -60,27 +64,20 @@ class ActivitiesController < ApplicationController
     activity_list.each do |id, activity|
       new_activity = create_activity(activity, @day)
       activities += [new_activity]
-      activities_valid = activities_valid && new_activity.valid?
-      flash[:notice] = flash[:notice] || new_activity.errors.full_messages[0]
+      unless new_activity.valid? 
+        flash[:notice] = flash[:notice] || new_activity.errors.full_messages[0]
+        activities_valid = false
+        break
+      end
     end
 
     unless activities_valid && @day.valid?
       flash[:notice] = flash[:notice] || @day.errors.full_messages[0]
-      false # unsuccessful
+      return false # unsuccessful
     else
       save_single_day(activities, @day)
-      true # successful
+      return true # successful
     end
-  end
-
-  def save_single_day(activities, day)
-    notice = ""
-    activities.each do |activity|
-      activity.save
-      day.save
-      notice += "#{activity.name} for #{activity.duration} minutes has been recorded for #{day.date.strftime("%m/%d/%Y")}\n"
-    end
-    flash[:notice] = notice
   end
 
   def create_activity(activity, day)
@@ -93,43 +90,60 @@ class ActivitiesController < ApplicationController
                               :day_id => day.id})
   end
 
+  def save_single_day(activities, day)
+    notice = ""
+    activities.each do |activity|
+      activity.save
+      day.save
+      notice += "#{activity.name} for #{activity.duration} minutes has been recorded for #{day.date.strftime("%m/%d/%Y")}\n"
+    end
+    flash[:notice] = notice
+  end
+
   def add_days
     unless check_simple_captcha
       bad_captcha
       redirect_to multiple_days_path
     else
       unless params[:user] == nil || params[:user][:days_attributes] == nil
-        today = DateTime.now.strftime("%m/%d/%Y")
-        success = true
-        params[:user][:days_attributes].each do |id, day|
-          unless day[:activities_attributes] == nil
-            date = ""
-            begin
-              date = Time.parse(day[:date]).strftime("%m/%d/%Y")
-            rescue Exception => e
-              flash[:notice] = "Invalid Date"
-              success = false
-              redirect_to multiple_days_path
-              break
-            end
-            unless add_single_day(day[:activities_attributes], date == today, date)
-              success = false
-              redirect_to multiple_days_path
-              break
-            end
-          else
-            success = false
-            empty_fields_notice()
-            redirect_to multiple_days_path
-            break
-          end
-        end
-        if success then redirect_to profile_path end
+        check_multiple_days()
       else
         empty_fields_notice()
         redirect_to multiple_days_path
       end
     end
+  end
+
+  def check_multiple_days
+    today = DateTime.now.strftime("%m/%d/%Y")
+    success = true
+    params[:user][:days_attributes].each do |id, day|
+      unless day[:activities_attributes] == nil
+        success = check_day(day, today)
+      else
+        success = false
+        empty_fields_notice()
+        redirect_to multiple_days_path
+        break
+      end
+    end
+    if success then redirect_to profile_path end
+  end
+
+  def check_day(day, todays_date)
+    date = ""
+    begin
+      date = Time.parse(day[:date]).strftime("%m/%d/%Y")
+    rescue Exception => e
+      flash[:notice] = "Invalid Date"
+      redirect_to multiple_days_path
+      return false #unsuccessful
+    end
+    unless add_single_day(day[:activities_attributes], date == todays_date, date)
+      redirect_to multiple_days_path
+      return false #unsuccessful
+    end
+    return true #successful
   end
 
   private
