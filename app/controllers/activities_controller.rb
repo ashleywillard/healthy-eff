@@ -3,45 +3,44 @@ class ActivitiesController < ApplicationController
   before_filter :check_logged_in
 
   def today
-    now = DateTime.now
-    @date = now.strftime("%m/%d/%Y")
+    @date = DateTime.now.strftime("%m/%d/%Y")
     @day = Day.new({:date => @date,
                       :reason => "", 
-                      :approved => true})
-    @day.user = current_user
+                      :approved => true,
+                      :user_id => current_user})
   end
 
   def multiple_days
-    @user = User.new() # use once it works -> User.find(current_user)
-
-    # Just thinking somthing through 
-    # to add reason we say
-    # :reason => params[:reason] || ""
+    @user = User.find(current_user)
   end
 
   def check_simple_captcha
     simple_captcha_valid?
-    true
+    # true
   end
 
   def bad_captcha
     flash[:notice] = "Bro, your captcha was so wrong dude."
-    redirect_to today_path
   end
 
-  def notice_empty_fields
+  def empty_fields_notice
     flash[:notice] = "Fields are empty"
-    redirect_to today_path
   end
 
   def add_activity
     unless check_simple_captcha
-      bad_captcha()
+      bad_captcha
+      redirect_to today_path
     else
       unless params[:day] == nil || params[:day][:activities_attributes] == nil
-        add_single_day(params[:day][:activities_attributes], true, @date)
+        if add_single_day(params[:day][:activities_attributes], true, @date)
+          redirect_to profile_path
+        else
+          redirect_to today_path
+        end
       else
-        notice_empty_fields()
+        empty_fields_notice()
+        redirect_to today_path
       end
     end
   end
@@ -49,7 +48,9 @@ class ActivitiesController < ApplicationController
   def add_single_day(activity_list, approved, date)
     @day = Day.new({:date => date,
                     :approved => approved,
-                    :total_time => 0}) #:user_id => current_user
+                    :total_time => 0,
+                    :user_id => current_user,
+                    :reason => params[:days][:reason]})
     activities = []
     activities_valid = true
 
@@ -62,9 +63,10 @@ class ActivitiesController < ApplicationController
 
     unless activities_valid && @day.valid?
       flash[:notice] = flash[:notice] || @day.errors.full_messages[0]
-      redirect_to today_path
+      false # unsuccessful
     else
       save_single_day(activities, @day)
+      true # successful
     end
   end
 
@@ -76,7 +78,6 @@ class ActivitiesController < ApplicationController
       notice += "#{activity.name} for #{activity.duration} minutes has been recorded\n"
     end
     flash[:notice] = notice
-    redirect_to profile_path
   end
 
   def create_activity(activity, day)
@@ -85,16 +86,37 @@ class ActivitiesController < ApplicationController
     day.total_time += duration.to_i
     if name == "" then name = "A Healthy Activity" end
     @activity = Activity.new({:name => name,
-                              :duration => duration}) #day_id => @day.id
+                              :duration => duration,
+                              :day_id => day.id})
   end
 
   def add_days
     unless check_simple_captcha
       bad_captcha
+      redirect_to multiple_days_path
     else
-      # params[:user][:days_attributes].each do |day|
-      #   #NOT YET IMPLEMENTED
-      # end
+      unless params[:user] == nil || params[:user][:days_attributes] == nil
+        today = DateTime.now.strftime("%m/%d/%Y")
+        success = true
+        params[:user][:days_attributes].each do |id, day|
+          unless day[:activities_attributes] == nil 
+            unless add_single_day(day[:activities_attributes], day[:date] == today, day[:date])
+              redirect_to multiple_days_path
+              success = false
+              break
+            end
+          else
+            success = false
+            empty_fields_notice()
+            redirect_to multiple_days_path
+            break
+          end
+        end
+        if success then redirect_to profile_path end
+      else
+        empty_fields_notice()
+        redirect_to multiple_days_path
+      end
     end
   end
 
