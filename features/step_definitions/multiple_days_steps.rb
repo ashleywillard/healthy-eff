@@ -24,22 +24,6 @@ And /I fill out "Date"/ do
   fill_in(@date, :with => '3/10/2015')
 end
 
-
-And /I write the captcha text in the textbox/ do
- activities_controller.any_instance.stubs(:check_simple_captcha).returns(true)
-end
-
-
-And /I press “Submit”/ do
-  click_button("submit")
-end 
-
-
-Then /I should be on “my profile page”/ do
-  assert page.current_path == profile_path
-end
-
-
 And /I should see a confirmation message for multiple days/ do
     assert page.has_content?("approve")
 end

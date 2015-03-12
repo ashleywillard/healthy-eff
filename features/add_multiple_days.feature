@@ -19,5 +19,5 @@ Scenario: Adding multiple exercises for multiple days
   And I fill in date with: 3/10/2015
   And I write the captcha text in the textbox
   And I press “Submit”
-  Then I should be on “my profile page”
+  Then I should be on my profile page
   And I should see a confirmation message for multiple days
