@@ -32,6 +32,7 @@ group :development, :test do
 end
 
 gem 'jquery-rails'
+gem 'simple_captcha', :git => 'git://github.com/galetahub/simple-captcha.git'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
