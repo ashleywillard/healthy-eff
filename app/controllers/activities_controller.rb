@@ -3,7 +3,7 @@ class ActivitiesController < ApplicationController
   before_filter :check_logged_in
 
   def today
-    @date = DateTime.now.strftime("%m/%d/%Y")
+    @date = DateTime.now
     @day = Day.new({:date => @date,
                       :reason => "", 
                       :approved => true,
@@ -15,8 +15,11 @@ class ActivitiesController < ApplicationController
   end
 
   def check_simple_captcha
-    simple_captcha_valid?
-    # true
+    if Rails.env.production?
+      simple_captcha_valid?
+    else
+      true
+    end
   end
 
   def bad_captcha
@@ -33,7 +36,7 @@ class ActivitiesController < ApplicationController
       redirect_to today_path
     else
       unless params[:day] == nil || params[:day][:activities_attributes] == nil
-        if add_single_day(params[:day][:activities_attributes], true, @date)
+        if add_single_day(params[:day][:activities_attributes], true, params[:day][:date])
           redirect_to profile_path
         else
           redirect_to today_path
@@ -75,7 +78,7 @@ class ActivitiesController < ApplicationController
     activities.each do |activity|
       activity.save
       day.save
-      notice += "#{activity.name} for #{activity.duration} minutes has been recorded\n"
+      notice += "#{activity.name} for #{activity.duration} minutes has been recorded for #{day.date.strftime("%m/%d/%Y")}\n"
     end
     flash[:notice] = notice
   end
@@ -99,10 +102,19 @@ class ActivitiesController < ApplicationController
         today = DateTime.now.strftime("%m/%d/%Y")
         success = true
         params[:user][:days_attributes].each do |id, day|
-          unless day[:activities_attributes] == nil 
-            unless add_single_day(day[:activities_attributes], day[:date] == today, day[:date])
-              redirect_to multiple_days_path
+          unless day[:activities_attributes] == nil
+            date = ""
+            begin
+              date = Time.parse(day[:date]).strftime("%m/%d/%Y")
+            rescue Exception => e
+              flash[:notice] = "Invalid Date"
               success = false
+              redirect_to multiple_days_path
+              break
+            end
+            unless add_single_day(day[:activities_attributes], date == today, date)
+              success = false
+              redirect_to multiple_days_path
               break
             end
           else

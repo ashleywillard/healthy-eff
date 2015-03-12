@@ -1,7 +1,6 @@
 = form_for @user, url: add_days_path()  do |f|
   %p
     Healthy Activity Form
-  %br
   = f.fields_for :days do |builder|
     = render "day_fields", :f => builder
   %p
