@@ -1,0 +1,15 @@
+= form_for @day, url: add_activity_path() do |f|
+  %p.form
+    Healthy Activity Form
+    %br
+  %div.today.field
+    = f.label :date, "Today #{@date}"
+    = f.fields_for :activities do |builder|
+      = render "activity_fields", :f => builder
+    %p
+      = link_to_add_fields "Add Activity", f, :activities
+  %p 
+    = show_simple_captcha(:label => "Enter before submitting", :placeholder => "", :refresh_button_text => "Refresh text")
+    = hidden_field :days, :reason, value: ""
+    = f.submit 'Submit'
+= link_to "I need to go back and input previous days", multiple_days_path

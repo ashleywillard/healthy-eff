@@ -1,5 +1,15 @@
 class Activity < ActiveRecord::Base
+
+  attr_accessible :name, :duration, :day_id
+  validates :name, :duration, presence: true
+  validate :valid_duration
+
   belongs_to :day
-  belongs_to :user, :through => :day
-  attr_accessible :name, :duration, :approved
+
+  def valid_duration
+  	if duration == nil || duration <= 0 || duration > 1440
+  		errors.add(:duration, "can't be less than 0 or over 24 hours")
+  	end
+  end
+
 end

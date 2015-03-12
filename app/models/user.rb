@@ -5,11 +5,14 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :name
   # attr_accessible :title, :body
 
-  has_many :days
-  has_many :activities, :through => :days
-  attr_accessible :is_admin
+  has_many :days, :dependent => :destroy
+  has_many :activities, through: :days
+  accepts_nested_attributes_for :days, :allow_destroy => true
+
+  attr_protected :is_admin
+
 
 end

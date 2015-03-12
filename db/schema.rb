@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150306210039) do
+ActiveRecord::Schema.define(:version => 20150312034434) do
 
   create_table "activities", :force => true do |t|
-    t.string   "type"
     t.integer  "duration"
-    t.boolean  "approved"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "name"
+    t.integer  "day_id"
   end
 
   create_table "days", :force => true do |t|
@@ -26,7 +26,19 @@ ActiveRecord::Schema.define(:version => 20150306210039) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "total_time"
+    t.boolean  "approved"
+    t.text     "reason"
+    t.integer  "user_id"
   end
+
+  create_table "simple_captcha_data", :force => true do |t|
+    t.string   "key",        :limit => 40
+    t.string   "value",      :limit => 6
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  add_index "simple_captcha_data", ["key"], :name => "idx_key"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

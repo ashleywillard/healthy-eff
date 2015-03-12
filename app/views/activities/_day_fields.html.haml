@@ -1,0 +1,8 @@
+%div.day.field
+  = f.label :date, 'On'
+  = f.text_field :date, :placeholder => 'mm/dd/yyyy'
+  = f.fields_for :activities do |builder|
+    = render "activity_fields", :f => builder
+  %p
+    = link_to_add_fields "Add Activity", f, :activities
+  = link_to_function "Remove Day", "remove_fields(this)"
