@@ -1,6 +1,6 @@
 class Activity < ActiveRecord::Base
 
-  attr_accessible :name, :duration
+  attr_accessible :name, :duration, :day_id
   validates :name, :duration, presence: true
   validate :valid_duration
 
