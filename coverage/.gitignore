@@ -1,6 +1,0 @@
-!/.gitignore
-
-# Ignore everything within 'coverage/'
-.*
-assets/
-index.html
