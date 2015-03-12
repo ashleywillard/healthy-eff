@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150311050810) do
+ActiveRecord::Schema.define(:version => 20150312034434) do
 
   create_table "activities", :force => true do |t|
     t.integer  "duration"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "name"
+    t.integer  "day_id"
   end
 
   create_table "days", :force => true do |t|
@@ -27,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20150311050810) do
     t.integer  "total_time"
     t.boolean  "approved"
     t.text     "reason"
+    t.integer  "user_id"
   end
 
   create_table "users", :force => true do |t|
