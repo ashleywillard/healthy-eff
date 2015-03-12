@@ -53,4 +53,3 @@ Then /^(?:|I )should see "([^"]*)"$/ do |text|
   end
 end
 
-
