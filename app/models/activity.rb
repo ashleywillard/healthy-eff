@@ -7,7 +7,9 @@ class Activity < ActiveRecord::Base
   belongs_to :day
 
   def valid_duration
-  	if duration <= 0 
+  	if duration == nil
+      errors.add(:duration, "can't be blank")
+    elsif duration <= 0 
   		errors.add(:duration, "can't be less than 0")
   	elsif duration > 1440
   		errors.add(:duration, "can't over 24 hours")
