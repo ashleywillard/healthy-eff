@@ -11,14 +11,16 @@ Background:
   Given I am logged in
   And I am on the home page
 
-Scenario: Adding one exercise for 1 day
+@javascript
+Scenario: Adding one exercise
   When I fill in activity with:Running 80
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on my profile page
   And I should see "Running for 80 minutes has been recorded"
 
-Scenario: Adding multiple exercises for a single day
+@javascript
+Scenario: Adding multiple exercises
   When I fill in activity with:Running 90,Lifting 100
   And I write the captcha text in the textbox
   And I press “Submit”
@@ -26,8 +28,26 @@ Scenario: Adding multiple exercises for a single day
   And I should see "Running for 90 minutes has been recorded"
   And I should see "Lifting for 100 minutes has been recorded"
 
-Scenario: Entering wrong captcha
-  When I fill in a wrong captcha
+@javascript
+Scenario: Adding one exercise without duration
+  When I fill in activity with:Running 
+  And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the home page
-  And I should see a error message
+  And I should see "Duration can't be blank"
+
+@javascript
+Scenario: Adding one exercise with less than 60 minutes
+  When I fill in activity with:Running 30
+  And I write the captcha text in the textbox
+  And I press “Submit”
+  Then I should be on the home page
+  And I should see "Total can't be less than 60"
+
+@javascript
+Scenario: Adding multiple exercises with less than 60 minutes total
+  When I fill in activity with:Running 20,Crying 10
+  And I write the captcha text in the textbox
+  And I press “Submit”
+  Then I should be on the home page
+  And I should see "Total can't be less than 60"
