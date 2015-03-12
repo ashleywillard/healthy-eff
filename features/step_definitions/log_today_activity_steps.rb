@@ -3,12 +3,24 @@ Given /I am on the home page/ do
 end
 
 When /I fill in activity with:(.*)/ do |entry_list|
-  temp = entry_list.split(',')
-  temp.each do |entry|
+  entries = entry_list.split(',')
+  puts entries
+  entries.each do
+    click_link('Add Activity')
+  end
+
+  name_ids = page.body.scan(/day_activities_attributes_.{0,20}_name/m)
+  duration_ids = page.body.scan(/day_activities_attributes_.{0,20}_duration/m)
+  
+  puts name_ids
+  puts duration_ids
+
+  entries.zip(name_ids, duration_ids).each do |entry, name_id, dur_id|
     activity = entry.split(' ')
-    
-    fill_in "activity_name", :with => activity[0]
-    fill_in "activity_duration", :with => activity[1]
+    puts page.body
+    fill_in name_id, :with => activity.first
+    fill_in dur_id,  :with => activity.last
+
   end
 end
 
