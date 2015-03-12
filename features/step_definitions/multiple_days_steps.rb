@@ -1,14 +1,5 @@
 # encoding: utf-8
 
-Given /I am signed in/ do
-  users_table.hashes.each do |user|
-    User.create!(user)
-  end
-  visit '/users/sign_in'
-  fill_in "user_email", :with => "169.healthyeff@gmail.com"
-  fill_in "user_password", :with => "northsidepotato"
-  click_button "Log in"
-end
 
 And /I am on the multiple day input page/ do
   visit '/multiple_days'

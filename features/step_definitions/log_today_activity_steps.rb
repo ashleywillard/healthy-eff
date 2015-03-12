@@ -2,6 +2,19 @@ Given /I am on the home page/ do
   visit '/today'
 end
 
+And /I am on the multiple day input page/ do
+  visit '/multiple_days'
+  assert page.current_path == multiple_days_path
+end
+
+And /I fill out "Date"/ do
+  fill_in(@date, :with => '3/10/2015')
+end
+
+When /I click "Add day"/ do
+  click_link "Add Day"
+end
+
 When /I fill in activity with:(.*)/ do |entry_list|
   entries = entry_list.split(',')
   puts entries
@@ -39,3 +52,5 @@ Then /^(?:|I )should see "([^"]*)"$/ do |text|
     assert page.has_content?(text)
   end
 end
+
+
