@@ -32,10 +32,11 @@ Then /I should be on my profile page/ do
   assert page.current_path == profile_path
 end
 
-Then /^(?:|I )should see "([^"]*)"$/ do |text|
-  if page.respond_to? :should
-    page.should have_content(text)
-  else
-    assert page.has_content?(text)
-  end
-end
+# Repeat of what is already in flash_steps.rb - allan
+# Then /^(?:|I )should see "([^"]*)"$/ do |text|
+#   if page.respond_to? :should
+#     page.should have_content(text)
+#   else
+#     assert page.has_content?(text)
+#   end
+# end
