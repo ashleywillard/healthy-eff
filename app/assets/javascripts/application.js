@@ -13,3 +13,13 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+function remove_fields(link) {
+  $(link).closest(".field").remove();
+}
+
+// Old code to delete soon
+// function add_fields(link, association, content) {
+//   time = new Date().getTime()
+//   regexp = new RegExp("new_" + association, 'g')
+//   $(link).parent().before(content.replace(regexp, time))
+// }

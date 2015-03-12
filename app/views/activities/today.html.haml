@@ -1,46 +1,15 @@
-/ = simple_form_for @today do |f|
-/ 	= f.input :name
-/ 	= f.input :duration
-/ 	= f.button :submit
-
-/ %p Today, 
-/ %p= @date
-/ %p , I
-
-/ = form_tag add_activity_path, :method => :put do
-
-/   = label :activity, :name, 'Workout', :class => 'activity1'
-/   = text_field :activity, 'name', :class => 'activity1'
-
-/   = label :activity, :duration, 'How long (Minutes)', :class => 'activity1'
-/   = number_field :activity, 'duration', :class => 'activity1'
-
-/ /make add exercise button a link
-/   = button_tag 'Add Exercise', :id => 'add'
-/   = submit_tag 'Submit'
-
-/ =link_to 'I would like to add multiple days', today_path
-
-/ %script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"}
-
-/ :javascript
-/   $(document).ready(function() {
-/     var count = 0;
-/     $("#add").click(function() {
-/       $("p").hide();
-/     });
-/   });
-
-= form_tag add_activity_path, :method => :put do
-  %p
-    = label :name, 'form', 'Workout Form'
+= form_for @day, url: add_activity_path() do |f|
+  %p.form
+    Healthy Activity Form
     %br
-  = label :name, "Today #{@date}", :class => 'day'
-  = fields_for :activities do |builder|
-    = render :partial => 'activity_fields'
-  = check_box :_destroy, :day
-  = label :_destroy, :day, 'Remove Date'
+  %div.today.field
+    = f.label :date, "Today #{@date}"
+    = f.fields_for :activities do |builder|
+      = render "activity_fields", :f => builder
+    %p
+      = link_to_add_fields "Add Activity", f, :activities
   %p 
-    = submit_tag 'Submit'
-
+    = show_simple_captcha(:label => "Enter before submitting", :placeholder => "", :refresh_button_text => "Refresh text")
+    = hidden_field :days, :reason, value: ""
+    = f.submit 'Submit'
 = link_to "I need to go back and input previous days", multiple_days_path

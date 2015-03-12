@@ -1,8 +1,7 @@
-%p.activity
-  = label :activity, :name, 'I did', :class => 'activity'
-  = text_field :activity, :name, :placeholder  => 'activity'
-  = label :activity, :duration, 'for'
-  = number_field :activity, :duration
-  minutes
-  = check_box :_destroy, :activity
-  = label :_destroy, :activity, 'Remove Activity'
+%p.activity.field
+  = f.label :name, 'I did'
+  = f.text_field :name, :placeholder  => 'activity'
+  = f.label :duration, 'for'
+  = f.number_field :duration, :placeholder => 'duration'
+  minutes.
+  = link_to_function "Remove Activity", "remove_fields(this)"

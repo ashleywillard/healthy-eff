@@ -1,9 +1,9 @@
 class Day < ActiveRecord::Base
-  attr_accessible :date, :total_time, :approved
+  attr_accessible :date, :total_time, :reason, :approved, :user_id
   validate :valid_total
   belongs_to :user
-  has_many :activites, :dependent => :destroy
-  accepts_nested_attributes_for :activites, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true
+  has_many :activities, :dependent => :destroy
+  accepts_nested_attributes_for :activities, :allow_destroy => true
   
   def valid_total
   	if total_time < 60
@@ -12,4 +12,5 @@ class Day < ActiveRecord::Base
   		errors.add(:total, "can't be more than 24 hours")
   	end
   end
+
 end
