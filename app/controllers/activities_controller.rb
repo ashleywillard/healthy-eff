@@ -3,11 +3,11 @@ class ActivitiesController < ApplicationController
   before_filter :check_logged_in
 
   def today
-    #RESTFUL redirecting
-    if request.fullpath != '/today'
-      flash.keep
-      redirect_to today_path
-    end
+    # #RESTFUL redirecting
+    # if request.fullpath != '/today'
+    #   flash.keep
+    #   redirect_to today_path
+    # end
     @date = DateTime.now
     @day = Day.new({:date => @date,
                       :reason => "", 
