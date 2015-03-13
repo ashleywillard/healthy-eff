@@ -41,7 +41,7 @@ class ActivitiesController < ApplicationController
 
   def check_today
     unless params[:day] == nil || params[:day][:activities_attributes] == nil
-      if add_single_day(params[:day][:activities_attributes], true, params[:day][:date])
+      if add_single_day(params[:day][:activities_attributes], true, params[:day][:date], true)
         redirect_to profile_path
       else
         redirect_to today_path
@@ -52,7 +52,7 @@ class ActivitiesController < ApplicationController
     end
   end
 
-  def add_single_day(activity_list, approved, date)
+  def add_single_day(activity_list, approved, date, save)
     @day = Day.new({:date => date,
                     :approved => approved,
                     :total_time => 0,
@@ -75,7 +75,9 @@ class ActivitiesController < ApplicationController
       flash[:notice] = flash[:notice] || @day.errors.full_messages[0]
       return false # unsuccessful
     else
-      save_single_day(activities, @day)
+      if save
+        save_single_day(activities, @day)
+      end
       return true # successful
     end
   end
@@ -97,7 +99,7 @@ class ActivitiesController < ApplicationController
       day.save
       notice += "#{activity.name} for #{activity.duration} minutes has been recorded for #{day.date.strftime("%m/%d/%Y")}\n"
     end
-    flash[:notice] = notice
+    if flash[:notice] == nil then flash[:notice] = notice else flash[:notice] = flash[:notice] + notice end
   end
 
   def add_days
@@ -120,6 +122,7 @@ class ActivitiesController < ApplicationController
     params[:user][:days_attributes].each do |id, day|
       unless day[:activities_attributes] == nil
         success = check_day(day, today)
+        unless success then break end
       else
         success = false
         empty_fields_notice()
@@ -127,7 +130,12 @@ class ActivitiesController < ApplicationController
         break
       end
     end
-    if success then redirect_to profile_path end
+    if success
+      params[:user][:days_attributes].each do |id, day|
+        add_single_day(day[:activities_attributes], date == todays_date, date, true)
+      end
+      redirect_to profile_path 
+    end
   end
 
   def check_day(day, todays_date)
@@ -139,7 +147,7 @@ class ActivitiesController < ApplicationController
       redirect_to multiple_days_path
       return false #unsuccessful
     end
-    unless add_single_day(day[:activities_attributes], date == todays_date, date)
+    unless add_single_day(day[:activities_attributes], date == todays_date, date, false)
       redirect_to multiple_days_path
       return false #unsuccessful
     end

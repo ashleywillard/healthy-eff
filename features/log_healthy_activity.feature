@@ -37,12 +37,43 @@ Scenario: Adding one exercise without duration
   And I should see "Duration can't be blank"
 
 @javascript
+Scenario: Adding one exercise with less than 0 minutes
+  When I fill in activity with:Running -1
+  And I write the captcha text in the textbox
+  And I press “Submit”
+  Then I should be on the home page
+  And I should see "Duration can't be less than 0"
+
+@javascript
+Scenario: Adding one exercise with greater than 1440 minutes
+  When I fill in activity with:Running 1441
+  And I write the captcha text in the textbox
+  And I press “Submit”
+  Then I should be on the home page
+  And I should see "Duration can't be over 24 hours"
+
+@javascript
+Scenario: Adding one exercise with greater than 1440 minutes
+  When I fill in activity with:Running 1430,Hockey 11
+  And I write the captcha text in the textbox
+  And I press “Submit”
+  Then I should be on the home page
+  And I should see "Total can't be more than 24 hours"
+
+@javascript
 Scenario: Adding one exercise with less than 60 minutes
   When I fill in activity with:Running 30
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the home page
   And I should see "Total can't be less than 60"
+
+@javascript
+Scenario: Submitting a blank form
+  When I write the captcha text in the textbox
+  And I press “Submit”
+  Then I should be on the home page
+  And I should see "Fields are empty"
 
 @javascript
 Scenario: Adding multiple exercises with less than 60 minutes total
