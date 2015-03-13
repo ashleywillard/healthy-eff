@@ -117,7 +117,7 @@ class ActivitiesController < ApplicationController
   end
 
   def check_multiple_days
-    today = DateTime.now.strftime("%m/%d/%Y")
+    todays_date = DateTime.now.strftime("%m/%d/%Y")
     success = true
     params[:user][:days_attributes].each do |id, day|
       unless day[:activities_attributes] == nil
@@ -132,6 +132,7 @@ class ActivitiesController < ApplicationController
     end
     if success
       params[:user][:days_attributes].each do |id, day|
+        date = Time.parse(day[:date]).strftime("%m/%d/%Y")
         add_single_day(day[:activities_attributes], date == todays_date, date, true)
       end
       redirect_to profile_path 
