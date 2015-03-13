@@ -8,8 +8,11 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name
   # attr_accessible :title, :body
 
-  has_many :days
-  has_many :activities, :through => :days
+  has_many :days, :dependent => :destroy
+  has_many :activities, through: :days
+  accepts_nested_attributes_for :days, :allow_destroy => true
+
   attr_protected :is_admin
+
 
 end
