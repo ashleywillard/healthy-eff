@@ -12,7 +12,7 @@ class Activity < ActiveRecord::Base
     elsif duration <= 0 
   		errors.add(:duration, "can't be less than 0")
   	elsif duration > 1440
-  		errors.add(:duration, "can't over 24 hours")
+  		errors.add(:duration, "can't be over 24 hours")
     end
   end
 
