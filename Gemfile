@@ -9,6 +9,7 @@ gem 'pg'
 gem 'devise'
 
 gem 'haml'
+gem 'selenium-webdriver'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -29,8 +30,6 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'simplecov', :require => false
   gem 'erb2haml'
-  gem "better_errors"
-  gem "binding_of_caller"
 end
 
 gem 'jquery-rails'
