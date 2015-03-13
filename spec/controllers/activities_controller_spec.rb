@@ -27,4 +27,22 @@ RSpec.describe ActivitiesController do
     end
   end
 
+  describe "handles bad captcha" do
+    it "add_activity should fail because captcha is bad" do 
+      ActivitiesController.any_instance.stub(:check_logged_in)
+      ActivitiesController.any_instance.stub(:check_simple_captcha).and_return(false)
+      post :add_activity
+      flash[:notice].should eql("Bro, your captcha was so wrong dude.")
+      response.should redirect_to(today_path)
+    end
+
+    it "add_days should fail because captcha is bad" do 
+      ActivitiesController.any_instance.stub(:check_logged_in)
+      ActivitiesController.any_instance.stub(:check_simple_captcha).and_return(false)
+      post :add_days
+      flash[:notice].should eql("Bro, your captcha was so wrong dude.")
+      response.should redirect_to(multiple_days_path)
+    end
+  end
+
 end
