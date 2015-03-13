@@ -18,7 +18,7 @@ Scenario: Changing password - happy path
   And I fill in the user_current_password field with my old password
   And I press “Update”
 
-  # Then I should be on the today page
+  Then I should be on the today page
   And I should see "Your account has been updated successfully."
 
 Scenario: Changing password - sad path, wrong current password
@@ -28,7 +28,7 @@ Scenario: Changing password - sad path, wrong current password
   And I fill in the user_current_password field with my old password
   And I press “Update”
 
-  # Then I should be on the user settings page
+  #Then I should be on the user settings page
   And I should see "Password doesn't match confirmation"
 
 Scenario: Changing password - sad path, wrong retyped password
@@ -38,5 +38,5 @@ Scenario: Changing password - sad path, wrong retyped password
   And I fill in the user_current_password field with a BAD old password
   And I press “Update”
 
-  # Then I should be on the user settings page
+  #Then I should be on the user settings page
   And I should see "Current password is invalid"
