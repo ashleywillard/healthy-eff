@@ -49,4 +49,12 @@ Scenario: Submit blank form with only date filled in
   Then I should be on the multiple day input page
   And I should see "Fields are empty"
 
+@javascript
+Scenario: Submit valid form with bad date
+  And I fill in day and activity with:RAWR,Swimming 100,Running 30|Meow,Rawring 30,Laughing 50
+  And I fill in reason with: "On Vacation"
+  And I write the captcha text in the textbox
+  And I press “Submit”
+  Then I should be on the multiple day input page
+  And I should see "Invalid Date"
 
