@@ -100,8 +100,9 @@ class ActivitiesController < ApplicationController
   def save_single_day(activities, day)
     notice = ""
     activities.each do |activity|
-      activity.save
-      day.save
+      day.save!
+      activity.day_id = day.id
+      activity.save!
       notice += "#{activity.name} for #{activity.duration} minutes has been recorded for #{day.date.strftime("%m/%d/%Y")}\n"
     end
     if flash[:notice] == nil then flash[:notice] = notice else flash[:notice] = flash[:notice] + notice end
