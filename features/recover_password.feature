@@ -3,16 +3,19 @@ Feature: Recover Password
   So that I can recover my forgotten password
   I want to be able to receive a reminder email
 
-Scenario: Get e-mail
+Background
+  Given I am logged in as Joe Smith
+
+Scenario: Get email
   When I click “Forgot my password”
-  And I type in my email
+  And I type in joesmith@healthy.com into the email field
   And I click submit
   Then I should see “An email has been sent”
 
 
 Scenario: Invalid email
   When I click “Forgot my password” 
-  And I type in a BAD email
+  And I type in meow@meow.com into the email field
   And I click submit
   Then I should see “Invalid email”
   And I should be on the forgot password page
