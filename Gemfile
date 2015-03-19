@@ -30,7 +30,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'simplecov', :require => false
   gem 'erb2haml'
-  gem 'rake'
+  gem 'rake', '10.4.2'
 end
 
 gem 'jquery-rails'
