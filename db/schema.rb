@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150312034434) do
+ActiveRecord::Schema.define(:version => 20150319035631) do
 
   create_table "activities", :force => true do |t|
     t.integer  "duration"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20150312034434) do
     t.datetime "updated_at", :null => false
     t.string   "name"
     t.integer  "day_id"
+    t.string   "user"
   end
 
   create_table "days", :force => true do |t|
@@ -54,7 +55,7 @@ ActiveRecord::Schema.define(:version => 20150312034434) do
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "name"
-    t.integer  "admin"
+    t.boolean  "admin"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
