@@ -1,6 +1,6 @@
 Feature: Approve late submissions
   As an admin
-  So that employees can get credit for their late/past workouts
+  So that employees can get credit for their past workouts
   I want to be able to approve these submissions
 
 Scenario: Selective Approval
