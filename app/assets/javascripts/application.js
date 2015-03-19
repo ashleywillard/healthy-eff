@@ -13,3 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+function remove_fields(link) {
+  $(link).closest(".field").remove();
+}

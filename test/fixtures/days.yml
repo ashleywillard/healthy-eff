@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  datetime: 2015-03-06
+  integer: 
+
+two:
+  datetime: 2015-03-06
+  integer: 
