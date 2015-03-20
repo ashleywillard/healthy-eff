@@ -55,13 +55,7 @@ class ActivitiesController < ApplicationController
       redirect_to multiple_days_path
     else
       unless params[:user] == nil || params[:user][:days_attributes] == nil
-        begin
-          check_multiple_days()
-          save_multiple_days()
-          redirect_to profile_path
-        rescue Exception
-          redirect_to multiple_days_path
-        end
+        check_multiple_days()
       else
         empty_fields_notice()
         redirect_to multiple_days_path
@@ -70,12 +64,12 @@ class ActivitiesController < ApplicationController
   end
 
   def check_today
-    @day = Day.new({:date => params[:day][:date],
+    begin
+      @day = Day.new({:date => params[:day][:date],
                     :approved => true,
                     :total_time => 0,
                     :user_id => current_user,
                     :reason => params[:days][:reason]})
-    begin
       save_single_day(validate_single_day(params[:day][:activities_attributes], @day), @day)
       redirect_to profile_path
     rescue Exception
@@ -84,6 +78,16 @@ class ActivitiesController < ApplicationController
   end
 
   def check_multiple_days
+    begin
+      validate_multiple_days()
+      save_multiple_days()
+      redirect_to profile_path
+    rescue Exception
+      redirect_to multiple_days_path
+    end
+  end
+
+  def validate_multiple_days
     params[:user][:days_attributes].each do |id, day|
       unless day[:activities_attributes] == nil
         check_day(day)
@@ -111,10 +115,7 @@ class ActivitiesController < ApplicationController
 
   def validate_single_day(activity_list, day)
     activities = validate_single_day_activities(activity_list, day)
-    unless day.valid?
-      flash[:notice] = flash[:notice] || day.errors.full_messages[0]
-      raise Exception
-    end
+    validate_model(day)
     return activities
   end
 
@@ -123,10 +124,7 @@ class ActivitiesController < ApplicationController
     activity_list.each do |id, activity|
       new_activity = create_activity(activity, day)
       activities += [new_activity]
-      unless new_activity.valid? 
-        flash[:notice] = flash[:notice] || new_activity.errors.full_messages[0]
-        raise Exception
-      end
+      validate_model(new_activity)
     end
     return activities
   end
@@ -159,6 +157,13 @@ class ActivitiesController < ApplicationController
                   :user_id => current_user,
                   :reason => params[:days][:reason]})
       save_single_day(validate_single_day(day[:activities_attributes], @day), @day)
+    end
+  end
+
+  def validate_model(model)
+    unless model.valid? 
+      flash[:notice] = model.errors.full_messages[0]
+      raise Exception
     end
   end
 
