@@ -29,73 +29,56 @@ class ActivitiesController < ApplicationController
 
   def bad_captcha
     flash[:notice] = "Bro, your captcha was so wrong dude."
+    raise Exception
   end
 
   def empty_fields_notice
     flash[:notice] = "Fields are empty"
+    raise Exception
   end
 
   def add_activity
-    unless check_simple_captcha
-      bad_captcha
+    begin
+      add(false, :day, :activities_attributes)
+    rescue Exception
       redirect_to today_path
-    else
-      unless params[:day] == nil || params[:day][:activities_attributes] == nil
-        check_today()
-      else
-        empty_fields_notice()
-        redirect_to today_path
-      end
     end
   end
 
   def add_days
-    unless check_simple_captcha
-      bad_captcha
+    begin
+      add(true, :user, :days_attributes)
+    rescue Exception
       redirect_to multiple_days_path
+    end
+  end
+
+  def add(has_multiple_days, outer_sym, inner_sym)
+    bad_captcha unless check_simple_captcha
+    empty_fields_notice() if params[outer_sym] == nil || params[outer_sym][inner_sym] == nil
+    if has_multiple_days then create_multiple_days() else create_single_day(params[outer_sym], true) end
+    redirect_to profile_path #success
+  end
+
+  def create_single_day(day, approved)
+    @day = Day.new({:approved => approved,
+                  :total_time => 0,
+                  :user_id => current_user,
+                  :reason => params[:days][:reason]})
+    unless approved
+      @day.date = Date.parse(day[:date]).strftime("%m/%d/%Y")
     else
-      unless params[:user] == nil || params[:user][:days_attributes] == nil
-        check_multiple_days()
-      else
-        empty_fields_notice()
-        redirect_to multiple_days_path
-      end
+      @day.date = day[:date]
     end
+    save_single_day(validate_single_day(day[:activities_attributes], @day), @day)
   end
 
-  def check_today
-    begin
-      @day = Day.new({:date => params[:day][:date],
-                    :approved => true,
-                    :total_time => 0,
-                    :user_id => current_user,
-                    :reason => params[:days][:reason]})
-      save_single_day(validate_single_day(params[:day][:activities_attributes], @day), @day)
-      redirect_to profile_path
-    rescue Exception
-      redirect_to today_path
-    end
-  end
-
-  def check_multiple_days
-    begin
-      validate_multiple_days()
-      save_multiple_days()
-      redirect_to profile_path
-    rescue Exception
-      redirect_to multiple_days_path
-    end
-  end
-
-  def validate_multiple_days
+  def create_multiple_days
     params[:user][:days_attributes].each do |id, day|
-      unless day[:activities_attributes] == nil
-        check_day(day)
-      else
-        empty_fields_notice()
-        raise Exception
-      end
+      empty_fields_notice() if day[:activities_attributes] == nil
+      check_day(day)
     end
+    save_multiple_days()
   end
 
   def check_day(day)
@@ -108,6 +91,7 @@ class ActivitiesController < ApplicationController
                     :reason => params[:days][:reason]})
       validate_single_day(day[:activities_attributes], @day)
     rescue ArgumentError
+      #case where Date.parse throws an ArgumentError for having invalid date field
       flash[:notice] = "Invalid Date"
       raise Exception
     end
@@ -123,8 +107,8 @@ class ActivitiesController < ApplicationController
     activities = []
     activity_list.each do |id, activity|
       new_activity = create_activity(activity, day)
-      activities += [new_activity]
       validate_model(new_activity)
+      activities += [new_activity]
     end
     return activities
   end
@@ -138,6 +122,12 @@ class ActivitiesController < ApplicationController
                               :duration => duration})
   end
 
+  def save_multiple_days
+    params[:user][:days_attributes].each do |id, day|
+      create_single_day(day, false)
+    end
+  end
+
   def save_single_day(activities, day)
     notice = ""
     activities.each do |activity|
@@ -147,17 +137,6 @@ class ActivitiesController < ApplicationController
       notice += "#{activity.name} for #{activity.duration} minutes has been recorded for #{day.date.strftime("%m/%d/%Y")}\n"
     end
     if flash[:notice] == nil then flash[:notice] = notice else flash[:notice] = flash[:notice] + notice end
-  end
-
-  def save_multiple_days
-    params[:user][:days_attributes].each do |id, day|
-      @day = Day.new({:date => Date.parse(day[:date]).strftime("%m/%d/%Y"),
-                  :approved => false,
-                  :total_time => 0,
-                  :user_id => current_user,
-                  :reason => params[:days][:reason]})
-      save_single_day(validate_single_day(day[:activities_attributes], @day), @day)
-    end
   end
 
   def validate_model(model)
