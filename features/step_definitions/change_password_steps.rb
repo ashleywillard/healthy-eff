@@ -25,4 +25,3 @@ end
 And /I fill in the user_current_password field with a BAD old password/ do
   fill_in "user_current_password", :with => "badpotato"
 end
-

@@ -2,7 +2,7 @@
 
 # ====================== PATH DEFINITIONS ====================== #
 
-Given (/I am on the home|today page/) do
+Given (/I am on the home page/) do
   visit '/today'
 end
 
