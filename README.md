@@ -2,7 +2,7 @@
 CS169, in partnership with EFF.
 
 ## Overview
-Reporting system for employees to record healthy activities daily, so management can track each month and reward employees for a healthy lifestyle.
+Reporting system for employees to record healthy activities daily, so management can track and reward employees monthly for a healthy lifestyle.
 
 ##### Group Members:
 Group 17: Alex Ho, Allan Tang, Ashley Willard, Corinne Schafle, Michelle Lin, Sarah Hernandez
