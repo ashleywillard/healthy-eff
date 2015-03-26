@@ -9,13 +9,14 @@ Group 17: Alex Ho, Allan Tang, Ashley Willard, Corinne Schafle, Michelle Lin, Sa
 
 ## Development
 
-##### Iteration 0
-* [Client Entry Interview](http://youtu.be/ptYHlSCjSQI)
-* [Lo-Fi Mockups](https://docs.google.com/presentation/d/1BA3Nlz5kssVkdUxyb5F7JyZ38Xxe5iuyYH-JrsLVQzc/)
-
 ##### Tools
 * [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/1282358)
 * [Travis CI](https://travis-ci.org/ashleywillard/healthy-eff)
+* [Code Climate](https://codeclimate.com/github/ashleywillard/healthy-eff)
+
+##### Iteration 0
+* [Client Entry Interview](http://youtu.be/ptYHlSCjSQI)
+* [Lo-Fi Mockups](https://docs.google.com/presentation/d/1BA3Nlz5kssVkdUxyb5F7JyZ38Xxe5iuyYH-JrsLVQzc/)
 
 ## Deadlines
 
