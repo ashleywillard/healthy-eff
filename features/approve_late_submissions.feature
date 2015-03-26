@@ -12,3 +12,4 @@ Scenario: Selective Approval
   And I should see a approval flash message
   And I should see Mary, Joe, Bob
   And I should not see Olivia, Kate
+  

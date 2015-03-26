@@ -1,6 +1,4 @@
-Given /I am on the home page/ do
-  visit '/today'
-end
+# encoding: UTF-8
 
 And /I fill out "Date"/ do
   fill_in(@date, :with => '3/10/2015')
@@ -28,14 +26,6 @@ end
 When /I write the captcha text in the textbox/ do
   fill_in "captcha", :with => "abc"
   #activities_controller.any_instance.should_receive(:check_simple_captcha).and_return(true)
-end
-
-Then /I should be on the home page/ do
-  assert page.current_path == today_path
-end
-
-Then /I should be on my profile page/ do
-  assert page.current_path == profile_path
 end
 
 # Then /^(?:|I )should see "([^"]*)"$/ do |text|
