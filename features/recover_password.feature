@@ -8,14 +8,13 @@ Background
 
 Scenario: Get email
   When I click “Forgot my password”
-  And I type in joesmith@healthy.com into the email field
-  And I click submit
+  And I type in "joesmith@healthy.com" into the email field
+  And I click "Submit"
   Then I should see “An email has been sent”
-
 
 Scenario: Invalid email
   When I click “Forgot my password” 
-  And I type in meow@meow.com into the email field
-  And I click submit
+  And I type in "meow@meow.com" into the email field
+  And I click "Submit"
   Then I should see “Invalid email”
   And I should be on the forgot password page

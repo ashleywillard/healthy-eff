@@ -3,25 +3,39 @@
 # ====================== PATH DEFINITIONS ====================== #
 
 Given (/I am on the home page/) do
-  visit '/today'
+#   visit '/today'
+  visit today_path
 end
 
 Given (/I am on the sign in page/) do
-  visit '/users/sign_in'
+#   visit '/users/sign_in'
+  visit new_user_session_path
 end
 
 Given (/I am on the user settings page/) do
-  visit '/users/edit'
+#   visit '/users/edit'
+  visit edit_user_registration_path
 end
 
 Given (/I am on my profile page/) do
-  visit '/profile'
+#   visit '/profile'
+  visit profile_path
 end
 
 And (/I am on the multiple day input page/) do
-  visit '/multiple_days'
-  assert page.current_path == multiple_days_path
+#   visit '/multiple_days'
+  visit multiple_days_path
 end
+
+# Manage employee page
+
+# Add employee page
+
+# Pending approval page
+
+# Forgot password page
+
+# Admin view page (employee list page?)
 
 And (/I am on any page/) do
   # Undefined for now 
