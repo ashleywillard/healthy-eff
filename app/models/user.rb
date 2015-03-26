@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
   has_many :activities, through: :days
   accepts_nested_attributes_for :days, :allow_destroy => true
 
-  attr_protected :is_admin
-
+  attr_protected :admin
 
 end
