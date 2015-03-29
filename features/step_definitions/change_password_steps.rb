@@ -1,6 +1,4 @@
-Given (/I am on the user settings page/) do
-  visit '/users/edit'
-end
+# encoding: UTF-8
 
 #Happy path stuff
 When /I fill in the user_email field .*/ do 
@@ -26,13 +24,4 @@ end
 
 And /I fill in the user_current_password field with a BAD old password/ do
   fill_in "user_current_password", :with => "badpotato"
-end
-
-#Path routes
-Then /I should be on the user settings page/ do
-  assert page.current_path == edit_user_registration_path
-end
-
-Then /I should be on the today page/ do
-  assert page.current_path == today_path
 end

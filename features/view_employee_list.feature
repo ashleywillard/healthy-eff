@@ -1,11 +1,11 @@
 Feature: View Employee List
+
   As an admin
   So that I can keep track of all employees logged activities for this month
   I want to see a display of all employees and the number of days they have logged activities for this month
 
 Background:
-  Given I am logged in
-  And I am an admin
+  Given I am logged in as an admin
 
 Scenario: Admin view
   When I click on the admin view
@@ -15,7 +15,7 @@ Scenario: Admin view
 
 Scenario: Visiting the pending approval page
   When I press “Pending Approval”
-  Then I should be on the “Pending Approval” page
+  Then I should be on the pending approval page
 
 Scenario: Viewing for a particular month
   When I click on the month

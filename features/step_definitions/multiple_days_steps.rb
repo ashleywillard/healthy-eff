@@ -1,10 +1,4 @@
-# encoding: utf-8
-
-
-And /I am on the multiple day input page/ do
-  visit '/multiple_days'
-  assert page.current_path == multiple_days_path
-end
+# encoding: UTF-8
 
 When /I fill in day and activity with:(.*)/ do |input|
   date_entries = input.split('|')
@@ -18,7 +12,6 @@ When /I fill in day and activity with:(.*)/ do |input|
       link.click
     end
   end
-  
 
   date_ids = page.body.scan(/id="user_days_attributes_.{0,20}_date/m)
   name_ids = page.body.scan(/id="user_days_attributes_.{0,20}_activities_attributes_.{0,20}_name/m)
@@ -42,10 +35,6 @@ end
 
 Given /^I fill in reason with: "(.*?)"$/ do |msg|
   fill_in "days_reason", :with => msg
-end
-
-Then /I should be on the multiple day input page/ do
-  assert page.current_path == multiple_days_path
 end
 
 # And /I fill out "Activity"/ do

@@ -18,7 +18,7 @@ Scenario: Changing password - happy path
   And I fill in the user_current_password field with my old password
   And I press “Update”
 
-  #Then I should be on the today page
+  # Then I should be on the today page
   And I should see "Your account has been updated successfully."
 
 Scenario: Changing password - sad path, wrong current password

@@ -1,11 +1,11 @@
 Feature: Adding and removing employees
+
   As an admin
   So that new employees can track their workout
   I want to be able to register employees
 
 Background:
-  Given I am logged in
-  And I am an admin
+  Given I am logged in as an admin
 
 Scenario: Going to add employee page
   Given I am on the manage employee page
@@ -16,7 +16,7 @@ Scenario: Adding an employee
   Given I am on the add employee page
   And I fill in John Doe into the name input box
   And I fill in johndoe@healthy.com in the email input box
-  And I press submit
+  And I press "Submit"
   Then I should be on the manage employee page
 
 Scenario: Removing an employee
