@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150330192919) do
+ActiveRecord::Schema.define(:version => 20150330204900) do
 
   create_table "activities", :force => true do |t|
     t.integer  "duration"
@@ -30,6 +30,18 @@ ActiveRecord::Schema.define(:version => 20150330192919) do
     t.boolean  "approved"
     t.text     "reason"
     t.integer  "user_id"
+    t.integer  "month_id"
+  end
+
+  create_table "months", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "month"
+    t.integer  "year"
+    t.boolean  "printed_form"
+    t.boolean  "received_form"
+    t.integer  "num_of_days"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "simple_captcha_data", :force => true do |t|
