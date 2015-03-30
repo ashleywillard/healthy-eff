@@ -3,6 +3,7 @@ class Day < ActiveRecord::Base
   validates :date, :reason, presence: true
   validate :valid_total, :valid_date
   belongs_to :user
+  belongs_to :month
   has_many :activities, :dependent => :destroy
   accepts_nested_attributes_for :activities, :allow_destroy => true
   
