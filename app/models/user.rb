@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
 
   has_many :months, :dependent => :destroy
-  has_many :days, :dependent => :destroy
+  has_many :days, through: :months
   has_many :activities, through: :days
   accepts_nested_attributes_for :days, :allow_destroy => true
 
