@@ -71,6 +71,7 @@ class ActivitiesController < ApplicationController
       @day.date = day[:date]
     end
     save_single_day(validate_single_day(day[:activities_attributes], @day), @day)
+    update_month(@day)
   end
 
   def create_multiple_days
@@ -144,6 +145,11 @@ class ActivitiesController < ApplicationController
       flash[:notice] = model.errors.full_messages[0]
       raise Exception
     end
+  end
+
+  def update_month(day)
+    #obj = Month.find_or_create(:user_id => current_user, :month => month, :year => year)
+    #obj.num_of_days += 1
   end
 
   private
