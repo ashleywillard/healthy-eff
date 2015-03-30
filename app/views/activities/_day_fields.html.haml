@@ -1,6 +1,6 @@
 %div.day.field
   = f.label :date, 'On'
-  = f.text_field :date, :placeholder => 'mm/dd/yyyy', :class => 'datepicker'
+  = f.text_field :date, :placeholder => 'mm/dd/yyyy', 'data-provide' => 'datepicker'
   = f.fields_for :activities do |builder|
     = render "activity_fields", :f => builder
   %p

@@ -18,7 +18,3 @@
 function remove_fields(link) {
   $(link).closest(".field").remove();
 }
-
-$(document).ready(function(){
-	$('.datepicker').datepicker();
-})
