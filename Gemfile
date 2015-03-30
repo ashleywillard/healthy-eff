@@ -7,6 +7,7 @@ gem 'rails', '3.2.16'
 
 gem 'pg'
 gem 'devise'
+gem 'devise_invitable', '~> 1.3.4'
 
 gem 'haml'
 gem 'selenium-webdriver'
@@ -31,6 +32,7 @@ group :development, :test do
   gem 'simplecov', :require => false
   gem 'erb2haml'
   gem 'rake', '10.4.2'
+  gem 'bootstrap-datepicker-rails', '~> 1.4.0'
 end
 
 gem 'jquery-rails'
