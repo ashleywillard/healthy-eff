@@ -16,16 +16,27 @@ class Day < ActiveRecord::Base
   end
 
   def valid_date
-    unless :approved
-      #start = beginning of this month
-      #end = day before today
-      # if day before 5th of month
-        #start = beginning of last month
-      #end
-      #range = start..end
-      # unless range === :date
-        #errors.add(you suck)
-    end
+    # not currently working - will work on more later
+    # unless :approved
+    #   now = DateTime.now
+    #   current_day = now.strftime("%d").to_i
+    #   current_month = now.strftime("%m").to_i
+    #   current_year = now.strftime("%Y").to_i
+    #   day = date.strftime("%d").to_i
+    #   month = date.strftime("%m").to_i
+    #   year = date.strftime("%Y").to_i
+    #   unless month == current_month && year == current_year && day < current_day
+    #     unless current_day < 6
+    #       errors.add(:date, "is invalid")
+    #     else
+    #       current_month = prev_month(current_month)
+    #       current_year -= 1 if current_month == 12
+    #       unless month == current_month && year == current_year
+    #         errors.add(:date, "is invalid")
+    #       end
+    #     end
+    #   end
+    # end
   end
 
 end
