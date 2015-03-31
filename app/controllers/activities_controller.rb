@@ -12,11 +12,11 @@ class ActivitiesController < ApplicationController
     @day = Day.new({:date => @date,
                       :reason => "", 
                       :approved => true,
-                      :user_id => current_user})
+                      :user_id => current_user.id})
   end
 
   def multiple_days
-    @user = User.find(current_user)
+    @user = current_user
   end
 
   def check_simple_captcha
@@ -66,11 +66,12 @@ class ActivitiesController < ApplicationController
                   :user_id => current_user,
                   :reason => params[:days][:reason]})
     unless approved
-      @day.date = Date.parse(day[:date]).strftime("%m/%d/%Y")
+      @day.date = Time.strptime(day[:date], "%m/%d/%Y")
     else
       @day.date = day[:date]
     end
     save_single_day(validate_single_day(day[:activities_attributes], @day), @day)
+    update_month(@day)
   end
 
   def create_multiple_days
@@ -83,7 +84,7 @@ class ActivitiesController < ApplicationController
 
   def check_day(day)
     begin
-      date = Date.parse(day[:date]).strftime("%m/%d/%Y")
+      date = Time.strptime(day[:date], "%m/%d/%Y")
       @day = Day.new({:date => date,
                     :approved => false,
                     :total_time => 0,
@@ -92,7 +93,7 @@ class ActivitiesController < ApplicationController
       validate_single_day(day[:activities_attributes], @day)
     rescue ArgumentError
       #case where Date.parse throws an ArgumentError for having invalid date field
-      flash[:notice] = "Invalid Date"
+      flash[:notice] = "Date is invalid"
       raise Exception
     end
   end
@@ -144,6 +145,22 @@ class ActivitiesController < ApplicationController
       flash[:notice] = model.errors.full_messages[0]
       raise Exception
     end
+  end
+
+  def update_month(day)
+    month = day.date.strftime("%m").to_i
+    year = day.date.strftime("%Y").to_i
+    month_model = Month.where(user_id: current_user.id, month: month, year: year).first
+    if month_model == nil
+      month_model = Month.create({:user_id => current_user.id, 
+                   :month => month, 
+                   :year => year, 
+                   :printed_form => false, 
+                   :received_form => false,
+                   :num_of_days => 0})
+    end
+    month_model.num_of_days += 1
+    month_model.save!
   end
 
   private
