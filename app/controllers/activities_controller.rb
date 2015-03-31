@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  
+
   before_filter :check_logged_in
 
   def today
