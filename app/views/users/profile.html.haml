@@ -1,12 +1,15 @@
 %script{:src => "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.min.js"}
-%link{:rel => "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css"}/
+%link{:rel => "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css"}
+%link{:href => "../assets/stylesheets/fullcalendar-custom.css", :rel => "stylesheet"}/
 :javascript
   $(document).ready(function() {
   
-      // page is now ready, initialize the calendar...
-  
       $('#calendar').fullCalendar({
-          // put your options and callbacks here
+        header: {
+          left: 'prev, today, next',
+          center: 'title',
+          right: ''
+        }
       })
   
   });
