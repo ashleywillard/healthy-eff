@@ -1,3 +1,15 @@
+%script{:src => "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.min.js"}
+%link{:rel => "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css"}/
+:javascript
+  $(document).ready(function() {
+  
+      // page is now ready, initialize the calendar...
+  
+      $('#calendar').fullCalendar({
+          // put your options and callbacks here
+      })
+  
+  });
 %p Today, I'm awesome because this is my profile page
 
 %p=@now

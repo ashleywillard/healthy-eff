@@ -16,17 +16,6 @@
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/core
 //= require fullcalendar
-//= require_tree./fullcalendar
 function remove_fields(link) {
   $(link).closest(".field").remove();
 }
-
-$(document).ready(function() {
-
-  // page is now ready, initialize the calendar...
-
-  $('#calendar').fullCalendar({
-    // put your options and callbacks here
-  })
-
-});
