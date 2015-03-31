@@ -17,6 +17,10 @@ class ActivitiesController < ApplicationController
 
   def multiple_days
     @user = current_user
+    today = Date.today
+    @end_date = today.prev_day
+    @start_date = today.beginning_of_month
+    @start_date = today.ago(1.month).beginning_of_month if today.strftime("%d").to_i < 6
   end
 
   def check_simple_captcha

@@ -18,12 +18,9 @@ class Day < ActiveRecord::Base
   def valid_date
     unless approved
       today = Date.today
-      end_date = today.prev_day
       start_date = today.beginning_of_month
-      if today.strftime("%d").to_i < 6
-        start_date = today.ago(1.month).beginning_of_month
-      end
-      range = start_date..end_date
+      start_date = today.ago(1.month).beginning_of_month if today.strftime("%d").to_i < 6
+      range = start_date..today.prev_day
       unless range === date.to_date
         errors.add(:date, "is invalid #{date.to_date}")
       end
