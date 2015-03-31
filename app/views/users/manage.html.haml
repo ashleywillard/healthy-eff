@@ -1,0 +1,16 @@
+%h1 List of Employees
+
+= link_to 'Add a new employee', new_user_invitation_path
+
+%table#movies
+  %thead
+    %tr
+      %th Name
+      %th Email
+      %th Remove?
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= user.name
+        %td= user.email
+        %td= button_to 'Delete', delete_path(user), :method => :delete, :confirm => 'Are you sure?'

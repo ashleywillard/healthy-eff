@@ -16,12 +16,17 @@ Healthyeff::Application.routes.draw do
   #change home#index to whatever need be -allan
   root to: 'activities#today'
 
+  #Managing employees
+  match 'manage' => 'users#manage', :as => :manage
+  delete 'manage/:id', to: 'users#destroy', :as => :delete
+
   #route for single activity -ashley
   match 'today' => 'activities#today', :as => :today
   match 'multiple_days' => 'activities#multiple_days', :as => :multiple_days
   match 'add_activity' => 'activities#add_activity', :as => :add_activity
   match 'add_days' => 'activities#add_days', :as => :add_days
   match 'profile' => 'users#profile', :as => :profile
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
