@@ -19,8 +19,7 @@ class ActivitiesController < ApplicationController
     @user = current_user
     today = Date.today
     @end_date = today.prev_day
-    @start_date = today.beginning_of_month
-    @start_date = today.ago(1.month).beginning_of_month if today.strftime("%d").to_i < 6
+    @start_date = today.strftime("%d").to_i < 6 ? today.ago(1.month).beginning_of_month : today.beginning_of_month
   end
 
   def check_simple_captcha
