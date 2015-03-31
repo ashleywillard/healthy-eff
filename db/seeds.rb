@@ -10,6 +10,11 @@ user = User.create! :email => '169.healthyeff@gmail.com',
                     :password => 'northsidepotato',
                     :password_confirmation => 'northsidepotato'
 
+#non-admin account
+User.create! :email => 'healthypotato@gmail.com', 
+			 :password => 'hotpotato', 
+			 :password_confirmation => 'hotpotato'
+
 # Manually give admin privileges, since attr_protected
 user.admin = true
 user.save
