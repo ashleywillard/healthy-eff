@@ -17,7 +17,10 @@ user.admin = true
 user.save
 
 #non-admin account
-User.create! :email => 'healthypotato@gmail.com', 
+User.create! 
+	   :first_name => 'Armando'
+	   :last_name => 'Fox'
+	   :email => 'healthypotato@gmail.com', 
        :password => 'hotpotato', 
        :password_confirmation => 'hotpotato'
 
@@ -67,6 +70,6 @@ Month.create! :user_id => 2
               :num_of_days => 3
               :printed_form => false
               :received_form => false
-              
+
 
 
