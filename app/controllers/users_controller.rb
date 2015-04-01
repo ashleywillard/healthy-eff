@@ -32,7 +32,11 @@ class UsersController < ApplicationController
     
     curr_month.days.each do |day|
       day.activities.each do |activity|
-        workouts.push([activity.name, activity.duration, day.date])	
+      	status = 'green'
+      	if !day.approved
+      		status = day.denied ? 'red' : 'yellow'
+      	end
+        workouts.push([activity.name, activity.duration, day.date, status])	
       end
     end
     return workouts

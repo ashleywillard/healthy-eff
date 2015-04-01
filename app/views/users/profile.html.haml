@@ -6,7 +6,7 @@
       var workouts = #{raw @workouts.to_json}
       for(i=0;i<workouts.length;i++){
         workout = workouts[i]
-        random[i]={title: workout[0]+': '+workout[1], start: workout[2]}
+        random[i]={title: workout[0]+': '+workout[1], start: workout[2], backgroundColor: workout[3], textColor: 'black'}
       }
       $('#calendar').fullCalendar({
         header: {
@@ -14,8 +14,10 @@
           center: 'title',
           right: ''
         },
-        events: random
+        events: random,
+        eventBorderColor: 'black'
       })
+
   });
 
 %p=@currentMonth
