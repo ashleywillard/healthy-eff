@@ -12,6 +12,7 @@ class ActivitiesController < ApplicationController
     @day = Day.new({:date => @date,
                       :reason => "", 
                       :approved => true,
+                      :denied => false,
                       :user_id => current_user.id})
   end
 
@@ -63,6 +64,7 @@ class ActivitiesController < ApplicationController
   def create_single_day(day, approved)
     @day = Day.new({:approved => approved,
                   :total_time => 0,
+                  :denied => false,
                   :user_id => current_user,
                   :reason => params[:days][:reason]})
     unless approved
@@ -87,6 +89,7 @@ class ActivitiesController < ApplicationController
       date = Time.strptime(day[:date], "%m/%d/%Y")
       @day = Day.new({:date => date,
                     :approved => false,
+                    :denied => false,
                     :total_time => 0,
                     :user_id => current_user,
                     :reason => params[:days][:reason]})
