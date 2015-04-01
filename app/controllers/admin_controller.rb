@@ -1,14 +1,13 @@
 class AdminController < ApplicationController
 
-  # either copy-paste the before_filter from ActivitiesController here to ensure
-  # admin is logged in before executing any admin-related logic, or move the
-  # before_filter function to ApplicationController, since you have to be logged
-  # in to do basically anything for our app?
+  before_filter :check_logged_in, :check_admin
 
   # function to generate list of employees for the list view
-    # RESTful: app.heroku.com/admin/list/:month <-> employee_list_path
-  def list
-    # TO DO
+    # RESTful: app.heroku.com/admin <-> admin_list_path
+  def index
+    @month = Date.today.strftime("%B")
+    @year = Date.today.strftime("%Y")
+    @user_months = Month.where(:month => Date.today.strftime("%m"), :year => @year)
   end
 
   # function to generate PDF printout for a single employee (accounting sheet)
@@ -20,7 +19,7 @@ class AdminController < ApplicationController
   # NOT YET IMPLEMENTED
 
   # function to generate list of multiple-day activities for pending view
-    # RESTful: app.heroku.com/admin/pending <-> pending_path
+    # RESTful: app.heroku.com/admin/pending <-> admin_pending_path
   def pending
     # TO DO
   end
@@ -29,6 +28,17 @@ class AdminController < ApplicationController
   def approve
     # TO DO
     # display a flash message and redirect back to pending page?
+  end
+
+  private
+  def check_admin
+    if current_user.nil?
+      redirect_to new_user_session_path
+    elsif not current_user.admin
+      flash[:notice] = "You don't have permission to access this."
+      flash.keep
+      redirect_to today_path
+    end
   end
 
   # potentially ashley/allan's stuff for adding and removing employees?
