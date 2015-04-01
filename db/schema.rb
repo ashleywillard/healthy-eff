@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150330204900) do
+ActiveRecord::Schema.define(:version => 20150401015437) do
 
   create_table "activities", :force => true do |t|
     t.integer  "duration"
@@ -66,7 +66,6 @@ ActiveRecord::Schema.define(:version => 20150330204900) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.string   "name"
     t.boolean  "admin"
     t.string   "invitation_token"
     t.datetime "invitation_created_at"
@@ -76,6 +75,8 @@ ActiveRecord::Schema.define(:version => 20150330204900) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.integer  "invitations_count",      :default => 0
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
