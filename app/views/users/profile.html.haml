@@ -12,19 +12,20 @@
         },
         events:
         [
-        - @user_month.each do |day|
+        - @workouts.each do |workout|
           {
-          title  : "#{appointment.title}",
-          start  : "#{appointment.start_event.strftime '%Y-%m-%dT%H:%M:%S'}",
-          end    : "#{appointment.end_event.strftime '%Y-%m-%dT%H:%M:%S'}",
-          allDay : #{appointment.allday}
+          title: '#{workout[1].name}' + ' ' + '#{workout[1].duration.to_s}'
+          start: '#{workout[0].date.strftime('%Y-%m-%d')}'
           },
-        ]
+        ],
       })
   });
 
-%p=@now
 %p=@currentMonth
+%p=@currentYear
 %p=@previousMonth
+%p=@previousYear
+%p=@curr_user_month
+%p=@prev_user_month
 
 #calendar
