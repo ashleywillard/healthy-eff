@@ -25,6 +25,8 @@ Healthyeff::Application.routes.draw do
   # routing for admin views
   get 'admin' => 'admin#index', :as => :admin_list
   get 'admin/pending' => 'admin#pending', :as => :admin_pending
+  put 'admin/approve' => 'admin#approve', :as => :admin_approve
+  put 'admin/deny' => 'admin#deny', :as => :admin_deny
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
