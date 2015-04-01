@@ -12,11 +12,14 @@ class ActivitiesController < ApplicationController
     @day = Day.new({:date => @date,
                       :reason => "", 
                       :approved => true,
-                      :user_id => current_user.id})
+                      :denied => false})
   end
 
   def multiple_days
-    @user = current_user
+    @user = User.new()
+    today = Date.today
+    @end_date = today.prev_day
+    @start_date = today.strftime("%d").to_i < 6 ? today.ago(1.month).beginning_of_month : today.beginning_of_month
   end
 
   def check_simple_captcha
@@ -63,7 +66,7 @@ class ActivitiesController < ApplicationController
   def create_single_day(day, approved)
     @day = Day.new({:approved => approved,
                   :total_time => 0,
-                  :user_id => current_user,
+                  :denied => false,
                   :reason => params[:days][:reason]})
     unless approved
       @day.date = Time.strptime(day[:date], "%m/%d/%Y")
@@ -87,8 +90,8 @@ class ActivitiesController < ApplicationController
       date = Time.strptime(day[:date], "%m/%d/%Y")
       @day = Day.new({:date => date,
                     :approved => false,
+                    :denied => false,
                     :total_time => 0,
-                    :user_id => current_user,
                     :reason => params[:days][:reason]})
       validate_single_day(day[:activities_attributes], @day)
     rescue ArgumentError
@@ -161,6 +164,8 @@ class ActivitiesController < ApplicationController
     end
     month_model.num_of_days += 1
     month_model.save!
+    day.month_id = month_model.id
+    day.save!
   end
 
 end

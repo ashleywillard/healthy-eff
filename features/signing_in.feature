@@ -8,6 +8,7 @@ Background: users in database
   Given the following users exist:
   | email                       | password              | password_confirmation |    
   | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
+  | healthypotato@gmail.com     | hotpotato             | hotpotato             |
 
 Scenario: Logging in with the correct credentials
   Given I am on the sign in page
@@ -23,7 +24,7 @@ Scenario: Logging in with incorrect password
   And I should see "Invalid email or password."
 
 Scenario: Logging out
-  Given I am signed in
+  Given I am logged in as a non-admin
   And I am on any page
   When I follow "Sign Out"
   Then I should be on the sign in page

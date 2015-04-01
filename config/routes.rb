@@ -5,7 +5,8 @@ Healthyeff::Application.routes.draw do
 
   # manually add user registration routes to prevent users from registering
   # themselves - Michelle
-  devise_for :users, :skip => [:registrations] 
+  # Added :controllers => { :invitations => 'invitations' } for devise invitable
+  devise_for :users, :skip => [:registrations], :controllers => { :invitations => 'invitations' } 
   as :user do
     get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
     put 'users/edit' => 'devise/registrations#update', :as => 'user_registration'
@@ -14,6 +15,10 @@ Healthyeff::Application.routes.draw do
   #required for devise to work, redirects to path below after user logs in
   #change home#index to whatever need be -allan
   root to: 'activities#today'
+
+  #Managing employees
+  match 'admin/manage' => 'users#manage', :as => :manage
+  delete 'manage/:id', to: 'users#destroy', :as => :delete
 
   #route for single activity -ashley
   match 'today' => 'activities#today', :as => :today

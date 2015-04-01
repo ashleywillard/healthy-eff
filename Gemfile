@@ -10,7 +10,7 @@ gem 'devise'
 gem 'devise_invitable', '~> 1.3.4'
 
 gem 'haml'
-gem 'selenium-webdriver'
+# gem 'selenium-webdriver'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -33,10 +33,12 @@ group :development, :test do
   gem 'erb2haml'
   gem 'rake', '10.4.2'
   gem 'bootstrap-datepicker-rails', '~> 1.4.0'
+  gem 'poltergeist'
 end
 
 gem 'jquery-rails'
 gem 'simple_captcha', :git => 'git://github.com/galetahub/simple-captcha.git'
+gem 'fullcalendar-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

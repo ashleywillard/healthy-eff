@@ -15,6 +15,7 @@
 //= require_tree .
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/core
+//= require fullcalendar
 function remove_fields(link) {
   $(link).closest(".field").remove();
 }

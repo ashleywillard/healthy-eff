@@ -28,12 +28,22 @@ And (/I am on the multiple day input page/) do
 end
 
 # Manage employee page
+And (/I visit the manage employee page/) do
+  visit manage_path
+end
 
 # Add employee page
+And (/I visit the add employee page/) do
+  visit new_user_invitation_path
+end
 
 # Pending approval page
 
 # Forgot password page
+And (/I am on the forgot password page/) do
+  visit new_user_password_path
+end
+
 
 # Admin view page (employee list page?)
 
@@ -61,4 +71,16 @@ end
 
 Then (/I should be on the multiple day input page/) do
   assert page.current_path == multiple_days_path
+end
+
+Then (/I should be on the forgot password page/) do
+  assert page.current_path == new_user_password_path
+end
+
+Then (/I should be on the add employee page/) do
+  assert page.current_path == new_user_invitation_path
+end
+
+Then (/I should be on the manage employee page/) do
+  assert page.current_path == manage_path
 end

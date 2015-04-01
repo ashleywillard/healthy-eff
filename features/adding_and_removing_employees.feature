@@ -4,24 +4,43 @@ Feature: Adding and removing employees
   So that new employees can track their workout
   I want to be able to register employees
 
-Background:
-  Given I am logged in as an admin
+Background: users in database
+  Given the following admins exist:
+  | email                       | password              | password_confirmation |    
+  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
+  Given the following users exist:
+  | email                       | password              | password_confirmation |    
+  | healthypotato@gmail.com     | hotpotato             | hotpotato             |
 
 Scenario: Going to add employee page
-  Given I am on the manage employee page
-  And I click “Add employee”
+  Given I am logged in as an admin
+  And I visit the manage employee page
+  When I follow “Add a new employee”
   Then I should be on the add employee page
 
 Scenario: Adding an employee
-  Given I am on the add employee page
-  And I fill in John Doe into the name input box
-  And I fill in johndoe@healthy.com in the email input box
-  And I press "Submit"
+  Given I am logged in as an admin
+  And I visit the manage employee page
+  And I visit the add employee page
+  And I fill in email with "healthypotato@gmail.com"
+  And I press “Send an invitation”
   Then I should be on the manage employee page
 
 Scenario: Removing an employee
-  Given I am on the manage employee page
-  And I follow the "Remove" link for John Doe
+  Given I am logged in as an admin
+  And I visit the manage employee page
+  When I follow the "Remove" link for John Doe
   And I press OK
   Then I should be on the manage employee page
   And I should not see "John Doe"
+
+Scenario: Not an admin
+  Given I am logged in as a non-admin
+  And I visit the manage employee page
+  Then I should be on the home page
+  And I should see "You are not authorized to send invites"
+
+Scenario: Can't delete myself
+  Given I am logged in as an admin
+  And I am on the manage employee page
+  Then I should not see my name
