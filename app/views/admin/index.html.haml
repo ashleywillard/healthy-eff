@@ -4,16 +4,15 @@
 %table#employee_list
   %thead
     %tr
-      %th Accounting
       %th
-        = link_to "First Name", admin_list_path(:sort => "first")
-      %th
-        = link_to "Last Name", admin_list_path(:sort => "last")
+      %th First Name
+      %th Last Name
       %th Days of Healthy Activity
   %tbody
     - @user_months.each do |month|
       %tr
         %td
+          = link_to "Accounting"
         %td= month.user.first_name
         %td= month.user.last_name
         %td= month.num_of_days
