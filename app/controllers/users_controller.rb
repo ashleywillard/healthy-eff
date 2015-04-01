@@ -18,14 +18,17 @@ class UsersController < ApplicationController
     @prev_user_month = Month.where(:month => @previousMonth, 
     							                 :year => @previousYear, 
     							                 :user_id => current_user.id)	
+    @workouts = populate_workouts(@curr_user_month)
   end
 
-   #  @workouts = []
-   #  def populate_events 
-	  #   @curr_user_month.days each |day| do
-	  #   	day.activities each |day| do
-	  #   		workouts.add(day.date, activity.activity)	
-   #  		end
-  	# 	end
-  	# end
+  
+  def populate_workouts(curr_month)
+    workouts = []
+    curr_month.days each |day| do
+      day.activities each |activity| do
+        workouts.push(day, activity)	
+      end
+    end
+  end
+
 end

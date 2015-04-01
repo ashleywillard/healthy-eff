@@ -10,14 +10,14 @@
           center: 'title',
           right: ''
         },
-        events:
+        events: 
         [
-        - @workouts.each do |workout|
+        -@workouts.each do |workout|
           {
           title: '#{workout[1].name}' + ' ' + '#{workout[1].duration.to_s}'
           start: '#{workout[0].date.strftime('%Y-%m-%d')}'
           },
-        ],
+        ]
       })
   });
 
@@ -27,5 +27,6 @@
 %p=@previousYear
 %p=@curr_user_month
 %p=@prev_user_month
+%p=@workouts
 
 #calendar
