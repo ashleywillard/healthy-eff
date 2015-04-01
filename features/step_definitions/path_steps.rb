@@ -28,16 +28,12 @@ And (/I am on the multiple day input page/) do
 end
 
 # Manage employee page
-And (/I am on the manage employee page/) do
-  visit manage_path
-end
-
 And (/I visit the manage employee page/) do
   visit manage_path
 end
 
 # Add employee page
-And (/I am on the add employee page/) do
+And (/I visit the add employee page/) do
   visit new_user_invitation_path
 end
 
