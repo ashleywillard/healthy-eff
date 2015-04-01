@@ -10,7 +10,7 @@ Background: users in database
 
 @javascript
 Scenario: Get email
-  When I follow "Forgot your password"
+  When I follow "Forgot your password?"
   And I fill in "healthypotato@gmail.com" into the email field
   And I click "Submit"
   Then I should be on the home page
@@ -18,7 +18,7 @@ Scenario: Get email
 
 @javascript
 Scenario: Invalid email
-  When I follow "Forgot your password" 
+  When I follow "Forgot your password?" 
   And I fill in "meow@meow.com" into the email field
   And I click "Submit"
   Then I should see “Invalid email”
