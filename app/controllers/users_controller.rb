@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter :check_logged_in
 
   def profile
     
@@ -19,8 +20,15 @@ class UsersController < ApplicationController
     end
     @user = User.find(params[:id])
     @user.destroy
-    flash[:notice] = "User '#{@user.name}' deleted."
+    flash[:notice] = "User '#{@user.first_name}' '#{@user.last_name}' deleted."
     redirect_to manage_path
+  end
+
+  private
+  def check_logged_in
+    if not user_signed_in?
+      redirect_to new_user_session_path
+    end
   end
 
 end
