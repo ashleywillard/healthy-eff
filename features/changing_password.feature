@@ -8,7 +8,7 @@ Background: users in database
   Given the following users exist:
   | email                       | password              | password_confirmation |    
   | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       | 
-  Given I am logged in
+  Given I am logged in as a non-admin
   And I am on the user settings page
 
 Scenario: Changing password - happy path

@@ -5,13 +5,13 @@ Feature: Adding and removing employees
   I want to be able to register employees
 
 Scenario: Going to add employee page
-  Given I am an admin
+  Given I am logged in as an admin
   And I am on the manage employee page
   When I click “Add add a new employee”
   Then I should be on the add employee page
 
 Scenario: Adding an employee
-  Given I am an admin
+  Given I am logged in as an admin
   And I am on the add employee page
   When I fill in "" with John Doe
   And I fill in johndoe@healthy.com in the email input box
@@ -19,7 +19,7 @@ Scenario: Adding an employee
   Then I should be on the manage employee page
 
 Scenario: Removing an employee
-  Given I am an admin
+  Given I am logged in as an admin
   And I am on the manage employee page
   When I follow the "Remove" link for John Doe
   And I press OK
@@ -27,12 +27,12 @@ Scenario: Removing an employee
   And I should not see "John Doe"
 
 Scenario: Not an admin
-  Given I am a nonadmin
+  Given I am logged in as a non-admin
   And I visit "Manage Employees"
   Then I should be on the home page
   And I should see "You are not authorized to send invites"
 
 Scenario: Can't delete myself
-  Given I am an admin
+  Given I am logged in as an admin
   And I am on the manage employee page
   Then I should not see my name
