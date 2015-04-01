@@ -38,6 +38,7 @@ end
 
 gem 'jquery-rails'
 gem 'simple_captcha', :git => 'git://github.com/galetahub/simple-captcha.git'
+gem 'fullcalendar-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

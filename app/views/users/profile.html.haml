@@ -1,2 +1,29 @@
-%p Today, I'm awesome because this is my profile page
+%script{:src => "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.min.js"}
+%link{:rel => "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css"}
+:javascript
+  $(document).ready(function() {
+      var random = []
+      var workouts = #{raw @workouts.to_json}
+      for(i=0;i<workouts.length;i++){
+        workout = workouts[i]
+        random[i]={title: workout[0]+': '+workout[1], start: workout[2]}
+      }
+      $('#calendar').fullCalendar({
+        header: {
+          left: 'prev, today, next',
+          center: 'title',
+          right: ''
+        },
+        events: random
+      })
+  });
 
+%p=@currentMonth
+%p=@currentYear
+%p=@previousMonth
+%p=@previousYear
+%p=@curr_user_month
+%p=@prev_user_month
+%p=@workouts
+
+#calendar
