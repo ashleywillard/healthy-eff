@@ -22,6 +22,10 @@ Healthyeff::Application.routes.draw do
   match 'add_days' => 'activities#add_days', :as => :add_days
   match 'profile' => 'users#profile', :as => :profile
 
+  # routing for admin views
+  get 'admin' => 'admin#index', :as => :admin_list
+  get 'admin/pending' => 'admin#pending', :as => :admin_pending
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

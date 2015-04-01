@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  
+
   before_filter :check_logged_in
 
   def today
@@ -8,7 +8,7 @@ class ActivitiesController < ApplicationController
     #   flash.keep
     #   redirect_to today_path
     # end
-    @date = DateTime.now
+    @date = Date.today
     @day = Day.new({:date => @date,
                       :reason => "", 
                       :approved => true,
@@ -166,10 +166,4 @@ class ActivitiesController < ApplicationController
     month_model.save!
   end
 
-  private
-  def check_logged_in
-    if not user_signed_in?
-      redirect_to new_user_session_path
-    end
-  end
 end
