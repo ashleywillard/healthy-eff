@@ -6,6 +6,14 @@ Given /the following users exist/ do |users_table|
   end
 end
 
+Given /the following admins exist/ do |users_table|
+  users_table.hashes.each do |user|
+    user = User.create!(user)
+    user.admin = true
+    user.save
+  end
+end
+
 Given /I am signed|logged in as an admin/ do
   visit '/users/sign_in'
   fill_in "user_email", :with => '169.healthyeff@gmail.com'
