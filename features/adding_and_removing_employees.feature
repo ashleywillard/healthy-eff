@@ -4,7 +4,7 @@ Feature: Adding and removing employees
   So that new employees can track their workout
   I want to be able to register employees
 
-Background:
+Background: users in database
   Given the following users exist:
   | email                       | password              | password_confirmation |    
   | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
@@ -34,7 +34,7 @@ Scenario: Removing an employee
 
 Scenario: Not an admin
   Given I am logged in as a non-admin
-  And I visit "Manage Employees"
+  And I visit the manage employee page
   Then I should be on the home page
   And I should see "You are not authorized to send invites"
 
