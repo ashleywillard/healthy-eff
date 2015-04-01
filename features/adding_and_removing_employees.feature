@@ -4,6 +4,12 @@ Feature: Adding and removing employees
   So that new employees can track their workout
   I want to be able to register employees
 
+Background:
+  Given the following users exist:
+  | email                       | password              | password_confirmation |    
+  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
+  | healthypotato@gmail.com     | hotpotato             | hotpotato             |
+
 Scenario: Going to add employee page
   Given I am logged in as an admin
   And I am on the manage employee page
