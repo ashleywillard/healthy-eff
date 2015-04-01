@@ -13,3 +13,7 @@ Given /I am a nonadmin/ do
   fill_in "user_password", :with => 'hotpotato'
   click_button "Log in"
 end
+
+When(/^I follow “Add a new employee”$/) do
+  click_link("Add a new employee")
+end

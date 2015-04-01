@@ -4,15 +4,21 @@ Feature: Adding and removing employees
   So that new employees can track their workout
   I want to be able to register employees
 
+Background:
+  Given the following users exist:
+  | email                       | password              | password_confirmation |    
+  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
+  | healthypotato@gmail.com     | hotpotato             | hotpotato             |
+
 Scenario: Going to add employee page
   Given I am an admin
-  And I am on the manage employee page
-  When I click “Add add a new employee”
+  And I go to the manage employee page
+  When I follow “Add a new employee”
   Then I should be on the add employee page
 
 Scenario: Adding an employee
   Given I am an admin
-  And I am on the add employee page
+  And I go to the add employee page
   When I fill in "" with John Doe
   And I fill in johndoe@healthy.com in the email input box
   And I press "Submit"
@@ -20,7 +26,7 @@ Scenario: Adding an employee
 
 Scenario: Removing an employee
   Given I am an admin
-  And I am on the manage employee page
+  And I go to the manage employee page
   When I follow the "Remove" link for John Doe
   And I press OK
   Then I should be on the manage employee page
