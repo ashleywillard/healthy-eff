@@ -20,7 +20,13 @@ When /I fill in day and activity with:(.*)/ do |input|
   date_entries.zip(date_ids) do |date_entry, date_id|
     
     act_durs=date_entry.split(',')
-    target_date = act_durs.shift
+    date_field = act_durs.shift
+    target_date = date_field
+    if date_field == "Yesterday"
+      target_date = Date.today.prev_day.strftime("%m/%d/%Y")
+    elsif date_field == "2 Days Ago"
+      target_date = Date.today.prev_day.prev_day.strftime("%m/%d/%Y")
+    end
     fill_in date_id[4..-1], :with => target_date
     
     act_durs.each do |obj|
@@ -50,7 +56,7 @@ end
 
 And /I fill out date/ do
   date_ids = page.body.scan(/id="user_days_attributes_.{0,20}_date/m)
-  fill_in date_ids[0][4..-1], :with => '3/10/2015'
+  fill_in date_ids[0][4..-1], :with => Date.today.prev_day.strftime("%m/%d/%Y")
 end
 
 # And /I should see a confirmation message for multiple days/ do

@@ -4,6 +4,12 @@
   <%= devise_error_messages! %>
   <%= f.hidden_field :invitation_token %>
 
+  <p><%= f.label :first_name %><br />
+  <%= f.text_field :first_name %></p>
+
+  <p><%= f.label :last_name %><br />
+  <%= f.text_field :last_name %></p>
+
   <p><%= f.label :password %><br />
   <%= f.password_field :password %></p>
 

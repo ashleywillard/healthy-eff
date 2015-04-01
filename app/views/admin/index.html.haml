@@ -1,0 +1,18 @@
+-#  app/views/admin/index.html.haml
+%h1 #{@month} #{@year}
+
+%table#employee_list
+  %thead
+    %tr
+      %th
+      %th First Name
+      %th Last Name
+      %th Days of Healthy Activity
+  %tbody
+    - @user_months.each do |month|
+      %tr
+        %td
+          = link_to "Accounting"
+        %td= month.user.first_name
+        %td= month.user.last_name
+        %td= month.num_of_days

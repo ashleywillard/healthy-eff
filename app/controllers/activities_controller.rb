@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  
+
   before_filter :check_logged_in
 
   def today
@@ -8,15 +8,19 @@ class ActivitiesController < ApplicationController
     #   flash.keep
     #   redirect_to today_path
     # end
-    @date = DateTime.now
+    @date = Date.today
     @day = Day.new({:date => @date,
                       :reason => "", 
                       :approved => true,
+                      :denied => false,
                       :user_id => current_user.id})
   end
 
   def multiple_days
     @user = current_user
+    today = Date.today
+    @end_date = today.prev_day
+    @start_date = today.strftime("%d").to_i < 6 ? today.ago(1.month).beginning_of_month : today.beginning_of_month
   end
 
   def check_simple_captcha
@@ -64,6 +68,7 @@ class ActivitiesController < ApplicationController
     @day = Day.new({:approved => approved,
                   :total_time => 0,
                   :user_id => current_user.id,
+                  :denied => false,
                   :reason => params[:days][:reason]})
     unless approved
       @day.date = Time.strptime(day[:date], "%m/%d/%Y")
@@ -87,6 +92,7 @@ class ActivitiesController < ApplicationController
       date = Time.strptime(day[:date], "%m/%d/%Y")
       @day = Day.new({:date => date,
                     :approved => false,
+                    :denied => false,
                     :total_time => 0,
                     :user_id => current_user.id,
                     :reason => params[:days][:reason]})
@@ -165,10 +171,4 @@ class ActivitiesController < ApplicationController
     day.save!
   end
 
-  private
-  def check_logged_in
-    if not user_signed_in?
-      redirect_to new_user_session_path
-    end
-  end
 end
