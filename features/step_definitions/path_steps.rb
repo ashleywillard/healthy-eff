@@ -44,6 +44,10 @@ end
 # Pending approval page
 
 # Forgot password page
+And (/I am on the forgot password page/) do
+  visit new_user_password_path
+end
+
 
 # Admin view page (employee list page?)
 
@@ -71,4 +75,8 @@ end
 
 Then (/I should be on the multiple day input page/) do
   assert page.current_path == multiple_days_path
+end
+
+Then (/I should be on the forgot password page/) do
+  assert page.current_path == new_user_password_path
 end
