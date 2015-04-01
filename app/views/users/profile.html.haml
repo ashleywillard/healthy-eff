@@ -1,13 +1,12 @@
 %script{:src => "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.min.js"}
 %link{:rel => "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css"}
-%link{:href => "../assets/stylesheets/fullcalendar-custom.css", :rel => "stylesheet"}/
 :javascript
   $(document).ready(function() {
       var random = []
-      var workout_length = #{@workout_length}
       var workouts = #{raw @workouts.to_json}
       for(i=0;i<workouts.length;i++){
-        random[i]={title: i+'', start: '2015-04=01'}
+        workout = workouts[i]
+        random[i]={title: workout[0]+': '+workout[1], start: workout[2]}
       }
       $('#calendar').fullCalendar({
         header: {

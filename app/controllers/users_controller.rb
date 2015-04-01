@@ -21,15 +21,14 @@ class UsersController < ApplicationController
     							                 :year => @previousYear,
     							                 :user_id => current_user.id).first	
     
-    @workouts = populate_workouts(@curr_user_month)
-    @workout_length = @workouts.length
+    @workouts = populate_workouts(@prev_user_month) + populate_workouts(@curr_user_month)
 
   end
 
   
   def populate_workouts(curr_month)
     workouts = []
-    return nil if(curr_month == nil)  
+    return [] if(curr_month == nil)  
     
     curr_month.days.each do |day|
       day.activities.each do |activity|
