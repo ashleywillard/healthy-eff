@@ -7,7 +7,6 @@
 require 'simplecov'
 SimpleCov.start 'rails'
 require 'cucumber/rails'
-require File.dirname(__FILE__) + '/seeds'
 
 require 'capybara/poltergeist'
 
