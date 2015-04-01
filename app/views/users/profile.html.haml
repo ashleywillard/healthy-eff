@@ -3,21 +3,19 @@
 %link{:href => "../assets/stylesheets/fullcalendar-custom.css", :rel => "stylesheet"}/
 :javascript
   $(document).ready(function() {
-  
+      var random = []
+      var workout_length = #{@workout_length}
+      var workouts = #{raw @workouts.to_json}
+      for(i=0;i<workouts.length;i++){
+        random[i]={title: i+'', start: '2015-04=01'}
+      }
       $('#calendar').fullCalendar({
         header: {
           left: 'prev, today, next',
           center: 'title',
           right: ''
         },
-        events: 
-        [
-        -@workouts.each do |workout|
-          {
-          title: '#{workout[1].name}' + ' ' + '#{workout[1].duration.to_s}'
-          start: '#{workout[0].date.strftime('%Y-%m-%d')}'
-          },
-        ]
+        events: random
       })
   });
 

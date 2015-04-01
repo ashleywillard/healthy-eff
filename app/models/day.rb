@@ -2,7 +2,6 @@ class Day < ActiveRecord::Base
   attr_accessible :date, :total_time, :reason, :approved, :user_id, :month_id
   validates :date, :reason, presence: true
   validate :valid_total, :valid_date
-  belongs_to :user
   belongs_to :month
   has_many :activities, :dependent => :destroy
   accepts_nested_attributes_for :activities, :allow_destroy => true

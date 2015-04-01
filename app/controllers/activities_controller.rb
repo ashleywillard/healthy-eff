@@ -63,7 +63,7 @@ class ActivitiesController < ApplicationController
   def create_single_day(day, approved)
     @day = Day.new({:approved => approved,
                   :total_time => 0,
-                  :user_id => current_user,
+                  :user_id => current_user.id,
                   :reason => params[:days][:reason]})
     unless approved
       @day.date = Time.strptime(day[:date], "%m/%d/%Y")
@@ -88,7 +88,7 @@ class ActivitiesController < ApplicationController
       @day = Day.new({:date => date,
                     :approved => false,
                     :total_time => 0,
-                    :user_id => current_user,
+                    :user_id => current_user.id,
                     :reason => params[:days][:reason]})
       validate_single_day(day[:activities_attributes], @day)
     rescue ArgumentError
@@ -161,6 +161,8 @@ class ActivitiesController < ApplicationController
     end
     month_model.num_of_days += 1
     month_model.save!
+    day.month_id = month_model.id
+    day.save!
   end
 
   private
