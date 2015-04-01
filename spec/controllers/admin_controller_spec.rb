@@ -2,18 +2,7 @@ require "rails_helper"
 
 RSpec.describe AdminController do
 
-  # this 'describe' is already covered in activities_controller_spec
-    # cf. note in AdminController about maybe moving the filter to
-    # ApplicationController; if that's the case, we'd write a separate RSpec for
-    # ApplicationController and just shove this one in there
-  describe "when not logged in" do
-    it "redirects to the login page" do
-      # pending
-    end
-    it "displays a not-logged-in message" do
-      # pending
-    end
-  end
+  # check_logged_in behavior tested in activities_controller_spec
 
   describe "checks for admin privilege" do
     it "allows access if admin" do
