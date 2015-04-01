@@ -9,18 +9,22 @@
           left: 'prev, today, next',
           center: 'title',
           right: ''
-        }
+        },
+        events:
+        [
+        - @user_month.each do |day|
+          {
+          title  : "#{appointment.title}",
+          start  : "#{appointment.start_event.strftime '%Y-%m-%dT%H:%M:%S'}",
+          end    : "#{appointment.end_event.strftime '%Y-%m-%dT%H:%M:%S'}",
+          allDay : #{appointment.allday}
+          },
+        ]
       })
-  
   });
-%p Today, I'm awesome because this is my profile page
 
 %p=@now
 %p=@currentMonth
 %p=@previousMonth
 
 #calendar
-
-
-
-
