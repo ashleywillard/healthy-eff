@@ -34,7 +34,6 @@ Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),
             :approved => true,
             :denied => false,
             :total_time => 60,
-            :user_id => 2,
             :reason => 'A legit reason',
             :month_id => 1
 
@@ -46,7 +45,6 @@ Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
             :approved => false,
             :denied => false,
             :total_time => 60,
-            :user_id => 2,
             :reason => 'A legit reason',
             :month_id => 1
 
@@ -58,7 +56,6 @@ Day.create! :date => Time.strptime("04/03/2015", "%m/%d/%Y"),
             :approved => false,
             :denied => true,
             :total_time => 60,
-            :user_id => 2,
             :reason => 'Because I just forgot -badpotato',
             :month_id => 1
 
@@ -70,5 +67,22 @@ Month.create! :user_id => 2,
               :printed_form => false,
               :received_form => false
 
+#This creates an approved day for the non-admin account
+Activity.create! :duration => 60, 
+                 :name => 'swimming',
+                 :day_id => 4
 
+Day.create! :date => Time.strptime("03/31/2015", "%m/%d/%Y"),
+            :approved => true,
+            :denied => false,
+            :total_time => 60,
+            :reason => 'A legit reason',
+            :month_id => 2
 
+#Month to hold above day
+Month.create! :user_id => 2,
+              :month => 3,
+              :year => 2015,
+              :num_of_days => 1,
+              :printed_form => true,
+              :received_form => false
