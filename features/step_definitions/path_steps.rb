@@ -74,7 +74,7 @@ Then (/I should be on the multiple day input page/) do
 end
 
 Then (/I should be on the forgot password page/) do
-  assert page.current_path == new_user_password_path
+  assert page.current_path == user_password_path
 end
 
 Then (/I should be on the add employee page/) do
