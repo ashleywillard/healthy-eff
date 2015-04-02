@@ -46,10 +46,11 @@ RSpec.describe AdminController do
                                   :year => Date.today.strftime("%Y")
       @prev_month = Month.create :month => (Date.today - 1.month).strftime("%m"),
                                  :year => Date.today.strftime("%Y")
-      get :index
     end
     it "generates a list of user-associated months for current month" do
+      get :index
       expect(assigns(:user_months)).to eq([@user_months])
+      expect([:user_months]).to_not include(@prev_month)
     end
   end
 
@@ -59,20 +60,19 @@ RSpec.describe AdminController do
         @day = Day.create :id => 1, :total_time => 60, :date => Date.today,
                           :approved => false, :denied => false
         allow(Day).to receive(:where).and_return([@day])
-        get :pending
       end
       it "renders a list of pending activities" do
+        get :pending
         expect(response.status).to eq(SUCCESS_CODE)
       end
     end
     context "when there are no activities pending approval" do
-      before :each do
-        get :pending
-      end
       it "redirects to the list view" do
+        get :pending
         expect(response).to redirect_to admin_list_path
       end
       it "displays a message notifying the admin of such" do
+        get :pending
         expect(flash[:notice]).to_not eq(nil)
       end
     end
