@@ -22,16 +22,41 @@ class AdminController < ApplicationController
     # RESTful: app.heroku.com/admin/pending <-> admin_pending_path
   def pending
     @days = Day.where(:approved => false, :denied => false)
+    if @days.nil? or @days.empty?
+      flash[:notice] = "No activities pending approval."
+      redirect_to admin_list_path
+    end
   end
 
   # function to approve or deny selected pending activities
+    # RESTful: app.heroku.com/admin/update_pending <-> admin_update_pending_path
   def update_pending
-    if params[:commit] == "Approve"
-      flash[:notice] = "Success! Activities approved."
-    elsif params[:commit] == "Deny"
-      flash[:notice] = "Success! Activities denied."
+    if not params[:selected].nil?
+      if params[:commit] == "Approve"
+        self.approve
+      elsif params[:commit] == "Deny"
+        self.deny
+      end
+      redirect_to admin_pending_path
     end
-    redirect_to admin_pending_path
+  end
+
+  def approve
+    params[:selected].each do |id|
+      d = Day.find_by_id(id)
+      d.approved = true
+      d.save
+    end
+    flash[:notice] = "Success! Activities approved."
+  end
+
+  def deny
+    params[:selected].each do |id|
+      d = Day.find_by_id(id)
+      d.denied = true
+      d.save
+    end
+    flash[:notice] = "Success! Activities denied."
   end
 
   private
