@@ -8,14 +8,6 @@ class AdminController < ApplicationController
     @user_months = Month.where(:month => Date.today.strftime("%m"), :year => @year)
   end
 
-  # function to generate PDF printout for a single employee (accounting sheet)
-    # (?) RESTful: app.heroku.com/admin/accounting/:month/:id (?)
-  # NOT YET IMPLEMENTED
-
-  # function to generate PDF printout for all employees (audit sheet)
-    # (?) RESTful: app.heroku.com/admin/audit/:month (?)
-  # NOT YET IMPLEMENTED
-
   def pending
     @days = Day.where(:approved => false, :denied => false)
     if @days.nil? or @days.empty?
@@ -26,11 +18,8 @@ class AdminController < ApplicationController
 
   def update_pending
     if not params[:selected].nil?
-      if params[:commit] == "Approve"
-        self.approve
-      elsif params[:commit] == "Deny"
-        self.deny
-      end
+      self.approve if params[:commit] == "Approve"
+      self.deny if params[:commit] == "Deny"
     end
     redirect_to admin_pending_path
   end
@@ -52,6 +41,14 @@ class AdminController < ApplicationController
     end
     flash[:notice] = "Success! Activities denied."
   end
+
+  # function to generate PDF printout for a single employee (accounting sheet)
+    # (?) RESTful: app.heroku.com/admin/accounting/:month/:id (?)
+  # NOT YET IMPLEMENTED
+
+  # function to generate PDF printout for all employees (audit sheet)
+    # (?) RESTful: app.heroku.com/admin/audit/:month (?)
+  # NOT YET IMPLEMENTED
 
   private
   def check_admin
