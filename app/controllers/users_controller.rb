@@ -2,30 +2,25 @@ class UsersController < ApplicationController
   before_filter :check_logged_in
 
   def profile
-  	@now = DateTime.now
-  	@currentMonth = @now.strftime('%m').to_i
-    @currentYear = @now.strftime('%Y').to_i
+    @name = current_user.first_name + ' ' + current_user.last_name
+    @date = Date.today 
+    @earliestDate = @date.at_beginning_of_month.next_month
 
-    @previousMonth = @currentMonth - 1
-    @previousYear = @currentYear
-    if @currentMonth== 0
-      @pseviousMonth = 12
-      @previousYear -= 1
+    @workouts = []
+    numOfMonthsToRetrieve = 2
+    (1..numOfMonthsToRetrieve).each do 
+      @earliestDate = @earliestDate.at_beginning_of_month.prev_month
+      @workouts += retrieveWorkouts(@earliestDate.month, @earliestDate.year)
     end
-
-    @curr_user_month = Month.where(:month => @currentMonth, 
-    							                 :year => @currentYear,
-    							                 :user_id => current_user.id).first
-    
-    @prev_user_month = Month.where(:month => @previousMonth, 
-    							                 :year => @previousYear,
-    							                 :user_id => current_user.id).first	
-    
-    @workouts = populate_workouts(@prev_user_month) + populate_workouts(@curr_user_month)
-
+  end
+  
+  private 
+  def retrieveWorkouts(month, year)
+    m = Month.where(:month => month, :year => year, :user_id => current_user.id).first
+    return populate_workouts(m)
   end
 
-  
+  private
   def populate_workouts(curr_month)
     workouts = []
     return [] if(curr_month == nil)  
