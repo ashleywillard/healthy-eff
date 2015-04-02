@@ -24,4 +24,6 @@ class Day < ActiveRecord::Base
     end
   end
 
+  def user ; self.month.user ; end
+
 end
