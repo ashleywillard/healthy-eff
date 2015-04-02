@@ -21,22 +21,23 @@ class AdminController < ApplicationController
   # function to generate list of multiple-day activities for pending view
     # RESTful: app.heroku.com/admin/pending <-> admin_pending_path
   def pending
-    # TO DO
+    @days = Day.where(:approved => false, :denied => false)
   end
 
-  # function to approve a single pending activity
-  def approve
-    # TO DO
-    # display a flash message and redirect back to pending page?
+  # function to approve or deny selected pending activities
+  def update_pending
+    if params[:commit] == "Approve"
+      flash[:notice] = "Success! Activities approved."
+    elsif params[:commit] == "Deny"
+      flash[:notice] = "Success! Activities denied."
+    end
+    redirect_to admin_pending_path
   end
 
   private
   def check_admin
-    if current_user.nil?
-      redirect_to new_user_session_path
-    elsif not current_user.admin
+    if not current_user.admin
       flash[:notice] = "You don't have permission to access this."
-      flash.keep
       redirect_to today_path
     end
   end
