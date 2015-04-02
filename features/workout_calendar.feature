@@ -9,7 +9,7 @@ Background: users in database
   | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
   | healthypotato@gmail.com     | hotpotato             | hotpotato             |
   Given the following months exist:
-  | user_id  | month  | year | num_of_days | printed_form  | received_from |
+  | user_id  | month  | year | num_of_days | printed_form  | received_form |
   | 2        | 4      | 2015 | 3           | false         | false         |
   Given the following days exist: 
   | date        | approved | denied | total_time | user_id | reason           | month_id |   
@@ -18,7 +18,6 @@ Background: users in database
   | duration | name   | day_id |    
   | 60       | hiking | 3      |
   Given that I am logged in as non-admin
-
 
 
 Scenario: Visiting my user profile page
