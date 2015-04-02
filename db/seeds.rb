@@ -30,52 +30,46 @@ Activity.create! :duration => 25,
 Activity.create! :duration => 35, 
                  :name => 'swimming',
                  :day_id => 1
-d = Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),
+Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),
                 :approved => true,
                 :denied => false,
                 :total_time => 60,
                 :reason => 'A legit reason',
                 :month_id => 1
-d.user_id = 1
-d.save
+
 
 # ===== Pending day, non-admin, #1 ===== #
 Activity.create! :duration => 60, 
                  :name => 'running',
                  :day_id => 2
-d = Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
+Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
                 :approved => false,
                 :denied => false,
                 :total_time => 60,
                 :reason => 'A legit reason',
                 :month_id => 1
-d.user_id = 1
-d.save
 
 # ===== Pending day, non-admin, #2 ===== #
 Activity.create! :duration => 60, 
                  :name => 'swimming',
                  :day_id => 2
-d = Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
+Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
                 :approved => false,
                 :denied => false,
                 :total_time => 60,
                 :reason => 'Another legit reason',
                 :month_id => 1
-d.user_id = 2
-d.save
 
 # ===== Denied day, non-admin ===== #
 Activity.create! :duration => 60, 
                  :name => 'hiking',
                  :day_id => 3
-d = Day.create! :date => Time.strptime("04/03/2015", "%m/%d/%Y"),
+Day.create! :date => Time.strptime("04/03/2015", "%m/%d/%Y"),
                 :approved => false,
                 :denied => true,
                 :total_time => 60,
                 :reason => 'Because I just forgot -badpotato',
                 :month_id => 1
-d.user_id = 1
 
 #Month to hold all the days
 Month.create! :user_id => 2,
@@ -90,14 +84,12 @@ Activity.create! :duration => 60,
                  :name => 'swimming',
                  :day_id => 4
 
-d = Day.create! :date => Time.strptime("03/31/2015", "%m/%d/%Y"),
+Day.create! :date => Time.strptime("03/31/2015", "%m/%d/%Y"),
                 :approved => true,
                 :denied => false,
                 :total_time => 60,
                 :reason => 'A legit reason',
                 :month_id => 2
-d.user_id = 1
-d.save
 
 #Month to hold above day
 Month.create! :user_id => 2,
