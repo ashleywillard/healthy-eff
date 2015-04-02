@@ -18,10 +18,6 @@ RSpec.describe AdminController do
       get :index
       expect(response.status).to eq(200)
     end
-    it "allows access to the pending approval page" do
-      get :pending
-      expect(response.status).to eq(200)
-    end
   end
 
   describe "when user is not an admin" do
