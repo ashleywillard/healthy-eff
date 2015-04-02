@@ -1,4 +1,4 @@
-class ActivitiesController < ApplicationController
+class DaysController < ApplicationController
 
   before_filter :check_logged_in
 
@@ -12,12 +12,11 @@ class ActivitiesController < ApplicationController
     @day = Day.new({:date => @date,
                       :reason => "", 
                       :approved => true,
-                      :denied => false,
-                      :user_id => current_user.id})
+                      :denied => false})
   end
 
   def multiple_days
-    @user = current_user
+    @user = User.new()
     today = Date.today
     @end_date = today.prev_day
     @start_date = today.strftime("%d").to_i < 6 ? today.ago(1.month).beginning_of_month : today.beginning_of_month
@@ -41,7 +40,7 @@ class ActivitiesController < ApplicationController
     raise Exception
   end
 
-  def add_activity
+  def add_today
     begin
       add(false, :day, :activities_attributes)
     rescue Exception
@@ -67,7 +66,6 @@ class ActivitiesController < ApplicationController
   def create_single_day(day, approved)
     @day = Day.new({:approved => approved,
                   :total_time => 0,
-                  :user_id => current_user.id,
                   :denied => false,
                   :reason => params[:days][:reason]})
     unless approved
@@ -94,7 +92,6 @@ class ActivitiesController < ApplicationController
                     :approved => false,
                     :denied => false,
                     :total_time => 0,
-                    :user_id => current_user.id,
                     :reason => params[:days][:reason]})
       validate_single_day(day[:activities_attributes], @day)
     rescue ArgumentError
