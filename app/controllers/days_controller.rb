@@ -1,4 +1,4 @@
-class ActivitiesController < ApplicationController
+class DaysController < ApplicationController
 
   before_filter :check_logged_in
 
@@ -40,7 +40,7 @@ class ActivitiesController < ApplicationController
     raise Exception
   end
 
-  def add_activity
+  def add_today
     begin
       add(false, :day, :activities_attributes)
     rescue Exception
