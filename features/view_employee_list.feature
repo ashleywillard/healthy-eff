@@ -5,16 +5,18 @@ Feature: View Employee List
   I want to see a display of all employees and the number of days they have logged activities for this month
 
 Background:
-  Given I am logged in as an admin
+  Given the following admins exist:
+  | email                       | password              | password_confirmation |
+  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
+  And I am logged in as an admin
 
 Scenario: Admin view
-  When I click on the admin view
+  When I follow "Admin"
   Then I should see a list of employee names
   And I should see the number of days each employee worked out
-  And I should see the amount of money each employee has accumulated
 
 Scenario: Visiting the pending approval page
-  When I press “Pending Approval”
+  When I press “Pending"
   Then I should be on the pending approval page
 
 Scenario: Viewing for a particular month
