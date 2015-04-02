@@ -1,5 +1,5 @@
 class Day < ActiveRecord::Base
-  attr_accessible :date, :total_time, :reason, :approved, :user_id, :month_id, :denied
+  attr_accessible :date, :total_time, :reason, :approved, :month_id, :denied
   validates :date, :reason, presence: true
   validate :valid_total, :valid_date
   belongs_to :month
