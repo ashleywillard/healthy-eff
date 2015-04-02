@@ -2,8 +2,6 @@ class AdminController < ApplicationController
 
   before_filter :check_logged_in, :check_admin
 
-  # function to generate list of employees for the list view
-    # RESTful: app.heroku.com/admin <-> admin_list_path
   def index
     @month = Date.today.strftime("%B")
     @year = Date.today.strftime("%Y")
@@ -18,8 +16,6 @@ class AdminController < ApplicationController
     # (?) RESTful: app.heroku.com/admin/audit/:month (?)
   # NOT YET IMPLEMENTED
 
-  # function to generate list of multiple-day activities for pending view
-    # RESTful: app.heroku.com/admin/pending <-> admin_pending_path
   def pending
     @days = Day.where(:approved => false, :denied => false)
     if @days.nil? or @days.empty?
@@ -28,8 +24,6 @@ class AdminController < ApplicationController
     end
   end
 
-  # function to approve or deny selected pending activities
-    # RESTful: app.heroku.com/admin/update_pending <-> admin_update_pending_path
   def update_pending
     if not params[:selected].nil?
       if params[:commit] == "Approve"
