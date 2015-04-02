@@ -7,7 +7,7 @@ RSpec.describe AdminController do
   # mock a logged-in admin
   before :each do
     @user = double(User)
-    @user.stub(:admin).and_return(true)
+    allow(@user).to receive(:admin).and_return(true)
     allow_message_expectations_on_nil # suppress warnings on devise warden
     allow(request.env['warden']).to receive(:authenticate!).and_return(@user)
     allow(controller).to receive(:current_user).and_return(@user)
@@ -25,7 +25,7 @@ RSpec.describe AdminController do
     context "when not admin" do
       before :each do
         # override default admin privilege
-        @user.stub(:admin).and_return(false)
+        allow(@user).to receive(:admin).and_return(false)
       end
       it "displays a 'forbidden' message on access attempts" do
         get :index
@@ -55,25 +55,39 @@ RSpec.describe AdminController do
 
   describe "admin#pending" do
     context "when there are activities pending approval" do
-      it "displays a list of pending activities"
+      before :each do
+        @day = Day.create :id => 1, :total_time => 60, :date => Date.today,
+                          :approved => false, :denied => false
+        allow(Day).to receive(:where).and_return([@day])
+        get :pending
+      end
+      it "renders a list of pending activities" do
+        expect(response.status).to eq(SUCCESS_CODE)
+      end
     end
     context "when there are no activities pending approval" do
-      it "displays a message notifying the admin of such"
-      it "redirects to the list view"
+      before :each do
+        get :pending
+      end
+      it "redirects to the list view" do
+        expect(response).to redirect_to admin_list_path
+      end
+      it "displays a message notifying the admin of such" do
+        expect(flash[:notice]).to_not eq(nil)
+      end
     end
   end
 
   describe "admin#update_pending" do
     before :each do
-      @day = double(Day).as_null_object
-      @day.stub(:approved).and_return(false)
-      @day.stub(:denied).and_return(false)
-      @day.stub(:id).and_return(1)
-      Day.stub(:find).and_return(@day)
+      @day1 = Day.create! :total_time => 60, :date => Date.today, :reason => "x",
+                          :approved => false, :denied => false
+      @day2 = Day.create! :total_time => 60, :date => Date.today, :reason => "x",
+                          :approved => false, :denied => false
     end
     context "when no pending activities are checked" do
       before :each do
-        controller.stub(:params).and_return({:selected => nil})
+        allow(controller).to receive(:params).and_return({:selected => nil})
       end
       it "redirects to the current page" do
         put :update_pending, :commit => "Approve"
@@ -83,23 +97,31 @@ RSpec.describe AdminController do
       end
     end
     context "when pending activities are checked" do
-      before :each do
-        controller.stub(:params).and_return({:selected => ["1"]})
-      end
       context "when admin clicks 'Approve'" do
         before :each do
-          put :update_pending, :commit => "Approve"
+          allow(Day).to receive(:find).and_return(@day1)
         end
-        it "approves the selected activities"
-#         it "displays a success message" do
-#           flash[:notice].should include("Success")
-#         end
+        it "approves the selected days" do
+          expect(controller).to receive(:approve)
+          put :update_pending, :commit => "Approve", :selected => [@day1.id.to_s]
+        end
+        it "displays a success message" do
+          put :update_pending, :commit => "Approve", :selected => [@day1.id.to_s]
+          expect(flash[:notice]).to include("Success")
+        end
       end
       context "when admin clicks 'Deny'" do
-        it "denies the selected activities"
-#         it "displays a success message" do
-#           flash[:notice].should include("Success")
-#         end
+        before :each do
+          allow(Day).to receive(:find).and_return(@day2)
+        end
+        it "denies the selected activities" do
+          expect(controller).to receive(:deny)
+          put :update_pending, :commit => "Deny", :selected => [@day2.id.to_s]
+        end
+        it "displays a success message" do
+          put :update_pending, :commit => "Deny", :selected => [@day2.id.to_s]
+          expect(flash[:notice]).to include("Success")
+        end
       end
     end
   end
