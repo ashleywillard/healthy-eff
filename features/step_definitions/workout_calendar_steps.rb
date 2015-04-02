@@ -20,7 +20,12 @@ Given /the following activities exist/ do |activities_table|
 end
 
 And /I should see a calendar with my logged activities/ do
-  page.should have_content("hiking")
-  page.should have_content("60")
+  page.should have_content("April 2015")
+  page.should have_content("Running")
+  page.should have_content("80")
 end
 
+When /^(?:|I )click the "([^"]*)"$/ do |selector|
+  find(:xpath, '//button[@class="fc-text-arrow"]').click
+
+end
