@@ -12,13 +12,11 @@ Background: users in database
   | user_id  | month  | year | num_of_days | printed_form  | received_from |
   | 2        | 4      | 2015 | 3           | false         | false         |
   Given the following days exist: 
-  | date | approved | denied | total_time | user_id | reason | month_id |   
-  
-
+  | date        | approved | denied | total_time | user_id | reason           | month_id |   
+  | 04/02/2015  | false    | false  | 60         | 2       | 'a legit reason' | 1        |
   Given the following activities exist:
-  | email                       | password              | password_confirmation |    
-  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
-  | healthypotato@gmail.com     | hotpotato             | hotpotato             |
+  | duration | name   | day_id |    
+  | 60       | hiking | 3      |
   Given that I am logged in as non-admin
 
 
