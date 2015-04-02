@@ -37,8 +37,8 @@ class AdminController < ApplicationController
       elsif params[:commit] == "Deny"
         self.deny
       end
-      redirect_to admin_pending_path
     end
+    redirect_to admin_pending_path
   end
 
   def approve
