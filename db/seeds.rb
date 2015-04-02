@@ -39,7 +39,7 @@ d = Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),
 d.user_id = 1
 d.save
 
-# ===== Pending day, non-admin ===== #
+# ===== Pending day, non-admin, #1 ===== #
 Activity.create! :duration => 60, 
                  :name => 'running',
                  :day_id => 2
@@ -50,6 +50,19 @@ d = Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
                 :reason => 'A legit reason',
                 :month_id => 1
 d.user_id = 1
+d.save
+
+# ===== Pending day, non-admin, #2 ===== #
+Activity.create! :duration => 60, 
+                 :name => 'swimming',
+                 :day_id => 2
+d = Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
+                :approved => false,
+                :denied => false,
+                :total_time => 60,
+                :reason => 'Another legit reason',
+                :month_id => 1
+d.user_id = 2
 d.save
 
 # ===== Denied day, non-admin ===== #
