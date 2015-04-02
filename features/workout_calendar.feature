@@ -17,12 +17,11 @@ Background: users in database
   Given the following activities exist:
   | duration | name   | day_id |    
   | 60       | hiking | 3      |
-  Given that I am logged in as non-admin
+  Given I am logged in as a non-admin
 
-
+@javascript
 Scenario: Visiting my user profile page
-  Given that I am logged in as non-admin
-  When I follow "profile"
+  When I follow "Profile"
   Then I should be on my profile page
   And I should see a calendar with my logged activities
 
