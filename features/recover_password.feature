@@ -8,18 +8,17 @@ Background: users in database
   | email                       | password              | password_confirmation |    
   | healthypotato@gmail.com     | hotpotato             | hotpotato             |
 
-@javascript
 Scenario: Get email
+  Given I am on the sign in page
   When I follow "Forgot your password?"
   And I fill in "healthypotato@gmail.com" into the email field
-  And I click "Submit"
-  Then I should be on the home page
-  And I should see “An email has been sent”
+  And I press “Send me reset password instructions”
+  Then I should see "You will receive an email with instructions on how to reset your password in a few minutes"
 
-@javascript
 Scenario: Invalid email
+  Given I am on the sign in page
   When I follow "Forgot your password?" 
   And I fill in "meow@meow.com" into the email field
-  And I click "Submit"
-  Then I should see “Invalid email”
+  And I press “Send me reset password instructions”
+  And I should see "Email not found"
   And I should be on the forgot password page
