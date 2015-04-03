@@ -8,18 +8,40 @@ Background:
   Given the following admins exist:
   | email                       | password              | password_confirmation |
   | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
-  And I am logged in as an admin
+  And the following users exist:
+  | email                      | password        | password_confirmation |
+  | healthypotato@gmail.com    | hotpotato       | hotpotato             |
+
+Scenario: Admin toolbar links
+  Given I am logged in as a non-admin
+  Then I should not see the "Admin" link
+  And I should not see the "Pending" link
 
 Scenario: Admin view
+  Given I am logged in as an admin
   When I follow "Admin"
-  Then I should see a list of employee names
+  Then I should see a table of employee names
   And I should see the number of days each employee worked out
 
-Scenario: Visiting the pending approval page
-  When I press “Pending"
+Scenario: No pending activities
+  Given I am logged in as an admin
+  And no pending activities exist
+  Then I should not see the "Pending" link
+  When I visit the pending approval page
+  Then I should be on the admin list page
+  And I should see "No activities pending approval"
+
+Scenario: Pending activities
+  Given 2 pending activities exist
+  And I am logged in as an admin
+  Then I should see "2 Pending"
+  When I visit the pending approval page
   Then I should be on the pending approval page
+  And there should be 2 activities pending approval
 
 Scenario: Viewing for a particular month
+  Given I am logged in as an admin
+  And I am on the admin list page
   When I click on the month
   Then I should see options for previous months
   And when I click on a previous month
