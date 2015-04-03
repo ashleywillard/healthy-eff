@@ -13,6 +13,15 @@ Then(/^I should not see the "(.*?)" link$/) do |link|
   expect(page).to_not have_link(link)
 end
 
-Then(/^there should be (\d+) activities pending approval$/) do |num|
+Then(/^there should be (\d+) (?:|activity|activities|day|days|) pending approval$/) do |num|
   expect(page).to have_content("Reason", :count => num.to_i + 1) # +1 for header
 end
+
+When(/^I check an activity|day$/) do
+  find(:css, "#selected_[value='2']").set(true)
+end
+
+When(/^I hit "(.*?)"$/) do |button|
+  click_button(button)
+end
+
