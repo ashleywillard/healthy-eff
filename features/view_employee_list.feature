@@ -21,7 +21,7 @@ Scenario: Privileged access
   And I should see "You don't have permission to access this."
 
 Scenario: Admin list view
-  Given I have logged 3 activities
+  Given that I have logged 3 activities
   And I am logged in as an admin
   When I follow "Admin"
   Then I should see a table of employee names
