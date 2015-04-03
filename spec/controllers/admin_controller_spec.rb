@@ -57,7 +57,7 @@ RSpec.describe AdminController do
   describe "admin#pending" do
     context "when there are activities pending approval" do
       before :each do
-        @day = Day.create :id => 1, :total_time => 60, :date => Date.today,
+        @day = Day.create :id => 1, :total_time => 60, :date => Date.today.prev_day,
                           :approved => false, :denied => false
         allow(Day).to receive(:where).and_return([@day])
       end
@@ -80,9 +80,9 @@ RSpec.describe AdminController do
 
   describe "admin#update_pending" do
     before :each do
-      @day1 = Day.create! :total_time => 60, :date => Date.today, :reason => "x",
+      @day1 = Day.create! :total_time => 60, :date => Date.today.prev_day, :reason => "x",
                           :approved => false, :denied => false
-      @day2 = Day.create! :total_time => 60, :date => Date.today, :reason => "x",
+      @day2 = Day.create! :total_time => 60, :date => Date.today.prev_day, :reason => "x",
                           :approved => false, :denied => false
     end
     context "when no pending activities are checked" do

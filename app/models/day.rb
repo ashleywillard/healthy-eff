@@ -25,8 +25,8 @@ class Day < ActiveRecord::Base
       start_date = today.beginning_of_month
       start_date =  today.ago(1.month).beginning_of_month if today.strftime("%d").to_i < 6 
       end_date = today.prev_day
-      unless start_date..end_date === date.to_date #check to see if date is in range
-        errors.add(:date, "#{date.to_date.strftime("%m/%d/%Y")} is not within allowed range")
+      unless ((start_date.to_date)..(end_date.to_date)) === (date.to_date) #check to see if date is in range
+        errors.add(:date, "#{date.strftime("%m/%d/%Y")} is not within allowed range")
       end
     end
   end

@@ -52,24 +52,27 @@ RSpec.describe DaysController do
 
   describe "adding today" do
     before :each do
-      user = double(User)
-      allow(request.env['warden']).to receive(:authenticate!).and_return(user)
-      allow(controller).to receive(:current_user).and_return(user)
+      user = User.create()
+      DaysController.any_instance.stub(:current_user).and_return(user)
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(true)
     end
     context 'All inputs are present and valid' do
       it 'should successfully add today to database and redirect to profile page' do
-        params = {:days => {:reason => "none"}, :day => {:date => "2015-04-02", :activities_attributes => {"1" =>{:name => "swimming", :duration => "90"}}}}
+        user = User.create()
+        DaysController.any_instance.stub(:current_user).and_return(user)
+        today = Date.today
+        params = {:days => {:reason => "none"}, :day => {:date => "#{today}", :activities_attributes => {"1" =>{:name => "swimming", :duration => "90"}}}}
         post :add_today, params
         #Check the database also
-        expect(flash[:notice]).to eq("swimming for 90 minutes has been recorded for 04/02/2015\n")
+        expect(flash[:notice]).to eq("swimming for 90 minutes has been recorded for #{today.strftime("%m/%d/%Y")}\n")
         response.should redirect_to(profile_path)
       end
     end
     context 'Duration field is empty for Activity' do
       it 'should redirect to multiple days path and display duration empty error' do
-        params = {:days => {:reason => "none"}, :day => {:date => "2015-04-02", :activities_attributes => {"1" =>{:name => "", :duration => ""}}}}
+        today = Date.today
+        params = {:days => {:reason => "none"}, :day => {:date => "#{today}", :activities_attributes => {"1" =>{:name => "", :duration => ""}}}}
         post :add_today, params
         expect(flash[:notice]).to eq("Duration can't be blank")
         response.should redirect_to(today_path)
@@ -77,7 +80,8 @@ RSpec.describe DaysController do
     end
     context 'Activity duration is invalid' do
       it 'should redirect to multiple days path and display duration invalid error' do
-        params = {:days => {:reason => "none"}, :day => {:date => "2015-04-02", :activities_attributes => {"1" =>{:name => "", :duration => "-1"}}}}
+        today = Date.today
+        params = {:days => {:reason => "none"}, :day => {:date => "#{today}", :activities_attributes => {"1" =>{:name => "", :duration => "-1"}}}}
         post :add_today, params
         expect(flash[:notice]).to eq("Duration can't be less than 0")
         response.should redirect_to(today_path)
@@ -87,16 +91,19 @@ RSpec.describe DaysController do
 
   describe "Adding multiple days" do
     before :each do
+      user = User.create()
+      DaysController.any_instance.stub(:current_user).and_return(user)
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(true)
     end
     context 'all inputs are present and valid' do
       it 'should successfully add days to database and redirect to profile page' do
+        date = Date.today.prev_day.strftime("%m/%d/%Y")
         params = {:days => {:reason => "Vacation"}, :user => {:days_attributes => 
-                              {"1" => {:date => "04/01/2015", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
+                              {"1" => {:date => "#{date}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         #Check the database also
         post :add_days, params
-        expect(flash[:notice]).to eq("running for 60 minutes has been recorded for 04/01/2015\n")
+        expect(flash[:notice]).to eq("running for 60 minutes has been recorded for #{date}\n")
         response.should redirect_to(profile_path)
       end
     end
@@ -111,8 +118,9 @@ RSpec.describe DaysController do
     end
     context 'Reason field is empty for Day' do
       it 'should redirect to multiple days path and flash reason is empty error' do
+        date = Date.today.prev_day.strftime("%m/%d/%Y")
         params = {:days => {:reason => ""}, :user => {:days_attributes => 
-                              {"1" => {:date => "04/01/2015", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
+                              {"1" => {:date => "#{date}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
         expect(flash[:notice]).to eq("Reason can't be blank")
         response.should redirect_to(multiple_days_path)
@@ -137,7 +145,8 @@ RSpec.describe DaysController do
     end
     context 'No activities are added to params for a single day' do
       it 'should flash Fields are empty and redirect to multiple days path' do
-        params = {:user => {:days_attributes => {"1" => {:date => "04/01/2015"}}}}
+        date = Date.today.prev_day.strftime("%m/%d/%Y")
+        params = {:user => {:days_attributes => {"1" => {:date => "#{date}"}}}}
         post :add_days
         expect(flash[:notice]).to eq("Fields are empty")
         response.should redirect_to(multiple_days_path)
@@ -145,11 +154,11 @@ RSpec.describe DaysController do
     end
     context 'Date field contains todays date' do
       it 'should redirect to multiple days path and flash invalid date error' do
-        Date.stub!(:today).and_return(Date.new(2015, 04, 04))
+        date = Date.today.strftime("%m/%d/%Y")
         params = {:days => {:reason => "Vacation"}, :user => {:days_attributes => 
-                              {"1" => {:date => "04/04/2015", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
+                              {"1" => {:date => "#{date}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
-        expect(flash[:notice]).to eq("04/04/2015 is not within allowed range")
+        expect(flash[:notice]).to eq("Date #{date} is not within allowed range")
         response.should redirect_to(multiple_days_path)
       end
     end
