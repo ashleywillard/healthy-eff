@@ -1,11 +1,13 @@
 require "rails_helper"
 
 RSpec.describe UsersController do
+
   describe "Profile method" do
     before :each do
       user = double('user')
       user.stub(:first_name).and_return('first')
       user.stub(:last_name).and_return('last')
+      allow_message_expectations_on_nil
       allow(request.env['warden']).to receive(:authenticate!).and_return(user)
       allow(controller).to receive(:current_user).and_return(user)
     end
@@ -24,12 +26,14 @@ RSpec.describe UsersController do
       response.should be_success
     end
   end
+
   describe "Retrieve Workouts" do
     before :each do
       user = double('user')
       user.stub(:first_name).and_return('first')
       user.stub(:last_name).and_return('last')
       user.stub(:id).and_return(1)
+      allow_message_expectations_on_nil
       allow(request.env['warden']).to receive(:authenticate!).and_return(user)
       allow(controller).to receive(:current_user).and_return(user)
     end
@@ -52,14 +56,11 @@ RSpec.describe UsersController do
       controller.retrieveWorkouts(4, 2015).should eql [['running', 60, '04-01-2015', 'green'],
                                                         ['jogging', 60, '04-01-2015', 'green'],
                                                         ['hiking', 80, '04-02-2015', 'green']]
-
     end
-    
     it "returns empty list if month is non-existent" do
       Month.stub_chain(:where, :first).and_return(nil)
       controller.retrieveWorkouts(4, 2015).should eql []
     end
-
     it "marks denied workouts as red" do
       denied_activity = double('Activity', :name => 'hiking', :duration => 80)
       month = double('Month', :month => 4, :year => 2015, :num_of_days => 1)
@@ -93,6 +94,20 @@ RSpec.describe UsersController do
       days[0].should_receive(:activities).and_return(activities)
       controller.retrieveWorkouts(4, 2015).should eql [['running', 60, '04-01-2015', 'green']]
     end
+  end
 
+  describe 'non-admin' do
+    before :each do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      @user = User.new(:email=>'meow@meow.com', :password=>'meowmeowbeans', :password_confirmation=>'meowmeowbeans')
+      sign_in @user
+      UsersController.any_instance.should_receive(:current_user).at_least(1).and_return @user
+      allow(request.env['warden']).to receive(:authenticate!).and_return(@user)
+    end
+    it "should not be able to delete a user" do
+      post :destroy, {:id => 1}
+      expect(response).to redirect_to(root_path)
+      flash[:notice].should eql('Unauthorized access')
+    end
   end
 end
