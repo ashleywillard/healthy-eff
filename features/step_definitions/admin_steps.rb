@@ -25,3 +25,6 @@ When(/^I hit "(.*?)"$/) do |button|
   click_button(button)
 end
 
+Then(/^"(.*?)" should appear in the table$/) do |arg|
+  pending # express the regexp above with the code you wish you had
+end
