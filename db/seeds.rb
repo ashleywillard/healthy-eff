@@ -31,44 +31,44 @@ Activity.create! :duration => 35,
                  :name => 'swimming',
                  :day_id => 1
 Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),
-                :approved => true,
-                :denied => false,
-                :total_time => 60,
-                :reason => 'A legit reason',
-                :month_id => 1
+            :approved => true,
+            :denied => false,
+            :total_time => 60,
+            :reason => 'A legit reason',
+            :month_id => 1
 
 # ===== Pending day, non-admin, #1 ===== #
 Activity.create! :duration => 60, 
                  :name => 'running',
                  :day_id => 2
 Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
-                :approved => false,
-                :denied => false,
-                :total_time => 60,
-                :reason => 'A legit reason',
-                :month_id => 1
+            :approved => false,
+            :denied => false,
+            :total_time => 60,
+            :reason => 'A legit reason',
+            :month_id => 1
 
 # ===== Pending day, non-admin, #2 ===== #
 Activity.create! :duration => 60, 
                  :name => 'swimming',
                  :day_id => 2
 Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
-                :approved => false,
-                :denied => false,
-                :total_time => 60,
-                :reason => 'Another legit reason',
-                :month_id => 1
+            :approved => false,
+            :denied => false,
+            :total_time => 60,
+            :reason => 'Another legit reason',
+            :month_id => 1
 
 # ===== Denied day, non-admin ===== #
 Activity.create! :duration => 60, 
                  :name => 'hiking',
                  :day_id => 3
 Day.create! :date => Time.strptime("04/03/2015", "%m/%d/%Y"),
-                :approved => false,
-                :denied => true,
-                :total_time => 60,
-                :reason => 'Because I just forgot -badpotato',
-                :month_id => 1
+            :approved => false,
+            :denied => true,
+            :total_time => 60,
+            :reason => 'Because I just forgot -badpotato',
+            :month_id => 1
 
 #Month to hold all the days
 Month.create! :user_id => 2,
