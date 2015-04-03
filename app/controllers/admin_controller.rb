@@ -18,28 +18,20 @@ class AdminController < ApplicationController
 
   def update_pending
     if not params[:selected].nil?
-      self.approve if params[:commit] == "Approve"
-      self.deny if params[:commit] == "Deny"
+      self.approve_or_deny(:approved) if params[:commit] == "Approve"
+      self.approve_or_deny(:denied) if params[:commit] == "Deny"
     end
     redirect_to admin_pending_path
   end
 
-  def approve
+  def approve_or_deny(action)
     params[:selected].each do |id|
       d = Day.find_by_id(id)
-      d.approved = true
+      d.approved = true if action == :approved
+      d.denied = true if action == :denied
       d.save
     end
-    flash[:notice] = "Success! Activities approved."
-  end
-
-  def deny
-    params[:selected].each do |id|
-      d = Day.find_by_id(id)
-      d.denied = true
-      d.save
-    end
-    flash[:notice] = "Success! Activities denied."
+    flash[:notice] = "Success! Activities #{action}."
   end
 
   # function to generate PDF printout for a single employee (accounting sheet)

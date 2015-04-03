@@ -102,7 +102,7 @@ RSpec.describe AdminController do
           allow(Day).to receive(:find).and_return(@day1)
         end
         it "approves the selected days" do
-          expect(controller).to receive(:approve)
+          expect(controller).to receive(:approve_or_deny).with(:approved)
           put :update_pending, :commit => "Approve", :selected => [@day1.id.to_s]
         end
         it "displays a success message" do
@@ -115,7 +115,7 @@ RSpec.describe AdminController do
           allow(Day).to receive(:find).and_return(@day2)
         end
         it "denies the selected activities" do
-          expect(controller).to receive(:deny)
+          expect(controller).to receive(:approve_or_deny).with(:denied)
           put :update_pending, :commit => "Deny", :selected => [@day2.id.to_s]
         end
         it "displays a success message" do
