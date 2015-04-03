@@ -1,7 +1,6 @@
-require 'rails_helper'
 require 'spec_helper'
 
-RSpec.describe InvitationsController, :type => :controller do
+RSpec.describe UsersController do
 
   describe 'non-admin' do
   	before :each do
@@ -11,10 +10,10 @@ RSpec.describe InvitationsController, :type => :controller do
       InvitationsController.any_instance.should_receive(:current_user).at_least(1).and_return @user
       allow(request.env['warden']).to receive(:authenticate!).and_return(@user)
   	end
-    it 'should not be able to send invitations' do
-      post :new
+  	it "should not be able to delete a user" do
+	  post :destroy, {:id => 1}
       expect(response).to redirect_to(root_path)
-      flash[:notice].should eql('You are not authorized to send invites!')
-    end
+      flash[:notice].should eql('Unauthorized access')
+	end
   end
 end
