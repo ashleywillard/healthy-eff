@@ -5,7 +5,7 @@ Then(/^I should see a table of employee names$/) do
   expect(page).to have_content("Last Name")
 end
 
-Then(/^I should see the number of days each employee worked out$/) do
+Then(/^there should be a column with the number of days each employee has worked out$/) do
   expect(page).to have_content("Days")
 end
 
@@ -23,8 +23,4 @@ end
 
 When(/^I hit "(.*?)"$/) do |button|
   click_button(button)
-end
-
-Then(/^"(.*?)" should appear in the table$/) do |arg|
-  pending # express the regexp above with the code you wish you had
 end
