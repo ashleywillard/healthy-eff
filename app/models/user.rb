@@ -10,7 +10,6 @@ class User < ActiveRecord::Base
 
   has_many :months, :dependent => :destroy
   has_many :days, through: :months
-  #has_many :activities, through: :days
   accepts_nested_attributes_for :days, :allow_destroy => true
 
   attr_protected :admin
