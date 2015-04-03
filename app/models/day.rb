@@ -5,7 +5,12 @@ class Day < ActiveRecord::Base
   belongs_to :month
   has_many :activities, :dependent => :destroy
   accepts_nested_attributes_for :activities, :allow_destroy => true
-  
+
+  # Returns the total number of activity-days pending approval
+  def self.num_pending
+    Day.count(:conditions => {:approved => false, :denied => false})
+  end
+
   def valid_total
     if total_time < 60
       errors.add(:total, "can't be less than 60 mins")
