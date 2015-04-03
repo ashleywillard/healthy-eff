@@ -77,6 +77,7 @@ Month.create! :user_id => 2,
               :num_of_days => 3,
               :printed_form => false,
               :received_form => false
+              
 
 # ===== Approved day, non-admin ===== #
 Activity.create! :duration => 60, 

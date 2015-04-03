@@ -6,7 +6,7 @@
       var workouts = #{raw @workouts.to_json}
       for(i=0;i<workouts.length;i++){
         workout = workouts[i]
-        random[i]={title: workout[0]+': '+workout[1], start: workout[2]}
+        random[i]={title: workout[0]+': '+workout[1], start: workout[2], backgroundColor: workout[3], textColor: 'black'}
       }
       $('#calendar').fullCalendar({
         header: {
@@ -14,16 +14,27 @@
           center: 'title',
           right: ''
         },
-        events: random
-      })
-  });
+        viewDisplay: function(view){
+          var end = '#{@date.month}' +' '+ '#{@date.year}'
+          var begin = '#{@earliestDate.month}' +' '+ '#{@earliestDate.year}'
+          var cal_date_string = view.start.getMonth() +' '+ view.start.getYear()
+          
+          if(begin == cal_date_string){ jQuery('.fc-button-prev').addClass("fc-state-disabled"); }
+          else{ jQuery('.fc-button-prev').removeClass("fc-state-disabled"); }
+          
+          if(end == cal_date_string){ jQuery('.fc-button-next').addClass("fc-state-disabled"); }
+          else { jQuery('.fc-button-next').removeClass("fc-state-disabled"); }
 
-%p=@currentMonth
-%p=@currentYear
-%p=@previousMonth
-%p=@previousYear
-%p=@curr_user_month
-%p=@prev_user_month
-%p=@workouts
+        },
+        events: random,
+        eventBorderColor: 'black'
+      })
+
+  });
+%head
+  =@name
+  =@date
+  =@earliestDate
+  
 
 #calendar
