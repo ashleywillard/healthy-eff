@@ -12,7 +12,7 @@ Given (/^I (?:am on|visit|go to) (?:|the) (.*) (?:|page|view)/) do |view|
   elsif view == "my profile"
     visit_path = profile_path
   elsif view == "multiple day input"
-    visit_path = multiples_days_path
+    visit_path = multiple_days_path
   elsif view == "manage employee"
     visit_path =  manage_path
   elsif view == "add employee"
@@ -84,7 +84,7 @@ end
 # end
 
 # ======================= PATH ASSERTIONS ====================== #
-Then (/^I should be on the (.*) (?:|page|view)/) do |view|
+Then (/^I should be on the (.*) (?:page|view)/) do |view|
   if view == "home" or view == "today"
     expected_path = today_path
   elsif view == "sign in" or view == "log in"
@@ -94,13 +94,13 @@ Then (/^I should be on the (.*) (?:|page|view)/) do |view|
   elsif view == "profile"
     expected_path = profile_path
   elsif view == "multiple day input"
-    expected_path = multiples_days_path
+    expected_path = multiple_days_path
   elsif view == "forgot password"
-    expected_path = new_user_password_path
+    expected_path = user_password_path
   elsif view == "add employee"
     expected_path = new_user_invitation_path
   elsif view == "manage employee"
-    expected_path == manage_path
+    expected_path = manage_path
   elsif view == "pending approval"
     expected_path = admin_pending_path
   elsif view == "admin list"
@@ -131,7 +131,7 @@ end
 # end
 # 
 # Then (/I should be on the forgot password page/) do
-#   assert page.current_path == new_user_password_path
+#   assert page.current_path == user_password_path
 # end
 # 
 # Then (/I should be on the add employee page/) do
