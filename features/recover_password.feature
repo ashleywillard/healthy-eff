@@ -3,18 +3,22 @@ Feature: Recover Password
   So that I can recover my forgotten password
   I want to be able to receive a reminder email
 
-Background
-  Given I am logged in as Joe Smith
+Background: users in database
+  Given the following users exist:
+  | email                       | password              | password_confirmation |    
+  | healthypotato@gmail.com     | hotpotato             | hotpotato             |
 
 Scenario: Get email
-  When I click “Forgot my password”
-  And I type in "joesmith@healthy.com" into the email field
-  And I click "Submit"
-  Then I should see “An email has been sent”
+  Given I am on the sign in page
+  When I follow "Forgot your password?"
+  And I fill in "healthypotato@gmail.com" into the email field
+  And I press “Send me reset password instructions”
+  Then I should see "You will receive an email with instructions on how to reset your password in a few minutes"
 
 Scenario: Invalid email
-  When I click “Forgot my password” 
-  And I type in "meow@meow.com" into the email field
-  And I click "Submit"
-  Then I should see “Invalid email”
+  Given I am on the sign in page
+  When I follow "Forgot your password?" 
+  And I fill in "meow@meow.com" into the email field
+  And I press “Send me reset password instructions”
+  And I should see "Email not found"
   And I should be on the forgot password page

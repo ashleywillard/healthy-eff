@@ -12,13 +12,13 @@ Given the following users exist:
   | user_id  | month  | year | num_of_days | printed_form  | received_form |
   | 2        | 4      | 2015 | 3           | false         | false         |
   | 2        | 3      | 2015 | 1           | false         | false         |
-  Given the following days exist: 
-  | date        | approved | denied | total_time | user_id | reason            | month_id |   
-  | 01/04/2015  | true     | false  | 60         | 2       | 'a legit reason1' | 1        |
-  | 01/04/2015  | false    | false  | 60         | 2       | 'a legit reason2' | 1        |
-  | 03/04/2015  | false    | true   | 60         | 2       | 'im a bad potato' | 1        |
-  | 01/03/2015  | true     | false  | 60         | 2       | 'doesnt matter'   | 2        |
-  Given the following activities exist:
+  Given the following dayys exist: 
+  | date        | approved | denied | total_time | reason            | month_id |   
+  | 01/04/2015  | true     | false  | 60         | 'a legit reason1' | 1        |
+  | 01/04/2015  | false    | false  | 60         | 'a legit reason2' | 1        |
+  | 02/04/2015  | false    | true   | 60         | 'im a bad potato' | 1        |
+  | 01/03/2015  | true     | false  | 60         | 'doesnt matter'   | 2        |
+  Given the following activvities exist:
   | duration | name     | day_id |    
   | 35       | running  | 1      |
   | 25       | swimming | 1      |

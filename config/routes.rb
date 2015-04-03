@@ -14,22 +14,23 @@ Healthyeff::Application.routes.draw do
 
   #required for devise to work, redirects to path below after user logs in
   #change home#index to whatever need be -allan
-  root to: 'activities#today'
+  root to: 'days#today'
 
   #Managing employees
   match 'admin/manage' => 'users#manage', :as => :manage
   delete 'manage/:id', to: 'users#destroy', :as => :delete
 
   #route for single activity -ashley
-  match 'today' => 'activities#today', :as => :today
-  match 'multiple_days' => 'activities#multiple_days', :as => :multiple_days
-  match 'add_activity' => 'activities#add_activity', :as => :add_activity
-  match 'add_days' => 'activities#add_days', :as => :add_days
+  match 'today' => 'days#today', :as => :today
+  match 'multiple_days' => 'days#multiple_days', :as => :multiple_days
+  match 'add_today' => 'days#add_today', :as => :add_today
+  match 'add_days' => 'days#add_days', :as => :add_days
   match 'profile' => 'users#profile', :as => :profile
 
   # routing for admin views
   get 'admin' => 'admin#index', :as => :admin_list
   get 'admin/pending' => 'admin#pending', :as => :admin_pending
+  put 'admin/update_pending' => 'admin#update_pending', :as => :admin_update_pending
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

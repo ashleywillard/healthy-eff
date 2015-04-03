@@ -2,12 +2,36 @@ class AdminController < ApplicationController
 
   before_filter :check_logged_in, :check_admin
 
-  # function to generate list of employees for the list view
-    # RESTful: app.heroku.com/admin <-> admin_list_path
   def index
     @month = Date.today.strftime("%B")
     @year = Date.today.strftime("%Y")
     @user_months = Month.where(:month => Date.today.strftime("%m"), :year => @year)
+  end
+
+  def pending
+    @days = Day.where(:approved => false, :denied => false)
+    if @days.nil? or @days.empty?
+      flash[:notice] = "No activities pending approval."
+      redirect_to admin_list_path
+    end
+  end
+
+  def update_pending
+    if not params[:selected].nil?
+      self.approve_or_deny(:approved) if params[:commit] == "Approve"
+      self.approve_or_deny(:denied) if params[:commit] == "Deny"
+    end
+    redirect_to admin_pending_path
+  end
+
+  def approve_or_deny(action)
+    params[:selected].each do |id|
+      d = Day.find_by_id(id)
+      d.approved = true if action == :approved
+      d.denied = true if action == :denied
+      d.save
+    end
+    flash[:notice] = "Success! Activities #{action}."
   end
 
   # function to generate PDF printout for a single employee (accounting sheet)
@@ -18,25 +42,10 @@ class AdminController < ApplicationController
     # (?) RESTful: app.heroku.com/admin/audit/:month (?)
   # NOT YET IMPLEMENTED
 
-  # function to generate list of multiple-day activities for pending view
-    # RESTful: app.heroku.com/admin/pending <-> admin_pending_path
-  def pending
-    # TO DO
-  end
-
-  # function to approve a single pending activity
-  def approve
-    # TO DO
-    # display a flash message and redirect back to pending page?
-  end
-
   private
   def check_admin
-    if current_user.nil?
-      redirect_to new_user_session_path
-    elsif not current_user.admin
+    if not current_user.admin
       flash[:notice] = "You don't have permission to access this."
-      flash.keep
       redirect_to today_path
     end
   end

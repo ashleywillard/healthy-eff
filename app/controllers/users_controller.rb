@@ -37,7 +37,7 @@ class UsersController < ApplicationController
   def manage
     if !current_user.admin?
       flash[:notice] = "Unauthorized access"
-      redirect_to root_path
+      redirect_to today_path
     end
     @users = User.find(:all, :conditions => ["id != ?", current_user.id])
   end

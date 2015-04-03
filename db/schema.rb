@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150401032207) do
+ActiveRecord::Schema.define(:version => 20150402221350) do
 
   create_table "activities", :force => true do |t|
     t.integer  "duration"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(:version => 20150401032207) do
     t.integer  "total_time"
     t.boolean  "approved"
     t.text     "reason"
-    t.integer  "user_id"
     t.integer  "month_id"
     t.boolean  "denied"
   end

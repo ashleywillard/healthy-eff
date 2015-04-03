@@ -6,24 +6,24 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# ===== Admin account ===== #
 user = User.create! :first_name => 'Will',
                     :last_name => 'Guo',
                     :email => '169.healthyeff@gmail.com',
                     :password => 'northsidepotato',
                     :password_confirmation => 'northsidepotato'
-
 # Manually give admin privileges, since attr_protected
 user.admin = true
 user.save
 
-#non-admin account
+# ===== Non-admin account ===== #
 User.create! :first_name => 'Armando',
-	         :last_name => 'Fox',
-	         :email => 'healthypotato@gmail.com', 
+             :last_name => 'Fox',
+             :email => 'healthypotato@gmail.com', 
              :password => 'hotpotato', 
              :password_confirmation => 'hotpotato'
 
-#This creates an approved day for the non-admin account
+# ===== Approved day, non-admin ===== #
 Activity.create! :duration => 25, 
                  :name => 'running',
                  :day_id => 1
@@ -34,11 +34,10 @@ Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),
             :approved => true,
             :denied => false,
             :total_time => 60,
-            :user_id => 2,
             :reason => 'A legit reason',
             :month_id => 1
 
-#This creates a non-approved day for the non-admin account
+# ===== Pending day, non-admin, #1 ===== #
 Activity.create! :duration => 60, 
                  :name => 'running',
                  :day_id => 2
@@ -46,11 +45,21 @@ Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
             :approved => false,
             :denied => false,
             :total_time => 60,
-            :user_id => 2,
             :reason => 'A legit reason',
             :month_id => 1
 
-#This create a denied day for the non-admin account
+# ===== Pending day, non-admin, #2 ===== #
+Activity.create! :duration => 60, 
+                 :name => 'swimming',
+                 :day_id => 2
+Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
+            :approved => false,
+            :denied => false,
+            :total_time => 60,
+            :reason => 'Another legit reason',
+            :month_id => 1
+
+# ===== Denied day, non-admin ===== #
 Activity.create! :duration => 60, 
                  :name => 'hiking',
                  :day_id => 3
@@ -58,7 +67,6 @@ Day.create! :date => Time.strptime("04/03/2015", "%m/%d/%Y"),
             :approved => false,
             :denied => true,
             :total_time => 60,
-            :user_id => 2,
             :reason => 'Because I just forgot -badpotato',
             :month_id => 1
 
@@ -71,5 +79,22 @@ Month.create! :user_id => 2,
               :received_form => false
               
 
+# ===== Approved day, non-admin ===== #
+Activity.create! :duration => 60, 
+                 :name => 'swimming',
+                 :day_id => 4
 
+Day.create! :date => Time.strptime("03/31/2015", "%m/%d/%Y"),
+                :approved => true,
+                :denied => false,
+                :total_time => 60,
+                :reason => 'A legit reason',
+                :month_id => 2
 
+#Month to hold above day
+Month.create! :user_id => 2,
+              :month => 3,
+              :year => 2015,
+              :num_of_days => 1,
+              :printed_form => true,
+              :received_form => false
