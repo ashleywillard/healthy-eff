@@ -13,15 +13,9 @@ class UsersController < ApplicationController
       @workouts += retrieveWorkouts(@earliestDate.month, @earliestDate.year)
     end
   end
-  
-  private 
-  def retrieveWorkouts(month, year)
-    m = Month.where(:month => month, :year => year, :user_id => current_user.id).first
-    return populate_workouts(m)
-  end
 
-  private
-  def populate_workouts(curr_month)
+  def retrieveWorkouts(month, year)
+    curr_month = Month.where(:month => month, :year => year, :user_id => current_user.id).first
     workouts = []
     return [] if(curr_month == nil)  
     
