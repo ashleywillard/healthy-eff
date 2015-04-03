@@ -59,7 +59,6 @@ Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
                 :reason => 'Another legit reason',
                 :month_id => 1
 
-
 # ===== Denied day, non-admin ===== #
 Activity.create! :duration => 60, 
                  :name => 'hiking',
