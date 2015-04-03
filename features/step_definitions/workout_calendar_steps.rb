@@ -1,22 +1,65 @@
 # encoding: UTF-8
 
+And /I set up the database with a few days/ do
+  today = Date.today
+  date_last_month = today.ago(1.month).beginning_of_month
+  Activity.create!({:duration => 25, 
+                 :name => 'running',
+                 :day_id => 1})
+  Activity.create!({:duration => 35, 
+                   :name => 'swimming',
+                   :day_id => 1})
+  Day.create!({:date => today,
+              :approved => true,
+              :denied => false,
+              :total_time => 60,
+              :reason => 'A legit reason',
+              :month_id => 1})
+  Month.create!({:user_id => 2,
+              :month => today.month,
+              :year => today.year,
+              :num_of_days => 1,
+              :printed_form => true,
+              :received_form => false})
+
+  Activity.create!({:duration => 25, 
+                 :name => 'hiking',
+                 :day_id => 2})
+  Activity.create!({:duration => 35, 
+                   :name => 'biking',
+                   :day_id => 2})
+  Day.create!({:date => Time.strptime(date_last_month.strftime("%m/%d/%Y"), "%m/%d/%Y"),
+              :approved => true,
+              :denied => false,
+              :total_time => 60,
+              :reason => 'A legit reason',
+              :month_id => 1})
+  Month.create!({:user_id => 2,
+              :month => date_last_month.month,
+              :year => date_last_month.year,
+              :num_of_days => 1,
+              :printed_form => true,
+              :received_form => false})
+end
+
 And /I should see a calendar with my logged activities/ do
-  while (!page.has_content?("April 2015"))
+  today = Date.today
+  while (!page.has_content?("#{today.strftime("%B")} #{today.year}"))
     page.execute_script("$('#calendar').fullCalendar('prev')")
   end
-  page.should have_content("running: 35")
-  page.should have_content("swimming: 25")
-  page.should have_content("jogging: 60")
-  page.should have_content("hiking: 60")
+  page.should have_content("running: 25")
+  page.should have_content("swimming: 35")
 end
 
 And /I should not see the previous months logged activities/ do
-  page.should_not have_content("lifting: 60")
+  page.should_not have_content("hiking: 25")
+  page.should_not have_content("biking: 35")
 end
 
 
 And /I should see a calendar with my last months logged activities/ do 
-  page.should have_content("lifting: 60")
+  page.should have_content("hiking: 25")
+  page.should have_content("biking: 35")
  end
 
 When /^(?:|I )click on the calendar's (.*) arrow$/ do |link|
