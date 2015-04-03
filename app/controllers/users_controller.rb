@@ -2,7 +2,10 @@ class UsersController < ApplicationController
   before_filter :check_logged_in
 
   def profile
-    @name = current_user.first_name + ' ' + current_user.last_name
+    @name = 'No name'
+    if current_user.first_name != nil && current_user.last_name != nil
+      @name = current_user.first_name + ' ' + current_user.last_name
+    end
     @date = Date.today 
     @earliestDate = @date.at_beginning_of_month.next_month
 
