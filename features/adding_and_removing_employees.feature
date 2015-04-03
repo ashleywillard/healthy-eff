@@ -6,11 +6,11 @@ Feature: Adding and removing employees
 
 Background: users in database
   Given the following admins exist:
-  | email                       | password              | password_confirmation |    
-  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
+  | email                       | password              | password_confirmation | last_name |  
+  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       | Guo       |
   Given the following users exist:
-  | email                       | password              | password_confirmation |    
-  | healthypotato@gmail.com     | hotpotato             | hotpotato             |
+  | email                       | password              | password_confirmation | last_name |  
+  | healthypotato@gmail.com     | hotpotato             | hotpotato             | Fox       |
 
 Scenario: Going to add employee page
   Given I am logged in as an admin
@@ -22,25 +22,24 @@ Scenario: Adding an employee
   Given I am logged in as an admin
   And I visit the manage employee page
   And I visit the add employee page
-  And I fill in email with "healthypotato@gmail.com"
+  And I fill in email with "newpotato@gmail.com"
   And I press “Send an invitation”
-  Then I should be on the manage employee page
+  Then I should see "An invitation email has been sent"
 
 Scenario: Removing an employee
   Given I am logged in as an admin
   And I visit the manage employee page
-  When I follow the "Remove" link for John Doe
-  And I press OK
+  And I press “Delete”
   Then I should be on the manage employee page
-  And I should not see "John Doe"
+  And I should see "User '' 'Fox' deleted."
 
 Scenario: Not an admin
   Given I am logged in as a non-admin
   And I visit the manage employee page
   Then I should be on the home page
-  And I should see "You are not authorized to send invites"
+  And I should see "Unauthorized access"
 
 Scenario: Can't delete myself
   Given I am logged in as an admin
-  And I am on the manage employee page
-  Then I should not see my name
+  And I visit the manage employee page
+  Then I should not see "Guo"

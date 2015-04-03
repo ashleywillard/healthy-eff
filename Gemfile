@@ -35,6 +35,7 @@ group :development, :test do
   gem 'bootstrap-datepicker-rails', '~> 1.4.0'
   gem 'poltergeist'
   gem 'launchy'
+  gem 'factory_girl'
 end
 
 gem 'jquery-rails'
