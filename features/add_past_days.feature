@@ -1,4 +1,4 @@
-Feature: Enter workouts for multiple days
+Feature: Enter workouts for past days
 
   As an employee
   So that I can get credit for days I was away
@@ -10,10 +10,10 @@ Background:
   | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
   | healthypotato@gmail.com     | hotpotato             | hotpotato             |
   Given I am logged in as a non-admin
-  And I am on the multiple day input page
+  And I am on the past day input page
 
 @javascript
-Scenario: Adding multiple exercises for multiple days
+Scenario: Adding multiple exercises for past days
   And I fill in day and activity with:Yesterday,Swimming 100,Running 30|2 Days Ago,Rawring 30,Laughing 50
   And I fill in reason with: "On Vacation"
   And I write the captcha text in the textbox
@@ -25,11 +25,11 @@ Scenario: Adding multiple exercises for multiple days
   And I should see "Laughing for 50 minutes has been recorded"
 
 @javascript
-Scenario: Adding multiple exercises for multiple days with blank fields
+Scenario: Adding multiple exercises for past days with blank fields
   And I fill in day and activity with:Yesterday,Swimming 100,Running 30|2 Days Ago,Rawring 30,Laughing 50
   And I write the captcha text in the textbox
   And I press “Submit”
-  Then I should be on the multiple day input page
+  Then I should be on the past day input page
   And I should see "Reason can't be blank"
 
 
@@ -37,7 +37,7 @@ Scenario: Adding multiple exercises for multiple days with blank fields
 Scenario: Submit blank form
   And I write the captcha text in the textbox
   And I press “Submit”
-  Then I should be on the multiple day input page
+  Then I should be on the past day input page
   And I should see "Fields are empty"
 
 
@@ -47,7 +47,7 @@ Scenario: Submit blank form with only date filled in
   And I fill out date
   And I write the captcha text in the textbox
   And I press “Submit”
-  Then I should be on the multiple day input page
+  Then I should be on the past day input page
   And I should see "Fields are empty"
 
 @javascript
@@ -56,6 +56,6 @@ Scenario: Submit valid form with bad date
   And I fill in reason with: "On Vacation"
   And I write the captcha text in the textbox
   And I press “Submit”
-  Then I should be on the multiple day input page
+  Then I should be on the past day input page
   And I should see "Date is invalid"
 

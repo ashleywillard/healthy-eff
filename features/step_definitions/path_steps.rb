@@ -11,8 +11,8 @@ Given (/^I (?:am on|visit|go to) (?:|the) (.*) (?:|page|view)/) do |view|
     visit_path = edit_user_registration_path
   elsif view == "my profile"
     visit_path = profile_path
-  elsif view == "multiple day input"
-    visit_path = multiple_days_path
+  elsif view == "past day input"
+    visit_path = past_days_path
   elsif view == "manage employee"
     visit_path =  manage_path
   elsif view == "add employee"
@@ -49,9 +49,9 @@ end
 #   visit profile_path
 # end
 # 
-# And (/I am on the multiple day input page/) do
-# #   visit '/multiple_days'
-#   visit multiple_days_path
+# And (/I am on the past day input page/) do
+# #   visit '/past_days'
+#   visit past_days_path
 # end
 # 
 # # Manage employee page
@@ -93,8 +93,8 @@ Then (/^I should be on the (.*) (?:page|view)/) do |view|
     expected_path = edit_user_registration_path
   elsif view == "profile"
     expected_path = profile_path
-  elsif view == "multiple day input"
-    expected_path = multiple_days_path
+  elsif view == "past day input"
+    expected_path = past_days_path
   elsif view == "forgot password"
     expected_path = user_password_path
   elsif view == "add employee"
@@ -126,8 +126,8 @@ end
 #   assert page.current_path == profile_path
 # end
 # 
-# Then (/I should be on the multiple day input page/) do
-#   assert page.current_path == multiple_days_path
+# Then (/I should be on the past day input page/) do
+#   assert page.current_path == past_days_path
 # end
 # 
 # Then (/I should be on the forgot password page/) do

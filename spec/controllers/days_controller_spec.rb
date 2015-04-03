@@ -41,11 +41,11 @@ RSpec.describe DaysController do
 
   describe "#add_days" do
     context "errors are present" do
-      it 'should redirect to multiple_days_path' do
+      it 'should redirect to past_days_path' do
         DaysController.any_instance.stub(:check_logged_in)
         DaysController.any_instance.stub(:add).and_raise(Exception)
         post :add_days
-        response.should redirect_to(multiple_days_path)
+        response.should redirect_to(past_days_path)
       end
     end
   end
@@ -70,7 +70,7 @@ RSpec.describe DaysController do
       end
     end
     context 'Duration field is empty for Activity' do
-      it 'should redirect to multiple days path and display duration empty error' do
+      it 'should redirect to today path and display duration empty error' do
         today = Date.today
         params = {:days => {:reason => "none"}, :day => {:date => "#{today}", :activities_attributes => {"1" =>{:name => "", :duration => ""}}}}
         post :add_today, params
@@ -79,7 +79,7 @@ RSpec.describe DaysController do
       end
     end
     context 'Activity duration is invalid' do
-      it 'should redirect to multiple days path and display duration invalid error' do
+      it 'should redirect to today path and display duration invalid error' do
         today = Date.today
         params = {:days => {:reason => "none"}, :day => {:date => "#{today}", :activities_attributes => {"1" =>{:name => "", :duration => "-1"}}}}
         post :add_today, params
@@ -89,7 +89,7 @@ RSpec.describe DaysController do
     end
   end
 
-  describe "Adding multiple days" do
+  describe "Adding past days" do
     before :each do
       user = User.create()
       DaysController.any_instance.stub(:current_user).and_return(user)
@@ -108,58 +108,58 @@ RSpec.describe DaysController do
       end
     end
     context 'Date argument is invalid' do
-      it 'should redirect to multiple days path and flash invalid date error' do
+      it 'should redirect to past days path and flash invalid date error' do
         params = {:days => {:reason => "Vacation"}, :user => {:days_attributes => 
                               {"1" => {:date => "RAWR", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
         expect(flash[:notice]).to eq("Date is invalid")
-        response.should redirect_to(multiple_days_path)
+        response.should redirect_to(past_days_path)
       end
     end
     context 'Reason field is empty for Day' do
-      it 'should redirect to multiple days path and flash reason is empty error' do
+      it 'should redirect to past days path and flash reason is empty error' do
         date = Date.today.prev_day.strftime("%m/%d/%Y")
         params = {:days => {:reason => ""}, :user => {:days_attributes => 
                               {"1" => {:date => "#{date}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
         expect(flash[:notice]).to eq("Reason can't be blank")
-        response.should redirect_to(multiple_days_path)
+        response.should redirect_to(past_days_path)
       end
     end
     context 'Date field is empty for Day' do
-      it 'should redirect to multiple days path and flash date is empty error' do
+      it 'should redirect to past days path and flash date is empty error' do
         params = {:days => {:reason => "Vacation"}, :user => {:days_attributes => 
                               {"1" => {:date => "", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
         expect(flash[:notice]).to eq("Date is invalid")
-        response.should redirect_to(multiple_days_path)
+        response.should redirect_to(past_days_path)
       end
     end
     context 'No days are added to params' do
-      it 'should flash Fields are empty and redirect to multiple days path' do
+      it 'should flash Fields are empty and redirect to past days path' do
         params = {:user => {}}
         post :add_days
         expect(flash[:notice]).to eq("Fields are empty")
-        response.should redirect_to(multiple_days_path)
+        response.should redirect_to(past_days_path)
       end
     end
     context 'No activities are added to params for a single day' do
-      it 'should flash Fields are empty and redirect to multiple days path' do
+      it 'should flash Fields are empty and redirect to past days path' do
         date = Date.today.prev_day.strftime("%m/%d/%Y")
         params = {:user => {:days_attributes => {"1" => {:date => "#{date}"}}}}
         post :add_days
         expect(flash[:notice]).to eq("Fields are empty")
-        response.should redirect_to(multiple_days_path)
+        response.should redirect_to(past_days_path)
       end
     end
     context 'Date field contains todays date' do
-      it 'should redirect to multiple days path and flash invalid date error' do
+      it 'should redirect to past days path and flash invalid date error' do
         date = Date.today.strftime("%m/%d/%Y")
         params = {:days => {:reason => "Vacation"}, :user => {:days_attributes => 
                               {"1" => {:date => "#{date}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
         expect(flash[:notice]).to eq("Date #{date} is not within allowed range")
-        response.should redirect_to(multiple_days_path)
+        response.should redirect_to(past_days_path)
       end
     end
   end
@@ -178,7 +178,7 @@ RSpec.describe DaysController do
       DaysController.any_instance.stub(:check_simple_captcha).and_return(false)
       post :add_days
       flash[:notice].should eql("Bro, your captcha was so wrong dude.")
-      response.should redirect_to(multiple_days_path)
+      response.should redirect_to(past_days_path)
     end
   end
 

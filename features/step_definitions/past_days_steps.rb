@@ -48,7 +48,7 @@ end
 #   click_link "a.#{"Add Activity"}"
 #   fill_in("activity", :with => 'nothing')
 #   fill_in("duration", :with => '60')
-#   fill_in("Reason for inputting multiple days", :with => 'Im lazy, duh')
+#   fill_in("Reason for inputting past days", :with => 'Im lazy, duh')
 # end
 And /I click Add Day/ do
   click_link "Add Day"
@@ -59,6 +59,6 @@ And /I fill out date/ do
   fill_in date_ids[0][4..-1], :with => Date.today.prev_day.strftime("%m/%d/%Y")
 end
 
-# And /I should see a confirmation message for multiple days/ do
+# And /I should see a confirmation message for past days/ do
 #     assert page.has_content?("approve")
 # end

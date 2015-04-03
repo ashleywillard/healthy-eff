@@ -15,7 +15,7 @@ class DaysController < ApplicationController
                       :denied => false})
   end
 
-  def multiple_days
+  def past_days
     @user = User.new()
     today = Date.today
     @end_date = today.prev_day
@@ -52,14 +52,14 @@ class DaysController < ApplicationController
     begin
       add(true, :user, :days_attributes)
     rescue Exception
-      redirect_to multiple_days_path
+      redirect_to past_days_path
     end
   end
 
-  def add(has_multiple_days, outer_sym, inner_sym)
+  def add(has_past_days, outer_sym, inner_sym)
     bad_captcha unless check_simple_captcha
     empty_fields_notice() if params[outer_sym] == nil || params[outer_sym][inner_sym] == nil
-    if has_multiple_days then create_multiple_days() else create_single_day(params[outer_sym], true) end
+    if has_past_days then create_past_days() else create_single_day(params[outer_sym], true) end
     redirect_to profile_path #success
   end
 
@@ -77,12 +77,12 @@ class DaysController < ApplicationController
     update_month(@day)
   end
 
-  def create_multiple_days
+  def create_past_days
     params[:user][:days_attributes].each do |id, day|
       empty_fields_notice() if day[:activities_attributes] == nil
       check_day(day)
     end
-    save_multiple_days()
+    save_past_days()
   end
 
   def check_day(day)
@@ -126,7 +126,7 @@ class DaysController < ApplicationController
                               :duration => duration})
   end
 
-  def save_multiple_days
+  def save_past_days
     params[:user][:days_attributes].each do |id, day|
       create_single_day(day, false)
     end

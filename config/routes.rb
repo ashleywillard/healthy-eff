@@ -22,7 +22,7 @@ Healthyeff::Application.routes.draw do
 
   #route for single activity -ashley
   match 'today' => 'days#today', :as => :today
-  match 'multiple_days' => 'days#multiple_days', :as => :multiple_days
+  match 'past_days' => 'days#past_days', :as => :past_days
   match 'add_today' => 'days#add_today', :as => :add_today
   match 'add_days' => 'days#add_days', :as => :add_days
   match 'profile' => 'users#profile', :as => :profile
