@@ -84,7 +84,7 @@ end
 # end
 
 # ======================= PATH ASSERTIONS ====================== #
-Then (/^I should be on the (.*) (?:page|view)/) do |view|
+Then (/^I should be on (?:the|my) (.*) (?:page|view)/) do |view|
   if view == "home" or view == "today"
     expected_path = today_path
   elsif view == "sign in" or view == "log in"
