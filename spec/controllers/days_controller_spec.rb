@@ -18,6 +18,7 @@ RSpec.describe DaysController do
 
   describe "when not logged in" do
     before :each do
+      allow_message_expectations_on_nil
       request.env['warden'].stub(:authenticate!).and_throw(:warden, {:scope => :user})
       allow(controller).to receive(:current_user).and_return(nil)
     end
