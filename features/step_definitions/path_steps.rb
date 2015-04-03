@@ -2,7 +2,11 @@
 
 # ====================== PATH DEFINITIONS ====================== #
 
-Given (/^I (?:am on|visit|go to) (?:|the) (.*) (?:|page|view)/) do |view|
+Given (/^I am on any page/) do
+  pass
+end
+
+Given (/^I (?:am on|visit|go to) (?:|my|the) (.*) (?:|page|view)/) do |view|
   if view == "home" or view == "today"
     visit_path = today_path
   elsif view == "sign in" or view == "log in"
