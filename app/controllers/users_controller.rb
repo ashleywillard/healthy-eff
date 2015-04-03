@@ -46,11 +46,13 @@ class UsersController < ApplicationController
     if !current_user.admin?
       flash[:notice] = "Unauthorized access"
       redirect_to root_path
+    else 
+      @user = User.find(params[:id])
+      @user.destroy
+      flash[:notice] = "User '#{@user.first_name}' '#{@user.last_name}' deleted."
+      redirect_to manage_path
     end
-    @user = User.find(params[:id])
-    @user.destroy
-    flash[:notice] = "User '#{@user.first_name}' '#{@user.last_name}' deleted."
-    redirect_to manage_path
+    
   end
 
   private
