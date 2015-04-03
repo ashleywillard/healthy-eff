@@ -71,12 +71,3 @@ Scenario: Clicking "Approve"/"Deny" with no activities checked
   Then I should be on the pending approval page
   And there should be 2 activities pending approval
   And I should not see "Success!"
-
-Scenario: Viewing for a particular month
-  Given I am logged in as an admin
-  And I am on the admin list page
-  When I click on the month
-  Then I should see options for previous months
-  And when I click on a previous month
-  And I press “Refresh”
-  Then I should see a list of employee names etc. for that month
