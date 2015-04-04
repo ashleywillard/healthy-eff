@@ -24,16 +24,16 @@ class UsersController < ApplicationController
     
     curr_month.days.each do |day|
       day.activities.each do |activity|
-      	status = 'green'
-      	if !day.approved
-      		status = day.denied ? 'red' : 'yellow'
-      	end
-        workouts.push([activity.name, activity.duration, day.date, status])	
+        status = 'green'
+        if !day.approved
+          status = day.denied ? 'red' : 'yellow'
+        end
+        workouts.push([activity.name, activity.duration, day.date, status]) 
       end
     end
     return workouts
   end
-  
+
   def manage
     if !current_user.admin?
       flash[:notice] = "Unauthorized access"
@@ -52,7 +52,7 @@ class UsersController < ApplicationController
       flash[:notice] = "User '#{@user.first_name}' '#{@user.last_name}' deleted."
       redirect_to manage_path
     end
-    
+
   end
 
   private
