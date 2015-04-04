@@ -6,6 +6,7 @@ gem 'rails', '3.2.16'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
+gem 'rails_12factor'
 gem 'devise'
 gem 'devise_invitable', '~> 1.3.4'
 
