@@ -32,7 +32,6 @@ group :development, :test do
   gem 'simplecov', :require => false
   gem 'erb2haml'
   gem 'rake', '10.4.2'
-  gem 'bootstrap-datepicker-rails', '~> 1.4.0'
   gem 'poltergeist'
   gem 'launchy'
   gem 'factory_girl'
@@ -41,6 +40,7 @@ end
 gem 'jquery-rails'
 gem 'simple_captcha', :git => 'git://github.com/galetahub/simple-captcha.git'
 gem 'fullcalendar-rails'
+gem 'bootstrap-datepicker-rails', '~> 1.4.0'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
