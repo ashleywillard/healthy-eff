@@ -6,12 +6,15 @@ gem 'rails', '3.2.16'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
-gem 'rails_12factor'
 gem 'devise'
 gem 'devise_invitable', '~> 1.3.4'
 
 gem 'haml'
 # gem 'selenium-webdriver'
+
+group :production do
+  gem 'rails_12factor'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -57,4 +60,3 @@ gem 'bootstrap-datepicker-rails', '~> 1.4.0'
 
 # To use debugger
 # gem 'debugger'
-
