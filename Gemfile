@@ -43,6 +43,7 @@ end
 
 gem 'jquery-rails'
 gem 'simple_captcha', :git => 'git://github.com/galetahub/simple-captcha.git'
+gem 'twitter-bootstrap-rails'
 gem 'fullcalendar-rails'
 gem 'bootstrap-datepicker-rails', '~> 1.4.0'
 

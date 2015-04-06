@@ -8,9 +8,45 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
  *= require_tree .
  *= require bootstrap-datepicker3
  *= require fullcalendar
+ *= require_self
  */
 
+.alert {
+  background-color: transparent;
+  border: none;
+}
+
+.content {
+  padding-left: 5%;
+}
+
+/* Option 1 */
+.navbar .nav > li > a {
+  text-shadow: none;
+  color: #cc0000;
+}
+
+.navbar .brand {
+  text-shadow: none;
+  color: #cc0000;
+} 
+
+/*Option 2
+.navbar-inner {
+  background-image: none;
+  background-color: #cc0000;
+}
+
+.navbar .nav > li > a {
+  text-shadow: none;
+  color: #fff;
+}
+
+.navbar .brand {
+  text-shadow: none;
+  color: #fff;
+}
+*/

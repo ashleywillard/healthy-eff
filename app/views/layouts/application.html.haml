@@ -6,17 +6,28 @@
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
-    - if user_signed_in?
-      = link_to "Home", today_path
-      - if current_user.admin
-        = link_to "Admin", admin_list_path
-        = link_to "Manage", manage_path
-        - if Day.num_pending > 0
-          = link_to "#{Day.num_pending} Pending", admin_pending_path
-      = link_to "Profile", profile_path
-      = link_to "Edit Account", edit_user_registration_path
-      = link_to "Sign Out", destroy_user_session_path, :method => :delete
+    = nav_bar fixed: :left, brand: "Healthy EFF", responsive: true do
+      = menu_group do
+        - if user_signed_in?
+          = menu_divider
+          = menu_item "Home", today_path
+          = menu_divider
+          - if current_user.admin
+            = drop_down "Admin" do
+              = menu_item "Admin Home", admin_list_path
+              = menu_item "Manage", manage_path
+              - if Day.num_pending > 0
+                = menu_item "#{Day.num_pending} Pending", admin_pending_path
+            = menu_divider
+          = menu_item "Profile", profile_path
+          = menu_divider
+          = menu_item "Edit Account", edit_user_registration_path
+          = menu_divider
+      = menu_group pull: :right do
+        = menu_divider
+        = menu_item "Sign Out", destroy_user_session_path, :method => :delete
   %body
-    %p.notice= notice
-    %p.alert= alert
-    = yield
+    %div.content
+      %p.notice= notice
+      %p.alert= alert
+      = yield
