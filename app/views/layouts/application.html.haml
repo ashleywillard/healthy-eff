@@ -21,11 +21,10 @@
             = menu_divider
           = menu_item "Profile", profile_path
           = menu_divider
-          = menu_item "Edit Account", edit_user_registration_path
-          = menu_divider
       = menu_group pull: :right do
-        = menu_divider
-        = menu_item "Sign Out", destroy_user_session_path, :method => :delete
+        = drop_down "Account" do
+          = menu_item "Edit", edit_user_registration_path
+          = menu_item "Sign Out", destroy_user_session_path, :method => :delete
   %body
     %div.content
       %p.notice= notice
