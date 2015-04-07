@@ -45,7 +45,7 @@ RSpec.describe Day, :type => :model do
     before :each do
       #something
     end
-  	context 'Date is later than the 5th of the month and approved is false' do
+    context 'Date is later than the 5th of the month and approved is false' do
       before :each do
         Date.stub(:today).and_return(Date.new(2015, 01, 07))
       end
@@ -93,8 +93,8 @@ RSpec.describe Day, :type => :model do
           expect(day.errors.full_messages[0]).to eq(nil)
         end
       end
-  	end
-  	context 'Date is on or before the 5th of the month and approved is false' do
+    end
+    context 'Date is on or before the 5th of the month and approved is false' do
       before :each do
         Date.stub(:today).and_return(Date.new(2015, 01, 04))
       end
