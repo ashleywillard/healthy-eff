@@ -5,7 +5,7 @@ When /I fill in day and activity with:(.*)/ do |input|
   date_entries.each do
     click_link('Add Day')
   end
- 
+
   links = page.all("a.activity_link")
   date_entries.zip(links).each do |date_entry, link|
     (1..date_entry.split(',').length-1).each do
@@ -18,7 +18,7 @@ When /I fill in day and activity with:(.*)/ do |input|
   duration_ids = page.body.scan(/id="user_days_attributes_.{0,20}_activities_attributes_.{0,20}_duration/m)
 
   date_entries.zip(date_ids) do |date_entry, date_id|
-    
+
     act_durs=date_entry.split(',')
     date_field = act_durs.shift
     target_date = date_field
@@ -28,7 +28,7 @@ When /I fill in day and activity with:(.*)/ do |input|
       target_date = Date.today.prev_day.prev_day.strftime("%m/%d/%Y")
     end
     fill_in date_id[4..-1], :with => target_date
-    
+
     act_durs.each do |obj|
       act_dur = obj.split(' ')
       fill_in name_ids.shift[4..-1], :with => act_dur[0]
@@ -37,7 +37,7 @@ When /I fill in day and activity with:(.*)/ do |input|
       end
     end
   end
-end  
+end
 
 Given /^I fill in reason with: "(.*?)"$/ do |msg|
   fill_in "days_reason", :with => msg

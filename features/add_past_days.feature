@@ -6,7 +6,7 @@ Feature: Enter workouts for past days
 
 Background:
   Given the following users exist:
-  | email                       | password              | password_confirmation |    
+  | email                       | password              | password_confirmation |
   | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
   | healthypotato@gmail.com     | hotpotato             | hotpotato             |
   Given I am logged in as a non-admin
@@ -32,14 +32,12 @@ Scenario: Adding multiple exercises for past days with blank fields
   Then I should be on the past day input page
   And I should see "Reason can't be blank"
 
-
 @javascript
 Scenario: Submit blank form
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the past day input page
   And I should see "Fields are empty"
-
 
 @javascript
 Scenario: Submit blank form with only date filled in
@@ -58,4 +56,3 @@ Scenario: Submit valid form with bad date
   And I press “Submit”
   Then I should be on the past day input page
   And I should see "Date is invalid"
-

@@ -6,9 +6,9 @@ Feature: Changing password
 
 Background: users in database
   Given the following users exist:
-  | email                       | password              | password_confirmation |    
+  | email                       | password              | password_confirmation |
   | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
-  | healthypotato@gmail.com     | hotpotato             | hotpotato             | 
+  | healthypotato@gmail.com     | hotpotato             | hotpotato             |
   Given I am logged in as a non-admin
   And I am on the user settings page
 
