@@ -100,7 +100,7 @@ RSpec.describe DaysController do
     context 'all inputs are present and valid' do
       it 'should successfully add days to database and redirect to profile page' do
         date = Date.today.prev_day.strftime("%m/%d/%Y")
-        params = {:days => {:reason => "Vacation"}, :user => {:days_attributes => 
+        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes => 
                               {"1" => {:date => "#{date}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         #Check the database also
         post :add_days, params
@@ -110,7 +110,7 @@ RSpec.describe DaysController do
     end
     context 'Date argument is invalid' do
       it 'should redirect to past days path and flash invalid date error' do
-        params = {:days => {:reason => "Vacation"}, :user => {:days_attributes => 
+        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes => 
                               {"1" => {:date => "RAWR", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
         expect(flash[:notice]).to eq("Date is invalid")
@@ -120,7 +120,7 @@ RSpec.describe DaysController do
     context 'Reason field is empty for Day' do
       it 'should redirect to past days path and flash reason is empty error' do
         date = Date.today.prev_day.strftime("%m/%d/%Y")
-        params = {:days => {:reason => ""}, :user => {:days_attributes => 
+        params = {:days => {:reason => ""}, :month => {:days_attributes => 
                               {"1" => {:date => "#{date}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
         expect(flash[:notice]).to eq("Reason can't be blank")
@@ -129,7 +129,7 @@ RSpec.describe DaysController do
     end
     context 'Date field is empty for Day' do
       it 'should redirect to past days path and flash date is empty error' do
-        params = {:days => {:reason => "Vacation"}, :user => {:days_attributes => 
+        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes => 
                               {"1" => {:date => "", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
         expect(flash[:notice]).to eq("Date is invalid")
@@ -138,7 +138,7 @@ RSpec.describe DaysController do
     end
     context 'No days are added to params' do
       it 'should flash Fields are empty and redirect to past days path' do
-        params = {:user => {}}
+        params = {:month => {}}
         post :add_days
         expect(flash[:notice]).to eq("Fields are empty")
         response.should redirect_to(past_days_path)
@@ -147,7 +147,7 @@ RSpec.describe DaysController do
     context 'No activities are added to params for a single day' do
       it 'should flash Fields are empty and redirect to past days path' do
         date = Date.today.prev_day.strftime("%m/%d/%Y")
-        params = {:user => {:days_attributes => {"1" => {:date => "#{date}"}}}}
+        params = {:month => {:days_attributes => {"1" => {:date => "#{date}"}}}}
         post :add_days
         expect(flash[:notice]).to eq("Fields are empty")
         response.should redirect_to(past_days_path)
@@ -156,7 +156,7 @@ RSpec.describe DaysController do
     context 'Date field contains todays date' do
       it 'should redirect to past days path and flash invalid date error' do
         date = Date.today.strftime("%m/%d/%Y")
-        params = {:days => {:reason => "Vacation"}, :user => {:days_attributes => 
+        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes => 
                               {"1" => {:date => "#{date}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
         expect(flash[:notice]).to eq("Date #{date} is not within allowed range")
