@@ -13,9 +13,9 @@ When /I fill in day and activity with:(.*)/ do |input|
     end
   end
 
-  date_ids = page.body.scan(/id="user_days_attributes_.{0,20}_date/m)
-  name_ids = page.body.scan(/id="user_days_attributes_.{0,20}_activities_attributes_.{0,20}_name/m)
-  duration_ids = page.body.scan(/id="user_days_attributes_.{0,20}_activities_attributes_.{0,20}_duration/m)
+  date_ids = page.body.scan(/id="month_days_attributes_.{0,20}_date/m)
+  name_ids = page.body.scan(/id="month_days_attributes_.{0,20}_activities_attributes_.{0,20}_name/m)
+  duration_ids = page.body.scan(/id="month_days_attributes_.{0,20}_activities_attributes_.{0,20}_duration/m)
 
   date_entries.zip(date_ids) do |date_entry, date_id|
     
@@ -54,8 +54,16 @@ And /I click Add Day/ do
   click_link "Add Day"
 end
 
+And /I click Remove Day/ do
+  click_link "Remove Day"
+end
+
+And /I press Submit/ do
+  page.find('.submit').trigger('click')
+end
+
 And /I fill out date/ do
-  date_ids = page.body.scan(/id="user_days_attributes_.{0,20}_date/m)
+  date_ids = page.body.scan(/id="month_days_attributes_.{0,20}_date/m)
   fill_in date_ids[0][4..-1], :with => Date.today.prev_day.strftime("%m/%d/%Y")
 end
 

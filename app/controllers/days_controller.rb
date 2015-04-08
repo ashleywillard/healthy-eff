@@ -13,13 +13,21 @@ class DaysController < ApplicationController
                       :reason => "", 
                       :approved => true,
                       :denied => false})
+    @day.activities.append(Activity.new())
   end
 
   def past_days
-    @user = User.new()
+    @month = Month.new()
+    day = Day.new()
+    @month.days.append(day)
+    day.activities.append(Activity.new())
     today = Date.today
     @end_date = today.prev_day
     @start_date = today.strftime("%d").to_i < 6 ? today.ago(1.month).beginning_of_month : today.beginning_of_month
+    # @previously_inputted = []
+    # month containing end date if it exists
+    # month containing start date if it exists.
+    # populate list with .strftime("%m/%d/%Y") from each day in these months.
   end
 
   def check_simple_captcha
@@ -50,7 +58,7 @@ class DaysController < ApplicationController
 
   def add_days
     begin
-      add(true, :user, :days_attributes)
+      add(true, :month, :days_attributes)
     rescue Exception
       redirect_to past_days_path
     end
@@ -78,7 +86,7 @@ class DaysController < ApplicationController
   end
 
   def create_past_days
-    params[:user][:days_attributes].each do |id, day|
+    params[:month][:days_attributes].each do |id, day|
       empty_fields_notice() if day[:activities_attributes] == nil
       check_day(day)
     end
@@ -127,7 +135,7 @@ class DaysController < ApplicationController
   end
 
   def save_past_days
-    params[:user][:days_attributes].each do |id, day|
+    params[:month][:days_attributes].each do |id, day|
       create_single_day(day, false)
     end
   end

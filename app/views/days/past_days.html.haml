@@ -1,4 +1,4 @@
-= form_for @user, url: add_days_path()  do |f|
+= form_for @month, url: add_days_path()  do |f|
   %p
     Healthy Activity Form
   = f.fields_for :days do |builder|
@@ -11,4 +11,4 @@
   (Note: activity for all days besides the current day will be sent to admin for approval)
   %p 
     = show_simple_captcha(:label => "Enter before submitting", :placeholder => "", :refresh_button_text => "Refresh text")
-    = f.submit 'Submit'
+    = f.submit 'Submit', :class => 'submit'

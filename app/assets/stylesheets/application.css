@@ -23,18 +23,6 @@
   padding-left: 5%;
 }
 
-/* Option 1 */
-.navbar .nav > li > a {
-  text-shadow: none;
-  color: #cc0000;
-}
-
-.navbar .brand {
-  text-shadow: none;
-  color: #cc0000;
-} 
-
-/*Option 2
 .navbar-inner {
   background-image: none;
   background-color: #cc0000;
@@ -49,4 +37,16 @@
   text-shadow: none;
   color: #fff;
 }
-*/
+
+.navbar .divider-vertical {
+  margin: 0px;
+}
+
+.navbar .nav > .active > a {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+/*.navbar .nav > .active > a:focus {
+  background-color: #c00;
+}*/

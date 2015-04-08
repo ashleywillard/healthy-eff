@@ -6,6 +6,7 @@ end
 
 When /I fill in activity with:(.*)/ do |entry_list|
   entries = entry_list.split(',')
+  click_link('Remove Activity')
   entries.each do
     click_link('Add Activity')
   end

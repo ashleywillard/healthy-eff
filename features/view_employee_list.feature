@@ -24,5 +24,6 @@ Scenario: Admin list view
   Given that I have logged 3 activities
   And I am logged in as an admin
   When I follow "Admin"
+  And I follow "Admin Home"
   Then I should see a table of employee names
   And I should see "Days"

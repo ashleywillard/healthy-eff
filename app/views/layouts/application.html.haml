@@ -10,8 +10,6 @@
       = menu_group do
         - if user_signed_in?
           = menu_divider
-          = menu_item "Home", today_path
-          = menu_divider
           - if current_user.admin
             = drop_down "Admin" do
               = menu_item "Admin Home", admin_list_path
@@ -22,6 +20,7 @@
           = menu_item "Profile", profile_path
           = menu_divider
       = menu_group pull: :right do
+        = menu_divider
         = drop_down "Account" do
           = menu_item "Edit", edit_user_registration_path
           = menu_item "Sign Out", destroy_user_session_path, :method => :delete

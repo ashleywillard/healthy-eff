@@ -11,6 +11,7 @@ Background:
   | healthypotato@gmail.com     | hotpotato             | hotpotato             |
   Given I am logged in as a non-admin
   And I am on the past day input page
+  And I click Remove Day
 
 @javascript
 Scenario: Adding multiple exercises for past days
@@ -46,7 +47,7 @@ Scenario: Submit blank form with only date filled in
   And I click Add Day
   And I fill out date
   And I write the captcha text in the textbox
-  And I press “Submit”
+  And I press Submit
   Then I should be on the past day input page
   And I should see "Fields are empty"
 
