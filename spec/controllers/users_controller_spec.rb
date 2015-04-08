@@ -42,13 +42,13 @@ RSpec.describe UsersController do
       activity2 = double('activity', :name => 'jogging', :duration => 60)
       activity3 = double('activity', :name => 'hiking', :duration => 80)
       month = double('Month', :month => 4, :year => 2015, :num_of_days => 2)
-      
+
       days = [double('Day', :date => '04-01-2015', :approved => true, :denied => false),
               double('Day', :date => '04-02-2015', :approved => true, :denied => false)]
-      
+
       activities1 = [activity1, activity2]
       activities2 = [activity3]
-      
+
       Month.stub_chain(:where, :first).and_return(month)
       month.should_receive(:days).and_return(days)
       days[0].should_receive(:activities).and_return(activities1)
@@ -66,7 +66,7 @@ RSpec.describe UsersController do
       month = double('Month', :month => 4, :year => 2015, :num_of_days => 1)
       days = [double('Day', :date => '04-01-2015', :approved => false, :denied => true)]
       activities = [denied_activity]
-      
+
       Month.stub_chain(:where, :first).and_return(month)
       month.should_receive(:days).and_return(days)
       days[0].should_receive(:activities).and_return(activities)
@@ -77,7 +77,7 @@ RSpec.describe UsersController do
       month = double('Month', :month => 4, :year => 2015, :num_of_days => 1)
       days = [double('Day', :date => '04-01-2015', :approved => false, :denied => false)]
       activities = [pending_activity]
-      
+
       Month.stub_chain(:where, :first).and_return(month)
       month.should_receive(:days).and_return(days)
       days[0].should_receive(:activities).and_return(activities)
@@ -88,7 +88,7 @@ RSpec.describe UsersController do
       month = double('Month', :month => 4, :year => 2015, :num_of_days => 1)
       days = [double('Day', :date => '04-01-2015', :approved => true, :denied => false)]
       activities = [approved_activity]
-      
+
       Month.stub_chain(:where, :first).and_return(month)
       month.should_receive(:days).and_return(days)
       days[0].should_receive(:activities).and_return(activities)

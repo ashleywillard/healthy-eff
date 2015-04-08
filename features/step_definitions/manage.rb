@@ -5,7 +5,5 @@ When(/^I follow “Add a new employee”$/) do
 end
 
 When (/I fill in email with "(.*)"/) do |email|
-  fill_in "user_email", :with => email 
+  fill_in "user_email", :with => email
 end
-
- 

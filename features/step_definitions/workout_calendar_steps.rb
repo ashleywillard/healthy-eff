@@ -3,10 +3,10 @@
 And /I set up the database with a few days/ do
   today = Date.today
   date_last_month = today.ago(1.month).beginning_of_month
-  Activity.create!({:duration => 25, 
+  Activity.create!({:duration => 25,
                  :name => 'running',
                  :day_id => 1})
-  Activity.create!({:duration => 35, 
+  Activity.create!({:duration => 35,
                    :name => 'swimming',
                    :day_id => 1})
   Day.create!({:date => today,
@@ -22,10 +22,10 @@ And /I set up the database with a few days/ do
               :printed_form => true,
               :received_form => false})
 
-  Activity.create!({:duration => 25, 
+  Activity.create!({:duration => 25,
                  :name => 'hiking',
                  :day_id => 2})
-  Activity.create!({:duration => 35, 
+  Activity.create!({:duration => 35,
                    :name => 'biking',
                    :day_id => 2})
   Day.create!({:date => Time.strptime(date_last_month.strftime("%m/%d/%Y"), "%m/%d/%Y"),
@@ -56,8 +56,7 @@ And /I should not see the previous months logged activities/ do
   page.should_not have_content("biking: 35")
 end
 
-
-And /I should see a calendar with my last months logged activities/ do 
+And /I should see a calendar with my last months logged activities/ do
   page.should have_content("hiking: 25")
   page.should have_content("biking: 35")
  end

@@ -152,7 +152,7 @@ class DaysController < ApplicationController
   end
 
   def validate_model(model)
-    unless model.valid? 
+    unless model.valid?
       flash[:notice] = model.errors.full_messages[0]
       raise Exception
     end
@@ -163,10 +163,10 @@ class DaysController < ApplicationController
     year = day.date.strftime("%Y").to_i
     month_model = Month.where(user_id: current_user.id, month: month, year: year).first
     if month_model == nil
-      month_model = Month.create({:user_id => current_user.id, 
-                   :month => month, 
-                   :year => year, 
-                   :printed_form => false, 
+      month_model = Month.create({:user_id => current_user.id,
+                   :month => month,
+                   :year => year,
+                   :printed_form => false,
                    :received_form => false,
                    :num_of_days => 0})
     end
