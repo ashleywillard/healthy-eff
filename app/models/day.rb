@@ -37,19 +37,4 @@ class Day < ActiveRecord::Base
     end
   end
 
-  def check_date_already_input(user, month, year)
-    # begin
-    #   #cant get self.month because it wont be set up till later
-    #   month = user.months.where(:month => month, :year => year)
-    #   month.days.each do |day|
-    #     if day.date.strftime("%m/%d/%Y") == date.strftime("%m/%d/%Y")
-    #       errors.add(:date, "#{date.strftime("%m/%d/%Y")} has already been inputted")
-    #       break
-    #     end
-    #   end
-    # rescue Exception => e
-    #   errors.add(:date, e.message)
-    # end
-  end
-
 end
