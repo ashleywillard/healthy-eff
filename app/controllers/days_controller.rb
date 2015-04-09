@@ -48,11 +48,6 @@ class DaysController < ApplicationController
     raise Exception
   end
 
-  def get_month_model(month, year)
-    month = Month.where(user_id: current_user.id, month: month, year: year)
-    return month == nil ? nil : month.first
-  end
-
   def format_date(date)
     return date.strftime("%m/%d/%Y")
   end
@@ -177,7 +172,7 @@ class DaysController < ApplicationController
   end
 
   def check_date_already_input(date)
-    month = get_month_model(get_month(date), get_year(date))
+    month = Month.get_month_model(current_user.id, get_month(date), get_year(date))
     unless month == nil || month.days == nil
       month.days.each do |day|
         check_for_date_match(day.date, date)
@@ -193,17 +188,7 @@ class DaysController < ApplicationController
   end
 
   def update_month(day)
-    month = get_month(day.date)
-    year = get_year(day.date)
-    month_model = get_month_model(month, year)
-    if month_model == nil
-      month_model = Month.create({:user_id => current_user.id,
-                   :month => month,
-                   :year => year,
-                   :printed_form => false,
-                   :received_form => false,
-                   :num_of_days => 0})
-    end
+    month_model = Month.get_or_create_month_model(current_user.id, get_month(day.date), get_year(day.date))
     month_model.num_of_days += 1
     month_model.save!
     day.month_id = month_model.id
