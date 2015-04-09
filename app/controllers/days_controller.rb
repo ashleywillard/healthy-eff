@@ -48,6 +48,23 @@ class DaysController < ApplicationController
     raise Exception
   end
 
+  def get_month_model(month, year)
+    month = Month.where(user_id: current_user.id, month: month, year: year)
+    return month == nil ? nil : month.first
+  end
+
+  def format_date(date)
+    return date.strftime("%m/%d/%Y")
+  end
+
+  def get_month(date)
+    return date.strftime("%m").to_i
+  end
+
+  def get_year(date)
+    return date.strftime("%Y").to_i
+  end
+
   def add_today
     begin
       add(false, :day, :activities_attributes)
@@ -111,8 +128,8 @@ class DaysController < ApplicationController
 
   def validate_single_day(activity_list, day)
     activities = validate_single_day_activities(activity_list, day)
-    # check_date_already_input(day.date)
     validate_model(day)
+    check_date_already_input(day.date)
     return activities
   end
 
@@ -147,7 +164,7 @@ class DaysController < ApplicationController
       day.save!
       activity.day_id = day.id
       activity.save!
-      notice += "#{activity.name} for #{activity.duration} minutes has been recorded for #{day.date.strftime("%m/%d/%Y")}\n"
+      notice += "#{activity.name} for #{activity.duration} minutes has been recorded for #{format_date(day.date)}\n"
     end
     if flash[:notice] == nil then flash[:notice] = notice else flash[:notice] = flash[:notice] + notice end
   end
@@ -160,23 +177,25 @@ class DaysController < ApplicationController
   end
 
   def check_date_already_input(date)
-    month_num = day.date.strftime("%m").to_i
-    year = day.date.strftime("%Y").to_i
-    month = current_user.months.where(:month => month_num, :year => year).first
-    unless month == nil
+    month = get_month_model(get_month(date), get_year(date))
+    unless month == nil || month.days == nil
       month.days.each do |day|
-        if day.date.strftime("%m/%d/%Y") == date.strftime("%m/%d/%Y")
-          flash[:notice] = "#{date.strftime("%m/%d/%Y")} has already been inputted"
-          raise Exception
-        end
+        check_for_date_match(day.date, date)
       end
     end
   end
 
+  def check_for_date_match(reference_date, date)
+    if format_date(reference_date) == format_date(date)
+      flash[:notice] = "#{format_date(date)} has already been inputted"
+      raise Exception
+    end
+  end
+
   def update_month(day)
-    month = day.date.strftime("%m").to_i
-    year = day.date.strftime("%Y").to_i
-    month_model = Month.where(user_id: current_user.id, month: month, year: year).first
+    month = get_month(day.date)
+    year = get_year(day.date)
+    month_model = get_month_model(month, year)
     if month_model == nil
       month_model = Month.create({:user_id => current_user.id,
                    :month => month,
