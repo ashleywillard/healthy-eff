@@ -34,11 +34,11 @@ Group 17: Alex Ho, Allan Tang, Ashley Willard, Corinne Schafle, Michelle Lin, Sa
 * Section Meeting: Thursday, 3/17/15
 
 ##### Iteration 3
-* Section Meeting: Thursday, 4/7/15
+* Section Meeting: Thursday, 4/9/15
 
 ##### Iteration 4
-* Section Meeting: Thursday, 4/22/15
-* Section Presentation: Thursday, 4/29, 15
+* Section Meeting: Thursday, 4/23/15
+* Section Presentation: Thursday, 4/30/15
 
 ##### Wrap-Up
 * Poster/Demo Fair: Monday, 5/4/15
