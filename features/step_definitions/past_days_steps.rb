@@ -2,14 +2,17 @@
 
 When /I fill in day and activity with:(.*)/ do |input|
   date_entries = input.split('|')
-  date_entries.each do
-    click_link('Add Day')
-  end
+  if date_entries.count > 1
+    click_link('Remove Day')
+    (date_entries.count).times do
+      click_link('Add Day')
+    end
 
-  links = page.all("a.activity_link")
-  date_entries.zip(links).each do |date_entry, link|
-    (1..date_entry.split(',').length-1).each do
-      link.click
+    links = page.all("a.activity_link")
+    date_entries.zip(links).each do |date_entry, link|
+      (1..date_entry.split(',').length-1).each do
+        link.click
+      end
     end
   end
 
