@@ -111,7 +111,7 @@ class DaysController < ApplicationController
 
   def validate_single_day(activity_list, day)
     activities = validate_single_day_activities(activity_list, day)
-    check_date_already_input(day.date)
+    # check_date_already_input(day.date)
     validate_model(day)
     return activities
   end
@@ -160,12 +160,15 @@ class DaysController < ApplicationController
   end
 
   def check_date_already_input(date)
-    month = current_user.months.where(:month => date.strftime("%m").to_i, :year => date.strftime("%Y").to_i).first
-    month.days.each do |day|
-      if day.date.strftime("%m/%d/%Y") == date.strftime("%m/%d/%Y")
-        notice = "#{date.strftime("%m/%d/%Y")} has already been inputted"
-        if flash[:notice] == nil then flash[:notice] = notice else flash[:notice] = flash[:notice] + notice end
-        raise Exception
+    month_num = day.date.strftime("%m").to_i
+    year = day.date.strftime("%Y").to_i
+    month = current_user.months.where(:month => month_num, :year => year).first
+    unless month == nil
+      month.days.each do |day|
+        if day.date.strftime("%m/%d/%Y") == date.strftime("%m/%d/%Y")
+          flash[:notice] = "#{date.strftime("%m/%d/%Y")} has already been inputted"
+          raise Exception
+        end
       end
     end
   end
