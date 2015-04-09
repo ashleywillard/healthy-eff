@@ -2,7 +2,7 @@ Feature: Enter workout for a past day without JavaScript
 
   As an employee
   So that I can get credit for days I was away
-  I want to be able to enter past workouts with JavaScript disabled
+  I want to be able to enter a past workout with JavaScript disabled
 
 Background:
   Given the following users exist:
