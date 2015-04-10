@@ -1,9 +1,9 @@
-= form_for @day, url: add_today_path() do |f|
+= form_for(@day, url: add_today_path(), :html => {class: "form-inline"}) do |f|
   %p.form
-    Healthy Activity Form
-    %br
   %div.today.field
-    = f.label :date, "Today #{@date.strftime("%m/%d/%Y")}"
+    = f.label :date, "Today #{@date.strftime("%m/%d/%Y")}", :class => "title"
+    %br
+    %br
     = f.hidden_field :date, value: @date
     = f.fields_for :activities do |builder|
       = render "activity_fields", :f => builder

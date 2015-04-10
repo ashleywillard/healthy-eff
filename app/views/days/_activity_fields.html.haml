@@ -1,7 +1,8 @@
 %p.activity.field
-  = f.label :name, 'I did'
-  = f.text_field :name, :placeholder  => 'activity'
-  = f.label :duration, 'for'
-  = f.number_field :duration, :placeholder => 'duration'
-  minutes.
-  = link_to_function "Remove Activity", "remove_fields(this)"
+  %div.activity_container
+    = f.label :name, 'Activity: ', :class => 'activity_label'
+    = f.text_field :name, :placeholder  => 'ex. Running'
+    = f.label :duration, 'Duration (in minutes)*: ', :class => 'activity_label'
+    = f.number_field :duration, :placeholder => 'ex. 30'
+    = link_to_function "(-)", "remove_fields(this)"
+    / %i.glyphicon.glyphicon-minus-sign

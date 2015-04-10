@@ -13,6 +13,11 @@
  *= require fullcalendar
  *= require_self
  */
+ .navbar {
+  font-family: "Helvetica"; 
+  font-weight: bold;
+  /*, "Arial", "Sans Serif"*/
+ }
 
 .alert {
   background-color: transparent;
@@ -42,11 +47,31 @@
   margin: 0px;
 }
 
-.navbar .nav > .active > a {
+.navbar .nav > .active > a,
+.navbar .nav > .active > a:hover {
   background-color: #333333;
   color: #ffffff;
 }
 
-/*.navbar .nav > .active > a:focus {
-  background-color: #c00;
-}*/
+a:focus, .navbar .nav > li > a:hover {
+  color: #fff;
+  background-color: #cc0000;
+}
+
+.activity_container:nth-child(2n) {
+  background-color: #EAEAEA;
+}
+
+.activity_container {
+  margin-left: 10px;
+  margin-right: 25%;
+}
+
+.activity_label {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.title {
+  font-size: 30px;
+}

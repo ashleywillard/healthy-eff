@@ -1,6 +1,5 @@
-= form_for @month, url: add_days_path()  do |f|
-  %p
-    Healthy Activity Form
+= form_for(@month, url: add_days_path(), :html => {class: "form-inline"})  do |f|
+  %p.form
   = f.fields_for :days do |builder|
     = render "day_fields", :f => builder
   %p
