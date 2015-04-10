@@ -70,6 +70,22 @@ RSpec.describe DaysController do
         response.should redirect_to(profile_path)
       end
     end
+    context 'Today was already input' do
+      it 'should redirect to today path and display day already inputted error' do
+        user = User.create()
+        DaysController.any_instance.stub(:current_user).and_return(user)
+        today = Date.today
+        
+        params = {:days => {:reason => "none"}, :day => {:date => "#{today}", :activities_attributes => {"1" =>{:name => "swimming", :duration => "90"}}}}
+        post :add_today, params
+
+        #try query again
+        post :add_today, params
+        #Check the database also
+        expect(flash[:notice]).to eq("#{today.strftime("%m/%d/%Y")} has already been inputted")
+        response.should redirect_to(today_path)
+      end
+    end
     context 'Duration field is empty for Activity' do
       it 'should redirect to today path and display duration empty error' do
         today = Date.today
@@ -97,7 +113,20 @@ RSpec.describe DaysController do
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(true)
     end
-    context 'all inputs are present and valid' do
+    context 'Inputs are present and valid for multiple days and activities' do
+      it 'should successfully add days to database and redirect to profile page' do
+        date1 = Date.today.prev_day.strftime("%m/%d/%Y")
+        date2 = Date.today.prev_day.prev_day.strftime("%m/%d/%Y")
+        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes => 
+                              {"1" => {:date => "#{date1}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}},
+                              "3" => {:date => "#{date2}", :activities_attributes => {"4" => {:name => "running", :duration => "20"}, "5" => {:name => "swimming", :duration => "40"}}}}}}
+        #Check the database also
+        post :add_days, params
+        expect(flash[:notice]).to eq("running for 60 minutes has been recorded for #{date1}\nrunning for 20 minutes has been recorded for #{date2}\nswimming for 40 minutes has been recorded for #{date2}\n")
+        response.should redirect_to(profile_path)
+      end
+    end
+    context 'Inputs are present and valid for single day and activity' do
       it 'should successfully add days to database and redirect to profile page' do
         date = Date.today.prev_day.strftime("%m/%d/%Y")
         params = {:days => {:reason => "Vacation"}, :month => {:days_attributes => 
@@ -106,6 +135,20 @@ RSpec.describe DaysController do
         post :add_days, params
         expect(flash[:notice]).to eq("running for 60 minutes has been recorded for #{date}\n")
         response.should redirect_to(profile_path)
+      end
+    end
+    context 'day was already input' do
+      it 'should redirect to past days path and flash already inputted error' do
+        date = Date.today.prev_day.strftime("%m/%d/%Y")
+        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes => 
+                              {"1" => {:date => "#{date}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
+        #Check the database also
+        post :add_days, params
+
+        #try again
+        post :add_days, params
+        expect(flash[:notice]).to eq("#{date} has already been inputted")
+        response.should redirect_to(past_days_path)
       end
     end
     context 'Date argument is invalid' do

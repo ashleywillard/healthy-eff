@@ -1,4 +1,5 @@
 class DaysController < ApplicationController
+  include DateFormat
 
   before_filter :check_logged_in
 
@@ -14,6 +15,8 @@ class DaysController < ApplicationController
                       :approved => true,
                       :denied => false})
     @day.activities.append(Activity.new())
+    month = Month.get_month_model(current_user.id, get_month(@date), get_year(@date))
+    flash[:notice] = "#{format_date(@date)} has already been inputted" if month != nil && month.contains_date?(@date)
   end
 
   def past_days
@@ -23,11 +26,8 @@ class DaysController < ApplicationController
     day.activities.append(Activity.new())
     today = Date.today
     @end_date = today.prev_day
-    @start_date = today.strftime("%d").to_i < 6 ? today.ago(1.month).beginning_of_month : today.beginning_of_month
-    # @previously_inputted = []
-    # month containing end date if it exists
-    # month containing start date if it exists.
-    # populate list with .strftime("%m/%d/%Y") from each day in these months.
+    @start_date = get_day(today) < 6 ? today.ago(1.month).beginning_of_month : today.beginning_of_month
+    @previously_inputted = Month.get_inputted_dates(current_user.id, @start_date, @end_date)
   end
 
   def check_simple_captcha
@@ -46,18 +46,6 @@ class DaysController < ApplicationController
   def empty_fields_notice
     flash[:notice] = EMPTY_FIELDS
     raise Exception
-  end
-
-  def format_date(date)
-    return date.strftime("%m/%d/%Y")
-  end
-
-  def get_month(date)
-    return date.strftime("%m").to_i
-  end
-
-  def get_year(date)
-    return date.strftime("%Y").to_i
   end
 
   def add_today
@@ -173,18 +161,9 @@ class DaysController < ApplicationController
 
   def check_date_already_input(date)
     month = Month.get_month_model(current_user.id, get_month(date), get_year(date))
-    unless month == nil || month.days == nil
-      month.days.each do |day|
-        check_for_date_match(day.date, date)
-      end
-    end
-  end
-
-  def check_for_date_match(reference_date, date)
-    if format_date(reference_date) == format_date(date)
-      flash[:notice] = "#{format_date(date)} has already been inputted"
-      raise Exception
-    end
+    return unless month != nil && month.contains_date?(date)
+    flash[:notice] = "#{format_date(date)} has already been inputted"
+    raise Exception
   end
 
   def update_month(day)
