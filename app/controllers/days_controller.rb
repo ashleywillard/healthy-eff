@@ -39,12 +39,12 @@ class DaysController < ApplicationController
   end
 
   def bad_captcha
-    flash[:notice] = "Bro, your captcha was so wrong dude."
+    flash[:notice] = BAD_CAPTCHA
     raise Exception
   end
 
   def empty_fields_notice
-    flash[:notice] = "Fields are empty"
+    flash[:notice] = EMPTY_FIELDS
     raise Exception
   end
 
@@ -116,7 +116,7 @@ class DaysController < ApplicationController
       validate_single_day(day[:activities_attributes], @day)
     rescue ArgumentError
       #case where Date.parse throws an ArgumentError for having invalid date field
-      flash[:notice] = "Date is invalid"
+      flash[:notice] = INVALID_DATE
       raise Exception
     end
   end

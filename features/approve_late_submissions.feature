@@ -17,7 +17,7 @@ Scenario: Privileged access
   Then I should not see "Pending"
   When I visit the pending approval page
   Then I should be on the home page
-  And I should see "You don't have permission to access this."
+  And I should see "Access to this page is restriced to administrators."
 
 Scenario: No pending activities
   Given I am logged in as an admin

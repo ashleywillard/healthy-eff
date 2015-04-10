@@ -18,7 +18,7 @@ Scenario: Privileged access
   And I should not see the "Pending" link
   When I visit the admin list page
   Then I should be on the home page
-  And I should see "You don't have permission to access this."
+  And I should see "Access to this page is restriced to administrators."
 
 Scenario: Admin list view
   Given that I have logged 3 activities

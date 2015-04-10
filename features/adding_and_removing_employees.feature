@@ -37,7 +37,7 @@ Scenario: Not an admin
   Given I am logged in as a non-admin
   And I visit the manage employee page
   Then I should be on the home page
-  And I should see "Unauthorized access"
+  And I should see "Access to this page is restriced to administrators."
 
 Scenario: Can't delete myself
   Given I am logged in as an admin
