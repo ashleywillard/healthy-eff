@@ -27,15 +27,7 @@ class DaysController < ApplicationController
     today = Date.today
     @end_date = today.prev_day
     @start_date = get_day(today) < 6 ? today.ago(1.month).beginning_of_month : today.beginning_of_month
-    @previously_inputted = get_inputted_dates
-  end
-
-  def get_inputted_dates
-    month1 = get_month(@end_date)
-    month2 = get_month(@start_date)
-    previously_inputted = Month.get_dates_list(current_user.id, month1, get_year(@end_date))
-    previoulsy_inputted += Month.get_dates_list(current_user.id, month2, get_year(@start_date)) unless month1 == month2
-    return previoulsy_inputted
+    @previously_inputted = Month.get_inputted_dates(current_user.id, @start_date, @end_date)
   end
 
   def check_simple_captcha

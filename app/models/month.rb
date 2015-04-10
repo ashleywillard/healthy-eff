@@ -20,6 +20,14 @@ class Month < ActiveRecord::Base
                    :num_of_days => 0})
   end
 
+  def self.get_inputted_dates(user_id, start_date, end_date)
+    month1 = end_date.strftime("%m")
+    month2 = start_date.strftime("%m")
+    previously_inputted = get_dates_list(user_id, month1, end_date.strftime("%Y"))
+    previoulsy_inputted += get_dates_list(user_id, month2, start_date.strftime("%Y")) unless month1 == month2
+    return previoulsy_inputted
+  end
+
   def self.get_dates_list(user_id, month, year)
     dates = []
     month_model = get_month_model(user_id, month, year)
