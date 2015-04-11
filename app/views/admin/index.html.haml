@@ -1,5 +1,9 @@
 -#  app/views/admin/index.html.haml
-%h1 Employee List: #{@month} #{@year}
+%h1 Employee List:
+= link_to "Previous", admin_list_path(:navigate => "Previous")
+= link_to "Next", admin_list_path(:navigate => "Next")
+
+%h3 #{@month} #{@year}
 
 %p= link_to "Audit Sheet"
 

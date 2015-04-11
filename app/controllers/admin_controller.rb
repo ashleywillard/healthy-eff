@@ -3,9 +3,17 @@ class AdminController < ApplicationController
   before_filter :check_logged_in, :check_admin
 
   def index
-    @month = Date.today.strftime("%B")
-    @year = Date.today.strftime("%Y")
-    @user_months = Month.where(:month => Date.today.strftime("%m"), :year => @year)
+    session[:months_ago] ||= 0
+    @months_ago = session[:months_ago]
+    if not params[:navigate].nil?
+      @months_ago += 1 if params[:navigate] == "Previous"
+      @months_ago -=1 if params[:navigate] == "Next"
+      session[:months_ago] = @months_ago
+    end
+    d = @months_ago.to_i.months.ago
+    @month = d.strftime("%B")
+    @year = d.strftime("%Y")
+    @user_months = Month.where(:month => d.strftime("%m"), :year => @year)
   end
 
   def pending
