@@ -1,4 +1,4 @@
-# Healthy EFF
+# [Healthy EFF](https://healthy-eff-169.herokuapp.com)
 CS169, in partnership with EFF.
 
 ## Overview
