@@ -15,22 +15,12 @@
  *= require_self
  */
 
- p.notice {
-  padding-top: 10px;
-  font-size: 20px;
-  color: blue;
- }
- .navbar {
-  font-family: "Helvetica"; 
-  font-weight: bold;
- }
-
-.alert {
-  background-color: transparent;
-  border: none;
+body {
+  background-color: rgb(249, 249, 249);
 }
 
 .content {
+  line-height: 2;
   border-radius: 25px;
   background-color: #fff;
   padding-left: 3%;
@@ -40,6 +30,23 @@
   margin-left: 10%;
   margin-right: 10%;
 }
+
+p.notice {
+  padding-top: 10px;
+  font-size: 20px;
+  color: blue;
+}
+
+p.alert {
+  background-color: transparent;
+  border: none;
+}
+
+.navbar {
+  font-family: "Helvetica"; 
+  font-weight: bold;
+}
+
 
 .navbar-inner {
   background-image: none;
@@ -71,8 +78,8 @@
   background-color: #cc0000;
 }
 
-.activity_container:nth-child(2n + 1) {
-  background-color: #EAEAEA;
+.activity_container:nth-child(2n) {
+  background-color: rgb(249, 249, 249);
 }
 
 .activity_container {
@@ -85,12 +92,8 @@
   padding-right: 3px;
 }
 
-.title {
-  font-size: 30px;
-}
-
-body {
-  background-color: rgb(249, 249, 249);
+.title_today {
+  font-size: 24px;
 }
 
 a.remove_activity {

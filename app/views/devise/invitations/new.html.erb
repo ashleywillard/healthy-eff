@@ -4,9 +4,9 @@
   <%= devise_error_messages! %>
 
 <% resource.class.invite_key_fields.each do |field| -%>
-  <p><%= f.label field %><br />
+  <p><%= f.label field %>
   <%= f.text_field field %></p>
 <% end -%>
 
-  <p><%= f.submit t("devise.invitations.new.submit_button") %></p>
+  <p><%= f.submit t("devise.invitations.new.submit_button"), :class => "btn" %></p>
 <% end %>
