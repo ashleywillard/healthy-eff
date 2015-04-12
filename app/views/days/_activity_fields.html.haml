@@ -4,5 +4,4 @@
     = f.text_field :name, :placeholder  => 'ex. Running'
     = f.label :duration, 'Duration (in minutes)*: ', :class => 'activity_label'
     = f.number_field :duration, :placeholder => 'ex. 30'
-    = link_to_function "(-)", "remove_fields(this)"
-    / %i.glyphicon.glyphicon-minus-sign
+    = link_to_function "<span class=\"glyphicon glyphicon-minus-sign\"</span>".html_safe, "remove_fields(this)", :class => "remove_activity"

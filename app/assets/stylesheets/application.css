@@ -9,8 +9,9 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_tree .
- *= require bootstrap-datepicker3
  *= require fullcalendar
+ *= require bootstrap-datepicker3
+ *= require bootstrap/glyphicons
  *= require_self
  */
 
@@ -30,10 +31,12 @@
 }
 
 .content {
+  border-radius: 25px;
   background-color: #fff;
   padding-left: 3%;
   padding-right: 3%;
-  padding-bottom: 3%;
+  padding-bottom: 2%;
+  padding-top:2%;
   margin-left: 10%;
   margin-right: 10%;
 }
@@ -63,13 +66,18 @@
   color: #ffffff;
 }
 
-a:focus, .navbar .nav > li > a:hover {
+.navbar .nav > li > a:hover {
   color: #fff;
   background-color: #cc0000;
 }
 
-.activity_container:nth-child(2n) {
+.activity_container:nth-child(2n + 1) {
   background-color: #EAEAEA;
+}
+
+.activity_container {
+  border-radius: 25px;
+  text-align: center;
 }
 
 .activity_label {
@@ -83,4 +91,23 @@ a:focus, .navbar .nav > li > a:hover {
 
 body {
   background-color: rgb(249, 249, 249);
+}
+
+a.remove_activity {
+  text-decoration: none;
+  color: #5cb85c;
+}
+
+a.activity_link.add_fields {
+  text-decoration: none;
+  padding-left: 8%;
+  color: #5cb85c;
+}
+
+a.day_link.add_fields {
+  text-decoration: none;
+}
+
+a.remove_day {
+  text-decoration: none;
 }

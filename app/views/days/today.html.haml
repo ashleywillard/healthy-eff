@@ -8,9 +8,10 @@
     = f.fields_for :activities do |builder|
       = render "activity_fields", :f => builder
     %p
-      = link_to_add_fields "Add Activity", f, :activities
+      = link_to_add_fields "<span class=\"glyphicon glyphicon-plus-sign\"</span>".html_safe, f, :activities
   %p 
     = show_simple_captcha(:label => "Enter before submitting", :placeholder => "", :refresh_button_text => "Refresh text")
     = hidden_field :days, :reason, value: "none"
+    %br
     = f.submit 'Submit', :class => "btn"
-= link_to "I need to go back and input past days", past_days_path
+= link_to "Input past days", past_days_path
