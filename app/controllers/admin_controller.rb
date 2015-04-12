@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
 
-  before_filter :check_logged_in, :check_admin
+  before_filter :check_logged_in, :check_admin, :force_password_change
 
   def index
     session[:months_ago] ||= 0
