@@ -51,7 +51,7 @@ Scenario: Submit blank form
   Given I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the past day input page
-  And I should see "Date is invalid"
+  And I should see "Invalid date"
 
 @javascript
 Scenario: Submit blank form with only date filled in
@@ -68,4 +68,4 @@ Scenario: Submit valid form with bad date
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the past day input page
-  And I should see "Date is invalid"
+  And I should see "Invalid date"

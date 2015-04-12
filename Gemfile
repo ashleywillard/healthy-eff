@@ -47,8 +47,9 @@ gem 'simple_captcha', :git => 'git://github.com/galetahub/simple-captcha.git'
 gem 'twitter-bootstrap-rails'
 gem 'fullcalendar-rails'
 gem 'bootstrap-datepicker-rails', '~> 1.4.0'
+gem 'font-awesome-sass'
 
-gem 'wkhtmltopdf'
+gem 'wkhtmltopdf-binary'
 gem 'pdfkit'
 
 
