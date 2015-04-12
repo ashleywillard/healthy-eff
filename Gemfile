@@ -49,7 +49,7 @@ gem 'fullcalendar-rails'
 gem 'bootstrap-datepicker-rails', '~> 1.4.0'
 gem 'font-awesome-sass'
 
-gem 'wkhtmltopdf'
+gem 'wkhtmltopdf-binary'
 gem 'pdfkit'
 
 

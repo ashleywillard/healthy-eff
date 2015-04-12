@@ -30,6 +30,7 @@ Healthyeff::Application.routes.draw do
   # routing for admin views
   get 'admin' => 'admin#index', :as => :admin_list
   get 'admin/pending' => 'admin#pending', :as => :admin_pending
+  get 'admin/:id/tally' => 'admin#tally', :as => :admin_tally
   put 'admin/update_pending' => 'admin#update_pending', :as => :admin_update_pending
 
   # The priority is based upon order of creation:

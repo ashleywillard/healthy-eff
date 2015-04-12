@@ -34,6 +34,13 @@ class AdminController < ApplicationController
     flash[:notice] = "Success! Activities #{action}."
   end
 
+  def tally
+    html = render_to_string(:layout => false , :action => "tally.html.haml")
+    kit = PDFKit.new(html)
+    pdf = kit.to_pdf
+    send_data(kit.to_pdf, :filename => "tally.pdf", :type => 'application/pdf', :disposition => "inline")
+  end
+
   # function to generate PDF printout for a single employee (accounting sheet)
     # (?) RESTful: app.heroku.com/admin/accounting/:month/:id (?)
   # NOT YET IMPLEMENTED
