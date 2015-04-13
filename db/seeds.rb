@@ -10,8 +10,14 @@
 user = User.create! :first_name => 'Will',
                     :last_name => 'Guo',
                     :email => '169.healthyeff@gmail.com',
+<<<<<<< HEAD
                     :password => '?Northsidepotato169',
                     :password_confirmation => '?Northsidepotato169'
+=======
+                    :password => 'northsidepotato',
+                    :password_confirmation => 'northsidepotato',
+                    :password_changed => true
+>>>>>>> 5fc7c2a50dc72be590941271b60058342a00bed3
 # Manually give admin privileges, since attr_protected
 user.admin = true
 user.save
@@ -19,15 +25,21 @@ user.save
 # ===== Non-admin account ===== #
 User.create! :first_name => 'Armando',
              :last_name => 'Fox',
+<<<<<<< HEAD
              :email => 'healthypotato@gmail.com', 
              :password => '?Hotpotato169', 
              :password_confirmation => '?Hotpotato169'
+=======
+             :email => 'healthypotato@gmail.com',
+             :password => 'hotpotato',
+             :password_confirmation => 'hotpotato'
+>>>>>>> 5fc7c2a50dc72be590941271b60058342a00bed3
 
 # ===== Approved day, non-admin ===== #
-Activity.create! :duration => 25, 
+Activity.create! :duration => 25,
                  :name => 'running',
                  :day_id => 1
-Activity.create! :duration => 35, 
+Activity.create! :duration => 35,
                  :name => 'swimming',
                  :day_id => 1
 Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),
@@ -38,7 +50,7 @@ Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),
             :month_id => 1
 
 # ===== Pending day, non-admin, #1 ===== #
-Activity.create! :duration => 60, 
+Activity.create! :duration => 60,
                  :name => 'running',
                  :day_id => 2
 Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
@@ -49,7 +61,7 @@ Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
             :month_id => 1
 
 # ===== Pending day, non-admin, #2 ===== #
-Activity.create! :duration => 60, 
+Activity.create! :duration => 60,
                  :name => 'swimming',
                  :day_id => 2
 Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
@@ -60,7 +72,7 @@ Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
             :month_id => 1
 
 # ===== Denied day, non-admin ===== #
-Activity.create! :duration => 60, 
+Activity.create! :duration => 60,
                  :name => 'hiking',
                  :day_id => 3
 Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
@@ -77,10 +89,10 @@ Month.create! :user_id => 2,
               :num_of_days => 3,
               :printed_form => false,
               :received_form => false
-              
+
 
 # ===== Approved day, non-admin ===== #
-Activity.create! :duration => 60, 
+Activity.create! :duration => 60,
                  :name => 'swimming',
                  :day_id => 4
 

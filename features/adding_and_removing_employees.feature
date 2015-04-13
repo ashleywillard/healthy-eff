@@ -6,11 +6,19 @@ Feature: Adding and removing employees
 
 Background: users in database
   Given the following admins exist:
+<<<<<<< HEAD
   | email                       | password              | password_confirmation | last_name |  
   | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | Guo       |
   Given the following users exist:
   | email                       | password              | password_confirmation | last_name |  
   | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | Fox       |
+=======
+  | email                       | password              | password_confirmation | last_name | password_changed |
+  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       | Guo       | true             |
+  Given the following users exist:
+  | email                       | password              | password_confirmation | last_name | password_changed |
+  | healthypotato@gmail.com     | hotpotato             | hotpotato             | Fox       | true             |
+>>>>>>> 5fc7c2a50dc72be590941271b60058342a00bed3
 
 Scenario: Going to add employee page
   Given I am logged in as an admin

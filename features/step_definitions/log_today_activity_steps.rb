@@ -7,7 +7,7 @@ end
 When /I fill in activity with:(.*)/ do |entry_list|
   entries = entry_list.split(',')
   (entries.count - 1).times do
-    click_link('Add Activity')
+    page.find('.activity_link').trigger('click')
   end
 
   name_ids = page.body.scan(/id="day_activities_attributes_.{0,20}_name/m)

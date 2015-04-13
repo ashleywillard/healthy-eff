@@ -5,9 +5,9 @@ Feature: Workout Calendar
 
 Background: users in database
   Given the following users exist:
-  | email                       | password              | password_confirmation |
-  | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   |
-  | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         |
+  | email                       | password              | password_confirmation | password_changed |
+  | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | true             |
+  | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | true             |
 
   Given I am logged in as a non-admin
   And I set up the database with a few days
