@@ -56,22 +56,39 @@ RSpec.describe Month, :type => :model do
   end
   describe '#self.get_inputted_dates' do
     before :each do
-      @month_model = Month.create!({:user_id => @user_id,
-                     :month => @month,
-                     :year => @year,
+      @end_date = Time.strptime("04/15/2015", "%m/%d/%Y")
+      @month1 = Month.create!({:user_id => @user_id,
+                     :month => 4,
+                     :year => 2015,
                      :num_of_days => 1})
-      @day = Day.create!({:date => @today,
+      @day1 = Day.create!({:date => @end_date,
                         :reason => "none",
-                        :month_id => @month_model.id, 
+                        :month_id => @month1.id, 
                         :total_time => 60,
                         :approved => true,
                         :denied => false})
     end
     context 'Month of start date and end date differ' do
-      it 'not implemented'
+      it 'not implemented' do
+        start_date = Time.strptime("03/01/2015", "%m/%d/%Y")
+        month2 = Month.create!({:user_id => @user_id,
+                     :month => 3,
+                     :year => 2015,
+                     :num_of_days => 1})
+        day2 = Day.create!({:date => start_date,
+                        :reason => "none",
+                        :month_id => month2.id, 
+                        :total_time => 60,
+                        :approved => true,
+                        :denied => false})
+        expect(Month.get_inputted_dates(@user_id, start_date, @end_date)).to eq(["04/15/2015", "03/01/2015"])
+      end
     end
     context 'Month of start date and end date are same' do
-      it 'not implemented'
+      it 'not implemented'do
+        start_date = Time.strptime("04/01/2015", "%m/%d/%Y")
+        expect(Month.get_inputted_dates(@user_id, start_date, @end_date)).to eq(["04/15/2015"])
+      end
     end
   end
   describe '#self.get_dates_list' do
