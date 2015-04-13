@@ -1,1 +1,24 @@
-%h1 Employee List
+-#  app/views/admin/tally.html.haml
+%h1 EFF's Healthy Lifestyles Program
+%h2 Monthly Accounting: #{@date.strftime("%B")} #{@date.strftime("%Y")}
+
+%p Employee Name: #{@first_name} #{@last_name}
+
+%table#monthly_acct
+  %tbody
+    - for i in 1..@num_days / 2
+      %tr
+        %td= i.to_s
+        %td _______
+        %td= (i + (@num_days/2)).to_s
+        %td _______
+        - if i == @num_days / 2 and (@num_days % 2) == 1
+          %td= @num_days.to_s
+          %td _______
+
+%p Total number of days: #{@user_days}
+%p Reimbursable amount (days x $10): $#{@user_days * 10}
+
+%p I certify that I spent at least one hour engaged in reimbursable personal health-focused behavior on each of the above dates.
+%br
+%p Signature: _______________________ &nbsp;&nbsp;&nbsp;&nbsp; Date: ________

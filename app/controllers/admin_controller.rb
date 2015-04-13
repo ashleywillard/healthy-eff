@@ -35,6 +35,14 @@ class AdminController < ApplicationController
   end
 
   def tally
+    id = params[:id] # TODO: null check
+    @first_name = User.find_by_id(id).first_name
+    @last_name = User.find_by_id(id).last_name
+    @date = Date.today
+#     @month = Date.today.strftime("%B")
+#     @year = Date.today.strftime("%Y")
+    @num_days = Time.days_in_month(@date.month, @date.year) + 1
+    @user_days = Month.where(:month => @date.strftime("%m"), :year => @date.strftime("%Y"), :user_id => id).first.num_of_days
     html = render_to_string(:layout => false, :action => "tally.html.haml")
     kit = PDFKit.new(html)
 #     pdf = kit.to_pdf

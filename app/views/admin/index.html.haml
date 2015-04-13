@@ -14,7 +14,7 @@
     - @user_months.each do |month|
       %tr
         %td
-          = link_to "Accounting"
+          = link_to "Accounting", admin_tally_path(:id => month.user.id)
         %td= month.user.first_name
         %td= month.user.last_name
         %td= month.num_of_days
