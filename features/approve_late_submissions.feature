@@ -7,10 +7,10 @@ Feature: Approve late submissions
 Background:
   Given the following admins exist:
   | email                       | password              | password_confirmation |
-  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
+  | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   |
   And the following users exist:
   | email                      | password        | password_confirmation |
-  | healthypotato@gmail.com    | hotpotato       | hotpotato             |
+  | healthypotato@gmail.com    | ?Hotpotato169   | ?Hotpotato169         |
 
 Scenario: Privileged access
   Given I am logged in as a non-admin

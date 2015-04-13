@@ -7,10 +7,10 @@ Feature: Adding and removing employees
 Background: users in database
   Given the following admins exist:
   | email                       | password              | password_confirmation | last_name |  
-  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       | Guo       |
+  | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | Guo       |
   Given the following users exist:
   | email                       | password              | password_confirmation | last_name |  
-  | healthypotato@gmail.com     | hotpotato             | hotpotato             | Fox       |
+  | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | Fox       |
 
 Scenario: Going to add employee page
   Given I am logged in as an admin

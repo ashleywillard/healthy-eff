@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  validate :password_complexity
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name
   # attr_accessible :title, :body
@@ -12,4 +14,23 @@ class User < ActiveRecord::Base
   has_many :days, through: :months
 
   attr_protected :admin
+
+  def password_complexity
+    if password.empty? 
+      errors.add :password, "Password can't be blank"
+    end
+    if not password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/)
+      errors.add :password, "must include at least one lowercase letter"
+    end
+    if not password.match(/^(?=.*[A-Z]).+$/)
+      errors.add :password, "must include at least one uppercase letter"
+    end
+    if not password.match(/^(?=.*\d).+$/)
+      errors.add :password, "must include at least one number"
+    end
+    if not password.match(/^(?=.*(_|[^\w])).+$/)
+      errors.add :password, "must include at least one non-letter character"
+    end
+  end
+
 end

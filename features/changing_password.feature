@@ -7,8 +7,8 @@ Feature: Changing password
 Background: users in database
   Given the following users exist:
   | email                       | password              | password_confirmation |
-  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
-  | healthypotato@gmail.com     | hotpotato             | hotpotato             |
+  | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   |
+  | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         |
   Given I am logged in as a non-admin
   And I am on the user settings page
 

@@ -6,7 +6,7 @@ Feature: Recover Password
 Background: users in database
   Given the following users exist:
   | email                       | password              | password_confirmation |    
-  | healthypotato@gmail.com     | hotpotato             | hotpotato             |
+  | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         |
 
 Scenario: Get email
   Given I am on the sign in page
