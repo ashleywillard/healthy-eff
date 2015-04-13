@@ -53,14 +53,14 @@ RSpec.describe DaysController do
 
   describe "adding today" do
     before :each do
-      user = User.create()
+      user = User.create(:password => "NewBaconings2day.")
       DaysController.any_instance.stub(:current_user).and_return(user)
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(true)
     end
     context 'All inputs are present and valid' do
       it 'should successfully add today to database and redirect to profile page' do
-        user = User.create()
+        user = User.create(:password => "Run1ng0utofp@ssword!deas:(")
         DaysController.any_instance.stub(:current_user).and_return(user)
         today = Date.today
         params = {:days => {:reason => "none"}, :day => {:date => "#{today}", :activities_attributes => {"1" =>{:name => "swimming", :duration => "90"}}}}
@@ -72,7 +72,7 @@ RSpec.describe DaysController do
     end
     context 'Today was already input' do
       it 'should redirect to today path and display day already inputted error' do
-        user = User.create()
+        user = User.create(:password => "Run1ng0utofp@ssword!deas:(")
         DaysController.any_instance.stub(:current_user).and_return(user)
         today = Date.today
         
@@ -108,7 +108,7 @@ RSpec.describe DaysController do
 
   describe "Adding past days" do
     before :each do
-      user = User.create()
+      user = User.create(:password => "Sushi5evar!")
       DaysController.any_instance.stub(:current_user).and_return(user)
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(true)

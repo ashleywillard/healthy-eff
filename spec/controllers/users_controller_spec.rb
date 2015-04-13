@@ -99,7 +99,7 @@ RSpec.describe UsersController do
   describe 'non-admin' do
     before :each do
       @request.env["devise.mapping"] = Devise.mappings[:user]
-      @user = User.create(:email=>'meow@meow.com', :password=>'meowmeowbeans', :password_confirmation=>'meowmeowbeans')
+      @user = User.create(:email=>'meow@meow.com', :password=>'?Meowmeowbeans169', :password_confirmation=>'?Meowmeowbeans169')
       sign_in @user
       UsersController.any_instance.should_receive(:current_user).at_least(1).and_return @user
       allow(request.env['warden']).to receive(:authenticate!).and_return(@user)

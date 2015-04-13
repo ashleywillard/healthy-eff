@@ -35,8 +35,8 @@ end
 Given (/^that I have logged (\d+) activities/) do |num|
   if num.casecmp("No") ; pass ; end
   u = User.create! :email => "blah@blah.com",
-                   :password => "asdfjkl;asdfjkl;",
-                   :password_confirmation => "asdfjkl;asdfjkl;"
+                   :password => "?1Asdfjkl;asdfjkl;",
+                   :password_confirmation => "?1Asdfjkl;asdfjkl;"
 #   u.first_name = name.split[0] ; u.last_name = name.split[1] ; u.save
   m = Month.create! :user_id => u.id
   num.to_i.times do
@@ -52,8 +52,8 @@ end
 Given (/^(.*) (?:pending|unapproved) (?:|activities|days) exist/) do |num|
   if num.casecmp("No") ; pass ; end
   u = User.create! :email => "blah@blah.com",
-                   :password => "asdfjkl;asdfjkl;",
-                   :password_confirmation => "asdfjkl;asdfjkl;"
+                   :password => "?Ag0asdfasdf",
+                   :password_confirmation => "?Ag0asdfasdf"
   m = Month.create! :user_id => u.id
   num.to_i.times do
     Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),

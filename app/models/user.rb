@@ -17,9 +17,9 @@ class User < ActiveRecord::Base
 
   def password_complexity
     if password.empty? 
-      errors.add :password, "Password can't be blank"
+      errors.add :password, "can't be blank"
     end
-    if not password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/)
+    if not password.match(/^(?=.*[a-z]).+$/)
       errors.add :password, "must include at least one lowercase letter"
     end
     if not password.match(/^(?=.*[A-Z]).+$/)
