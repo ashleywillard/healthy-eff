@@ -3,19 +3,16 @@
   = devise_error_messages!
   .field
     = f.label :email
-    %br/
     = f.email_field :email, autofocus: true
   .field
     = f.label :password
     - if @validatable
       %em
         (#{@minimum_password_length} characters minimum)
-    %br/
     = f.password_field :password, autocomplete: "off"
   .field
     = f.label :password_confirmation
-    %br/
     = f.password_field :password_confirmation, autocomplete: "off"
   .actions
-    = f.submit "Sign up"
+    = f.submit "Sign up", :class => "btn"
 = render "devise/shared/links"

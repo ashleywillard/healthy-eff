@@ -13,13 +13,13 @@ Background: users in database
 Scenario: Logging in with the correct credentials
   Given I am on the sign in page
   When I fill in my username and password
-  And I press “Log in”
+  And I press “Sign In”
   Then I should see "Signed in successfully."
 
 Scenario: Logging in with incorrect password
   Given I am on the sign in page
   When I fill in my username and the wrong password
-  And I press “Log in”
+  And I press “Sign In”
   Then I should be on the sign in page
   And I should see "Invalid email or password."
 

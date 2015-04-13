@@ -4,14 +4,14 @@ Given /I am signed|logged in as an admin/ do
   visit '/users/sign_in'
   fill_in "user_email", :with => '169.healthyeff@gmail.com'
   fill_in "user_password", :with => 'northsidepotato'
-  click_button "Log in"
+  click_button "Sign In"
 end
 
 Given /I am signed|logged in as a non-admin/ do
   visit '/users/sign_in'
   fill_in "user_email", :with => 'healthypotato@gmail.com'
   fill_in "user_password", :with => 'hotpotato'
-  click_button "Log in"
+  click_button "Sign In"
 end
 
 When /I fill in my username and password/ do

@@ -47,6 +47,7 @@ gem 'simple_captcha', :git => 'git://github.com/galetahub/simple-captcha.git'
 gem 'twitter-bootstrap-rails'
 gem 'fullcalendar-rails'
 gem 'bootstrap-datepicker-rails', '~> 1.4.0'
+gem 'bootstrap-glyphicons'
 
 # To generate PDF files
 gem 'wkhtmltopdf-binary'
