@@ -16,16 +16,16 @@ class User < ActiveRecord::Base
   attr_protected :admin
 
   def password_complexity
-    if not password.match(/^(?=.*[a-z]).+$/)
+    if password.present? and not password.match(/^(?=.*[a-z]).+$/)
       errors.add :password, "must include at least one lowercase character"
     end
-    if not password.match(/^(?=.*[A-Z]).+$/)
+    if password.present? and not password.match(/^(?=.*[A-Z]).+$/)
       errors.add :password, "must include at least one uppercase character"
     end
-    if not password.match(/^(?=.*\d).+$/)
+    if password.present? and not password.match(/^(?=.*\d).+$/)
       errors.add :password, "must include at least one number"
     end
-    if not password.match(/^(?=.*(_|[^\w])).+$/)
+    if password.present? and not password.match(/^(?=.*(_|[^\w])).+$/)
       errors.add :password, "must include at least one special character"
     end
   end
