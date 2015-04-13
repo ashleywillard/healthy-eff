@@ -2,14 +2,15 @@ require "rails_helper"
 
 RSpec.describe DaysController do
 
-  describe "when logged in" do
-    before :each do
-      user = double('user')
-      allow_message_expectations_on_nil # suppress warnings on devise warden
-      allow(request.env['warden']).to receive(:authenticate!).and_return(user)
-      allow(controller).to receive(:current_user).and_return(user)
-    end
+  before :each do
+    @user = double(User)
+    allow(@user).to receive(:password_changed?).and_return(true)
+    allow_message_expectations_on_nil # suppress warnings on devise warden
+    allow(request.env['warden']).to receive(:authenticate!).and_return(@user)
+    allow(controller).to receive(:current_user).and_return(@user)
+  end
 
+  describe "when logged in" do
     it "displays the log activity page" do
       post :add_today
       expect(response).to redirect_to(today_path)
@@ -53,14 +54,12 @@ RSpec.describe DaysController do
 
   describe "adding today" do
     before :each do
-      user = User.create()
-      DaysController.any_instance.stub(:current_user).and_return(user)
-      DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(true)
     end
     context 'All inputs are present and valid' do
       it 'should successfully add today to database and redirect to profile page' do
         user = User.create()
+        allow(user).to receive(:password_changed?).and_return(true)
         DaysController.any_instance.stub(:current_user).and_return(user)
         today = Date.today
         params = {:days => {:reason => "none"}, :day => {:date => "#{today}", :activities_attributes => {"1" =>{:name => "swimming", :duration => "90"}}}}
@@ -73,9 +72,10 @@ RSpec.describe DaysController do
     context 'Today was already input' do
       it 'should redirect to today path and display day already inputted error' do
         user = User.create()
+        allow(user).to receive(:password_changed?).and_return(true)
         DaysController.any_instance.stub(:current_user).and_return(user)
         today = Date.today
-        
+
         params = {:days => {:reason => "none"}, :day => {:date => "#{today}", :activities_attributes => {"1" =>{:name => "swimming", :duration => "90"}}}}
         post :add_today, params
 
@@ -109,6 +109,7 @@ RSpec.describe DaysController do
   describe "Adding past days" do
     before :each do
       user = User.create()
+      allow(user).to receive(:password_changed?).and_return(true)
       DaysController.any_instance.stub(:current_user).and_return(user)
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(true)
@@ -117,7 +118,7 @@ RSpec.describe DaysController do
       it 'should successfully add days to database and redirect to profile page' do
         date1 = Date.today.prev_day.strftime("%m/%d/%Y")
         date2 = Date.today.prev_day.prev_day.strftime("%m/%d/%Y")
-        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes => 
+        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes =>
                               {"1" => {:date => "#{date1}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}},
                               "3" => {:date => "#{date2}", :activities_attributes => {"4" => {:name => "running", :duration => "20"}, "5" => {:name => "swimming", :duration => "40"}}}}}}
         #Check the database also
@@ -129,7 +130,7 @@ RSpec.describe DaysController do
     context 'Inputs are present and valid for single day and activity' do
       it 'should successfully add days to database and redirect to profile page' do
         date = Date.today.prev_day.strftime("%m/%d/%Y")
-        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes => 
+        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes =>
                               {"1" => {:date => "#{date}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         #Check the database also
         post :add_days, params
@@ -140,7 +141,7 @@ RSpec.describe DaysController do
     context 'day was already input' do
       it 'should redirect to past days path and flash already inputted error' do
         date = Date.today.prev_day.strftime("%m/%d/%Y")
-        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes => 
+        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes =>
                               {"1" => {:date => "#{date}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         #Check the database also
         post :add_days, params
@@ -153,7 +154,7 @@ RSpec.describe DaysController do
     end
     context 'Date argument is invalid' do
       it 'should redirect to past days path and flash invalid date error' do
-        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes => 
+        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes =>
                               {"1" => {:date => "RAWR", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
         expect(flash[:notice]).to eq("Date is invalid")
@@ -163,7 +164,7 @@ RSpec.describe DaysController do
     context 'Reason field is empty for Day' do
       it 'should redirect to past days path and flash reason is empty error' do
         date = Date.today.prev_day.strftime("%m/%d/%Y")
-        params = {:days => {:reason => ""}, :month => {:days_attributes => 
+        params = {:days => {:reason => ""}, :month => {:days_attributes =>
                               {"1" => {:date => "#{date}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
         expect(flash[:notice]).to eq("Reason can't be blank")
@@ -172,7 +173,7 @@ RSpec.describe DaysController do
     end
     context 'Date field is empty for Day' do
       it 'should redirect to past days path and flash date is empty error' do
-        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes => 
+        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes =>
                               {"1" => {:date => "", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
         expect(flash[:notice]).to eq("Date is invalid")
@@ -199,7 +200,7 @@ RSpec.describe DaysController do
     context 'Date field contains todays date' do
       it 'should redirect to past days path and flash invalid date error' do
         date = Date.today.strftime("%m/%d/%Y")
-        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes => 
+        params = {:days => {:reason => "Vacation"}, :month => {:days_attributes =>
                               {"1" => {:date => "#{date}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
         expect(flash[:notice]).to eq("Date #{date} is not within allowed range")
@@ -209,7 +210,7 @@ RSpec.describe DaysController do
   end
 
   describe "handles bad captcha" do
-    it "add_today should fail because captcha is bad" do 
+    it "add_today should fail because captcha is bad" do
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(false)
       post :add_today
@@ -217,7 +218,7 @@ RSpec.describe DaysController do
       response.should redirect_to(today_path)
     end
 
-    it "add_days should fail because captcha is bad" do 
+    it "add_days should fail because captcha is bad" do
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(false)
       post :add_days
