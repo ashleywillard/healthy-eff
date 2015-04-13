@@ -6,7 +6,7 @@ Feature: Log Healthy Activity Without JavaScript
 
 Background:
   Given the following users exist:
-  | email                       | password              | password_confirmation | passoword_changed |
+  | email                       | password              | password_confirmation | password_changed |
   | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | true              |
   | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | true              |
   Given I am logged in as a non-admin

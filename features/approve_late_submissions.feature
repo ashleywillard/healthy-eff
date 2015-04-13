@@ -10,7 +10,7 @@ Background:
   | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | true             |
   And the following users exist:
   | email                      | password        | password_confirmation | password_changed |
-  | healthypotato@gmail.com    | ?Hotpotato169   | ?Hotpotato169         | true
+  | healthypotato@gmail.com    | ?Hotpotato169   | ?Hotpotato169         | true             |
 
 Scenario: Privileged access
   Given I am logged in as a non-admin

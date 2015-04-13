@@ -7,7 +7,7 @@ Feature: View Employee List
 Background:
   Given the following admins exist:
   | email                       | password              | password_confirmation | password_changed |
-  | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | true
+  | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | true             |
   And the following users exist:
   | email                      | password        | password_confirmation | password_changed |
   | healthypotato@gmail.com    | ?Hotpotato169   | ?Hotpotato169         | true             |
