@@ -17,16 +17,16 @@ class User < ActiveRecord::Base
 
   def password_complexity
     if not password.match(/^(?=.*[a-z]).+$/)
-      errors.add :password, "must include at least one lowercase letter"
+      errors.add :password, "must include at least one lowercase character"
     end
     if not password.match(/^(?=.*[A-Z]).+$/)
-      errors.add :password, "must include at least one uppercase letter"
+      errors.add :password, "must include at least one uppercase character"
     end
     if not password.match(/^(?=.*\d).+$/)
       errors.add :password, "must include at least one number"
     end
     if not password.match(/^(?=.*(_|[^\w])).+$/)
-      errors.add :password, "must include at least one non-letter character"
+      errors.add :password, "must include at least one special character"
     end
   end
 
