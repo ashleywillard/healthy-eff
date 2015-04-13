@@ -32,7 +32,9 @@ Healthyeff::Application.routes.draw do
   get 'admin/pending' => 'admin#pending', :as => :admin_pending
   put 'admin/update_pending' => 'admin#update_pending', :as => :admin_update_pending
   # pdf
-  get 'admin/:id/tally' => 'admin#tally', :as => :admin_tally
+#   get 'admin/:id/tally' => 'admin#tally', :as => :admin_tally
+  get 'admin/:year/:month/accounting/:id' => 'admin#accounting', :as => :admin_accounting
+  get 'admin/:year/:month/audit' => 'admin#audit', :as => :admin_audit
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
