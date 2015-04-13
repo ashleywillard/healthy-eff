@@ -6,11 +6,11 @@ Feature: Approve late submissions
 
 Background:
   Given the following admins exist:
-  | email                       | password              | password_confirmation |
-  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
+  | email                       | password              | password_confirmation | password_changed |
+  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       | true             |
   And the following users exist:
-  | email                      | password        | password_confirmation |
-  | healthypotato@gmail.com    | hotpotato       | hotpotato             |
+  | email                      | password        | password_confirmation | password_changed |
+  | healthypotato@gmail.com    | hotpotato       | hotpotato             | true             |
 
 Scenario: Privileged access
   Given I am logged in as a non-admin

@@ -7,6 +7,7 @@ RSpec.describe UsersController do
       user = double('user')
       user.stub(:first_name).and_return('first')
       user.stub(:last_name).and_return('last')
+      allow(user).to receive(:password_changed?).and_return(true)
       allow_message_expectations_on_nil
       allow(request.env['warden']).to receive(:authenticate!).and_return(user)
       allow(controller).to receive(:current_user).and_return(user)
@@ -33,6 +34,7 @@ RSpec.describe UsersController do
       user.stub(:first_name).and_return('first')
       user.stub(:last_name).and_return('last')
       user.stub(:id).and_return(1)
+      allow(user).to receive(:password_changed?).and_return(true)
       allow_message_expectations_on_nil
       allow(request.env['warden']).to receive(:authenticate!).and_return(user)
       allow(controller).to receive(:current_user).and_return(user)
@@ -101,6 +103,7 @@ RSpec.describe UsersController do
       @request.env["devise.mapping"] = Devise.mappings[:user]
       @user = User.create(:email=>'meow@meow.com', :password=>'meowmeowbeans', :password_confirmation=>'meowmeowbeans')
       sign_in @user
+      allow(@user).to receive(:password_changed?).and_return(true)
       UsersController.any_instance.should_receive(:current_user).at_least(1).and_return @user
       allow(request.env['warden']).to receive(:authenticate!).and_return(@user)
     end
