@@ -45,7 +45,7 @@ class Month < ActiveRecord::Base
 
   def self.get_earliest_months
     months = self.where(year: Month.minimum(:year))
-    return months == nil ? nil : months.where(month: months.minimum(:month))
+    return months.first == nil ? nil : months.where(month: months.minimum(:month))
   end
 
   def contains_date?(date)
