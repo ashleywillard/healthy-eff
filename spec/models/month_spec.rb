@@ -7,8 +7,8 @@ RSpec.describe Month, :type => :model do
     user = User.create!({:first_name => 'Will',
                     :last_name => 'Guo',
                     :email => '169.healthyeff@gmail.com',
-                    :password => 'northsidepotato',
-                    :password_confirmation => 'northsidepotato'})
+                    :password => '?Northsidepotato169',
+                    :password_confirmation => '?Northsidepotato169'})
     @user_id = user.id
     @today = Date.today
     @month = get_month(@today)

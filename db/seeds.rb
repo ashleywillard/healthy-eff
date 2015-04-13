@@ -11,7 +11,7 @@ user = User.create! :first_name => 'Will',
                     :last_name => 'Guo',
                     :email => '169.healthyeff@gmail.com',
                     :password => '?Northsidepotato169',
-                    :password_confirmation => '?Northsidepotato169'
+                    :password_confirmation => '?Northsidepotato169',
                     :password_changed => true
 # Manually give admin privileges, since attr_protected
 user.admin = true
