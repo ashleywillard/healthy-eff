@@ -54,13 +54,19 @@ RSpec.describe DaysController do
 
   describe "adding today" do
     before :each do
+      @user = User.create!({:first_name => 'Will',
+                    :last_name => 'Guo',
+                    :email => '169.healthyeff@gmail.com',
+                    :password => 'northsidepotato',
+                    :password_confirmation => 'northsidepotato'})
+      DaysController.any_instance.stub(:current_user).and_return(@user)
+      DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(true)
     end
     context 'All inputs are present and valid' do
       it 'should successfully add today to database and redirect to profile page' do
-        user = User.create()
-        allow(user).to receive(:password_changed?).and_return(true)
-        DaysController.any_instance.stub(:current_user).and_return(user)
+        allow(@user).to receive(:password_changed?).and_return(true)
+        DaysController.any_instance.stub(:current_user).and_return(@user)
         today = Date.today
         params = {:days => {:reason => "none"}, :day => {:date => "#{today}", :activities_attributes => {"1" =>{:name => "swimming", :duration => "90"}}}}
         post :add_today, params
@@ -71,9 +77,8 @@ RSpec.describe DaysController do
     end
     context 'Today was already input' do
       it 'should redirect to today path and display day already inputted error' do
-        user = User.create()
-        allow(user).to receive(:password_changed?).and_return(true)
-        DaysController.any_instance.stub(:current_user).and_return(user)
+        allow(@user).to receive(:password_changed?).and_return(true)
+        DaysController.any_instance.stub(:current_user).and_return(@user)
         today = Date.today
 
         params = {:days => {:reason => "none"}, :day => {:date => "#{today}", :activities_attributes => {"1" =>{:name => "swimming", :duration => "90"}}}}
@@ -88,6 +93,7 @@ RSpec.describe DaysController do
     end
     context 'Duration field is empty for Activity' do
       it 'should redirect to today path and display duration empty error' do
+        allow(@user).to receive(:password_changed?).and_return(true)
         today = Date.today
         params = {:days => {:reason => "none"}, :day => {:date => "#{today}", :activities_attributes => {"1" =>{:name => "", :duration => ""}}}}
         post :add_today, params
@@ -97,6 +103,7 @@ RSpec.describe DaysController do
     end
     context 'Activity duration is invalid' do
       it 'should redirect to today path and display duration invalid error' do
+        allow(@user).to receive(:password_changed?).and_return(true)
         today = Date.today
         params = {:days => {:reason => "none"}, :day => {:date => "#{today}", :activities_attributes => {"1" =>{:name => "", :duration => "-1"}}}}
         post :add_today, params
@@ -108,9 +115,13 @@ RSpec.describe DaysController do
 
   describe "Adding past days" do
     before :each do
-      user = User.create()
-      allow(user).to receive(:password_changed?).and_return(true)
-      DaysController.any_instance.stub(:current_user).and_return(user)
+      @user = User.create!({:first_name => 'Will',
+                    :last_name => 'Guo',
+                    :email => '169.healthyeff@gmail.com',
+                    :password => 'northsidepotato',
+                    :password_confirmation => 'northsidepotato'})
+      allow(@user).to receive(:password_changed?).and_return(true)
+      DaysController.any_instance.stub(:current_user).and_return(@user)
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(true)
     end
