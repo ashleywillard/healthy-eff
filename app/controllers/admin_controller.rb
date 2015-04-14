@@ -42,11 +42,10 @@ class AdminController < ApplicationController
   def accounting
     @user = User.find_by_id(params[:id])
     @date = get_date()
-    @num_days = Time.days_in_month(@date.month, @date.year) # + 1 here temporarily as test for 31 days
+    @num_days = Time.days_in_month(@date.month, @date.year)
     records = Month.get_month_model(params[:id], @date.month, @date.year)
     if records.nil?
-      flash[:notice] = "No recorded activities for #{@user.first_name} #{@user.last_name} for #{@date.strftime("%B")} #{@date.strftime("%Y")}."
-      redirect_to admin_list_path
+      handle_no_records()
     else
       @user_days = records.num_of_days
       generate_pdf("accounting", "acct-#{@user.last_name}-#{get_month_name(@date)}-#{get_year(@date)}.pdf")
@@ -74,6 +73,11 @@ class AdminController < ApplicationController
     send_data(kit.to_pdf, :filename => name,
                           :type => 'application/pdf',
                           :disposition => "inline")
+  end
+
+  def handle_no_records
+    flash[:notice] = "No recorded activities for #{@user.first_name} #{@user.last_name} for #{@date.strftime("%B")} #{@date.strftime("%Y")}."
+    redirect_to admin_list_path
   end
 
   def get_date
