@@ -6,6 +6,17 @@ Given (/^the following users exist/) do |users_table|
   end
 end
 
+Given(/^"(.*?)" and "(.*?)" exist as users$/) do |name1, name2|
+  u1 = User.create! :email => "blah@blah.com",
+                    :password => "?1Asdfjkl;asdfjkl;",
+                    :password_confirmation => "?1Asdfjkl;asdfjkl;"
+  u1.first_name = name1.split[0] ; u1.last_name = name1.split[1] ; u1.save
+  u2 = User.create! :email => "blah2@blah.com",
+                    :password => "?1Asdfjkl;asdfjkl;",
+                    :password_confirmation => "?1Asdfjkl;asdfjkl;"
+  u2.first_name = name2.split[0] ; u2.last_name = name2.split[1] ; u2.save
+end
+
 Given (/^the following admins exist/) do |users_table|
   users_table.hashes.each do |user|
     user = User.create!(user)
