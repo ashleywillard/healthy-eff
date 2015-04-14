@@ -9,6 +9,8 @@ SimpleCov.start 'rails'
 require 'cucumber/rails'
 
 require 'capybara/poltergeist'
+require File.expand_path('../../../extras/error_messages', __FILE__)
+World(ErrorMessages)
 
 Capybara.register_driver :poltergeist do |app|
     Capybara::Poltergeist::Driver.new(app, {debug: false, js_errors: false})

@@ -18,7 +18,7 @@ Scenario: Adding a past day
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on my profile page
-  And I should see "Swimming for 100 minutes has been recorded"
+  And I should see activity "Swimming" and duration "100"
 
 Scenario: Adding a past day that has already been inputted
   Given I fill in day and activity with:Yesterday,Swimming 100
@@ -31,13 +31,13 @@ Scenario: Adding a past day that has already been inputted
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the past day input page
-  And I should see "already been inputted"
+  And I should see that this date has already been inputted
 
 Scenario: Submit blank form
   Given I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the past day input page
-  And I should see "Date is invalid"
+  And I should see that the date is invalid
 
 Scenario: Submit blank form with only date filled in
   Given I fill out date
@@ -52,4 +52,4 @@ Scenario: Submit valid form with bad date
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the past day input page
-  And I should see "Date is invalid"
+  And I should see that the date is invalid

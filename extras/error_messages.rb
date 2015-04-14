@@ -18,7 +18,7 @@ module ErrorMessages
 
   USER_DELETED = " has been deleted."
   def user_deleted(first_name, last_name)
-    "User #{first_name} #{last_name}"
+    "User #{first_name} #{last_name}" + USER_DELETED
   end
 
   INVITE_REFUSED = "You are not authorized to invite other users."
@@ -38,13 +38,22 @@ module ErrorMessages
   EMPTY_FIELDS = "Some required fields were left blank."
 
   INVALID_DATE = "Invalid date."
+  def invalid_date
+    INVALID_DATE
+  end
 
   def activity_recorded(name, duration, date)
-    "#{name} for #{duration} minutes has been recorded for #{date}.\n"
+    if date == ""
+      return "#{name.capitalize} for #{duration} minutes has been recorded for"
+    end
+    "#{name.capitalize} for #{duration} minutes has been recorded for #{date}.\n"
   end
 
   REPEAT_DATE = " has already been inputted."
   def repeat_date(date)
     "#{date}" + REPEAT_DATE
   end
+
+  NOT_BLANK = "can't be blank"
 end
+#World(ErrorMessages)

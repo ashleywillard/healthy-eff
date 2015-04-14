@@ -19,10 +19,10 @@ Scenario: Adding multiple exercises for past days
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on my profile page
-  And I should see "Swimming for 100 minutes has been recorded"
-  And I should see "Running for 30 minutes has been recorded"
-  And I should see "Rawring for 30 minutes has been recorded"
-  And I should see "Laughing for 50 minutes has been recorded"
+  And I should see activity "Swimming" and duration "100"
+  And I should see activity "Running" and duration "30"
+  And I should see activity "Rawring" and duration "30"
+  And I should see activity "Laughing" and duration "50"
 
 @javascript
 Scenario: Adding past days that have already been inputted
@@ -36,7 +36,7 @@ Scenario: Adding past days that have already been inputted
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the past day input page
-  And I should see "already been inputted"
+  And I should see that this date has already been inputted
 
 @javascript
 Scenario: Adding multiple exercises for past days with blank fields
@@ -51,7 +51,7 @@ Scenario: Submit blank form
   Given I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the past day input page
-  And I should see "Date is invalid"
+  And I should see that the date is invalid
 
 @javascript
 Scenario: Submit blank form with only date filled in
@@ -68,4 +68,4 @@ Scenario: Submit valid form with bad date
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the past day input page
-  And I should see "Date is invalid"
+  And I should see that the date is invalid

@@ -8,7 +8,7 @@ class Activity < ActiveRecord::Base
 
   def valid_duration
     if duration == nil
-      errors.add(:duration, "can't be blank")
+      errors.add(:duration, NOT_BLANK)
     elsif duration <= 0 
       errors.add(:duration, "can't be less than 0")
     elsif duration > 1440
