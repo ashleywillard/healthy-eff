@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-
+  include DateFormat
   before_filter :check_logged_in, :check_admin, :force_password_change
 
   # Admin list view
@@ -7,9 +7,8 @@ class AdminController < ApplicationController
     session[:months_ago] ||= 0
     session[:months_ago] += 1 if params[:navigate] == "Previous"
     session[:months_ago] -= 1 if params[:navigate] == "Next"
-    @date = session[:months_ago].to_i.months.ago
-    @user_months = Month.where(:month => @date.strftime("%m"),
-                               :year => @date.strftime("%Y"))
+    @date = get_date()
+    @user_months = Month.where(:month => get_month(@date), :year => get_year(@date))
   end
 
   # Activities pending approval
@@ -42,15 +41,15 @@ class AdminController < ApplicationController
   # Generate PDF for individual accounting sheet
   def accounting
     @user = User.find_by_id(params[:id])
-    @date = session[:months_ago].to_i.months.ago
-    @num_days = Time.days_in_month(@date.month, @date.year) + 1 # +1 here as test for 31 days
+    @date = get_date()
+    @num_days = Time.days_in_month(@date.month, @date.year) # + 1 here temporarily as test for 31 days
     records = Month.get_month_model(params[:id], @date.month, @date.year)
     if records.nil?
       flash[:notice] = "No recorded activities for #{@user.first_name} #{@user.last_name} for #{@date.strftime("%B")} #{@date.strftime("%Y")}."
       redirect_to admin_list_path
     else
       @user_days = records.num_of_days
-      generate_pdf("accounting", "acct-#{@last_name}-#{@date.strftime("%B")}-#{@date.strftime("%Y")}.pdf")
+      generate_pdf("accounting", "acct-#{@user.last_name}-#{get_month_name(@date)}-#{get_year(@date)}.pdf")
     end
   end
 
@@ -58,7 +57,7 @@ class AdminController < ApplicationController
   def audit
     @date = session[:months_ago].to_i.months.ago
     @user_months = Month.where(:month => @date.strftime("%m"), :year => @date.strftime("%Y"))
-    generate_pdf("audit", "audit-#{@date.strftime("%B")}-#{@date.strftime("%Y")}.pdf")
+    generate_pdf("audit", "audit-#{get_month_name(@date)}-#{get_year(@date)}.pdf")
   end
 
   def generate_pdf(type, name)
@@ -75,6 +74,10 @@ class AdminController < ApplicationController
     send_data(kit.to_pdf, :filename => name,
                           :type => 'application/pdf',
                           :disposition => "inline")
+  end
+
+  def get_date
+    session[:months_ago].to_i.months.ago
   end
 
   private
