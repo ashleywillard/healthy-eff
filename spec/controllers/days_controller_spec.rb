@@ -5,6 +5,7 @@ RSpec.describe DaysController do
   before :each do
     @user = double(User)
     allow(@user).to receive(:password_changed?).and_return(true)
+    allow(@user).to receive(:id).and_return(1)
     allow_message_expectations_on_nil # suppress warnings on devise warden
     allow(request.env['warden']).to receive(:authenticate!).and_return(@user)
     allow(controller).to receive(:current_user).and_return(@user)
@@ -27,6 +28,22 @@ RSpec.describe DaysController do
     it "redirects to login page" do
       post :add_today
       expect(response).to redirect_to(new_user_session_path)
+    end
+  end
+
+  describe "password_changed? filter" do
+    context "when signing in for the first time" do
+      it "prompts the user to change his/her password" do
+        allow(@user).to receive(:password_changed?).and_return(false)
+        get :today
+        expect(response).to redirect_to(edit_user_registration_path)
+      end
+    end
+    context "when signing in having already changed password" do
+      it "allows access" do
+        get :today
+        expect(response.status).to eq(200)
+      end
     end
   end
 
