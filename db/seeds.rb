@@ -10,8 +10,8 @@
 user = User.create! :first_name => 'Will',
                     :last_name => 'Guo',
                     :email => '169.healthyeff@gmail.com',
-                    :password => 'northsidepotato',
-                    :password_confirmation => 'northsidepotato',
+                    :password => '?Northsidepotato169',
+                    :password_confirmation => '?Northsidepotato169',
                     :password_changed => true
 # Manually give admin privileges, since attr_protected
 user.admin = true
@@ -20,9 +20,9 @@ user.save
 # ===== Non-admin account ===== #
 User.create! :first_name => 'Armando',
              :last_name => 'Fox',
-             :email => 'healthypotato@gmail.com',
-             :password => 'hotpotato',
-             :password_confirmation => 'hotpotato'
+             :email => 'healthypotato@gmail.com', 
+             :password => '?Hotpotato169', 
+             :password_confirmation => '?Hotpotato169'
 
 # ===== Approved day, non-admin ===== #
 Activity.create! :duration => 25,

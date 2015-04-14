@@ -5,8 +5,8 @@ Feature: Recover Password
 
 Background: users in database
   Given the following users exist:
-  | email                       | password              | password_confirmation | password_changed |
-  | healthypotato@gmail.com     | hotpotato             | hotpotato             | true             |
+  | email                       | password              | password_confirmation | password_changed |   
+  | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | true             |
 
 Scenario: Get email
   Given I am on the sign in page
