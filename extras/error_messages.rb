@@ -1,14 +1,16 @@
 module ErrorMessages
 
-  ACCESS_DENIED = " page is restriced to administrators."
-
   def get_current_page
     path = Rails.application.routes.recognize_path(request.env['PATH_INFO'])
     path[:action]
   end
 
+  ACCESS_DENIED = " page is restricted to administrators."
   def deny_access(page)
     "Access to the '#{page.capitalize}'" + ACCESS_DENIED
+  end
+  def access_denied
+    ACCESS_DENIED
   end
 
   ACTION_COMPLETE = "Success! Activities "
@@ -18,12 +20,18 @@ module ErrorMessages
 
   USER_DELETED = " has been deleted."
   def user_deleted(first_name, last_name)
+    if (first_name == "")
+      return "User #{last_name}" + USER_DELETED
+    end
     "User #{first_name} #{last_name}" + USER_DELETED
   end
 
   INVITE_REFUSED = "You are not authorized to invite other users."
 
   NOTHING_PENDING = "No activities pending approval."
+  def nothing_pending
+    NOTHING_PENDING
+  end
 
   APPROVE = "Approve"
 
@@ -55,5 +63,12 @@ module ErrorMessages
   end
 
   NOT_BLANK = "can't be blank"
+  NOT_BELOW_ZERO = "can't be less than 0"
+  NOT_TOO_HIGH = "can't be over 24 hours"
+  NOT_ENOUGH = "can't be less than 60 mins"
+
+  def date_out_of_range(date)
+    date + " is not within allowed range"
+  end
 end
 #World(ErrorMessages)

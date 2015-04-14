@@ -1,4 +1,5 @@
 class Day < ActiveRecord::Base
+  include ErrorMessages
   attr_accessible :date, :total_time, :reason, :approved, :month_id, :denied
   validates :date, :reason, presence: true
   validate :valid_total, :valid_date
@@ -15,9 +16,9 @@ class Day < ActiveRecord::Base
 
   def valid_total
     if total_time < 60
-      errors.add(:total, "can't be less than 60 mins")
+      errors.add(:total, NOT_ENOUGH)
     elsif total_time > 1440
-      errors.add(:total, "can't be more than 24 hours")
+      errors.add(:total, NOT_TOO_HIGH)
     end
   end
 
@@ -33,7 +34,7 @@ class Day < ActiveRecord::Base
 
   def check_date_in_range(start_date, end_date)
     unless ((start_date.to_date)..(end_date.to_date)) === (date.to_date)
-      errors.add(:date, "#{date.strftime("%m/%d/%Y")} is not within allowed range")
+      errors.add(:date, date_out_of_range(date.strftime("%m/%d/%Y")))
     end
   end
 

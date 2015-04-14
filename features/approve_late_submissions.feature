@@ -17,7 +17,7 @@ Scenario: Privileged access
   Then I should not see "Pending"
   When I visit the pending approval page
   Then I should be on the home page
-  And I should see "You don't have permission to access this."
+  And I should see that I cannot access this page
 
 Scenario: No pending activities
   Given I am logged in as an admin
@@ -25,7 +25,7 @@ Scenario: No pending activities
   Then I should not see the "Pending" link
   When I visit the pending approval page
   Then I should be on the admin list page
-  And I should see "No activities pending approval"
+  And I should see that no activities are pending approval
 
 Scenario: Pending activities
   Given 2 pending activities exist
@@ -43,7 +43,7 @@ Scenario: Approving pending activities
   And I hit "Approve"
   Then I should be on the pending approval page
   And there should be 1 activity pending approval
-  And I should see "Success! Activities approved."
+  And I should see that "approved" was successful
 
 Scenario: Denying pending activities
   Given 2 pending activities exist
@@ -53,7 +53,7 @@ Scenario: Denying pending activities
   And I hit "Deny"
   Then I should be on the pending approval page
   And there should be 1 activity pending approval
-  And I should see "Success! Activities denied."
+  And I should see that "denied" was successful
 
 Scenario: Clicking "Approve"/"Deny" with no activities checked
   Given 2 pending activities exist

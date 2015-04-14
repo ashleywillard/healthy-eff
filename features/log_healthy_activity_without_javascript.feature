@@ -17,7 +17,7 @@ Scenario: Adding one exercise
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on my profile page
-  And I should see "Running for 80 minutes has been recorded"
+  And I should see activity "Running" and duration "80"
 
 Scenario: Adding today multiple times
   When I fill in activity with:Running 90
@@ -28,7 +28,7 @@ Scenario: Adding today multiple times
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the home page
-  And I should see "already been inputted"
+  And I should see that this date has already been inputted
 
 Scenario: Adding one exercise without duration
   When I fill in activity with:Running 

@@ -8,12 +8,28 @@ Then(/^I should see activity "(.*)" and duration "(.*)"$/) do |activity, duratio
   expect(page).to have_content(activity_recorded(activity, duration, ""))
 end
 
-Then /^I should see that the date is invalid$/ do
+Then(/^I should see that the date is invalid$/) do
 	expect(page).to have_content(invalid_date)
 end
 
 Then(/^I should see that this date has already been inputted$/) do
   expect(page).to have_content(repeat_date "")
+end
+
+Then(/^I should see that "(.*)" "(.*)" has been deleted$/) do |first_name, last_name|
+  expect(page).to have_content(user_deleted(first_name, last_name))
+end
+
+Then(/^I should see that I cannot access this page$/) do
+  expect(page).to have_content(access_denied)
+end
+
+Then(/^I should see that no activities are pending approval$/) do
+  expect(page).to have_content(nothing_pending)
+end
+
+Then(/^I should see that "(.*)" was successful$/) do |action|
+  expect(page).to have_content(activities_action(action))
 end
 
 Then(/^I should not see "(.*")$/) do |msg|
