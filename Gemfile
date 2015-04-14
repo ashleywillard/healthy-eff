@@ -51,6 +51,10 @@ gem 'fullcalendar-rails'
 gem 'bootstrap-datepicker-rails', '~> 1.4.0'
 gem 'bootstrap-glyphicons'
 
+# To generate PDF files
+gem 'wkhtmltopdf-binary'
+gem 'pdfkit'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
