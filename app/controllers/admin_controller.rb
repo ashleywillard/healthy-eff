@@ -11,15 +11,16 @@ class AdminController < ApplicationController
   def pending
     @days = Day.where(:approved => false, :denied => false)
     if @days.nil? or @days.empty?
-      flash[:notice] = ""
+      ###### added nothing_pending
+      flash[:notice] = NOTHING_PENDING
       redirect_to admin_list_path
     end
   end
 
   def update_pending
     if not params[:selected].nil?
-      self.approve_or_deny(:approved) if params[:commit] == "Approve"
-      self.approve_or_deny(:denied) if params[:commit] == "Deny"
+      self.approve_or_deny(:approved) if params[:commit] == APPROVE
+      self.approve_or_deny(:denied) if params[:commit] == DENY
     end
     redirect_to admin_pending_path
   end
@@ -31,7 +32,8 @@ class AdminController < ApplicationController
       d.denied = true if action == :denied
       d.save
     end
-    flash[:notice] = "Success! Activities #{action}."
+    ###### changed to activities_action method
+    flash[:notice] = activities_action(action)
   end
 
   # function to generate PDF printout for a single employee (accounting sheet)
@@ -45,7 +47,8 @@ class AdminController < ApplicationController
   private
   def check_admin
     if not current_user.admin
-      flash[:notice] = "You don't have permission to access this."
+      ###### changed to deny_access method
+      flash[:notice] = deny_access get_current_page
       redirect_to today_path
     end
   end

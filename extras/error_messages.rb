@@ -1,7 +1,6 @@
 module ErrorMessages
 
   ACCESS_DENIED = " page is restriced to administrators."
-  ACTION_COMPLETE = "Success! Activities"
 
   def get_current_page
     path = Rails.application.routes.recognize_path(request.env['PATH_INFO'])
@@ -9,7 +8,12 @@ module ErrorMessages
   end
 
   def deny_access(page)
-    "Access to the #{page.capitalize}" + ACCESS_DENIED
+    "Access to the '#{page.capitalize}'" + ACCESS_DENIED
+  end
+
+  ACTION_COMPLETE = "Success! Activities "
+  def activities_action(action)
+    ACTION_COMPLETE + "#{action}."
   end
 
   USER_DELETED = " has been deleted."
