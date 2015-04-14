@@ -42,26 +42,22 @@ class AdminController < ApplicationController
   # Generate PDF for individual accounting sheet
   def accounting
     @user = User.find_by_id(params[:id])
-    @date = session[:months_ago].to_i.months.ago # CHANGE TO REFLECT MONTH CURRENTLY BEING VIEWED
+    @date = session[:months_ago].to_i.months.ago
     @num_days = Time.days_in_month(@date.month, @date.year) + 1 # +1 here as test for 31 days
-    records = Month.where(:month => @date.strftime("%m"),
-                          :year => @date.strftime("%Y"),
-                          :user_id => params[:id]).first
+    records = Month.get_month_model(params[:id], @date.month, @date.year)
     if records.nil?
-      flash[:notice] = "No recorded activities for #{@first_name} #{@last_name} for #{@date.strftime("%B")} #{@date.strftime("%Y")}."
-      redirect_to admin_list_path and return
+      flash[:notice] = "No recorded activities for #{@user.first_name} #{@user.last_name} for #{@date.strftime("%B")} #{@date.strftime("%Y")}."
+      redirect_to admin_list_path
     else
       @user_days = records.num_of_days
+      generate_pdf("accounting", "acct-#{@last_name}-#{@date.strftime("%B")}-#{@date.strftime("%Y")}.pdf")
     end
-    generate_pdf("accounting", "acct-#{@last_name}-#{@date.strftime("%B")}-#{@date.strftime("%Y")}.pdf")
   end
 
   # Generate PDF for all employees this month (audit sheet)
   def audit
-    @date = Date.today # CHANGE ME
-    @month_num = @date.strftime("%m")
-    @year = @date.strftime("%Y")
-    @user_months = Month.where(:month => @month_num, :year => @year)
+    @date = session[:months_ago].to_i.months.ago
+    @user_months = Month.where(:month => @date.strftime("%m"), :year => @date.strftime("%Y"))
     generate_pdf("audit", "audit-#{@date.strftime("%B")}-#{@date.strftime("%Y")}.pdf")
   end
 

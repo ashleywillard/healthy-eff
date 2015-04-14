@@ -4,6 +4,9 @@ class Month < ActiveRecord::Base
   belongs_to :user
   accepts_nested_attributes_for :days, :allow_destroy => true
 
+  # TO DO
+  # Add accessor method to get models for all users corresponding to a specific month
+
   def self.get_month_model(user_id, month, year)
     month_model = self.where(user_id: user_id, month: month, year: year)
     return month_model == nil ? nil : month_model.first
