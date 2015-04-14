@@ -9,7 +9,7 @@ gem 'pg'
 gem 'devise'
 gem 'devise_invitable', '~> 1.3.4'
 gem "figaro"
-gem "binding_of_caller"
+# gem "binding_of_caller"
 
 gem 'haml'
 # gem 'selenium-webdriver'
@@ -41,7 +41,7 @@ group :development, :test do
   gem 'poltergeist'
   gem 'launchy'
   gem 'factory_girl'
-  gem "better_errors"
+  # gem "better_errors"
 end
 
 gem 'jquery-rails'
