@@ -11,7 +11,7 @@ class AdminController < ApplicationController
   def pending
     @days = Day.where(:approved => false, :denied => false)
     if @days.nil? or @days.empty?
-      flash[:notice] = "No activities pending approval."
+      flash[:notice] = ""
       redirect_to admin_list_path
     end
   end
