@@ -74,8 +74,8 @@ RSpec.describe DaysController do
       @user = User.create!({:first_name => 'Will',
                     :last_name => 'Guo',
                     :email => '169.healthyeff@gmail.com',
-                    :password => 'northsidepotato',
-                    :password_confirmation => 'northsidepotato'})
+                    :password => 'NewBaconings2day.',
+                    :password_confirmation => 'NewBaconings2day.'})
       DaysController.any_instance.stub(:current_user).and_return(@user)
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(true)
@@ -135,8 +135,8 @@ RSpec.describe DaysController do
       @user = User.create!({:first_name => 'Will',
                     :last_name => 'Guo',
                     :email => '169.healthyeff@gmail.com',
-                    :password => 'northsidepotato',
-                    :password_confirmation => 'northsidepotato'})
+                    :password => 'Sushi5evar!',
+                    :password_confirmation => 'Sushi5evar!'})
       allow(@user).to receive(:password_changed?).and_return(true)
       DaysController.any_instance.stub(:current_user).and_return(@user)
       DaysController.any_instance.stub(:check_logged_in)
