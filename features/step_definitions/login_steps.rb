@@ -24,6 +24,28 @@ When /I fill in my username and the wrong password/ do
   fill_in "user_password", :with => "badpotato"
 end
 
+Given(/^that I sign in as a new user$/) do
+  User.create! :email => "blah@blah.com",
+               :password => "Abcdef123?",
+               :password_confirmation => "Abcdef123?",
+               :password_changed => false
+  visit '/users/sign_in'
+  fill_in "user_email", :with => "blah@blah.com"
+  fill_in "user_password", :with => "Abcdef123?"
+  click_button "Sign In"
+end
+
+Given(/^that I sign in as a returning user$/) do
+  User.create! :email => "blah@blah.com",
+               :password => "Abcdef123?",
+               :password_confirmation => "Abcdef123?",
+               :password_changed => true
+  visit '/users/sign_in'
+  fill_in "user_email", :with => "blah@blah.com"
+  fill_in "user_password", :with => "Abcdef123?"
+  click_button "Sign In"
+end
+
 When /^I press “(.*)”$/ do |button|
   click_button(button)
 end
