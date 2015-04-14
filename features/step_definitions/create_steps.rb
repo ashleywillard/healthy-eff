@@ -1,4 +1,5 @@
 # encoding: UTF-8
+include DateFormat
 
 Given (/^the following users exist/) do |users_table|
   users_table.hashes.each do |user|
@@ -32,15 +33,16 @@ Given (/^the following activities exist:/) do |activities_table|
   end
 end
 
-Given (/^that I have logged (\d+) activities/) do |num|
-  if num.casecmp("No") ; pass ; end
+Given (/^that I have logged (.*) activities/) do |num|
   u = User.create! :email => "blah@blah.com",
                    :password => "?1Asdfjkl;asdfjkl;",
                    :password_confirmation => "?1Asdfjkl;asdfjkl;"
-#   u.first_name = name.split[0] ; u.last_name = name.split[1] ; u.save
-  m = Month.create! :user_id => u.id
+  u.first_name = "John" ; u.last_name = "Doe" ; u.save
+  m = Month.create! :user_id => u.id,
+                    :month => Time.now.month,
+                    :year => Time.now.year
   num.to_i.times do
-    Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),
+    Day.create! :date => Time.now,
                 :approved => true,
                 :denied => false,
                 :total_time => 60,
