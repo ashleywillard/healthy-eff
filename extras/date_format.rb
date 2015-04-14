@@ -7,6 +7,10 @@ module DateFormat
     return date.strftime("%m").to_i
   end
 
+  def get_month_name(date)
+    return date.strftime("%B").to_i
+  end
+
   def get_year(date)
     return date.strftime("%Y").to_i
   end
