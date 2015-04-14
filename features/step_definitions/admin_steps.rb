@@ -21,6 +21,6 @@ When(/^I check an activity|day$/) do
   find(:css, "#selected_[value='2']").set(true)
 end
 
-When(/^I hit "(.*?)"$/) do |button|
+When(/^I hit "(.*)"$/) do |button|
   click_button(button)
 end

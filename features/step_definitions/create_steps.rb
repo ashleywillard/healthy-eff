@@ -44,14 +44,18 @@ Given (/^the following activities exist:/) do |activities_table|
   end
 end
 
-Given (/^that I have logged (.*) activities/) do |num|
-  u = User.create! :email => "blah@blah.com",
-                   :password => "?1Asdfjkl;asdfjkl;",
-                   :password_confirmation => "?1Asdfjkl;asdfjkl;"
-  u.first_name = "John" ; u.last_name = "Doe" ; u.save
+Given (/I have logged (.*) activities/) do |num|
+  u = User.find_by_email("blah@blah.com")
+  if u.nil?
+    u = User.create! :email => "blah@blah.com",
+                     :password => "?1Asdfjkl;asdfjkl;",
+                     :password_confirmation => "?1Asdfjkl;asdfjkl;"
+    u.first_name = "John" ; u.last_name = "Doe" ; u.save
+  end
   m = Month.create! :user_id => u.id,
                     :month => Time.now.month,
-                    :year => Time.now.year
+                    :year => Time.now.year,
+                    :num_of_days => num.to_i
   num.to_i.times do
     Day.create! :date => Time.now,
                 :approved => true,

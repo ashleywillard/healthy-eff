@@ -6,7 +6,7 @@
 - if @user_months.empty?
   %p= "No records for #{@date.strftime("%B")} #{@date.strftime("%Y")}."
 - else
-  %p= button_to "Print Audit Sheet", admin_audit_path(:year => @date.strftime("%Y"), :month => @date.strftime("%m")), :method => :get
+  %p= button_to "Print Audit Sheet", admin_audit_path(:year => @date.strftime("%Y"), :month => @date.strftime("%m")), :method => :get, :class => "btn"
   %table#employee_list.table.table-striped
     %thead
       %tr
@@ -25,4 +25,4 @@
           %td= month.user.last_name
           %td= month.num_of_days
 
-  = submit_tag 'Print Accounting Sheet'
+  = submit_tag 'Print Accounting Sheet', :class => "btn"
