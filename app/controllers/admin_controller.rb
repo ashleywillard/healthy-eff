@@ -14,7 +14,8 @@ class AdminController < ApplicationController
     d = @months_ago.to_i.months.ago
     @month = d.strftime("%B")
     @year = d.strftime("%Y")
-    @user_months = Month.where(:month => d.strftime("%m"), :year => @year)
+    @month_num = d.strftime("%m")
+    @user_months = Month.where(:month => @month_num, :year => @year)
   end
 
   # Activities pending approval
@@ -63,11 +64,23 @@ class AdminController < ApplicationController
 
     html = render_to_string(:layout => false, :action => "accounting.html.haml")
     kit = PDFKit.new(html)
-    send_data(kit.to_pdf, :filename => "accounting.pdf", :type => 'application/pdf', :disposition => "inline")
+    send_data(kit.to_pdf, :filename => "acct-#{@last_name}-#{@date.strftime("%B")}-#{@date.strftime("%Y")}.pdf",
+                          :type => 'application/pdf',
+                          :disposition => "inline")
   end
 
   # Generate PDF for all employees this month (audit sheet)
   def audit
+    @date = Date.today # CHANGE ME
+    @month_num = @date.strftime("%m")
+    @year = @date.strftime("%Y")
+    @user_months = Month.where(:month => @month_num, :year => @year)
+
+    html = render_to_string(:layout => false, :action => "audit.html.haml")
+    kit = PDFKit.new(html, :orientation => 'Landscape')
+    send_data(kit.to_pdf, :filename => "audit-#{@date.strftime("%B")}-#{@date.strftime("%Y")}.pdf",
+                          :type => 'application/pdf',
+                          :disposition => "inline")
   end
 
   private

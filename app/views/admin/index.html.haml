@@ -5,7 +5,7 @@
 
 %h3 #{@month} #{@year}
 
-%p= link_to "Audit Sheet"
+%p= link_to "Audit Sheet", admin_audit_path(:year => @year, :month => @month_num)
 
 %table#employee_list.table.table-striped
   %thead
@@ -19,8 +19,8 @@
       %tr
         %td
           = link_to "Accounting", admin_accounting_path(:id => month.user.id,
-                                                        :year => Date.today.strftime("%Y"),
-                                                        :month => Date.today.strftime("%m"))
+                                                        :year => @year,
+                                                        :month => @month_num)
         %td= month.user.first_name
         %td= month.user.last_name
         %td= month.num_of_days
