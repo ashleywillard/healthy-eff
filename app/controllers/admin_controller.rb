@@ -61,12 +61,12 @@ class AdminController < ApplicationController
     else
       @user_days = records.num_of_days
     end
-
-    html = render_to_string(:layout => false, :action => "accounting.html.haml")
-    kit = PDFKit.new(html)
-    send_data(kit.to_pdf, :filename => "acct-#{@last_name}-#{@date.strftime("%B")}-#{@date.strftime("%Y")}.pdf",
-                          :type => 'application/pdf',
-                          :disposition => "inline")
+    generate_pdf("accounting", "acct-#{@last_name}-#{@date.strftime("%B")}-#{@date.strftime("%Y")}.pdf")
+#     html = render_to_string(:layout => false, :action => "accounting.html.haml")
+#     kit = PDFKit.new(html)
+#     send_data(kit.to_pdf, :filename => "acct-#{@last_name}-#{@date.strftime("%B")}-#{@date.strftime("%Y")}.pdf",
+#                           :type => 'application/pdf',
+#                           :disposition => "inline")
   end
 
   # Generate PDF for all employees this month (audit sheet)
@@ -75,10 +75,26 @@ class AdminController < ApplicationController
     @month_num = @date.strftime("%m")
     @year = @date.strftime("%Y")
     @user_months = Month.where(:month => @month_num, :year => @year)
+    generate_pdf("audit", "audit-#{@date.strftime("%B")}-#{@date.strftime("%Y")}.pdf")
+#     html = render_to_string(:layout => false, :action => "audit.html.haml")
+#     kit = PDFKit.new(html, :orientation => 'Landscape')
+#     send_data(kit.to_pdf, :filename => "audit-#{@date.strftime("%B")}-#{@date.strftime("%Y")}.pdf",
+#                           :type => 'application/pdf',
+#                           :disposition => "inline")
+  end
 
-    html = render_to_string(:layout => false, :action => "audit.html.haml")
-    kit = PDFKit.new(html, :orientation => 'Landscape')
-    send_data(kit.to_pdf, :filename => "audit-#{@date.strftime("%B")}-#{@date.strftime("%Y")}.pdf",
+  def generate_pdf(type, name)
+    case type
+      when 'audit'
+        action = 'audit.html.haml'
+        orientation = 'Landscape'
+      when 'accounting'
+        action = 'accounting.html.haml'
+        orientation = 'Portrait'
+    end
+    html = render_to_string(:layout => false, :action => action)
+    kit = PDFKit.new(html, :orientation => orientation)
+    send_data(kit.to_pdf, :filename => name,
                           :type => 'application/pdf',
                           :disposition => "inline")
   end
