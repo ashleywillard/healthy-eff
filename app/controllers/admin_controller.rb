@@ -5,17 +5,22 @@ class AdminController < ApplicationController
   # Admin list view
   def index
     session[:months_ago] ||= 0
-    @months_ago = session[:months_ago]
-    if not params[:navigate].nil?
-      @months_ago += 1 if params[:navigate] == "Previous"
-      @months_ago -=1 if params[:navigate] == "Next"
-      session[:months_ago] = @months_ago
-    end
-    d = @months_ago.to_i.months.ago
-    @month = d.strftime("%B")
-    @year = d.strftime("%Y")
-    @month_num = d.strftime("%m")
-    @user_months = Month.where(:month => @month_num, :year => @year)
+#     @months_ago = session[:months_ago]
+#     if not params[:navigate].nil?
+#       @months_ago += 1 if params[:navigate] == "Previous"
+#       @months_ago -=1 if params[:navigate] == "Next"
+#       session[:months_ago] = @months_ago
+#     end
+    session[:months_ago] += 1 if params[:navigate] == "Previous"
+    session[:months_ago] -= 1 if params[:navigate] == "Next"
+#     d = @months_ago.to_i.months.ago
+#     @month = d.strftime("%B")
+#     @year = d.strftime("%Y")
+#     @month_num = d.strftime("%m")
+#     @user_months = Month.where(:month => @month_num, :year => @year)
+    @date = session[:months_ago].to_i.months.ago
+    @user_months = Month.where(:month => @date.strftime("%m"),
+                               :year => @date.strftime("%Y"))
   end
 
   # Activities pending approval
