@@ -8,14 +8,12 @@
 
 %table#monthly_acct
   %tbody
-    - for i in 1..@num_days / 2
+    - for i in 1..(@num_days + 1) / 2
       %tr
         %td= i.to_s
         %td _______
-        %td= (i + (@num_days/2)).to_s
-        %td _______
-        - if i == @num_days / 2 and (@num_days % 2) == 1
-          %td= @num_days.to_s
+        - if i <= 15
+          %td= (i + (@num_days + 1) / 2).to_s
           %td _______
 
 %p
