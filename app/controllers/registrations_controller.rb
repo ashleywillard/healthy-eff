@@ -1,11 +1,11 @@
 class RegistrationsController < Devise::RegistrationsController
 
   def update
-    super
-    if not params[:password].nil?
+    if not params[:user][:password].nil?
       current_user.password_changed = true
       current_user.save
     end
+    super
   end
 
 end
