@@ -1,7 +1,7 @@
 class DaysController < ApplicationController
   include DateFormat
 
-  before_filter :check_logged_in
+  before_filter :check_logged_in, :force_password_change
 
   def today
     # #RESTFUL redirecting
@@ -11,7 +11,7 @@ class DaysController < ApplicationController
     # end
     @date = Date.today
     @day = Day.new({:date => @date,
-                      :reason => "", 
+                      :reason => "",
                       :approved => true,
                       :denied => false})
     @day.activities.append(Activity.new())

@@ -9,6 +9,7 @@ gem 'pg'
 gem 'devise'
 gem 'devise_invitable', '~> 1.3.4'
 gem "figaro"
+# gem "binding_of_caller"
 
 gem 'haml'
 # gem 'selenium-webdriver'
@@ -40,6 +41,7 @@ group :development, :test do
   gem 'poltergeist'
   gem 'launchy'
   gem 'factory_girl'
+  # gem "better_errors"
 end
 
 gem 'jquery-rails'
@@ -47,6 +49,11 @@ gem 'simple_captcha', :git => 'git://github.com/galetahub/simple-captcha.git'
 gem 'twitter-bootstrap-rails'
 gem 'fullcalendar-rails'
 gem 'bootstrap-datepicker-rails', '~> 1.4.0'
+gem 'bootstrap-glyphicons'
+
+# To generate PDF files
+gem 'wkhtmltopdf-binary'
+gem 'pdfkit'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

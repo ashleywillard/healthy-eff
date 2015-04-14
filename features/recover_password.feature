@@ -5,8 +5,8 @@ Feature: Recover Password
 
 Background: users in database
   Given the following users exist:
-  | email                       | password              | password_confirmation |    
-  | healthypotato@gmail.com     | hotpotato             | hotpotato             |
+  | email                       | password              | password_confirmation | password_changed |   
+  | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | true             |
 
 Scenario: Get email
   Given I am on the sign in page
@@ -17,7 +17,7 @@ Scenario: Get email
 
 Scenario: Invalid email
   Given I am on the sign in page
-  When I follow "Forgot your password?" 
+  When I follow "Forgot your password?"
   And I fill in "meow@meow.com" into the email field
   And I press “Send me reset password instructions”
   And I should see "Email not found"

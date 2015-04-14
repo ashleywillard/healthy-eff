@@ -1,17 +1,18 @@
 class UsersController < ApplicationController
-  before_filter :check_logged_in
+
+  before_filter :check_logged_in, :force_password_change
 
   def profile
     @name = 'No name'
     if current_user.first_name != nil && current_user.last_name != nil
       @name = current_user.first_name + ' ' + current_user.last_name
     end
-    @date = Date.today 
+    @date = Date.today
     @earliestDate = @date.at_beginning_of_month.next_month
 
     @workouts = []
     numOfMonthsToRetrieve = 2
-    (1..numOfMonthsToRetrieve).each do 
+    (1..numOfMonthsToRetrieve).each do
       @earliestDate = @earliestDate.at_beginning_of_month.prev_month
       @workouts += retrieveWorkouts(@earliestDate.month, @earliestDate.year)
     end
@@ -20,15 +21,15 @@ class UsersController < ApplicationController
   def retrieveWorkouts(month, year)
     curr_month = Month.where(:month => month, :year => year, :user_id => current_user.id).first
     workouts = []
-    return [] if(curr_month == nil)  
-    
+    return [] if(curr_month == nil)
+
     curr_month.days.each do |day|
       day.activities.each do |activity|
         status = 'green'
         if !day.approved
           status = day.denied ? 'red' : 'yellow'
         end
-        workouts.push([activity.name, activity.duration, day.date, status]) 
+        workouts.push([activity.name, activity.duration, day.date, status])
       end
     end
     return workouts
@@ -46,7 +47,7 @@ class UsersController < ApplicationController
     if !current_user.admin?
       flash[:notice] = deny_access get_current_page
       redirect_to root_path
-    else 
+    else
       @user = User.find(params[:id])
       @user.destroy
       flash[:notice] = user_deleted(@user.first_name, @user.last_name)

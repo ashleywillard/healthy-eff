@@ -1,0 +1,17 @@
+-#  app/views/admin/audit.html.haml
+%h1 Healthy EFF Checklist: #{@date.strftime("%B")} #{@date.strftime("%Y")}
+
+%table#audit_checklist
+  %thead
+    %tr
+      %th Employee Name
+      %th Received?
+      %th #
+      %th $
+  %tbody
+    - @user_months.each do |month|
+      %tr
+        %td #{month.user.last_name}, #{month.user.first_name}
+        %td
+        %td #{month.num_of_days}
+        %td #{month.num_of_days * 10}

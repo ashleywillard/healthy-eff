@@ -1,20 +1,28 @@
 -#  app/views/admin/index.html.haml
-%h1 Employee List: #{@month} #{@year}
+%h1 #{@date.strftime("%B")} #{@date.strftime("%Y")}
+= link_to "Previous", admin_list_path(:navigate => "Previous")
+= link_to "Next", admin_list_path(:navigate => "Next")
 
-%p= link_to "Audit Sheet"
-
-%table#employee_list
-  %thead
-    %tr
-      %th
-      %th First Name
-      %th Last Name
-      %th Days of Healthy Activity
-  %tbody
-    - @user_months.each do |month|
+- if @user_months.empty?
+  %p= "No records for #{@date.strftime("%B")} #{@date.strftime("%Y")}."
+- else
+  %p= button_to "Print Audit Sheet", admin_audit_path(:year => @date.strftime("%Y"), :month => @date.strftime("%m")), :method => :get
+  %table#employee_list.table.table-striped
+    %thead
       %tr
-        %td
-          = link_to "Accounting"
-        %td= month.user.first_name
-        %td= month.user.last_name
-        %td= month.num_of_days
+        %th{:style => "text-align:center"} Select
+        %th First Name
+        %th Last Name
+        %th Days of Healthy Activity
+    %tbody
+      - @user_months.each do |month|
+        %tr
+          %td{:style => "text-align:center"}
+            = link_to "Accounting", admin_accounting_path(:id => month.user.id,
+                                                          :year => @date.strftime("%Y"),
+                                                          :month => @date.strftime("%m"))
+          %td= month.user.first_name
+          %td= month.user.last_name
+          %td= month.num_of_days
+
+  = submit_tag 'Print Accounting Sheet'

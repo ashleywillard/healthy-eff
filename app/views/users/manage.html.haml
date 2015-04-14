@@ -1,8 +1,8 @@
-%h1 List of Employees
+%h1 Employees
 
 = link_to 'Add a new employee', new_user_invitation_path
 
-%table#movies
+%table#movies.table.table-striped
   %thead
     %tr
       %th Last Name
@@ -15,4 +15,4 @@
         %td= user.last_name
         %td= user.first_name
         %td= user.email
-        %td= button_to 'Delete', delete_path(user), :method => :delete, :confirm => 'Are you sure?'
+        %td= button_to 'Delete', delete_path(user), :method => :delete, :confirm => "Are you sure you want to delete employee #{user.first_name} #{user.last_name}?", :class => "btn btn-danger"

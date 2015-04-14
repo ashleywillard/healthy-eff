@@ -6,9 +6,9 @@ Feature: Log Healthy Activity Without JavaScript
 
 Background:
   Given the following users exist:
-  | email                       | password              | password_confirmation |    
-  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
-  | healthypotato@gmail.com     | hotpotato             | hotpotato             |
+  | email                       | password              | password_confirmation | password_changed |
+  | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | true              |
+  | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | true              |
   Given I am logged in as a non-admin
   And I am on the home page
 
@@ -31,7 +31,7 @@ Scenario: Adding today multiple times
   And I should see that this date has already been inputted
 
 Scenario: Adding one exercise without duration
-  When I fill in activity with:Running 
+  When I fill in activity with:Running
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the home page

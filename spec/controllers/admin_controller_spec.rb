@@ -8,12 +8,13 @@ RSpec.describe AdminController do
   before :each do
     @user = double(User)
     allow(@user).to receive(:admin).and_return(true)
+    allow(@user).to receive(:password_changed?).and_return(true)
     allow_message_expectations_on_nil # suppress warnings on devise warden
     allow(request.env['warden']).to receive(:authenticate!).and_return(@user)
     allow(controller).to receive(:current_user).and_return(@user)
   end
 
-  # check_logged_in behavior tested in activities_controller_spec
+  # check_logged_in behavior tested in days_controller_spec
 
   describe "user.admin" do
     context "when admin" do

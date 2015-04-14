@@ -7,25 +7,27 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
     = nav_bar fixed: :left, brand: "Healthy EFF", responsive: true do
-      = menu_group do
-        - if user_signed_in?
+      - if user_signed_in?
+        = menu_group do
           = menu_divider
           - if current_user.admin
             = drop_down "Admin" do
               = menu_item "Admin Home", admin_list_path
-              = menu_item "Manage", manage_path
+              = menu_item "Manage Employees", manage_path
               - if Day.num_pending > 0
-                = menu_item "#{Day.num_pending} Pending", admin_pending_path
+                = menu_item "#{Day.num_pending} Pending Approval", admin_pending_path
             = menu_divider
           = menu_item "Profile", profile_path
           = menu_divider
-      = menu_group pull: :right do
-        = menu_divider
-        = drop_down "Account" do
-          = menu_item "Edit", edit_user_registration_path
-          = menu_item "Sign Out", destroy_user_session_path, :method => :delete
+        = menu_group pull: :right do
+          = menu_divider
+          = drop_down "Account" do
+            = menu_item "Edit", edit_user_registration_path
+            = menu_item "Sign Out", destroy_user_session_path, :method => :delete
   %body
     %div.content
-      %p.notice= notice
-      %p.alert= alert
+      -if notice
+        %p.notice= notice
+      -if alert
+        %p.alert= alert
       = yield
