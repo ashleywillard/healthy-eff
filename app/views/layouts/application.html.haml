@@ -13,9 +13,9 @@
           - if current_user.admin
             = drop_down "Admin" do
               = menu_item "Admin Home", admin_list_path
-              = menu_item "Manage", manage_path
+              = menu_item "Manage Employees", manage_path
               - if Day.num_pending > 0
-                = menu_item "#{Day.num_pending} Pending", admin_pending_path
+                = menu_item "#{Day.num_pending} Pending Approval", admin_pending_path
             = menu_divider
           = menu_item "Profile", profile_path
           = menu_divider

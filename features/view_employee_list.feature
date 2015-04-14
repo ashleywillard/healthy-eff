@@ -20,10 +20,15 @@ Scenario: Privileged access
   Then I should be on the home page
   And I should see "You don't have permission to access this."
 
-Scenario: Admin list view
+Scenario: Admin list view - no records
+  Given I am logged in as an admin
+  When I follow "Admin"
+  And I follow "Admin Home"
+  Then I should see "No records"
+
+Scenario: Admin list view - records
   Given that I have logged 3 activities
   And I am logged in as an admin
   When I follow "Admin"
   And I follow "Admin Home"
   Then I should see a table of employee names
-  And I should see "Days"
