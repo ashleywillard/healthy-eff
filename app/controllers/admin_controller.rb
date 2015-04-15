@@ -55,7 +55,8 @@ class AdminController < ApplicationController
   # Generate PDF for all employees this month (audit sheet)
   def audit
     @date = session[:months_ago].to_i.months.ago
-    @user_months = Month.where(:month => @date.strftime("%m"), :year => @date.strftime("%Y"))
+    @user_months = Month.find(:all, :conditions => {:month => get_month(@date), :year => get_year(@date)},
+                              :joins => :user, :order => 'users.last_name')
     generate_pdf("audit", "audit-#{get_month_name(@date)}-#{get_year(@date)}.pdf")
   end
 
