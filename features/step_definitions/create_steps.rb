@@ -38,7 +38,8 @@ Given (/^that I have logged (\d+) activities/) do |num|
                    :password => "asdfjkl;asdfjkl;",
                    :password_confirmation => "asdfjkl;asdfjkl;"
 #   u.first_name = name.split[0] ; u.last_name = name.split[1] ; u.save
-  m = Month.create! :user_id => u.id
+  m = Month.create! :user_id => u.id,
+                    :num_of_days => num
   num.to_i.times do
     Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),
                 :approved => true,
@@ -54,7 +55,8 @@ Given (/^(.*) (?:pending|unapproved) (?:|activities|days) exist/) do |num|
   u = User.create! :email => "blah@blah.com",
                    :password => "asdfjkl;asdfjkl;",
                    :password_confirmation => "asdfjkl;asdfjkl;"
-  m = Month.create! :user_id => u.id
+  m = Month.create! :user_id => u.id,
+                    :num_of_days => 0
   num.to_i.times do
     Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),
                 :approved => false,

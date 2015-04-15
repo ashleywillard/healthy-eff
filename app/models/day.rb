@@ -37,4 +37,11 @@ class Day < ActiveRecord::Base
     end
   end
 
+  def approve_day
+    approved = true
+    month = self.month
+    month.num_of_days += 1
+    month.save!
+  end
+
 end

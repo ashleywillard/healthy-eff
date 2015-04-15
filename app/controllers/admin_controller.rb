@@ -1,4 +1,5 @@
 class AdminController < ApplicationController
+  include DateFormat
 
   before_filter :check_logged_in, :check_admin, :force_password_change
 
@@ -12,9 +13,9 @@ class AdminController < ApplicationController
       session[:months_ago] = @months_ago
     end
     d = @months_ago.to_i.months.ago
-    @month = d.strftime("%B")
-    @year = d.strftime("%Y")
-    @user_months = Month.where(:month => d.strftime("%m"), :year => @year)
+    @month = get_month_string(d)
+    @year = get_year(d)
+    @user_months = Month.where(:month => get_month(d), :year => @year)
   end
 
   # Activities pending approval
@@ -37,7 +38,7 @@ class AdminController < ApplicationController
   def approve_or_deny(action)
     params[:selected].each do |id|
       d = Day.find_by_id(id)
-      d.approved = true if action == :approved
+      d.approve_day if action == :approved
       d.denied = true if action == :denied
       d.save
     end
@@ -51,9 +52,7 @@ class AdminController < ApplicationController
 
     @date = Date.today # CHANGE TO REFLECT MONTH CURRENTLY BEING VIEWED
     @num_days = Time.days_in_month(@date.month, @date.year) + 1 # +1 here as test for 31 days
-    records = Month.where(:month => @date.strftime("%m"),
-                          :year => @date.strftime("%Y"),
-                          :user_id => id).first
+    records = Month.get_month_model(id, get_month(@date), get_year(@date))
     if records.nil?
       flash[:notice] = "No recorded activities for #{@first_name} #{@last_name} for #{@date.strftime("%B")} #{@date.strftime("%Y")}."
       redirect_to admin_list_path and return
@@ -77,8 +76,5 @@ class AdminController < ApplicationController
       redirect_to today_path
     end
   end
-
-  # potentially ashley/allan's stuff for adding and removing employees?
-  # might also be in UsersController, depending on their implementation
 
 end
