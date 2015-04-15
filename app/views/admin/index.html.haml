@@ -5,8 +5,11 @@
 
 - if @user_months.empty?
   %p= "No records for #{@date.strftime("%B")} #{@date.strftime("%Y")}."
+
 - else
   %p= button_to "Print Audit Sheet", admin_audit_path(:year => @date.strftime("%Y"), :month => @date.strftime("%m")), :method => :get, :class => "btn"
+
+  = form_tag, admin_multi_acct_path(:year => @date.strftime("%Y"), :month => @date.strftime("%m"))
   %table#employee_list.table.table-striped
     %thead
       %tr
@@ -18,6 +21,7 @@
       - @user_months.each do |month|
         %tr
           %td{:style => "text-align:center"}
+            = check_box_tag "selected[]", month.user.id
             = link_to "Accounting", admin_accounting_path(:id => month.user.id,
                                                           :year => @date.strftime("%Y"),
                                                           :month => @date.strftime("%m"))
@@ -25,4 +29,5 @@
           %td= month.user.last_name
           %td= month.num_of_days
 
-  = submit_tag 'Print Accounting Sheet', :class => "btn"
+  = submit_tag 'Select All', :class => "btn"
+  = submit_tag 'Print Selected', :class => "btn"
