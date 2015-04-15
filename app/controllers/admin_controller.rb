@@ -43,11 +43,11 @@ class AdminController < ApplicationController
     @user = User.find_by_id(params[:id])
     @date = get_date()
     @num_days = Time.days_in_month(@date.month, @date.year)
-    records = Month.get_month_model(params[:id], @date.month, @date.year)
-    if records.nil?
+    @records = Month.get_month_model(params[:id], @date.month, @date.year)
+    if @records.nil?
       handle_no_records()
     else
-      @user_days = records.num_of_days
+      @user_days = @records.num_of_days
       generate_pdf("accounting", "acct-#{@user.last_name}-#{get_month_name(@date)}-#{get_year(@date)}.pdf")
     end
   end
@@ -71,6 +71,7 @@ class AdminController < ApplicationController
     end
     html = render_to_string(:layout => false, :action => action)
     kit = PDFKit.new(html, :orientation => orientation)
+    kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/pdf.css"
     send_data(kit.to_pdf, :filename => name,
                           :type => 'application/pdf',
                           :disposition => "inline")
