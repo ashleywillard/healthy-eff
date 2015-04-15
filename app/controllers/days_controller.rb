@@ -39,13 +39,11 @@ class DaysController < ApplicationController
   end
 
   def bad_captcha
-    ###### bad_captcha
     flash[:notice] = BAD_CAPTCHA
     raise Exception
   end
 
   def empty_fields_notice
-    ###### empty_fields
     flash[:notice] = EMPTY_FIELDS
     raise Exception
   end
