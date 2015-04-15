@@ -6,7 +6,7 @@
   %strong Employee Name:
   #{@user.first_name} #{@user.last_name}
 
-%table#monthly_acct
+%table#monthly_acct{:style => "width: 50%"}
   %tbody
     - for i in 1..(@num_days + 1) / 2
       %tr
@@ -16,6 +16,7 @@
           %td= (i + (@num_days + 1) / 2).to_s
           %td _______
 
+%br
 %p
   %strong Total number of days:
   #{@user_days}
@@ -28,6 +29,6 @@
 %br
 %p
   %strong Signature:
-  __________________________ &nbsp;&nbsp;&nbsp;&nbsp;
+  __________________________________ &nbsp;&nbsp;&nbsp;&nbsp;
   %strong Date:
-  ________
+  _________________
