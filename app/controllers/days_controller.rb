@@ -168,7 +168,7 @@ class DaysController < ApplicationController
 
   def update_month(day)
     month_model = Month.get_or_create_month_model(current_user.id, get_month(day.date), get_year(day.date))
-    month_model.num_of_days += 1
+    month_model.num_of_days += 1 if day.approved
     month_model.save!
     day.month_id = month_model.id
     day.save!

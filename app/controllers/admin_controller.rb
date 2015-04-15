@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
   include DateFormat
+
   before_filter :check_logged_in, :check_admin, :force_password_change
 
   # Admin list view
@@ -31,7 +32,7 @@ class AdminController < ApplicationController
   def approve_or_deny(action)
     params[:selected].each do |id|
       d = Day.find_by_id(id)
-      d.approved = true if action == :approved
+      d.approve_day if action == :approved
       d.denied = true if action == :denied
       d.save
     end
