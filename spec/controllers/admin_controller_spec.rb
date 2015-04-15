@@ -81,10 +81,14 @@ RSpec.describe AdminController do
 
   describe "admin#update_pending" do
     before :each do
-      @day1 = Day.create! :total_time => 60, :date => Date.today.prev_day, :reason => "x",
-                          :approved => false, :denied => false
-      @day2 = Day.create! :total_time => 60, :date => Date.today.prev_day, :reason => "x",
-                          :approved => false, :denied => false
+      yesterday = Date.today.prev_day
+      @month = Month.create! :month => DateFormat.get_month(yesterday),
+                            :year => DateFormat.get_year(yesterday),
+                            :num_of_days => 0
+      @day1 = Day.create! :total_time => 60, :date => yesterday, :reason => "x",
+                          :approved => false, :denied => false, :month_id => @month.id
+      @day2 = Day.create! :total_time => 60, :date => yesterday, :reason => "x",
+                          :approved => false, :denied => false, :month_id => @month.id
     end
     context "when no pending activities are checked" do
       before :each do
