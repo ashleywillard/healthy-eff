@@ -7,10 +7,10 @@ Feature: View Employee List
 Background:
   Given the following admins exist:
   | email                       | password              | password_confirmation | password_changed |
-  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       | true             |
+  | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | true             |
   And the following users exist:
   | email                      | password        | password_confirmation | password_changed |
-  | healthypotato@gmail.com    | hotpotato       | hotpotato             | true             |
+  | healthypotato@gmail.com    | ?Hotpotato169   | ?Hotpotato169         | true             |
 
 Scenario: Privileged access
   Given I am logged in as a non-admin
@@ -20,10 +20,15 @@ Scenario: Privileged access
   Then I should be on the home page
   And I should see "You don't have permission to access this."
 
-Scenario: Admin list view
+Scenario: Admin list view - no records
+  Given I am logged in as an admin
+  When I follow "Admin"
+  And I follow "Admin Home"
+  Then I should see "No records"
+
+Scenario: Admin list view - records
   Given that I have logged 3 activities
   And I am logged in as an admin
   When I follow "Admin"
   And I follow "Admin Home"
   Then I should see a table of employee names
-  And I should see "Days"

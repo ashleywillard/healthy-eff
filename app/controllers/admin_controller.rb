@@ -6,16 +6,10 @@ class AdminController < ApplicationController
   # Admin list view
   def index
     session[:months_ago] ||= 0
-    @months_ago = session[:months_ago]
-    if not params[:navigate].nil?
-      @months_ago += 1 if params[:navigate] == "Previous"
-      @months_ago -=1 if params[:navigate] == "Next"
-      session[:months_ago] = @months_ago
-    end
-    d = @months_ago.to_i.months.ago
-    @month = get_month_string(d)
-    @year = get_year(d)
-    @user_months = Month.where(:month => get_month(d), :year => @year)
+    session[:months_ago] += 1 if params[:navigate] == "Previous"
+    session[:months_ago] -= 1 if params[:navigate] == "Next"
+    @date = get_date()
+    @user_months = Month.where(:month => get_month(@date), :year => get_year(@date))
   end
 
   # Activities pending approval
@@ -47,26 +41,48 @@ class AdminController < ApplicationController
 
   # Generate PDF for individual accounting sheet
   def accounting
-    id = params[:id] ; u = User.find_by_id(id)
-    @first_name = u.first_name ; @last_name = u.last_name
-
-    @date = Date.today # CHANGE TO REFLECT MONTH CURRENTLY BEING VIEWED
-    @num_days = Time.days_in_month(@date.month, @date.year) + 1 # +1 here as test for 31 days
-    records = Month.get_month_model(id, get_month(@date), get_year(@date))
+    @user = User.find_by_id(params[:id])
+    @date = get_date()
+    @num_days = Time.days_in_month(@date.month, @date.year)
+    records = Month.get_month_model(params[:id], @date.month, @date.year)
     if records.nil?
-      flash[:notice] = "No recorded activities for #{@first_name} #{@last_name} for #{@date.strftime("%B")} #{@date.strftime("%Y")}."
-      redirect_to admin_list_path and return
+      handle_no_records()
     else
       @user_days = records.num_of_days
+      generate_pdf("accounting", "acct-#{@user.last_name}-#{get_month_name(@date)}-#{get_year(@date)}.pdf")
     end
-
-    html = render_to_string(:layout => false, :action => "accounting.html.haml")
-    kit = PDFKit.new(html)
-    send_data(kit.to_pdf, :filename => "accounting.pdf", :type => 'application/pdf', :disposition => "inline")
   end
 
   # Generate PDF for all employees this month (audit sheet)
   def audit
+    @date = session[:months_ago].to_i.months.ago
+    @user_months = Month.where(:month => @date.strftime("%m"), :year => @date.strftime("%Y"))
+    generate_pdf("audit", "audit-#{get_month_name(@date)}-#{get_year(@date)}.pdf")
+  end
+
+  def generate_pdf(type, name)
+    case type
+      when 'audit'
+        action = 'audit.html.haml'
+        orientation = 'Landscape'
+      when 'accounting'
+        action = 'accounting.html.haml'
+        orientation = 'Portrait'
+    end
+    html = render_to_string(:layout => false, :action => action)
+    kit = PDFKit.new(html, :orientation => orientation)
+    send_data(kit.to_pdf, :filename => name,
+                          :type => 'application/pdf',
+                          :disposition => "inline")
+  end
+
+  def handle_no_records
+    flash[:notice] = "No recorded activities for #{@user.first_name} #{@user.last_name} for #{@date.strftime("%B")} #{@date.strftime("%Y")}."
+    redirect_to admin_list_path
+  end
+
+  def get_date
+    session[:months_ago].to_i.months.ago
   end
 
   private
