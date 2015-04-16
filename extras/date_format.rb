@@ -8,7 +8,7 @@ module DateFormat
   end
 
   def get_month_name(date)
-    return date.strftime("%B").to_i
+    return date.strftime("%B")
   end
 
   def get_year(date)
