@@ -3,22 +3,15 @@ class AdminController < ApplicationController
 
   before_filter :check_logged_in, :check_admin, :force_password_change
 
-  # Admin list view
+  # :get for list view
   def index
+    session[:sort] = params[:sort] if not params[:sort].nil?
     navigate_months()
     @date = get_date()
-    session[:sort] = params[:sort] if not params[:sort].nil?
-    @user_months = Month.where(:month => get_month(@date), :year => get_year(@date))
-    @user_months = @user_months.joins(:user).order("users." + session[:sort])
+    @user_months = sort_admin_list(Month.get_user_months(get_month(@date), get_year(@date)))
   end
 
-  def navigate_months
-    session[:months_ago] ||= 0
-    session[:months_ago] += 1 if params[:navigate] == "Previous"
-    session[:months_ago] -= 1 if params[:navigate] == "Next"
-  end
-
-  # Activities pending approval
+  # :get for pending activities
   def pending
     @days = Day.where(:approved => false, :denied => false)
     if @days.nil? or @days.empty?
@@ -27,6 +20,7 @@ class AdminController < ApplicationController
     end
   end
 
+  # :put for pending activities
   def update_pending
     if not params[:selected].nil?
       self.approve_or_deny(:approved) if params[:commit] == "Approve"
@@ -45,7 +39,7 @@ class AdminController < ApplicationController
     flash[:notice] = "Success! Activities #{action}."
   end
 
-  # Generate PDF for individual accounting sheet
+  # :get for accounting sheet PDF
   def accounting
     @user = User.find_by_id(params[:id])
     @date = get_date()
@@ -59,10 +53,10 @@ class AdminController < ApplicationController
     end
   end
 
-  # Generate PDF for all employees this month (audit sheet)
+  # :get for audit sheet PDF
   def audit
     @date = session[:months_ago].to_i.months.ago
-    @user_months = Month.where(:month => @date.strftime("%m"), :year => @date.strftime("%Y"))
+    @user_months = Month.get_user_months(get_month(@date), get_year(@date))
     generate_pdf("audit", "audit-#{get_month_name(@date)}-#{get_year(@date)}.pdf")
   end
 
@@ -80,6 +74,16 @@ class AdminController < ApplicationController
     send_data(kit.to_pdf, :filename => name,
                           :type => 'application/pdf',
                           :disposition => "inline")
+  end
+
+  def navigate_months
+    session[:months_ago] ||= 0
+    session[:months_ago] += 1 if params[:navigate] == "Previous"
+    session[:months_ago] -= 1 if params[:navigate] == "Next"
+  end
+
+  def sort_admin_list(list)
+    list.joins(:user).order("users." + session[:sort])
   end
 
   def handle_no_records
