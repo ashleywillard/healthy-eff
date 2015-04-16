@@ -8,7 +8,11 @@ class AdminController < ApplicationController
     session[:sort] = params[:sort] if not params[:sort].nil?
     navigate_months()
     @date = get_date()
-    @user_months = sort_admin_list(Month.get_user_months(get_month(@date), get_year(@date)))
+    @user_months = Month.get_user_months(get_month(@date), get_year(@date))
+    if not params[:sort].nil?
+      session[:sort] = params[:sort]
+      @user_months = sort_admin_list(@user_months)
+    end
   end
 
   # :get for pending activities
