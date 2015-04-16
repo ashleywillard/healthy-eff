@@ -11,11 +11,16 @@
     - for i in 1..(@num_days + 1) / 2
       %tr
         %td= i.to_s
-        %td _______
+        - if @records.contains_approved_date?(Date.parse(i.to_s + "-" + @records.month.to_s + "-" + @records.year.to_s))
+          %td X
+        - else
+          %td _______
         - if i <= 15
           %td= (i + (@num_days + 1) / 2).to_s
-          %td _______
-
+          - if @records.contains_approved_date?(Date.parse((i + (@num_days + 1) / 2).to_s + "-" + @records.month.to_s + "-" + @records.year.to_s))
+            %td X
+          - else
+            %td _______
 %p
   %strong Total number of days:
   #{@user_days}

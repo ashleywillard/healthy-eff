@@ -9,6 +9,7 @@ class AdminController < ApplicationController
     navigate_months()
     @date = get_date()
     @user_months = Month.get_user_months(get_month(@date), get_year(@date))
+    @user_months = @user_months.reject{ |x| x.get_num_approved_days() == 0 }
     if not params[:sort].nil?
       session[:sort] = params[:sort]
       @user_months = sort_admin_list(@user_months)
@@ -52,7 +53,7 @@ class AdminController < ApplicationController
     if records.nil?
       handle_no_records()
     else
-      @user_days = records.num_of_days
+      @user_days = @records.get_num_approved_days()
       generate_pdf("accounting", "acct-#{@user.last_name}-#{get_month_name(@date)}-#{get_year(@date)}.pdf")
     end
   end
@@ -60,7 +61,8 @@ class AdminController < ApplicationController
   # :get for audit sheet PDF
   def audit
     @date = session[:months_ago].to_i.months.ago
-    @user_months = Month.get_user_months(get_month(@date), get_year(@date))
+    @user_months = Month.find(:all, :conditions => {:month => get_month(@date), :year => get_year(@date)},
+                              :joins => :user, :order => 'users.last_name')
     generate_pdf("audit", "audit-#{get_month_name(@date)}-#{get_year(@date)}.pdf")
   end
 

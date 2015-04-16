@@ -13,5 +13,5 @@
       %tr
         %td #{month.user.last_name}, #{month.user.first_name}
         %td
-        %td #{month.num_of_days}
-        %td #{month.num_of_days * 10}
+        %td #{month.get_num_approved_days()}
+        %td #{month.get_num_approved_days * 10}

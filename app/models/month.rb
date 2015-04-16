@@ -59,4 +59,19 @@ class Month < ActiveRecord::Base
     return false
   end
 
+  def contains_approved_date?(date)
+  	self.days.each do |day|
+    	return true if day.date.strftime("%m/%d/%Y") == date.strftime("%m/%d/%Y") and day.approved
+    end
+    return false
+  end
+
+  def get_num_approved_days
+    self.days.count(:conditions => {:approved => true})
+  end
+
+  def get_num_pending_days
+    self.days.count(:conditions => {:approved => false, :denied => false})
+  end
+
 end
