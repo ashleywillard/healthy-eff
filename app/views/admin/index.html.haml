@@ -3,7 +3,7 @@
 = link_to "Previous", admin_list_path(:navigate => "Previous")
 = link_to "Next", admin_list_path(:navigate => "Next")
 
-- if @user_months.empty?
+- if @user_months.nil? or @user_months.empty?
   %p= "No records for #{@date.strftime("%B")} #{@date.strftime("%Y")}."
 - else
   %p= button_to "Print Audit Sheet", admin_audit_path(:year => @date.strftime("%Y"), :month => @date.strftime("%m")), :method => :get, :class => "btn"

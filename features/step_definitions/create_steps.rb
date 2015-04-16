@@ -56,8 +56,9 @@ Given (/I have logged (.*) activities/) do |num|
                     :month => Time.now.month,
                     :year => Time.now.year,
                     :num_of_days => num
-  num.to_i.times do
-    Day.create! :date => Time.now,
+  # num.to_i.times do
+  for i in 0..num.to_i
+    Day.create! :date => Time.now - i.days,
                 :approved => true,
                 :denied => false,
                 :total_time => 60,

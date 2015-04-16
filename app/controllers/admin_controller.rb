@@ -9,7 +9,7 @@ class AdminController < ApplicationController
     navigate_months()
     @date = get_date()
     @user_months = Month.get_user_months(get_month(@date), get_year(@date))
-    @user_months = sort_admin_list(@user_months)
+    @user_months = sort_admin_list(@user_months) unless session[:sort].nil?
     @user_months = @user_months.reject{ |x| x.get_num_approved_days() == 0 } unless @user_months.nil?
   end
 
@@ -110,7 +110,7 @@ class AdminController < ApplicationController
   end
 
   def sort_admin_list(list)
-    list.joins(:user).order("users." + session[:sort]) unless session[:sort].nil?
+    list.joins(:user).order("users." + session[:sort])
   end
 
   def handle_no_records
