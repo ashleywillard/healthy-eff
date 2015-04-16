@@ -37,6 +37,7 @@ Healthyeff::Application.routes.draw do
 #   get 'admin/:id/tally' => 'admin#tally', :as => :admin_tally
   get 'admin/:year/:month/accounting/:id' => 'admin#accounting', :as => :admin_accounting
   get 'admin/:year/:month/audit' => 'admin#audit', :as => :admin_audit
+  get 'admin/accounting' => 'admin#group_accounting', :as => :admin_group_accounting
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

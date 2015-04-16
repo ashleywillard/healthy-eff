@@ -58,6 +58,29 @@ class AdminController < ApplicationController
     end
   end
 
+  def group_accounting
+    html = ""
+    @date = get_date()
+    @num_days = Time.days_in_month(@date.month, @date.year)
+    redirect_to admin_list_path and return if params[:selected].nil?
+    params[:selected].each do |m_id|
+      if m_id == params[:selected][0] ; @first = true ; else ; @first = false ; end
+      @user = User.find_by_id(Month.find_by_id(m_id).user.id)
+      @records = Month.get_month_model(@user.id, @date.month, @date.year)
+      if @records.nil?
+        @user_days = 0
+      else
+        @user_days = @records.get_num_approved_days()
+      end
+      html << render_to_string(:layout => false, :action => 'accounting.html.haml')
+      kit = PDFKit.new(html)
+      kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/pdf.css"
+      send_data(kit.to_pdf, :filename => "acct-#{get_month_name(@date)}-#{get_year(@date)}.pdf",
+                            :type => 'application/pdf',
+                            :disposition => "inline")
+    end
+  end
+
   # :get for audit sheet PDF
   def audit
     @date = session[:months_ago].to_i.months.ago
