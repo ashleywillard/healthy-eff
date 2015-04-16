@@ -7,13 +7,13 @@
   %p= "No records for #{@date.strftime("%B")} #{@date.strftime("%Y")}."
 - else
   %p= button_to "Print Audit Sheet", admin_audit_path(:year => @date.strftime("%Y"), :month => @date.strftime("%m")), :method => :get, :class => "btn"
-  %= form_tag, admin_multi_acct_path(:year => @date.strftime("%Y"), :month => @date.strftime("%m"))
+  -# form_tag, MULTI-PAGE PDF GENERATING GOES HERE, e.g., admin_multi_acct_path(:year => @date.strftime("%Y"), :month => @date.strftime("%m"))
   %table#employee_list.table.table-striped
     %thead
       %tr
         %th{:style => "text-align:center"} Select
-        %th First Name
-        %th Last Name
+        %th= link_to "First Name", admin_list_path(:sort => "first_name")
+        %th= link_to "Last Name", admin_list_path(:sort => "last_name")
         %th Days of Healthy Activity
     %tbody
       - @user_months.each do |month|
