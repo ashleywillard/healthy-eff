@@ -47,7 +47,6 @@ Scenario: Adding one exercise without duration
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the home page
-  And I should see "Duration can't be blank"
 
 @javascript
 Scenario: Adding one exercise with less than 0 minutes
@@ -86,7 +85,6 @@ Scenario: Submitting a blank form
   When I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the home page
-  And I should see "Duration can't be blank"
 
 @javascript
 Scenario: Adding multiple exercises with less than 60 minutes total
