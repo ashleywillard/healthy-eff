@@ -14,6 +14,7 @@
         %th= link_to "First Name", admin_list_path(:sort => "first_name")
         %th= link_to "Last Name", admin_list_path(:sort => "last_name")
         %th Days of Healthy Activity
+        %th Pending
     %tbody
       - @user_months.each do |month|
         %tr
@@ -23,9 +24,7 @@
                                                           :month => @date.strftime("%m"))
           %td= month.user.first_name
           %td= month.user.last_name
-          - if month.get_num_pending_days() == 0
-            %td= month.get_num_approved_days().to_s
-          - else
-            %td= month.get_num_approved_days().to_s + " " + "(" + month.get_num_pending_days().to_s + " pending)"
+          %td= month.get_num_approved_days()
+          %td= link_to "#{month.get_num_pending_days()}", admin_pending_path unless month.get_num_pending_days() == 0
 
   = submit_tag 'Print Accounting Sheet', :class => "btn"
