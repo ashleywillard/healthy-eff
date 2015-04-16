@@ -11,7 +11,7 @@
     %thead
       %tr
         %th{:style => "text-align:center"}
-          %button.btn#check_all Select All
+          %input#selectAll{:type => "checkbox", :value => "selectAll"}
         %th= link_to "First Name", admin_list_path(:sort => "first_name")
         %th= link_to "Last Name", admin_list_path(:sort => "last_name")
         %th{:style => "text-align:center"} Days of Healthy Activity
@@ -32,4 +32,14 @@
   = submit_tag 'Print Selected', :class => "btn"
 
 :javascript
-  $('#check_all').on("click", function(){ $('input[type="checkbox"]').click(); });
+  $('#selectAll').click(function() {
+     if (this.checked) {
+         $(':checkbox').each(function() {
+             this.checked = true;
+         });
+     } else {
+        $(':checkbox').each(function() {
+             this.checked = false;
+         });
+     }
+  });
