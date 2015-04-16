@@ -67,7 +67,7 @@ class Month < ActiveRecord::Base
   end
 
   def get_num_approved_days
-    self.days.count(:conditions => {:approved => true})
+    self.days.count('date', :distinct => true, :conditions => {:approved => true})
   end
 
   def get_num_pending_days
