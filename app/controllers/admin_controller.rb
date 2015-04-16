@@ -50,7 +50,7 @@ class AdminController < ApplicationController
     @date = get_date()
     @num_days = Time.days_in_month(@date.month, @date.year)
     @records = Month.get_month_model(params[:id], @date.month, @date.year)
-    if @records.nil?
+    if @records.nil? or @records.get_num_approved_days() == 0
       handle_no_records()
     else
       @user_days = @records.get_num_approved_days()

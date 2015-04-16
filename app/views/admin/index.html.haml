@@ -11,7 +11,8 @@
   %table#employee_list.table.table-striped
     %thead
       %tr
-        %th{:style => "text-align:center"} Select
+        %th{:style => "text-align:center"}
+          %button.btn#check_all Select All
         %th= link_to "First Name", admin_list_path(:sort => "first_name")
         %th= link_to "Last Name", admin_list_path(:sort => "last_name")
         %th Days of Healthy Activity
@@ -28,6 +29,7 @@
           %td= month.user.last_name
           %td= month.get_num_approved_days()
           %td= link_to "#{month.get_num_pending_days()}", admin_pending_path unless month.get_num_pending_days() == 0
-
-  = submit_tag 'Select All', :class => "btn"
   = submit_tag 'Print Selected', :class => "btn"
+
+:javascript
+  $('#check_all').on("click", function(){ $('input[type="checkbox"]').click(); });
