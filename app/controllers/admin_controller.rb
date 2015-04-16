@@ -1,14 +1,21 @@
 class AdminController < ApplicationController
   include DateFormat
+
   before_filter :check_logged_in, :check_admin, :force_password_change
 
   # Admin list view
   def index
+    navigate_months()
+    @date = get_date()
+    session[:sort] = params[:sort] if not params[:sort].nil?
+    @user_months = Month.where(:month => get_month(@date), :year => get_year(@date))
+    @user_months = @user_months.joins(:user).order("users." + session[:sort])
+  end
+
+  def navigate_months
     session[:months_ago] ||= 0
     session[:months_ago] += 1 if params[:navigate] == "Previous"
     session[:months_ago] -= 1 if params[:navigate] == "Next"
-    @date = get_date()
-    @user_months = Month.where(:month => get_month(@date), :year => get_year(@date))
   end
 
   # Activities pending approval
@@ -31,7 +38,7 @@ class AdminController < ApplicationController
   def approve_or_deny(action)
     params[:selected].each do |id|
       d = Day.find_by_id(id)
-      d.approved = true if action == :approved
+      d.approve_day if action == :approved
       d.denied = true if action == :denied
       d.save
     end

@@ -11,8 +11,8 @@
     %thead
       %tr
         %th{:style => "text-align:center"} Select
-        %th First Name
-        %th Last Name
+        %th= link_to "First Name", admin_list_path(:sort => "first_name")
+        %th= link_to "Last Name", admin_list_path(:sort => "last_name")
         %th Days of Healthy Activity
     %tbody
       - @user_months.each do |month|
