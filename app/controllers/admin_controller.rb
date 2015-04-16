@@ -9,11 +9,8 @@ class AdminController < ApplicationController
     navigate_months()
     @date = get_date()
     @user_months = Month.get_user_months(get_month(@date), get_year(@date))
+    @user_months = sort_admin_list(@user_months)
     @user_months = @user_months.reject{ |x| x.get_num_approved_days() == 0 }
-    if not params[:sort].nil?
-      session[:sort] = params[:sort]
-      @user_months = sort_admin_list(@user_months)
-    end
   end
 
   # :get for pending activities
