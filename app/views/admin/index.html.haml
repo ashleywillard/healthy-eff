@@ -25,7 +25,10 @@
                                                           :month => @date.strftime("%m"))
           %td= month.user.first_name
           %td= month.user.last_name
-          %td= month.num_of_days
+          - if month.get_num_pending_days() == 0
+            %td= month.get_num_approved_days().to_s
+          - else
+            %td= month.get_num_approved_days().to_s + " " + "(" + month.get_num_pending_days().to_s + " pending)"
 
   = submit_tag 'Select All', :class => "btn"
   = submit_tag 'Print Selected', :class => "btn"
