@@ -45,6 +45,11 @@ RSpec.describe AdminController do
     before :each do
       @user_months = Month.create :month => Date.today.strftime("%m"),
                                   :year => Date.today.strftime("%Y")
+      Day.create! :date => Date.today - 1.day,
+                  :approved => true,
+                  :total_time => 60,
+                  :reason => 'Reason',
+                  :month_id => @user_months.id
       @prev_month = Month.create :month => (Date.today - 1.month).strftime("%m"),
                                  :year => Date.today.strftime("%Y")
     end
