@@ -98,7 +98,7 @@ class AdminController < ApplicationController
     session[:months_ago] -= 1 if params[:navigate] == "Next"
   end
 
-  def sort_admin_list(list)
+  def sort(list)
     session[:sort].nil? ? list : list.joins(:user).order("users." + session[:sort])
   end
 
