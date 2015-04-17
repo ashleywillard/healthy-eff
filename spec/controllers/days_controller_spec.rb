@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe DaysController do
+  let(:dummy_class) { Class.new { extend ErrorMessages } }
 
   before :each do
     @user = double(User)
@@ -88,7 +89,7 @@ RSpec.describe DaysController do
         params = {:days => {:reason => "none"}, :day => {:date => "#{today}", :activities_attributes => {"1" =>{:name => "swimming", :duration => "90"}}}}
         post :add_today, params
         #Check the database also
-        expect(flash[:notice]).to eq("swimming for 90 minutes has been recorded for #{today.strftime("%m/%d/%Y")}\n")
+        expect(flash[:notice]).to eq(dummy_class.activity_recorded("swimming", "90", "#{today.strftime("%m/%d/%Y")}"))
         response.should redirect_to(profile_path)
       end
     end
@@ -104,7 +105,7 @@ RSpec.describe DaysController do
         #try query again
         post :add_today, params
         #Check the database also
-        expect(flash[:notice]).to eq("#{today.strftime("%m/%d/%Y")} has already been inputted")
+        expect(flash[:notice]).to eq(dummy_class.repeat_date("#{today.strftime("%m/%d/%Y")}"))
         response.should redirect_to(today_path)
       end
     end
@@ -151,7 +152,7 @@ RSpec.describe DaysController do
                               "3" => {:date => "#{date2}", :activities_attributes => {"4" => {:name => "running", :duration => "20"}, "5" => {:name => "swimming", :duration => "40"}}}}}}
         #Check the database also
         post :add_days, params
-        expect(flash[:notice]).to eq("running for 60 minutes has been recorded for #{date1}\nrunning for 20 minutes has been recorded for #{date2}\nswimming for 40 minutes has been recorded for #{date2}\n")
+        expect(flash[:notice]).to eq(dummy_class.activity_recorded("running", "60", "#{date1}") + dummy_class.activity_recorded("running", "20", "#{date2}") + dummy_class.activity_recorded("swimming", "40", "#{date2}"))
         response.should redirect_to(profile_path)
       end
     end
@@ -162,7 +163,7 @@ RSpec.describe DaysController do
                               {"1" => {:date => "#{date}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         #Check the database also
         post :add_days, params
-        expect(flash[:notice]).to eq("running for 60 minutes has been recorded for #{date}\n")
+        expect(flash[:notice]).to eq(dummy_class.activity_recorded("running", "60", "#{date}"))
         response.should redirect_to(profile_path)
       end
     end
@@ -176,7 +177,7 @@ RSpec.describe DaysController do
 
         #try again
         post :add_days, params
-        expect(flash[:notice]).to eq("#{date} has already been inputted")
+        expect(flash[:notice]).to eq(dummy_class.repeat_date("#{date}"))
         response.should redirect_to(past_days_path)
       end
     end
@@ -185,7 +186,7 @@ RSpec.describe DaysController do
         params = {:days => {:reason => "Vacation"}, :month => {:days_attributes =>
                               {"1" => {:date => "RAWR", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
-        expect(flash[:notice]).to eq("Date is invalid")
+        expect(flash[:notice]).to eq(dummy_class.invalid_date)
         response.should redirect_to(past_days_path)
       end
     end
@@ -204,7 +205,7 @@ RSpec.describe DaysController do
         params = {:days => {:reason => "Vacation"}, :month => {:days_attributes =>
                               {"1" => {:date => "", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
-        expect(flash[:notice]).to eq("Date is invalid")
+        expect(flash[:notice]).to eq(dummy_class.invalid_date)
         response.should redirect_to(past_days_path)
       end
     end
@@ -212,7 +213,7 @@ RSpec.describe DaysController do
       it 'should flash Fields are empty and redirect to past days path' do
         params = {:month => {}}
         post :add_days
-        expect(flash[:notice]).to eq("Fields are empty")
+        expect(flash[:notice]).to eq(dummy_class.empty_fields)
         response.should redirect_to(past_days_path)
       end
     end
@@ -221,7 +222,7 @@ RSpec.describe DaysController do
         date = Date.today.prev_day.strftime("%m/%d/%Y")
         params = {:month => {:days_attributes => {"1" => {:date => "#{date}"}}}}
         post :add_days
-        expect(flash[:notice]).to eq("Fields are empty")
+        expect(flash[:notice]).to eq(dummy_class.empty_fields)
         response.should redirect_to(past_days_path)
       end
     end
@@ -242,7 +243,7 @@ RSpec.describe DaysController do
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(false)
       post :add_today
-      flash[:notice].should eql("Bro, your captcha was so wrong dude.")
+      flash[:notice].should eql(dummy_class.bad_captcha)
       response.should redirect_to(today_path)
     end
 
@@ -250,7 +251,7 @@ RSpec.describe DaysController do
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(false)
       post :add_days
-      flash[:notice].should eql("Bro, your captcha was so wrong dude.")
+      flash[:notice].should eql(dummy_class.bad_captcha)
       response.should redirect_to(past_days_path)
     end
   end

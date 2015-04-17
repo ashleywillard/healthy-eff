@@ -31,8 +31,9 @@ RSpec.describe AdminController do
         allow(@user).to receive(:admin).and_return(false)
       end
       it "displays a 'forbidden' message on access attempts" do
+        extend ErrorMessages
         get :index
-        expect(flash[:notice]).to eq("You don't have permission to access this.")
+        expect(flash[:notice]).to eq(deny_access("index"))
       end
       it "redirects to the root page on access attempts" do
         get :index

@@ -152,9 +152,10 @@ RSpec.describe UsersController do
       allow(request.env['warden']).to receive(:authenticate!).and_return(@user)
     end
     it "should not be able to delete a user" do
+      extend ErrorMessages
       post :destroy, {:id => 1}
       expect(response).to redirect_to(root_path)
-      flash[:notice].should eql('Unauthorized access')
+      flash[:notice].should eql(deny_access("manage"))
     end
   end
 

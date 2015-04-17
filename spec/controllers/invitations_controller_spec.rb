@@ -12,9 +12,10 @@ RSpec.describe InvitationsController, :type => :controller do
       allow(request.env['warden']).to receive(:authenticate!).and_return(@user)
     end
     it 'should not be able to send invitations' do
+      extend ErrorMessages
       post :new
       expect(response).to redirect_to(root_path)
-      flash[:notice].should eql('You are not authorized to send invites!')
+      flash[:notice].should eql(invite_refused)
     end
   end
 end

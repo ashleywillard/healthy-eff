@@ -27,6 +27,9 @@ module ErrorMessages
   end
 
   INVITE_REFUSED = "You are not authorized to invite other users."
+  def invite_refused
+    INVITE_REFUSED
+  end
 
   NOTHING_PENDING = "No activities pending approval."
   def nothing_pending
@@ -42,8 +45,14 @@ module ErrorMessages
   end
 
   BAD_CAPTCHA = "Incorrect captcha."
+  def bad_captcha
+    BAD_CAPTCHA
+  end
 
   EMPTY_FIELDS = "Some required fields were left blank."
+  def empty_fields
+    EMPTY_FIELDS
+  end
 
   INVALID_DATE = "Invalid date."
   def invalid_date

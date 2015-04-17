@@ -36,7 +36,7 @@ RSpec.describe Day, :type => :model do
                     :total_time => 1441,
                     :reason => "none"})
         assert !day.valid?
-        expect(day.errors.full_messages[0]).to eq("Total can't be more than 24 hours")
+        expect(day.errors.full_messages[0]).to eq("Total can't be over 24 hours")
       end
     end
   end
