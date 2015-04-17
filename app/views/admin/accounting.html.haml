@@ -2,7 +2,7 @@
 - if not @first
   %div.pagebreak
 %h1 EFF's Healthy Lifestyles Program
-%h2 Monthly Accounting: #{@date.strftime("%B")} #{@date.strftime("%Y")}
+%h2 Monthly Accounting: #{get_month_name(@date)} #{get_year(@date)}
 
 %p
   %strong Employee Name:

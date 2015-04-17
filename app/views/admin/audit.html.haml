@@ -1,5 +1,5 @@
 -#  app/views/admin/audit.html.haml
-%h1 Healthy EFF Checklist: #{@date.strftime("%B")} #{@date.strftime("%Y")}
+%h1 Healthy EFF Checklist: #{get_month_name(@date)} #{get_year(@date)}
 
 %table#audit_checklist.pure-table.pure-table-bordered
   %thead
