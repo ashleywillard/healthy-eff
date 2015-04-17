@@ -57,8 +57,9 @@ Then(/^the following names should be listed on the audit form: "(.*)"$/) do |las
 end
 
 When (/I check names: (.*)$/) do |blah|
+	save_and_open_page
 	names = blah.split(", ")
-	for names.each { |name| check(name) }
+	names.each { |name| check("selected[" + name + "]") }
 end
 
 
@@ -76,15 +77,18 @@ Given (/(.*) has logged (.*) activities/) do |name, num|
                     :month => Time.now.month,
                     :year => Time.now.year,
                     :num_of_days => num
+  m.save
   # num.to_i.times do
-  for i in 0..num.to_i
-    Day.create! :date => Time.now - i.days,
+  for i in 0..num.to_i - 1
+    d = Day.create! :date => Time.now - i.days,
                 :approved => true,
                 :denied => false,
                 :total_time => 60,
                 :reason => 'Reason',
                 :month_id => m.id
+    d.save
   end
+  #Day.find_by_date(Time.now).activities.each { |a| puts ("the thing" + a.name)}
 end
 
 
