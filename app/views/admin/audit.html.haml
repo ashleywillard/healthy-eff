@@ -1,17 +1,17 @@
 -#  app/views/admin/audit.html.haml
-%h1 Healthy EFF Checklist: #{@date.strftime("%B")} #{@date.strftime("%Y")}
+%h1 Healthy EFF Checklist: #{get_month_name(@date)} #{get_year(@date)}
 
-%table#audit_checklist
+%table#audit_checklist.pure-table.pure-table-bordered
   %thead
     %tr
       %th Employee Name
       %th Received?
-      %th #
-      %th $
+      %th{:style => "text-align:center"} #
+      %th{:style => "text-align:center"} $
   %tbody
     - @user_months.each do |month|
       %tr
         %td #{month.user.last_name}, #{month.user.first_name}
         %td
-        %td #{month.num_of_days}
-        %td #{month.num_of_days * 10}
+        %td #{month.get_num_approved_days()}
+        %td #{month.get_num_approved_days * 10}

@@ -24,7 +24,7 @@ Given (/^I (?:am on|visit|go to) (?:|my|the) (.*) (?:|page|view)/) do |view|
       visit_path = new_user_invitation_path
     when "pending approval"
       visit_path = admin_pending_path
-    when "admin list"
+    when "admin list", "admin"
       visit_path = admin_list_path
     when "forgot password"
       visit_path = new_user_password_path
@@ -57,7 +57,7 @@ Then (/^I should be on (?:the|my) (.*) (?:page|view)/) do |view|
       expected_path = manage_path
     when "pending approval"
       expected_path = admin_pending_path
-    when "admin list"
+    when "admin list", "admin"
       expected_path = admin_list_path
   end
   expect(page.current_path).to eq(expected_path)
