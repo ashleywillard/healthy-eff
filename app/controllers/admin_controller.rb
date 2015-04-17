@@ -49,7 +49,7 @@ class AdminController < ApplicationController
     @num_days = Time.days_in_month(@date.month, @date.year)
     html = ""
     params[:selected].each do |m_id|
-      @first = false if m_id == params[:selected][1]
+      @first = false if m_id == params[:selected][1] # insert page breaks
       generate_accounting_sheet(m_id)
       html << render_to_string(:layout => false, :action => 'accounting')
     end
@@ -61,6 +61,7 @@ class AdminController < ApplicationController
     generate_pdf("accounting", pdf_name, html)
   end
 
+  # set up instance variables for use in the PDF views
   def generate_accounting_sheet(month_id)
     @user = Month.find_by_id(month_id).user
     @records = Month.get_month_model(@user.id, @date.month, @date.year)
@@ -72,6 +73,8 @@ class AdminController < ApplicationController
     @date = session[:months_ago].to_i.months.ago
     @user_months = Month.find(:all, :conditions => {:month => get_month(@date), :year => get_year(@date)},
                               :joins => :user, :order => 'users.last_name')
+    # NOTE: May have to change if we want all employees to be displayed, not just
+    # the ones that have logged stuff this month
     html = render_to_string(:layout => false, :action => 'audit')
     generate_pdf("audit", "audit-#{get_month_name(@date)}-#{get_year(@date)}.pdf", html)
   end
