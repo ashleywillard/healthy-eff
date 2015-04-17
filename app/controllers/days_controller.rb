@@ -4,11 +4,11 @@ class DaysController < ApplicationController
   before_filter :check_logged_in, :force_password_change
 
   def today
-    # #RESTFUL redirecting
-    # if request.fullpath != '/today'
-    #   flash.keep
-    #   redirect_to today_path
-    # end
+    #RESTFUL redirecting
+    if request.fullpath != '/today'
+      flash.keep
+      redirect_to today_path
+    end
     @date = Date.today
     @day = Day.new({:date => @date,
                       :reason => "",
