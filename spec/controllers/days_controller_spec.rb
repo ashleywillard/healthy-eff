@@ -42,7 +42,7 @@ RSpec.describe DaysController do
     context "when signing in having already changed password" do
       it "allows access" do
         get :today
-        expect(response.status).to eq(200)
+        expect(response).to redirect_to(today_path)
       end
     end
   end
