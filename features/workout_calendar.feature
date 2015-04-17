@@ -25,3 +25,18 @@ Scenario: Viewing previous months
   Then I should be on my profile page
   When I click on the calendar's previous arrow
   Then I should see a calendar with my last months logged activities
+
+@javascript
+Scenario: Cannot click arrow to see future months on calendar
+  When I follow "Profile"
+  Then I should be on my profile page
+  Then I should not be able to click next
+  And I should be able to click prev
+
+@javascript
+Scenario: Cannot click arrow to see months before your first workout
+  When I follow "Profile"
+  Then I should be on my profile page
+  Then I click on the calendar's previous arrow
+  Then I should not be able to click prev
+  And I should be able to click next

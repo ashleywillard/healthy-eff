@@ -9,29 +9,27 @@ class UsersController < ApplicationController
     end
     @date = Date.today
     earliest_month = Month.get_users_earliest_month(current_user.id)
-    @earliest_date = Date.new(earliest_month.year,earliest_month.month, 1)
+    @earliest_date = (earliest_month == nil) ? @date : Date.new(earliest_month.year,earliest_month.month, 1)
     
-    @workouts = []
-    numOfMonthsToRetrieve = 1+(@date.year*12+@date.month)-(@earliest_date.year*12+@earliest_date.month) 
-    temp = @date
-    (1..numOfMonthsToRetrieve).each do
-      @workouts += retrieveWorkouts(temp.month, temp.year)
-      temp = temp.at_beginning_of_month.prev_month
-    end
-    
+    @workouts = getAllWorkouts(@earliest_date, @date)
     @money = getMoneyEarned(@date.strftime("%m"), @date.strftime("%Y"))
   end
 
   def getAllWorkouts(start, finish)
-    
-    
+    workouts = []
+    numOfMonthsToRetrieve = 1+(finish.year*12+finish.month)-(start.year*12+start.month) 
+    (1..numOfMonthsToRetrieve).each do
+      workouts += retrieveWorkouts(finish.month, finish.year)
+      finish = finish.at_beginning_of_month.prev_month
+    end
+    return workouts
   end
 
   def retrieveWorkouts(month, year)
-    curr_month = Month.where(:month => month, :year => year, :user_id => current_user.id).first
-    workouts = []
+    curr_month = Month.get_month_model(current_user.id, month, year)
     return [] if(curr_month == nil)
 
+    workouts = []
     curr_month.days.each do |day|
       day.activities.each do |activity|
         status = 'green'
