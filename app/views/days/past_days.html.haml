@@ -4,8 +4,8 @@
     = render "day_fields", :f => builder
   %p
     = link_to_add_fields "<span class=\"glyphicon glyphicon-plus-sign\"</span>".html_safe, f, :days
-  = label :days, :reason, 'Reason for inputting multiple days'
-  = text_field :days, :reason
+  = label :days, :reason, 'Reason for inputting past days*:'
+  = text_field :days, :reason, :required => "required"
   %br
   (Note: activity for all past days will be sent to admin for approval)
   %p 

@@ -4,8 +4,9 @@ class Month < ActiveRecord::Base
   belongs_to :user
   accepts_nested_attributes_for :days, :allow_destroy => true
 
-  # TO DO
-  # Add accessor method to get models for all users corresponding to a specific month
+  def self.get_user_months(month, year)
+    Month.where(:month => month, :year => year)
+  end
 
   def self.get_month_model(user_id, month, year)
     month_model = self.where(user_id: user_id, month: month, year: year)
@@ -56,6 +57,21 @@ class Month < ActiveRecord::Base
     	return true if day.date.strftime("%m/%d/%Y") == date.strftime("%m/%d/%Y")
     end
     return false
+  end
+
+  def contains_approved_date?(date)
+  	self.days.each do |day|
+    	return true if day.date.strftime("%m/%d/%Y") == date.strftime("%m/%d/%Y") and day.approved
+    end
+    return false
+  end
+
+  def get_num_approved_days
+    self.days.count('date', :distinct => true, :conditions => {:approved => true})
+  end
+
+  def get_num_pending_days
+    self.days.count(:conditions => {:approved => false, :denied => false})
   end
 
 end

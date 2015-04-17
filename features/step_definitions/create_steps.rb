@@ -55,9 +55,10 @@ Given (/I have logged (.*) activities/) do |num|
   m = Month.create! :user_id => u.id,
                     :month => Time.now.month,
                     :year => Time.now.year,
-                    :num_of_days => num.to_i
-  num.to_i.times do
-    Day.create! :date => Time.now,
+                    :num_of_days => num
+  # num.to_i.times do
+  for i in 0..num.to_i
+    Day.create! :date => Time.now - i.days,
                 :approved => true,
                 :denied => false,
                 :total_time => 60,
@@ -71,7 +72,8 @@ Given (/^(.*) (?:pending|unapproved) (?:|activities|days) exist/) do |num|
   u = User.create! :email => "blah@blah.com",
                    :password => "?Ag0asdfasdf",
                    :password_confirmation => "?Ag0asdfasdf"
-  m = Month.create! :user_id => u.id
+  m = Month.create! :user_id => u.id,
+                    :num_of_days => 0
   num.to_i.times do
     Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),
                 :approved => false,

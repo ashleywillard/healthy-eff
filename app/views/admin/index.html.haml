@@ -3,26 +3,40 @@
 = link_to "Previous", admin_list_path(:navigate => "Previous")
 = link_to "Next", admin_list_path(:navigate => "Next")
 
-- if @user_months.empty?
+- if @user_months.nil? or @user_months.empty?
   %p= "No records for #{@date.strftime("%B")} #{@date.strftime("%Y")}."
 - else
   %p= button_to "Print Audit Sheet", admin_audit_path(:year => @date.strftime("%Y"), :month => @date.strftime("%m")), :method => :get, :class => "btn"
   %table#employee_list.table.table-striped
     %thead
       %tr
-        %th{:style => "text-align:center"} Select
-        %th First Name
-        %th Last Name
-        %th Days of Healthy Activity
+        %th{:style => "text-align:center"}
+          %input#selectAll{:type => "checkbox", :value => "selectAll"}
+        %th= link_to "First Name", admin_list_path(:sort => "first_name")
+        %th= link_to "Last Name", admin_list_path(:sort => "last_name")
+        %th{:style => "text-align:center"} Days of Healthy Activity
+        %th{:style => "text-align:center"} Pending
     %tbody
+      = form_tag admin_accounting_path(:year => @date.year, :month => @date.month), :method => :get
       - @user_months.each do |month|
         %tr
           %td{:style => "text-align:center"}
-            = link_to "Accounting", admin_accounting_path(:id => month.user.id,
-                                                          :year => @date.strftime("%Y"),
-                                                          :month => @date.strftime("%m"))
+            = check_box_tag "selected[]", month.id
           %td= month.user.first_name
           %td= month.user.last_name
-          %td= month.num_of_days
+          %td{:style => "text-align:center"}= month.get_num_approved_days()
+          %td{:style => "text-align:center"}= link_to "#{month.get_num_pending_days()}", admin_pending_path unless month.get_num_pending_days() == 0
+  = submit_tag 'Print Selected', :class => "btn"
 
-  = submit_tag 'Print Accounting Sheet', :class => "btn"
+:javascript
+  $('#selectAll').click(function() {
+     if (this.checked) {
+         $(':checkbox').each(function() {
+             this.checked = true;
+         });
+     } else {
+        $(':checkbox').each(function() {
+             this.checked = false;
+         });
+     }
+  });

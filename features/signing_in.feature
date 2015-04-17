@@ -15,6 +15,7 @@ Scenario: Logging in with the correct credentials
   When I fill in my username and password
   And I press “Sign In”
   Then I should see "Signed in successfully."
+  And I should be on the today page
 
 Scenario: Logging in with incorrect password
   Given I am on the sign in page
