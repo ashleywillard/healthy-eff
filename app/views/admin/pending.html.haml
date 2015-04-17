@@ -2,10 +2,10 @@
 %h1 Activities Pending Approval
 
 = form_tag admin_update_pending_path, :method => :put
-%table#pending
+%table#pending.table.table-striped
   %thead
     %tr
-      %th Select
+      %th{:style => "text-align:center"} Select
       %th First Name
       %th Last Name
       %th Date
@@ -13,12 +13,12 @@
   %tbody
     - @days.each do |day|
       %tr
-        %td= check_box_tag "selected[]", day.id
+        %td{:style => "text-align:center"}= check_box_tag "selected[]", day.id
         %td= day.user.first_name
         %td= day.user.last_name
         %td= day.date.strftime("%m/%d/%Y")
         %td= day.reason
 
 %p
-= submit_tag 'Approve'
-= submit_tag 'Deny'
+= submit_tag 'Approve', :class => "btn btn-success"
+= submit_tag 'Deny', :class => "btn btn-danger"

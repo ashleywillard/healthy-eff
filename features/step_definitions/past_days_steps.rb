@@ -3,9 +3,9 @@
 When /I fill in day and activity with:(.*)/ do |input|
   date_entries = input.split('|')
   if date_entries.count > 1
-    click_link('Remove Day')
+    page.find('.remove_day').trigger('click')
     (date_entries.count).times do
-      click_link('Add Day')
+      page.find('.day_link').trigger('click')
     end
 
     links = page.all("a.activity_link")
@@ -54,11 +54,11 @@ end
 #   fill_in("Reason for inputting past days", :with => 'Im lazy, duh')
 # end
 And /I click Add Day/ do
-  click_link "Add Day"
+  page.find('.day_link').trigger('click')
 end
 
 And /I click Remove Day/ do
-  click_link "Remove Day"
+  page.find('.remove_day').trigger('click')
 end
 
 And /I press Submit/ do

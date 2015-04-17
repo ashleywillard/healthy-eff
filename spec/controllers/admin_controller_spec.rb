@@ -8,12 +8,13 @@ RSpec.describe AdminController do
   before :each do
     @user = double(User)
     allow(@user).to receive(:admin).and_return(true)
+    allow(@user).to receive(:password_changed?).and_return(true)
     allow_message_expectations_on_nil # suppress warnings on devise warden
     allow(request.env['warden']).to receive(:authenticate!).and_return(@user)
     allow(controller).to receive(:current_user).and_return(@user)
   end
 
-  # check_logged_in behavior tested in activities_controller_spec
+  # check_logged_in behavior tested in days_controller_spec
 
   describe "user.admin" do
     context "when admin" do
@@ -44,6 +45,11 @@ RSpec.describe AdminController do
     before :each do
       @user_months = Month.create :month => Date.today.strftime("%m"),
                                   :year => Date.today.strftime("%Y")
+      Day.create! :date => Date.today - 1.day,
+                  :approved => true,
+                  :total_time => 60,
+                  :reason => 'Reason',
+                  :month_id => @user_months.id
       @prev_month = Month.create :month => (Date.today - 1.month).strftime("%m"),
                                  :year => Date.today.strftime("%Y")
     end
@@ -80,10 +86,14 @@ RSpec.describe AdminController do
 
   describe "admin#update_pending" do
     before :each do
-      @day1 = Day.create! :total_time => 60, :date => Date.today.prev_day, :reason => "x",
-                          :approved => false, :denied => false
-      @day2 = Day.create! :total_time => 60, :date => Date.today.prev_day, :reason => "x",
-                          :approved => false, :denied => false
+      yesterday = Date.today.prev_day
+      @month = Month.create! :month => DateFormat.get_month(yesterday),
+                            :year => DateFormat.get_year(yesterday),
+                            :num_of_days => 0
+      @day1 = Day.create! :total_time => 60, :date => yesterday, :reason => "x",
+                          :approved => false, :denied => false, :month_id => @month.id
+      @day2 = Day.create! :total_time => 60, :date => yesterday, :reason => "x",
+                          :approved => false, :denied => false, :month_id => @month.id
     end
     context "when no pending activities are checked" do
       before :each do

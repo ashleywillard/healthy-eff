@@ -1,0 +1,42 @@
+-#  app/views/admin/accounting.html.haml
+- if not @first
+  %div.pagebreak
+%h1 EFF's Healthy Lifestyles Program
+%h2 Monthly Accounting: #{@date.strftime("%B")} #{@date.strftime("%Y")}
+
+%p
+  %strong Employee Name:
+  #{@user.first_name} #{@user.last_name}
+
+%table#monthly_acct{:style => "width: 50%"}
+  %tbody
+    - for i in 1..(@num_days + 1) / 2
+      %tr
+        %td= i.to_s
+        - if @records.contains_approved_date?(Date.parse(i.to_s + "-" + @records.month.to_s + "-" + @records.year.to_s))
+          %td X
+        - else
+          %td _______
+        - if i <= 15
+          %td= (i + (@num_days + 1) / 2).to_s
+          - if @records.contains_approved_date?(Date.parse((i + (@num_days + 1) / 2).to_s + "-" + @records.month.to_s + "-" + @records.year.to_s))
+            %td X
+          - else
+            %td _______
+%br
+%p
+  %strong Total number of days:
+  #{@user_days}
+%p
+  %strong Reimbursable amount (days x $10):
+  $#{@user_days * 10}
+
+%br
+%p I certify that I spent at least one hour engaged in reimbursable personal health-focused behavior on each of the above dates.
+%br
+%p
+  %strong Signature:
+  __________________________________ &nbsp;&nbsp;&nbsp;&nbsp;
+  %strong Date:
+  _________________
+

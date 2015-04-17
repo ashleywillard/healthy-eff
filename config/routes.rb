@@ -6,10 +6,12 @@ Healthyeff::Application.routes.draw do
   # manually add user registration routes to prevent users from registering
   # themselves - Michelle
   # Added :controllers => { :invitations => 'invitations' } for devise invitable
-  devise_for :users, :skip => [:registrations], :controllers => { :invitations => 'invitations' } 
+  devise_for :users, :skip => [:registrations], :controllers => {:invitations => 'invitations'}
   as :user do
-    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
-    put 'users/edit' => 'devise/registrations#update', :as => 'user_registration'
+#     get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
+    get 'users/edit' => 'registrations#edit', :as => 'edit_user_registration'
+#     put 'users/edit' => 'devise/registrations#update', :as => 'user_registration'
+    put 'users/edit' => 'registrations#update', :as => 'user_registration'
   end
 
   #required for devise to work, redirects to path below after user logs in
@@ -31,6 +33,11 @@ Healthyeff::Application.routes.draw do
   get 'admin' => 'admin#index', :as => :admin_list
   get 'admin/pending' => 'admin#pending', :as => :admin_pending
   put 'admin/update_pending' => 'admin#update_pending', :as => :admin_update_pending
+  # pdf
+#   get 'admin/:id/tally' => 'admin#tally', :as => :admin_tally
+  get 'admin/:year/:month/accounting/:id' => 'admin#accounting', :as => :admin_accounting
+  get 'admin/:year/:month/audit' => 'admin#audit', :as => :admin_audit
+  get 'admin/accounting' => 'admin#group_accounting', :as => :admin_group_accounting
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -9,13 +9,13 @@
     %div
       Currently waiting confirmation for: #{resource.unconfirmed_email}
   .field
-    = f.label "#{:password} (leave blank if you do not want to change it)"
+    = f.label "New #{:password}"
     = f.password_field :password, autocomplete: "off"
   .field
-    = f.label :password_confirmation
+    = f.label "New #{:password_confirmation}"
     = f.password_field :password_confirmation, autocomplete: "off"
   .field
-    = f.label "#{:current_password} (we need your current password to confirm your changes)"
+    = f.label "#{:current_password} (to confirm your changes)"
     = f.password_field :current_password, autocomplete: "off"
   .actions
     = f.submit "Update", :class => "btn"

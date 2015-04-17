@@ -6,9 +6,9 @@ Feature: Changing password
 
 Background: users in database
   Given the following users exist:
-  | email                       | password              | password_confirmation |
-  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
-  | healthypotato@gmail.com     | hotpotato             | hotpotato             |
+  | email                       | password              | password_confirmation | password_changed |
+  | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | true             |
+  | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | true             |
   Given I am logged in as a non-admin
   And I am on the user settings page
 
@@ -19,7 +19,7 @@ Scenario: Changing password - happy path
   And I fill in the user_current_password field with my old password
   And I press “Update”
 
-  # Then I should be on the today page
+  Then I should be on the today page
   And I should see "Your account has been updated successfully."
 
 Scenario: Changing password - sad path, wrong current password

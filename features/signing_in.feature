@@ -6,20 +6,21 @@ Feature: Signing in
 
 Background: users in database
   Given the following users exist:
-  | email                       | password              | password_confirmation |    
-  | 169.healthyeff@gmail.com    | northsidepotato       | northsidepotato       |
-  | healthypotato@gmail.com     | hotpotato             | hotpotato             |
+  | email                       | password              | password_confirmation | password_changed |
+  | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | true             |
+  | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | true             |
 
 Scenario: Logging in with the correct credentials
   Given I am on the sign in page
   When I fill in my username and password
-  And I press “Log in”
+  And I press “Sign In”
   Then I should see "Signed in successfully."
+  And I should be on the today page
 
 Scenario: Logging in with incorrect password
   Given I am on the sign in page
   When I fill in my username and the wrong password
-  And I press “Log in”
+  And I press “Sign In”
   Then I should be on the sign in page
   And I should see "Invalid email or password."
 

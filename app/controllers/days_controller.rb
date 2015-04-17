@@ -1,17 +1,17 @@
 class DaysController < ApplicationController
   include DateFormat
 
-  before_filter :check_logged_in
+  before_filter :check_logged_in, :force_password_change
 
   def today
-    # #RESTFUL redirecting
-    # if request.fullpath != '/today'
-    #   flash.keep
-    #   redirect_to today_path
-    # end
+    #RESTFUL redirecting
+    if request.fullpath != '/today'
+      flash.keep
+      redirect_to today_path
+    end
     @date = Date.today
     @day = Day.new({:date => @date,
-                      :reason => "", 
+                      :reason => "",
                       :approved => true,
                       :denied => false})
     @day.activities.append(Activity.new())
@@ -168,7 +168,7 @@ class DaysController < ApplicationController
 
   def update_month(day)
     month_model = Month.get_or_create_month_model(current_user.id, get_month(day.date), get_year(day.date))
-    month_model.num_of_days += 1
+    month_model.num_of_days += 1 if day.approved
     month_model.save!
     day.month_id = month_model.id
     day.save!
