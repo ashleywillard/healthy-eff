@@ -55,6 +55,10 @@ gem 'bootstrap-glyphicons'
 gem 'wkhtmltopdf-binary'
 gem 'pdfkit'
 
+group :test, :cucumber do
+  gem 'pdf-reader'
+end
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
