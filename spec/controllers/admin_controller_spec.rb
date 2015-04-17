@@ -3,10 +3,12 @@ require "rails_helper"
 RSpec.describe AdminController do
 
   SUCCESS_CODE = 200
+  REDIRECT_CODE = 302
 
   # mock a logged-in admin
   before :each do
     @user = double(User)
+    allow(@user).to receive(:id).and_return(1)
     allow(@user).to receive(:admin).and_return(true)
     allow(@user).to receive(:password_changed?).and_return(true)
     allow_message_expectations_on_nil # suppress warnings on devise warden
@@ -133,6 +135,77 @@ RSpec.describe AdminController do
           expect(flash[:notice]).to include("Success")
         end
       end
+    end
+  end
+
+  describe "admin#audit" do
+    it "makes a call to generate a printable PDF document" do
+      expect(controller).to receive(:generate_pdf)
+      get :audit, :month => Date.today.month, :year => Date.today.year, :id => 1
+    end
+  end
+
+  describe "admin#accounting" do
+    context "when the user has not logged anything this month" do
+      before :each do
+        allow(Month).to receive(:get_month_model).and_return(nil)
+        allow(@user).to receive(:first_name).and_return("first")
+        allow(@user).to receive(:last_name).and_return("last")
+        allow(User).to receive(:find_by_id).and_return(@user)
+      end
+      it "redirects to the list view when the user hasn't logged anything" do
+        get :accounting, :month => Date.today.month, :year => Date.today.year, :id => 1
+        expect(response.status).to eq(REDIRECT_CODE)
+      end
+      it "displays a message notifying the admin of such" do
+        get :accounting, :month => Date.today.month, :year => Date.today.year, :id => 1
+        expect(flash[:notice]).to_not eq(nil)
+      end
+    end
+    context "when users have logged activities this month" do
+      it "makes a call to generate a printable PDF document" do
+        allow(@user).to receive(:id).and_return(1)
+        allow(@user).to receive(:first_name).and_return("first")
+        allow(@user).to receive(:last_name).and_return("first")
+        allow(User).to receive(:find_by_id).and_return(@user)
+        Month.any_instance.stub(:get_num_approved_days).and_return(2)
+        expect(controller).to receive(:generate_pdf)
+        get :accounting, :month => Date.today.month, :year => Date.today.year, :id => @user.id
+      end
+    end
+  end
+
+  describe "admin#group_accounting" do
+    it "does not generate a PDF when no employees are checked" do
+      get :group_accounting
+      expect(controller).to_not receive(:generate_pdf)
+    end
+    it "bounces PDF request to normal 'accounting()' when only one user checked" do
+      allow(@user).to receive(:id).and_return(1)
+      allow(User).to receive(:find_by_id).and_return(@user)
+      @month = double(Month)
+      allow(@month).to receive(:user).and_return(@user)
+      allow(Month).to receive(:find_by_id).and_return(@month)
+      expect(controller).to receive(:accounting)
+      get :group_accounting, :selected => ["1"]
+    end
+  end
+
+  describe "admin#navigate_months" do
+    it "stores the month being viewed in the session hash" do
+      get :index
+      expect(session[:months_ago]).to_not eq(nil)
+    end
+  end
+
+  describe "admin#sort" do
+    it "makes no additional queries to the database" do
+      expect(Month).to receive(:find).exactly(0).times
+      expect(User).to receive(:find).exactly(0).times
+    end
+    it "updates the session hash" do
+      get :index, :sort => "last_name"
+      expect(session[:sort]).to_not eq(nil)
     end
   end
 

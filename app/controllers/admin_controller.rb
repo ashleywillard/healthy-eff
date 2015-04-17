@@ -44,12 +44,12 @@ class AdminController < ApplicationController
 
   # :get for accounting sheet PDF
   def accounting
-    @user = User.find_by_id(params[:id])
     @date = get_date()
-    @num_days = Time.days_in_month(@date.month, @date.year)
+    @user = User.find_by_id(params[:id])
     @records = Month.get_month_model(params[:id], @date.month, @date.year)
     handle_no_records() if @records.nil? or @records.get_num_approved_days() == 0
-    @user_days = @records.get_num_approved_days()
+    @num_days = Time.days_in_month(@date.month, @date.year)
+    @user_days = @records.nil? ? 0 : @records.get_num_approved_days()
     html = render_to_string(:layout => false, :action => 'accounting.html.haml')
     generate_pdf("accounting", "acct-#{@user.last_name}-#{get_month_name(@date)}-#{get_year(@date)}.pdf", html)
   end
@@ -59,6 +59,11 @@ class AdminController < ApplicationController
     @date = get_date()
     @num_days = Time.days_in_month(@date.month, @date.year)
     html = ""
+    if params[:selected].length == 1
+      params[:id] = Month.find_by_id(params[:selected][0]).user.id
+      @first = true
+      accounting() and return
+    end
     params[:selected].each do |m_id|
       if m_id == params[:selected][0] ; @first = true ; else ; @first = false ; end
       @user = User.find_by_id(Month.find_by_id(m_id).user.id)
