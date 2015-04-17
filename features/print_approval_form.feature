@@ -4,11 +4,18 @@ As an admin
 So that my employees can sign off on what they did
 I want to be able to print out approval forms
 
+Background:
+  Given the following admins exist:
+  | email                       | password              | password_confirmation | password_changed |
+  | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | true             |
+  And That Person1 has logged 4 activities
+  And This Person2 has logged 1 activities
+
+@javascript
 Scenario: Selectively Printing Approval Forms
 Given I am logged in as an admin
 And I am on the admin view
-When I check names: blah1, blah2, blah3
-And I uncheck names: blah4, blah5
+When I check names: Person1, Person2
 Then I press print forms
 Then I should see a print preview and a form for: blah1, blah2, blah3
-And I should not see a print preview and a form for: blah4, blah5
+And I should not see a print preview and a form for: blah4, blah3

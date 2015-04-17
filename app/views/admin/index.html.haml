@@ -21,7 +21,7 @@
       - @user_months.each do |month|
         %tr
           %td{:style => "text-align:center"}
-            = check_box_tag "selected[]", month.id
+            = check_box_tag "selected[" + month.user.last_name + "]", month.id
           %td= month.user.first_name
           %td= month.user.last_name
           %td{:style => "text-align:center"}= month.get_num_approved_days()
