@@ -62,7 +62,8 @@ class AdminController < ApplicationController
   end
 
   def generate_accounting_sheet(month_id)
-    @user = User.find_by_id(Month.find_by_id(month_id).user.id)
+#     @user = User.find_by_id(Month.find_by_id(month_id).user.id)
+    @user = Month.find_by_id(month_id).user
     @records = Month.get_month_model(@user.id, @date.month, @date.year)
     @records.nil? ? @user_days = 0 : @user_days = @records.get_num_approved_days()
   end
