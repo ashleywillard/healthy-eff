@@ -42,31 +42,29 @@ class AdminController < ApplicationController
     flash[:notice] = "Success! Activities #{action}."
   end
 
-  # :get for accounting sheet PDF
   def accounting
-    @user = User.find_by_id(params[:id])
-    @date = get_date()
-    @num_days = Time.days_in_month(@date.month, @date.year)
-    @records = Month.get_month_model(params[:id], @date.month, @date.year)
-    handle_no_records() if @records.nil? or @records.get_num_approved_days() == 0
-    @user_days = @records.get_num_approved_days()
-    html = render_to_string(:layout => false, :action => 'accounting.html.haml')
-    generate_pdf("accounting", "acct-#{@user.last_name}-#{get_month_name(@date)}-#{get_year(@date)}.pdf", html)
-  end
-
-  def group_accounting
     redirect_to admin_list_path and return if params[:selected].nil?
+    @first = true
     @date = get_date()
     @num_days = Time.days_in_month(@date.month, @date.year)
     html = ""
     params[:selected].each do |m_id|
-      if m_id == params[:selected][0] ; @first = true ; else ; @first = false ; end
-      @user = User.find_by_id(Month.find_by_id(m_id).user.id)
-      @records = Month.get_month_model(@user.id, @date.month, @date.year)
-      @records.nil? ? @user_days = 0 : @user_days = @records.get_num_approved_days()
-      html << render_to_string(:layout => false, :action => 'accounting.html.haml')
-      generate_pdf("accounting", "acct-#{get_month_name(@date)}-#{get_year(@date)}.pdf", html)
+      @first = false if m_id == params[:selected][1]
+      generate_accounting_sheet(m_id)
+      html << render_to_string(:layout => false, :action => 'accounting')
     end
+    if params[:selected].length == 1
+      pdf_name = "acct-#{@user.last_name}-#{get_month_name(@date)}-#{get_year(@date)}.pdf"
+    else
+      pdf_name = "acct-#{get_month_name(@date)}-#{get_year(@date)}.pdf"
+    end
+    generate_pdf("accounting", pdf_name, html)
+  end
+
+  def generate_accounting_sheet(month_id)
+    @user = Month.find_by_id(month_id).user
+    @records = Month.get_month_model(@user.id, @date.month, @date.year)
+    @records.nil? ? @user_days = 0 : @user_days = @records.get_num_approved_days()
   end
 
   # :get for audit sheet PDF
@@ -74,7 +72,7 @@ class AdminController < ApplicationController
     @date = session[:months_ago].to_i.months.ago
     @user_months = Month.find(:all, :conditions => {:month => get_month(@date), :year => get_year(@date)},
                               :joins => :user, :order => 'users.last_name')
-    html = render_to_string(:layout => false, :action => 'audit.html.haml')
+    html = render_to_string(:layout => false, :action => 'audit')
     generate_pdf("audit", "audit-#{get_month_name(@date)}-#{get_year(@date)}.pdf", html)
   end
 
