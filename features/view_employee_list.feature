@@ -32,3 +32,5 @@ Scenario: Admin list view - records
   When I follow "Admin"
   And I follow "Admin Home"
   Then I should see a table of employee names
+  And I should see "Days of Healthy Activity"
+  And I should see "Pending"

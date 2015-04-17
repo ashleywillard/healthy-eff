@@ -120,6 +120,42 @@ RSpec.describe Month, :type => :model do
       end
     end
   end
+  describe '#self.get_approved_dates_list' do 
+    before :each do
+      @month_model = Month.create!({:user_id => @user_id,
+                     :month => @month,
+                     :year => @year,
+                     :num_of_days => 1})
+    end
+    context 'Month does not exist' do
+      it 'should return empty list' do
+        expect(Month.get_approved_dates_list(@user_id, @last_month, @year)).to eq([])
+      end
+    end
+    context 'Month has no days' do
+      it 'should return empty list' do
+        expect(Month.get_approved_dates_list(@user_id, @month, @year)).to eq([])
+      end
+    end
+    it 'should return list of approved days this month' do
+      @day=Day.create!({:date => @today,
+                  :reason => "none",
+                  :month_id => @month_model.id, 
+                  :total_time => 60,
+                  :approved => true,
+                  :denied => false})
+      expect(Month.get_approved_dates_list(@user_id, @month, @year)).to eq([format_date(@today)])
+    end
+    it 'should not return non-approved days' do
+      @today=Day.create!({:date => @today.at_beginning_of_month,
+                  :reason => "none",
+                  :month_id => @month_model.id, 
+                  :total_time => 60,
+                  :approved => false,
+                  :denied => false})
+      expect(Month.get_approved_dates_list(@user_id, @month, @year)).to eq([])
+    end
+  end
   describe '#self.get_users_earliest_month' do
     before :each do
       @month1 = Month.create!({:user_id => @user_id,

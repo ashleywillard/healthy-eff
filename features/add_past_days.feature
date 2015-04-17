@@ -44,7 +44,6 @@ Scenario: Adding multiple exercises for past days with blank fields
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the past day input page
-  And I should see "Reason can't be blank"
 
 @javascript
 Scenario: Submit blank form
@@ -59,7 +58,6 @@ Scenario: Submit blank form with only date filled in
   And I write the captcha text in the textbox
   And I press Submit
   Then I should be on the past day input page
-  And I should see "Duration can't be blank"
 
 @javascript
 Scenario: Submit valid form with bad date

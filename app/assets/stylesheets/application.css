@@ -43,7 +43,7 @@ p.alert {
 }
 
 .navbar {
-  font-family: "Helvetica"; 
+  font-family: "Helvetica";
   font-weight: bold;
 }
 
@@ -76,6 +76,23 @@ p.alert {
 .navbar .nav > li > a:hover {
   color: #fff;
   background-color: #cc0000;
+}
+
+.dropdown-menu > .active > a{
+    background-color: #ffffff !important;
+    background-image: linear-gradient(to bottom, #ffffff, #ffffff) !important;
+    background-repeat: repeat-x !important;
+    color: #333333;
+    outline: 0 none;
+    text-decoration: none;
+}
+.dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+    background-color: #ffffff !important;
+    background-image: linear-gradient(to bottom, #0088cc, #0088cc) !important;
+    background-repeat: repeat-x !important;
+    color: #ffffff;
+    outline: 0 none;
+    text-decoration: none;
 }
 
 .activity_container:nth-child(2n) {
@@ -114,3 +131,24 @@ a.day_link.add_fields {
 a.remove_day {
   text-decoration: none;
 }
+
+/* For Profile Page */
+#head{
+  position: relative;
+  height: 80px;
+}
+.profileName{
+  font-size: 40px;
+  float: left;
+}
+.moneyEarned{
+  font-size: 40px;
+  float: right;
+}
+.moneyCaption{
+  float: right;
+}
+#legendhelper{
+  position: relative;
+}
+
