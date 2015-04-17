@@ -157,39 +157,41 @@ RSpec.describe AdminController do
         get :accounting, :month => Date.today.month, :year => Date.today.year, :id => 1
         expect(response.status).to eq(REDIRECT_CODE)
       end
-      it "displays a message notifying the admin of such" do
-        get :accounting, :month => Date.today.month, :year => Date.today.year, :id => 1
-        expect(flash[:notice]).to_not eq(nil)
-      end
     end
     context "when users have logged activities this month" do
-      it "makes a call to generate a printable PDF document" do
+      before :each do
         allow(@user).to receive(:id).and_return(1)
         allow(@user).to receive(:first_name).and_return("first")
         allow(@user).to receive(:last_name).and_return("first")
         allow(User).to receive(:find_by_id).and_return(@user)
         Month.any_instance.stub(:get_num_approved_days).and_return(2)
-        expect(controller).to receive(:generate_pdf)
+      end
+      it "makes a call to generate a printable PDF document" do
+        expect(controller).to receive(:generate_pdf).exactly(1).times
+        get :accounting, :month => Date.today.month, :year => Date.today.year, :id => @user.id, :selected => ["1"]
+      end
+      it "does not generate a PDF when no employees are checked" do
+        expect(controller).to receive(:generate_pdf).exactly(0).times
         get :accounting, :month => Date.today.month, :year => Date.today.year, :id => @user.id
       end
     end
   end
 
-  describe "admin#group_accounting" do
-    it "does not generate a PDF when no employees are checked" do
-      get :group_accounting
-      expect(controller).to_not receive(:generate_pdf)
-    end
-    it "bounces PDF request to normal 'accounting()' when only one user checked" do
-      allow(@user).to receive(:id).and_return(1)
-      allow(User).to receive(:find_by_id).and_return(@user)
-      @month = double(Month)
-      allow(@month).to receive(:user).and_return(@user)
-      allow(Month).to receive(:find_by_id).and_return(@month)
-      expect(controller).to receive(:accounting)
-      get :group_accounting, :selected => ["1"]
-    end
-  end
+#   describe "admin#group_accounting" do
+#     it "does not generate a PDF when no employees are checked" do
+#       get :group_accounting
+#       expect(controller).to_not receive(:generate_pdf)
+#     end
+#     it "bounces PDF request to normal 'accounting()' when only one user checked" do
+#       allow(@user).to receive(:id).and_return(1)
+#       allow(User).to receive(:find_by_id).and_return(@user)
+#       @month = double(Month)
+#       allow(@month).to receive(:user).and_return(@user)
+#       allow(Month).to receive(:find_by_id).and_return(@month)
+#       expect(controller).to receive(:accounting)
+#       get :group_accounting, :selected => ["1"]
+#     end
+#   end
 
   describe "admin#navigate_months" do
     it "stores the month being viewed in the session hash" do

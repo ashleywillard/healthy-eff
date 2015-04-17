@@ -42,36 +42,29 @@ class AdminController < ApplicationController
     flash[:notice] = "Success! Activities #{action}."
   end
 
-  # :get for single accounting sheet PDF
   def accounting
-    @date = get_date()
-    @user = User.find_by_id(params[:id])
-    @records = Month.get_month_model(@user.id, @date.month, @date.year)
-    handle_no_records() if @records.nil? or @records.get_num_approved_days() == 0
-    @num_days = Time.days_in_month(@date.month, @date.year)
-    @user_days = @records.nil? ? 0 : @records.get_num_approved_days()
-    html = render_to_string(:layout => false, :action => 'accounting')
-    generate_pdf("accounting", "acct-#{@user.last_name}-#{get_month_name(@date)}-#{get_year(@date)}.pdf", html)
-  end
-
-  def group_accounting
     redirect_to admin_list_path and return if params[:selected].nil?
     @first = true
-    if params[:selected].length == 1
-      params[:id] = Month.find_by_id(params[:selected][0]).user.id
-      accounting() and return
-    end
     @date = get_date()
     @num_days = Time.days_in_month(@date.month, @date.year)
     html = ""
     params[:selected].each do |m_id|
-      if m_id == params[:selected][1] ; @first = false ; end
-      @user = User.find_by_id(Month.find_by_id(m_id).user.id)
-      @records = Month.get_month_model(@user.id, @date.month, @date.year)
-      @records.nil? ? @user_days = 0 : @user_days = @records.get_num_approved_days()
+      @first = false if m_id == params[:selected][1]
+      generate_accounting_sheet(m_id)
       html << render_to_string(:layout => false, :action => 'accounting')
-      generate_pdf("accounting", "acct-#{get_month_name(@date)}-#{get_year(@date)}.pdf", html)
     end
+    if params[:selected].length == 1
+      pdf_name = "acct-#{@user.last_name}-#{get_month_name(@date)}-#{get_year(@date)}.pdf"
+    else
+      pdf_name = "acct-#{get_month_name(@date)}-#{get_year(@date)}.pdf"
+    end
+    generate_pdf("accounting", pdf_name, html)
+  end
+
+  def generate_accounting_sheet(month_id)
+    @user = User.find_by_id(Month.find_by_id(month_id).user.id)
+    @records = Month.get_month_model(@user.id, @date.month, @date.year)
+    @records.nil? ? @user_days = 0 : @user_days = @records.get_num_approved_days()
   end
 
   # :get for audit sheet PDF

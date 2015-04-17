@@ -17,14 +17,11 @@
         %th{:style => "text-align:center"} Days of Healthy Activity
         %th{:style => "text-align:center"} Pending
     %tbody
-      = form_tag admin_group_accounting_path, :method => :get
+      = form_tag admin_accounting_path(:year => @date.year, :month => @date.month), :method => :get
       - @user_months.each do |month|
         %tr
           %td{:style => "text-align:center"}
             = check_box_tag "selected[]", month.id
-            -#= link_to "Accounting", admin_accounting_path(:id => month.user.id,
-                                                          :year => @date.strftime("%Y"),
-                                                          :month => @date.strftime("%m"))
           %td= month.user.first_name
           %td= month.user.last_name
           %td{:style => "text-align:center"}= month.get_num_approved_days()
