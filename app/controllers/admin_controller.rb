@@ -105,11 +105,6 @@ class AdminController < ApplicationController
     session[:sort].nil? ? list : list.joins(:user).order("users." + session[:sort])
   end
 
-  def handle_no_records
-    flash[:notice] = "No recorded activities for #{@user.first_name} #{@user.last_name} for #{get_month_name(@date)} #{get_year(@date)}."
-    redirect_to admin_list_path and return
-  end
-
   def get_date
     session[:months_ago].to_i.months.ago
   end
