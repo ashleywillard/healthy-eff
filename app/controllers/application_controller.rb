@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   include SimpleCaptcha::ControllerHelpers
+  ###### include error messages module
+  include ErrorMessages
 
   private
   def check_logged_in

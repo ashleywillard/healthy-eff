@@ -16,7 +16,7 @@ class DaysController < ApplicationController
                       :denied => false})
     @day.activities.append(Activity.new())
     month = Month.get_month_model(current_user.id, get_month(@date), get_year(@date))
-    flash[:notice] = "#{format_date(@date)} has already been inputted" if month != nil && month.contains_date?(@date)
+    flash[:notice] = repeat_date(format_date(@date)) if month != nil && month.contains_date?(@date)
   end
 
   def past_days
@@ -39,12 +39,12 @@ class DaysController < ApplicationController
   end
 
   def bad_captcha
-    flash[:notice] = "Bro, your captcha was so wrong dude."
+    flash[:notice] = BAD_CAPTCHA
     raise Exception
   end
 
   def empty_fields_notice
-    flash[:notice] = "Fields are empty"
+    flash[:notice] = EMPTY_FIELDS
     raise Exception
   end
 
@@ -104,7 +104,7 @@ class DaysController < ApplicationController
       validate_single_day(day[:activities_attributes], @day)
     rescue ArgumentError
       #case where Date.parse throws an ArgumentError for having invalid date field
-      flash[:notice] = "Date is invalid"
+      flash[:notice] = INVALID_DATE
       raise Exception
     end
   end
@@ -119,6 +119,7 @@ class DaysController < ApplicationController
   def validate_single_day_activities(activity_list, day)
     activities = []
     activity_list.each do |id, activity|
+      session[:name] = activity[:name]
       new_activity = create_activity(activity, day)
       validate_model(new_activity)
       activities += [new_activity]
@@ -147,7 +148,7 @@ class DaysController < ApplicationController
       day.save!
       activity.day_id = day.id
       activity.save!
-      notice += "#{activity.name} for #{activity.duration} minutes has been recorded for #{format_date(day.date)}\n"
+      notice += activity_recorded(activity.name, activity.duration, format_date(day.date))
     end
     if flash[:notice] == nil then flash[:notice] = notice else flash[:notice] = flash[:notice] + notice end
   end
@@ -162,7 +163,7 @@ class DaysController < ApplicationController
   def check_date_already_input(date)
     month = Month.get_month_model(current_user.id, get_month(date), get_year(date))
     return unless month != nil && month.contains_date?(date)
-    flash[:notice] = "#{format_date(date)} has already been inputted"
+    flash[:notice] = repeat_date format_date(date)
     raise Exception
   end
 

@@ -31,13 +31,13 @@ Scenario: Removing an employee
   And I visit the manage employee page
   And I press “Delete”
   Then I should be on the manage employee page
-  And I should see "User '' 'Fox' deleted."
+  And I should see that "" "Fox" has been deleted
 
 Scenario: Not an admin
   Given I am logged in as a non-admin
   And I visit the manage employee page
   Then I should be on the home page
-  And I should see "Unauthorized access"
+  And I should see that I cannot access this page
 
 Scenario: Can't delete myself
   Given I am logged in as an admin

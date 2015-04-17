@@ -18,7 +18,7 @@ Scenario: Adding one exercise
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on my profile page
-  And I should see "Running for 80 minutes has been recorded"
+  And I should see activity "Running" and duration "80"
 
 @javascript
 Scenario: Adding multiple exercises
@@ -26,8 +26,8 @@ Scenario: Adding multiple exercises
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on my profile page
-  And I should see "Running for 90 minutes has been recorded"
-  And I should see "Lifting for 100 minutes has been recorded"
+  And I should see activity "Running" and duration "90"
+  And I should see activity "Lifting" and duration "100"
 
 @javascript
 Scenario: Adding today multiple times
@@ -39,7 +39,7 @@ Scenario: Adding today multiple times
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the home page
-  And I should see "already been inputted"
+  And I should see that this date has already been inputted
 
 @javascript
 Scenario: Adding one exercise without duration
@@ -70,7 +70,7 @@ Scenario: Adding multiple exercises with total greater than 1440 minutes
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the home page
-  And I should see "Total can't be more than 24 hours"
+  And I should see "Total can't be over 24 hours"
 
 @javascript
 Scenario: Adding one exercise with less than 60 minutes

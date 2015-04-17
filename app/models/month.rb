@@ -42,6 +42,16 @@ class Month < ActiveRecord::Base
     return dates
   end
 
+  def self.get_approved_dates_list(user_id, month, year)
+    dates = []
+    month_model = self.get_month_model(user_id, month, year)
+    return dates if month_model == nil
+    month_model.days.each do |day|
+      dates += [day.date.strftime("%m/%d/%Y")] if day.approved
+    end
+    return dates
+  end
+
   def self.get_users_earliest_month(user_id)
     months = self.where(user_id: user_id, year: Month.minimum(:year))
     return months == nil ? nil : months.where(month: months.minimum(:month)).first

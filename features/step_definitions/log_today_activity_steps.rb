@@ -28,6 +28,13 @@ When /I write the captcha text in the textbox/ do
   #activities_controller.any_instance.should_receive(:check_simple_captcha).and_return(true)
 end
 
+Then(/^the activity field should contain "(.*)"$/) do |activity|
+  name_ids = page.body.scan(/day_activities_attributes_.{0,20}_name/m)
+  the_id = name_ids[0]
+  value = page.find(:xpath, "//input[@id='#{the_id}']").value
+  assert_equal(value, activity)
+end
+
 # Then /^(?:|I )should see "([^"]*)"$/ do |text|
 #   if page.respond_to? :should
 #     page.should have_content(text)
@@ -35,4 +42,3 @@ end
 #     assert page.has_content?(text)
 #   end
 # end
-

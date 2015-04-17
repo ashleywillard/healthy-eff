@@ -8,21 +8,28 @@ class UsersController < ApplicationController
       @name = current_user.first_name + ' ' + current_user.last_name
     end
     @date = Date.today
-    @earliestDate = @date.at_beginning_of_month.next_month
+    earliest_month = Month.get_users_earliest_month(current_user.id)
+    @earliest_date = (earliest_month == nil) ? @date : Date.new(earliest_month.year,earliest_month.month, 1)
+    
+    @workouts = getAllWorkouts(@earliest_date, @date)
+    @money = getMoneyEarned(@date.strftime("%m"), @date.strftime("%Y"))
+  end
 
-    @workouts = []
-    numOfMonthsToRetrieve = 2
+  def getAllWorkouts(start, finish)
+    workouts = []
+    numOfMonthsToRetrieve = 1+(finish.year*12+finish.month)-(start.year*12+start.month) 
     (1..numOfMonthsToRetrieve).each do
-      @earliestDate = @earliestDate.at_beginning_of_month.prev_month
-      @workouts += retrieveWorkouts(@earliestDate.month, @earliestDate.year)
+      workouts += retrieveWorkouts(finish.month, finish.year)
+      finish = finish.at_beginning_of_month.prev_month
     end
+    return workouts
   end
 
   def retrieveWorkouts(month, year)
-    curr_month = Month.where(:month => month, :year => year, :user_id => current_user.id).first
-    workouts = []
+    curr_month = Month.get_month_model(current_user.id, month, year)
     return [] if(curr_month == nil)
 
+    workouts = []
     curr_month.days.each do |day|
       day.activities.each do |activity|
         status = 'green'
@@ -35,9 +42,15 @@ class UsersController < ApplicationController
     return workouts
   end
 
+  def getMoneyEarned(month, year)
+    amt_per_day = 10
+    approved_cnt = Month.get_approved_dates_list(current_user.id, month, year).length
+    return "$" + (approved_cnt * amt_per_day).to_s
+  end
+
   def manage
     if !current_user.admin?
-      flash[:notice] = "Unauthorized access"
+      flash[:notice] = deny_access get_current_page
       redirect_to today_path
     end
     @users = User.find(:all, :conditions => ["id != ?", current_user.id])
@@ -45,12 +58,12 @@ class UsersController < ApplicationController
 
   def destroy
     if !current_user.admin?
-      flash[:notice] = "Unauthorized access"
+      flash[:notice] = deny_access get_current_page
       redirect_to root_path
     else
       @user = User.find(params[:id])
       @user.destroy
-      flash[:notice] = "User '#{@user.first_name}' '#{@user.last_name}' deleted."
+      flash[:notice] = user_deleted(@user.first_name, @user.last_name)
       redirect_to manage_path
     end
 

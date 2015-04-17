@@ -7,24 +7,51 @@ RSpec.describe UsersController do
       user = double('user')
       user.stub(:first_name).and_return('first')
       user.stub(:last_name).and_return('last')
+      user.stub(:id).and_return(1)
       allow(user).to receive(:password_changed?).and_return(true)
       allow_message_expectations_on_nil
       allow(request.env['warden']).to receive(:authenticate!).and_return(user)
       allow(controller).to receive(:current_user).and_return(user)
     end
-    it "Returns empty when user has not worked out for current or previous month" do
-      UsersController.any_instance.stub(:retrieveWorkouts).and_return([])
+    it "Returns empty when user has not worked out ever" do
+      Month.stub(:get_users_earliest_month)
+      UsersController.any_instance.stub(:getMoneyEarned)
+      UsersController.any_instance.stub(:getAllWorkouts).and_return([])
       get :profile
       controller.instance_eval{@workouts}.should eql []
       response.should be_success
     end
-    it "Returns all workout info for current or previous month" do
+    it "Returns all workout info for all previous months" do
       firstMonth = [['swimming', 80, '03-01-2015', 'green']]
       secondMonth = [['running', 60, '04-01-2015', 'yellow'],['climbing', 60, '04-02-2015', 'red']]
-      UsersController.any_instance.stub(:retrieveWorkouts).and_return(firstMonth, secondMonth)
+      Month.stub(:get_users_earliest_month)
+      UsersController.any_instance.stub(:getMoneyEarned)
+      UsersController.any_instance.stub(:getAllWorkouts).and_return(firstMonth + secondMonth)
+      
       get :profile
       controller.instance_eval{@workouts}.should eql firstMonth + secondMonth
       response.should be_success
+    end
+  end
+
+  describe "Get All Workouts" do 
+    before :each do
+      user = double('user')
+      user.stub(:first_name).and_return('first')
+      user.stub(:last_name).and_return('last')
+      user.stub(:id).and_return(1)
+      allow(user).to receive(:password_changed?).and_return(true)
+      allow_message_expectations_on_nil
+      allow(request.env['warden']).to receive(:authenticate!).and_return(user)
+      allow(controller).to receive(:current_user).and_return(user)
+    end
+    it "should call Retrieve workouts for certain number of months" do
+      start = Date.new(2015,03,01)
+      finish = Date.new(2015,04,15)
+      firstMonth = [['swimming', 80, '03-01-2015', 'green']]
+      secondMonth = [['running', 60, '04-01-2015', 'yellow'],['climbing', 60, '04-02-2015', 'red']]
+      UsersController.any_instance.stub(:retrieveWorkouts).and_return(firstMonth, secondMonth)
+      controller.getAllWorkouts(start, finish).should eql firstMonth + secondMonth
     end
   end
 
@@ -98,6 +125,23 @@ RSpec.describe UsersController do
     end
   end
 
+  describe 'get money earned for this month' do
+    before :each do
+      user = double('user')
+      user.stub(:first_name).and_return('first')
+      user.stub(:last_name).and_return('last')
+      user.stub(:id).and_return(1)
+      allow(user).to receive(:password_changed?).and_return(true)
+      allow_message_expectations_on_nil
+      allow(request.env['warden']).to receive(:authenticate!).and_return(user)
+      allow(controller).to receive(:current_user).and_return(user)
+    end
+    it 'computes amount of money earned from approved days this month' do 
+      Month.stub_chain(:get_approved_dates_list, :length).and_return(2)
+      controller.getMoneyEarned(3,2015).should eql '$20'
+    end
+  end
+
   describe 'non-admin' do
     before :each do
       @request.env["devise.mapping"] = Devise.mappings[:user]
@@ -108,9 +152,11 @@ RSpec.describe UsersController do
       allow(request.env['warden']).to receive(:authenticate!).and_return(@user)
     end
     it "should not be able to delete a user" do
+      extend ErrorMessages
       post :destroy, {:id => 1}
       expect(response).to redirect_to(root_path)
-      flash[:notice].should eql('Unauthorized access')
+      flash[:notice].should eql(deny_access(""))
     end
   end
+
 end

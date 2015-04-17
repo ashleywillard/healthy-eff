@@ -83,7 +83,7 @@ Month.create! :user_id => 2,
 # ===== Approved day, non-admin ===== #
 Activity.create! :duration => 60,
                  :name => 'swimming',
-                 :day_id => 4
+                 :day_id => 5
 
 Day.create! :date => Time.strptime("03/31/2015", "%m/%d/%Y"),
                 :approved => true,

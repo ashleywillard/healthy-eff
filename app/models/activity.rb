@@ -1,4 +1,5 @@
 class Activity < ActiveRecord::Base
+  include ErrorMessages
 
   attr_accessible :name, :duration, :day_id
   validates :name, :duration, presence: true
@@ -8,11 +9,11 @@ class Activity < ActiveRecord::Base
 
   def valid_duration
     if duration == nil
-      errors.add(:duration, "can't be blank")
+      errors.add(:duration, NOT_BLANK)
     elsif duration <= 0 
-      errors.add(:duration, "can't be less than 0")
+      errors.add(:duration, NOT_BELOW_ZERO)
     elsif duration > 1440
-      errors.add(:duration, "can't be over 24 hours")
+      errors.add(:duration, NOT_TOO_HIGH)
     end
   end
 
