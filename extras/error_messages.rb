@@ -1,8 +1,12 @@
 module ErrorMessages
 
   def get_current_page
-    path = Rails.application.routes.recognize_path(request.env['PATH_INFO'])
-    path[:action]
+    begin
+      path = Rails.application.routes.recognize_path(request.env['PATH_INFO'])
+      path[:action]
+    rescue
+      ""
+    end
   end
 
   ACCESS_DENIED = " page is restricted to administrators."
