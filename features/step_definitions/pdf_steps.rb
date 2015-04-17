@@ -56,6 +56,38 @@ Then(/^the following names should be listed on the audit form: "(.*)"$/) do |las
 	assert_not_equal(page.driver.response.instance_variable_get('@body').index(/#{last}/), nil)
 end
 
+When (/I check names: (.*)$/) do |blah|
+	names = blah.split(", ")
+	for names.each { |name| check(name) }
+end
+
+
+Given (/(.*) has logged (.*) activities/) do |name, num|
+  full_name = name.split(" ")
+
+  u = User.find_by_last_name(full_name[1])
+  if u.nil?
+    u = User.create! :email => full_name[0] + "@blah.com",
+                     :password => "?1Asdfjkl;asdfjkl;",
+                     :password_confirmation => "?1Asdfjkl;asdfjkl;"
+    u.first_name = full_name[0] ; u.last_name = full_name[1] ; u.save
+  end
+  m = Month.create! :user_id => u.id,
+                    :month => Time.now.month,
+                    :year => Time.now.year,
+                    :num_of_days => num
+  # num.to_i.times do
+  for i in 0..num.to_i
+    Day.create! :date => Time.now - i.days,
+                :approved => true,
+                :denied => false,
+                :total_time => 60,
+                :reason => 'Reason',
+                :month_id => m.id
+  end
+end
+
+
 
 
 
