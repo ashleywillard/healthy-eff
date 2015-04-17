@@ -114,3 +114,38 @@ a.day_link.add_fields {
 a.remove_day {
   text-decoration: none;
 }
+
+/* For Profile Page */
+#head{
+  position: relative;
+  height: 80px;
+}
+.profileName{
+  font-size: 40px;
+  float: left;
+}
+.moneyEarned{
+  font-size: 40px;
+  float: right;
+}
+.moneyCaption{
+  float: right;
+}
+#legendhelper{
+  position: relative;
+}
+/* Positioning *//*
+.legend { list-style: none; }
+.legend li { float: left; margin-right: 10px; }
+.legend span { 
+  border: 1px solid #ccc; 
+  float: left; 
+  width: 25px; 
+  height: 25px; 
+  margin: 10px; 
+  vertical-align: text-bottom;
+  }
+/* Colors *//*
+.legend .approved { background-color: green; }
+.legend .pending { background-color: yellow; }
+.legend .rejected { background-color: red; }

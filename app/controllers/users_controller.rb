@@ -8,14 +8,23 @@ class UsersController < ApplicationController
       @name = current_user.first_name + ' ' + current_user.last_name
     end
     @date = Date.today
-    @earliestDate = @date.at_beginning_of_month.next_month
-
+    earliest_month = Month.get_users_earliest_month(current_user.id)
+    @earliest_date = Date.new(earliest_month.year,earliest_month.month, 1)
+    
     @workouts = []
-    numOfMonthsToRetrieve = 2
+    numOfMonthsToRetrieve = 1+(@date.year*12+@date.month)-(@earliest_date.year*12+@earliest_date.month) 
+    temp = @date
     (1..numOfMonthsToRetrieve).each do
-      @earliestDate = @earliestDate.at_beginning_of_month.prev_month
-      @workouts += retrieveWorkouts(@earliestDate.month, @earliestDate.year)
+      @workouts += retrieveWorkouts(temp.month, temp.year)
+      temp = temp.at_beginning_of_month.prev_month
     end
+    
+    @money = getMoneyEarned(@date.strftime("%m"), @date.strftime("%Y"))
+  end
+
+  def getAllWorkouts(start, finish)
+    
+    
   end
 
   def retrieveWorkouts(month, year)
@@ -33,6 +42,12 @@ class UsersController < ApplicationController
       end
     end
     return workouts
+  end
+
+  def getMoneyEarned(month, year)
+    amt_per_day = 10
+    approved_cnt = Month.get_approved_dates_list(current_user.id, month, year).length
+    return "$" + (approved_cnt * amt_per_day).to_s
   end
 
   def manage
