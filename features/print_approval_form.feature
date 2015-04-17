@@ -16,6 +16,6 @@ Scenario: Selectively Printing Approval Forms
 Given I am logged in as an admin
 And I am on the admin view
 When I check names: Person1, Person2
-Then I press print forms
+Then I press "Print Selected"
 Then I should see a print preview and a form for: blah1, blah2, blah3
 And I should not see a print preview and a form for: blah4, blah3

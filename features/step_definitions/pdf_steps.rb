@@ -4,7 +4,7 @@ module PDF
       @receiver = PDF::SimplePageTextReceiver.new
       pdf = PDF::Reader.file(pdf_file, @receiver)
     end
- 
+
     def get_text
       @receiver.content.inspect
     end
@@ -14,26 +14,26 @@ end
 module PDF
   class SimplePageTextReceiver
     attr_accessor :content
- 
+
     def initialize
       @content = []
     end
- 
+
     # Called when page parsing starts
     def begin_page(arg = nil)
       @content << ""
     end
- 
+
     # record text that is drawn on the page
     def show_text(string, *params)
       @content.last << string.strip
     end
- 
+
     # there's a few text callbacks, so make sure we process them all
     alias :super_show_text :show_text
     alias :move_to_next_line_and_show_text :show_text
     alias :set_spacing_next_line_show_text :show_text
- 
+
     # this final text callback takes slightly different arguments
     def show_text_with_positioning(*params)
       params = params.first
@@ -57,9 +57,11 @@ Then(/^the following names should be listed on the audit form: "(.*)"$/) do |las
 end
 
 When (/I check names: (.*)$/) do |blah|
-	save_and_open_page
-	names = blah.split(", ")
-	names.each { |name| check("selected[" + name + "]") }
+# 	save_and_open_page
+# 	names = blah.split(", ")
+# 	names.each { |name| check("selected[" + name + "]") }
+  find(:css, "input#selectAll[value='selectAll']").set(true)
+  find(:css, "input#selectAll[value='selectAll']").should be_checked
 end
 
 
