@@ -56,13 +56,23 @@ Then(/^the following names should be listed on the audit form: "(.*)"$/) do |las
 	assert_not_equal(page.driver.response.instance_variable_get('@body').index(/#{last}/), nil)
 end
 
-When (/I check names: (.*)$/) do |blah|
-	names = blah.split(", ")
-	names.each { |name| find(:css, "input#selected_" + name).set(true) }
+When (/I check names: (.*)$/) do |names_list|
+  names = names_list.split(", ")
+  for i in 0..names.length - 1
+    first = names[i].split[0]; last = names[i].split[1]
+    check 'selected_' + last
+  end
 end
 
+When (/I select all/) do
+  check 'selectAll'
+  find(:css, "input#selectAll[value='selectAll']").should be_checked
+  all('input[type=checkbox]').each do |checkbox|
+    expect(checkbox).to be_checked
+  end
+end
 
-Given (/(.*) has logged (.*) activities/) do |name, num|
+Given (/^(.*) has logged (\d+) (?:activity|activities)/) do |name, num|
   full_name = name.split(" ")
 
   u = User.find_by_last_name(full_name[1])
