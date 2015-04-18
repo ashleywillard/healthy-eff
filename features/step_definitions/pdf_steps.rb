@@ -57,11 +57,8 @@ Then(/^the following names should be listed on the audit form: "(.*)"$/) do |las
 end
 
 When (/I check names: (.*)$/) do |blah|
-# 	save_and_open_page
-# 	names = blah.split(", ")
-# 	names.each { |name| check("selected[" + name + "]") }
-  find(:css, "input#selectAll[value='selectAll']").set(true)
-  find(:css, "input#selectAll[value='selectAll']").should be_checked
+	names = blah.split(", ")
+	names.each { |name| find(:css, "input#selected_" + name).set(true) }
 end
 
 
