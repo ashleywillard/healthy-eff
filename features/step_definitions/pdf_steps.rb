@@ -44,7 +44,6 @@ end
 
 
 When(/^I follow the PDF button "([^"]+)"$/) do |label|
-  save_and_open_page
   click_button(label)
   temp_pdf = Tempfile.new('pdf')
   temp_pdf << page.source.force_encoding('UTF-8')
@@ -58,12 +57,8 @@ Then(/^the following names should be listed on the audit form: "(.*)"$/) do |las
 end
 
 When (/I check names: (.*)$/) do |blah|
-# 	save_and_open_page
-# 	names = blah.split(", ")
-# 	names.each { |name| check("selected[" + name + "]") }
   find(:css, "input#selectAll[value='selectAll']").set(true)
   find(:css, "input#selectAll[value='selectAll']").should be_checked
-  save_and_open_page
 end
 
 
