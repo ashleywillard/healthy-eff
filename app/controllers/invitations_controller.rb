@@ -3,7 +3,7 @@ class InvitationsController < Devise::InvitationsController
     if current_user.admin?
       super
     else
-      flash[:notice] = INVITE_REFUSED
+      flash[:alert] = INVITE_REFUSED
       redirect_to root_path
     end
   end

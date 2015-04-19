@@ -3,29 +3,36 @@ class UsersController < ApplicationController
   before_filter :check_logged_in, :force_password_change
 
   def profile
-    @name = 'No name'
-    if current_user.first_name != nil && current_user.last_name != nil
-      @name = current_user.first_name + ' ' + current_user.last_name
-    end
+    @name = set_name
     @date = Date.today
     earliest_month = Month.get_users_earliest_month(current_user.id)
-    @earliest_date = (earliest_month == nil) ? @date : Date.new(earliest_month.year,earliest_month.month, 1)
-    
-    @workouts = getAllWorkouts(@earliest_date, @date)
-    @money = getMoneyEarned(@date.strftime("%m"), @date.strftime("%Y"))
+    @earliest_date = (earliest_month == nil) ? @date : Date.new(earliest_month.year,earliest_month.month, 1)   
+    @workouts = get_all_workouts(@earliest_date, @date)
+    @money = get_money_earned(@date.strftime("%m"), @date.strftime("%Y"))
   end
 
-  def getAllWorkouts(start, finish)
-    workouts = []
-    numOfMonthsToRetrieve = 1+(finish.year*12+finish.month)-(start.year*12+start.month) 
-    (1..numOfMonthsToRetrieve).each do
-      workouts += retrieveWorkouts(finish.month, finish.year)
+  def set_name
+    name = 'No name'
+    if current_user.first_name != nil && current_user.last_name != nil
+      name = current_user.first_name + ' ' + current_user.last_name
+    end
+    return name
+  end
+
+  def get_all_workouts(start, finish)
+    workouts = [] 
+    (1..num_of_months_to_retrieve(start, finish)).each do
+      workouts += retrieve_workouts(finish.month, finish.year)
       finish = finish.at_beginning_of_month.prev_month
     end
     return workouts
   end
 
-  def retrieveWorkouts(month, year)
+  def num_of_months_to_retrieve(start, finish)
+    return 1 + (finish.year*12 + finish.month) - (start.year*12 + start.month)
+  end
+
+  def retrieve_workouts(month, year)
     curr_month = Month.get_month_model(current_user.id, month, year)
     return [] if(curr_month == nil)
 
@@ -42,7 +49,7 @@ class UsersController < ApplicationController
     return workouts
   end
 
-  def getMoneyEarned(month, year)
+  def get_money_earned(month, year)
     amt_per_day = 10
     approved_cnt = Month.get_approved_dates_list(current_user.id, month, year).length
     return "$" + (approved_cnt * amt_per_day).to_s
@@ -50,7 +57,7 @@ class UsersController < ApplicationController
 
   def manage
     if !current_user.admin?
-      flash[:notice] = deny_access get_current_page
+      flash[:alert] = deny_access get_current_page
       redirect_to today_path
     end
     @users = User.find(:all, :conditions => ["id != ?", current_user.id])
@@ -58,7 +65,7 @@ class UsersController < ApplicationController
 
   def destroy
     if !current_user.admin?
-      flash[:notice] = deny_access get_current_page
+      flash[:alert] = deny_access get_current_page
       redirect_to root_path
     else
       @user = User.find(params[:id])

@@ -4,11 +4,7 @@ class DaysController < ApplicationController
   before_filter :check_logged_in, :force_password_change
 
   def today
-    #RESTFUL redirecting
-    if request.fullpath != '/today'
-      flash.keep
-      redirect_to today_path
-    end
+    restful_redirect
     @date = Date.today
     @day = Day.new({:date => @date,
                       :reason => "",
@@ -16,7 +12,7 @@ class DaysController < ApplicationController
                       :denied => false})
     @day.activities.append(Activity.new())
     month = Month.get_month_model(current_user.id, get_month(@date), get_year(@date))
-    flash[:notice] = repeat_date(format_date(@date)) if month != nil && month.contains_date?(@date)
+    flash[:alert] = repeat_date(format_date(@date)) if month != nil && month.contains_date?(@date)
   end
 
   def past_days
@@ -30,6 +26,14 @@ class DaysController < ApplicationController
     @previously_inputted = Month.get_inputted_dates(current_user.id, @start_date, @end_date)
   end
 
+  def restful_redirect
+    #RESTFUL redirecting
+    if request.fullpath != '/today'
+      flash.keep
+      redirect_to today_path
+    end
+  end
+
   def check_simple_captcha
     if Rails.env.production?
       return simple_captcha_valid?
@@ -39,12 +43,12 @@ class DaysController < ApplicationController
   end
 
   def bad_captcha
-    flash[:notice] = BAD_CAPTCHA
+    flash[:alert] = BAD_CAPTCHA
     raise Exception
   end
 
   def empty_fields_notice
-    flash[:notice] = EMPTY_FIELDS
+    flash[:alert] = EMPTY_FIELDS
     raise Exception
   end
 
@@ -104,7 +108,7 @@ class DaysController < ApplicationController
       validate_single_day(day[:activities_attributes], @day)
     rescue ArgumentError
       #case where Date.parse throws an ArgumentError for having invalid date field
-      flash[:notice] = INVALID_DATE
+      flash[:alert] = INVALID_DATE
       raise Exception
     end
   end
@@ -155,7 +159,7 @@ class DaysController < ApplicationController
 
   def validate_model(model)
     unless model.valid?
-      flash[:notice] = model.errors.full_messages[0]
+      flash[:alert] = model.errors.full_messages[0]
       raise Exception
     end
   end
@@ -163,7 +167,7 @@ class DaysController < ApplicationController
   def check_date_already_input(date)
     month = Month.get_month_model(current_user.id, get_month(date), get_year(date))
     return unless month != nil && month.contains_date?(date)
-    flash[:notice] = repeat_date format_date(date)
+    flash[:alert] = repeat_date format_date(date)
     raise Exception
   end
 

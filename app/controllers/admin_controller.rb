@@ -46,15 +46,23 @@ class AdminController < ApplicationController
 
   def accounting
     redirect_to admin_list_path and return if params[:selected].nil?
-    @first = true
     @date = get_date()
     @num_days = Time.days_in_month(@date.month, @date.year)
-    html = ""
+    generate_forms(render_html)
+  end
+
+  def render_html
+    @first = true
+    html = ''
     params[:selected].each do |m_id|
       @first = false if m_id == params[:selected][1] # insert page breaks
       generate_accounting_sheet(m_id)
       html << render_to_string(:layout => false, :action => 'accounting')
     end
+    return html
+  end
+
+  def generate_forms(html)
     if params[:selected].length == 1
       pdf_name = "acct-#{@user.last_name}-#{get_month_name(@date)}-#{get_year(@date)}.pdf"
     else
@@ -113,7 +121,7 @@ class AdminController < ApplicationController
   def check_admin
     if not current_user.admin
       ###### changed to deny_access method
-      flash[:notice] = deny_access get_current_page
+      flash[:alert] = deny_access get_current_page
       redirect_to today_path
     end
   end

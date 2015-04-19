@@ -89,11 +89,11 @@ Given (/^(.*) has logged (\d+) (?:activity|activities)/) do |name, num|
   m.save
   # num.to_i.times do
   for i in 0..num.to_i - 1
-    d = Day.create! :date => Time.now - i.days,
-                :approved => true,
+    d = Day.create! :approved => true,
                 :denied => false,
+                :date => Time.now - i.days,
                 :total_time => 60,
-                :reason => 'Reason',
+                :reason => 'none',
                 :month_id => m.id
     d.save
   end

@@ -15,7 +15,7 @@ RSpec.describe InvitationsController, :type => :controller do
       extend ErrorMessages
       post :new
       expect(response).to redirect_to(root_path)
-      flash[:notice].should eql(invite_refused)
+      flash[:alert].should eql(invite_refused)
     end
   end
 end
