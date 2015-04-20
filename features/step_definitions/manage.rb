@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
-When(/^I follow “Add a new employee”$/) do
-  click_link("Add a new employee")
+When(/^I follow “New employee”$/) do
+  page.find('.add_new_employee').click
 end
 
 When (/I fill in email with "(.*)"/) do |email|

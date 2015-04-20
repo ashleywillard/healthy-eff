@@ -1,7 +1,5 @@
 -#  app/views/admin/index.html.haml
-%h1 #{get_month_name(@date)} #{get_year(@date)}
-= link_to "Previous", admin_list_path(:navigate => "Previous")
-= link_to "Next", admin_list_path(:navigate => "Next")
+%h1 #{link_to "<span class=\"glyphicon glyphicon-circle-arrow-left\"></span>".html_safe, admin_list_path(:navigate => "Previous"), :class => "admin_previous"} #{get_month_name(@date)} #{get_year(@date)} #{link_to "<span class=\"glyphicon glyphicon-circle-arrow-right\"></span>".html_safe, admin_list_path(:navigate => "Next"), :class => "admin_next"}
 
 - if @user_months.nil? or @user_months.empty?
   %p= "No records for #{get_month_name(@date)} #{get_year(@date)}."

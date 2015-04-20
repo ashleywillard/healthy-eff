@@ -5,6 +5,7 @@
     %title Healthy EFF
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
+    = favicon_link_tag 'favicon.ico'
     = csrf_meta_tags
     = nav_bar fixed: :left, brand: "Healthy EFF", responsive: true do
       - if user_signed_in?
@@ -27,7 +28,11 @@
   %body
     %div.content
       -if notice
-        %p.notice= notice
+        %p.notice
+          %span.glyphicon.glyphicon-info-sign
+          = notice
       -if alert
-        %p.alert= alert
+        %p.alert
+          %span.glyphicon.glyphicon-exclamation-sign
+          = alert
       = yield

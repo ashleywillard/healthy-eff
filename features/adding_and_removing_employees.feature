@@ -15,7 +15,7 @@ Background: users in database
 Scenario: Going to add employee page
   Given I am logged in as an admin
   And I visit the manage employee page
-  When I follow “Add a new employee”
+  When I follow “New employee”
   Then I should be on the add employee page
 
 Scenario: Adding an employee

@@ -1,6 +1,5 @@
 %h1 Employees
-
-= link_to 'Add a new employee', new_user_invitation_path
+= link_to "<span class=\"glyphicon glyphicon-plus-sign\"></span> New employee".html_safe, new_user_invitation_path, :class => "add_new_employee"
 
 %table#movies.table.table-striped
   %thead
