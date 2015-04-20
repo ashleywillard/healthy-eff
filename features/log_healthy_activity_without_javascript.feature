@@ -36,7 +36,6 @@ Scenario: Adding one exercise without duration
   And I press “Submit”
   Then I should be on the home page
   And I should see "Duration can't be blank"
-  And the activity field should contain "Running"
 
 Scenario: Adding one exercise with less than 0 minutes
   When I fill in activity with:Running -1

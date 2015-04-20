@@ -124,7 +124,6 @@ class DaysController < ApplicationController
   def validate_single_day_activities(activity_list, day)
     activities = []
     activity_list.each do |id, activity|
-      session[:name] = activity[:name]
       new_activity = create_activity(activity, day)
       validate_model(new_activity)
       activities += [new_activity]
