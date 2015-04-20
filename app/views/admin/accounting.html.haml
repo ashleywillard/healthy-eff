@@ -1,6 +1,4 @@
 -#  app/views/admin/accounting.html.haml
-- if not @first
-  %div.pagebreak
 %h1 EFF's Healthy Lifestyles Program
 %h2 Monthly Accounting: #{get_month_name(@date)} #{get_year(@date)}
 
@@ -40,3 +38,4 @@
   %strong Date:
   _________________
 
+%div{:style => "page-break-after:always"}
