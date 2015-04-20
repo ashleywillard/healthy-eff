@@ -35,28 +35,25 @@ class UsersController < ApplicationController
   def retrieve_workouts(month, year)
     curr_month = Month.get_month_model(current_user.id, month, year)
     return [] if(curr_month == nil)
-
     workouts = []
     curr_month.days.each do |day|
       day.activities.each do |activity|
-        status = '#3c763d'
-        background = '#dff0d8'
-        border = '#d6e9c6'
-        if !day.approved
-          if day.denied?
-            status = '#a94442'
-            background = '#f2dede'
-            border = '#ebccd1'
-          else
-            status = '#8a6d3b'
-            background = '#fcf8e3'
-            border = '#faebcc'
-          end
-        end
-        workouts.push([activity.name, activity.duration, day.date, status, background, border])
+        workouts.push(retrieve_workout(activity, day))
       end
     end
     return workouts
+  end
+
+  def retrieve_workout(activity, day)
+    workout = [activity.name, activity.duration, day.date]
+    if day.approved
+      workout += ['#3c763d', '#dff0d8', '#d6e9c6']
+    elsif day.denied?
+      workout += ['#a94442', '#f2dede', '#ebccd1']
+    else
+      workout += ['#8a6d3b', '#fcf8e3', '#faebcc']
+    end
+    return workout
   end
 
   def get_money_earned(month, year)

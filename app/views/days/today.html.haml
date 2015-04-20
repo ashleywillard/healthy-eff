@@ -7,7 +7,9 @@
     = f.hidden_field :date, value: @date
     = f.fields_for :activities do |builder|
       = render "activity_fields", :f => builder
-      = link_to_add_fields "<span class=\"glyphicon glyphicon-plus-sign\"></span>".html_safe, f, :activities
+      = link_to_add_fields "<span class=\"glyphicon glyphicon-plus-sign\"></span> Add Activity".html_safe, f, :activities
+
+      
   %p 
     = show_simple_captcha(:label => "Enter before submitting", :placeholder => "", :refresh_button_text => "Refresh text")
     = hidden_field :days, :reason, value: "none"

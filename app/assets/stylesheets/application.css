@@ -60,6 +60,8 @@ p.alert {
   color: #a94442;
 }
 
+/* navbar formatting */
+
 .navbar {
   font-family: Helvetica;
   font-size:18px;
@@ -108,7 +110,9 @@ a.dropdown-toggle {
 }
 
 .dropdown-menu > li > a:hover,
-.dropdown-menu > li > a:focus {
+.dropdown-menu > li > a:focus,
+.dropdown-menu > .active > a:hover, 
+.dropdown-menu > .active > a:focus {
   background-color: #ffffff !important;
   background-image: linear-gradient(to bottom, #CC0010, #CC0000) !important;
   background-repeat: repeat-x !important;
@@ -126,16 +130,11 @@ a.dropdown-toggle {
   text-decoration: none;
 }
 
-.dropdown-menu > .active > a:hover, 
-.dropdown-menu > .active > a:focus {
-  background-color: #ffffff !important;
-  background-image: linear-gradient(to bottom, #CC0010, #CC0000) !important;
-  background-repeat: repeat-x !important;
-  color: #ffffff;
-  outline: 0 none;
-  text-decoration: none;
+label {
+  cursor: default;
 }
 
+/* today and past_day formatting */
 
 .activity_container:nth-child(2n) {
   background-color: rgb(249, 249, 249);
@@ -162,7 +161,6 @@ a.remove_activity {
 
 a.activity_link.add_fields {
   text-decoration: none;
-  padding-left: 13%;
   color: #5cb85c;
 }
 
@@ -172,34 +170,56 @@ a.remove_day {
   color: rgb(0, 85, 128);
 }
 
+.today.field,
+.day.field {
+  border: 2px;
+  border-style: solid;
+  border-color: #eaeaea;
+  padding: 15px;
+  border-radius: 25px;
+}
+
+.day.field {
+  margin-top:5px;
+  margin-bottom: 5px;
+}
+
+input#captcha {
+  width: 125px;
+}
+
+/* admin formatting */
+
 a.admin_previous,
 a.admin_next {
   text-decoration: none;
   font-size:28px;
   vertical-align: middle;
 }
+
 /* For Profile Page */
+
 #head{
   position: relative;
   height: 80px;
 }
+
 .profile_name{
   font-size: 40px;
   float: left;
 }
+
 .money_earned{
   font-size: 40px;
   float: right;
 }
+
 .money_caption{
   float: right;
 }
+
 #legendhelper{
   position: relative;
-}
-
-input#captcha {
-  width: 125px;
 }
 
 .fc-state-highlight {

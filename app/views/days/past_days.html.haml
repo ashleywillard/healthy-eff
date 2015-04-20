@@ -3,11 +3,13 @@
   = f.fields_for :days do |builder|
     = render "day_fields", :f => builder
   %p
-    = link_to_add_fields "<span class=\"glyphicon glyphicon-plus-sign\"></span>".html_safe, f, :days
+    = link_to_add_fields "<span class=\"glyphicon glyphicon-plus-sign\"></span> Add Day".html_safe, f, :days
   = label :days, :reason, 'Reason for inputting past days:'
   = text_field :days, :reason, :required => "required"
   %br
   (Note: activity for all past days will be sent to admin for approval)
+
+  
   %p 
     = show_simple_captcha(:label => "Enter before submitting", :placeholder => "", :refresh_button_text => "Refresh text")
     %br
