@@ -183,15 +183,15 @@ a.admin_next {
   position: relative;
   height: 80px;
 }
-.profileName{
+.profile_name{
   font-size: 40px;
   float: left;
 }
-.moneyEarned{
+.money_earned{
   font-size: 40px;
   float: right;
 }
-.moneyCaption{
+.money_caption{
   float: right;
 }
 #legendhelper{
@@ -200,4 +200,8 @@ a.admin_next {
 
 input#captcha {
   width: 125px;
+}
+
+.fc-state-highlight {
+  background: none repeat scroll 0% 0% #d9edf7;
 }
