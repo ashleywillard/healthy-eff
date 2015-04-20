@@ -41,6 +41,10 @@ body {
   vertical-align: middle !important;
 }
 
+.glyphicon-minus-sign {
+  margin-left:5px !important; 
+}
+
 a,
 a:hover,
 a:active {
