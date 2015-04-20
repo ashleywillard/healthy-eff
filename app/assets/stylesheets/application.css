@@ -49,6 +49,7 @@ a,
 a:hover,
 a:active {
   color: #CC0000;
+  text-decoration: none;
 }
 
 p.notice {
@@ -62,6 +63,10 @@ p.alert {
   border: none;
   padding: 0px;
   color: #a94442;
+}
+
+div.note {
+  color: #31708F;
 }
 
 /* navbar formatting */

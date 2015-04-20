@@ -16,6 +16,7 @@ class DaysController < ApplicationController
   end
 
   def past_days
+    flash[:notice] = "Activity for all past days will be sent to admin for approval"
     @month = Month.new()
     day = Day.new()
     @month.days.append(day)
