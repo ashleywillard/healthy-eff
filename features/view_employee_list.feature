@@ -24,10 +24,11 @@ Scenario: Admin list view - no records
   Given I am logged in as an admin
   When I follow "Admin"
   And I follow "Admin Home"
+  And I navigate to the next month
   Then I should see "No records"
 
 Scenario: Admin list view - records
-  Given that I have logged 3 activities
+  Given Nick Herson has logged 3 activities
   And I am logged in as an admin
   When I follow "Admin"
   And I follow "Admin Home"

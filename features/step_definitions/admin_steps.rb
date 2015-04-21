@@ -24,3 +24,11 @@ end
 When(/^I hit "(.*)"$/) do |button|
   click_button(button)
 end
+
+And(/^I navigate to the next month$/) do
+  visit admin_list_path(:navigate => "Next")
+end
+
+And(/^I navigate to the previous month$/) do
+  visit admin_list_path(:navigate => "Previous")
+end

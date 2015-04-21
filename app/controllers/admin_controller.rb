@@ -8,10 +8,11 @@ class AdminController < ApplicationController
     session[:sort] = params[:sort] if not params[:sort].nil?
     navigate_months()
     @date = get_date()
-    @user_months = sort(Month.get_user_months(get_month(@date), get_year(@date)))
-    unless @user_months.nil?
-      @user_months = @user_months.reject{ |x| x.get_num_approved_days() == 0 }
+    @user_months = Hash.new
+    User.all.each do |user|
+      @user_months[user] = Month.get_or_create_month_model(user.id, get_month(@date), get_year(@date))
     end
+    @user_months = sort(@user_months)
   end
 
   # :get for pending activities
@@ -56,6 +57,7 @@ class AdminController < ApplicationController
     html = ''
     params[:selected].each do |m_id|
       @first = false if m_id == params[:selected][1] # insert page breaks
+      next if Month.find_by_id(m_id).nil?
       generate_accounting_sheet(m_id)
       html << render_to_string(:layout => false, :action => 'accounting')
     end
@@ -81,10 +83,11 @@ class AdminController < ApplicationController
   # :get for audit sheet PDF
   def audit
     @date = session[:months_ago].to_i.months.ago
-    @user_months = Month.find(:all, :conditions => {:month => get_month(@date), :year => get_year(@date)},
-                              :joins => :user, :order => 'users.last_name')
-    # NOTE: May have to change if we want all employees to be displayed, not just
-    # the ones that have logged stuff this month
+    @user_months = []
+    User.all.each do |user|
+      @user_months << Month.get_or_create_month_model(user.id, get_month(@date), get_year(@date))
+    end
+    @user_months = @user_months.sort_by {|m| m.user.last_name.to_s}
     html = render_to_string(:layout => false, :action => 'audit')
     generate_pdf("audit", "audit-#{get_month_name(@date)}-#{get_year(@date)}.pdf", html)
   end
@@ -109,8 +112,15 @@ class AdminController < ApplicationController
     session[:months_ago] -= 1 if params[:navigate] == "Next"
   end
 
-  def sort(list)
-    session[:sort].nil? ? list : list.joins(:user).order("users." + session[:sort])
+  def sort(hash)
+    case session[:sort]
+      when nil
+      when "first_name"
+        hash = hash.sort_by {|k, v| k.first_name}
+      when "last_name"
+        hash = hash.sort_by {|k, v| k.last_name}
+    end
+    return hash
   end
 
   def get_date

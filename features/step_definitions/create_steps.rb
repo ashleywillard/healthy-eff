@@ -7,6 +7,13 @@ Given (/^the following users exist/) do |users_table|
   end
 end
 
+Given(/^"(.*?)" exists as a user$/) do |name|
+  u = User.create! :email => "blah@blah.com",
+                   :password => "?1Asdfjkl;asdfjkl;",
+                   :password_confirmation => "?1Asdfjkl;asdfjkl;"
+  u.first_name = name.split[0] ; u.last_name = name.split[1] ; u.save
+end
+
 Given(/^"(.*?)" and "(.*?)" exist as users$/) do |name1, name2|
   u1 = User.create! :email => "blah@blah.com",
                     :password => "?1Asdfjkl;asdfjkl;",
