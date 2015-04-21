@@ -46,19 +46,23 @@ RSpec.describe AdminController do
 
   describe "admin#index" do
     before :each do
-      @user_months = Month.create :month => Date.today.strftime("%m"),
-                                  :year => Date.today.strftime("%Y")
+      @user = User.create! :email => 'testuser@test.com',
+                           :password => '?1234Abcedfg',
+                           :password_confirmation => '?1234Abcedfg'
+      @cur_month = Month.create! :month => Date.today.strftime("%m"),
+                                 :year => Date.today.strftime("%Y"),
+                                 :user_id => @user.id
       Day.create! :date => Date.today - 1.day,
                   :approved => true,
                   :total_time => 60,
                   :reason => 'Reason',
-                  :month_id => @user_months.id
-      @prev_month = Month.create :month => (Date.today - 1.month).strftime("%m"),
-                                 :year => Date.today.strftime("%Y")
+                  :month_id => @cur_month.id
+      @prev_month = Month.create! :month => (Date.today - 1.month).strftime("%m"),
+                                  :year => Date.today.strftime("%Y")
     end
     it "generates a list of user-associated months for current month" do
       get :index
-      expect(assigns(:user_months)).to eq([@user_months])
+      expect(assigns(:user_months)).to eq({@user => @cur_month})
       expect([:user_months]).to_not include(@prev_month)
     end
   end
@@ -186,9 +190,28 @@ RSpec.describe AdminController do
   end
 
   describe "admin#navigate_months" do
+    before :each do
+      @user = User.create! :email => 'testuser@test.com',
+                           :password => '?1234Abcedfg',
+                           :password_confirmation => '?1234Abcedfg'
+      @cur_month = Month.create! :month => Date.today.strftime("%m"),
+                                 :year => Date.today.strftime("%Y"),
+                                 :user_id => @user.id
+      Day.create! :date => Date.today - 1.day,
+                  :approved => true,
+                  :total_time => 60,
+                  :reason => 'Reason',
+                  :month_id => @cur_month.id
+      @prev_month = Month.create! :month => (Date.today - 1.month).strftime("%m"),
+                                  :year => Date.today.strftime("%Y")
+    end
     it "stores the month being viewed in the session hash" do
       get :index
       expect(session[:months_ago]).to_not eq(nil)
+    end
+    it "allows the admin to view records for the previous month" do
+      get :index, :navigate => "Previous"
+      expect(session[:months_ago]).to be > 0
     end
   end
 
