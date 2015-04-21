@@ -11,15 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150412002550) do
+ActiveRecord::Schema.define(:version => 20150421041215) do
 
   create_table "activities", :force => true do |t|
-    t.string   "name"
     t.integer  "duration"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "name"
     t.integer  "day_id"
     t.string   "user"
+  end
+
+  create_table "constants", :force => true do |t|
+    t.integer  "curr_rate"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "days", :force => true do |t|
@@ -42,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20150412002550) do
     t.integer  "num_of_days"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "work_rate"
   end
 
   create_table "simple_captcha_data", :force => true do |t|
