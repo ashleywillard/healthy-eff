@@ -1,10 +1,16 @@
 -#  app/views/admin/index.html.haml
+= javascript_include_tag "selectAll"
+
 %h1 #{link_to "<span class=\"glyphicon glyphicon-circle-arrow-left\"></span>".html_safe, admin_list_path(:navigate => "Previous"), :class => "admin_previous"} #{get_month_name(@date)} #{get_year(@date)} #{link_to "<span class=\"glyphicon glyphicon-circle-arrow-right\"></span>".html_safe, admin_list_path(:navigate => "Next"), :class => "admin_next"}
 
-- if @date > 0.months.ago
+- if future_records?
   No records yet for #{get_month_name(@date)} #{get_year(@date)}.
+- elsif beyond_earliest_records?
+  No records from #{get_month_name(@date)} #{get_year(@date)}.
+
 - else
   %p= button_to "Print Audit Sheet", admin_audit_path(:year => get_year(@date), :month => get_month(@date)), :method => :get, :class => "btn"
+
   %table#employee_list.table.table-striped
     %thead
       %tr
@@ -23,26 +29,17 @@
       - @user_months.each do |user, month|
         %tr
           %td{:style => "text-align:center"}
-            = check_box_tag "selected[" + user.last_name.to_s + "]", month.id
+            - if month.nil? or month.get_num_approved_days() == 0
+            - else
+              = check_box_tag "selected[" + user.last_name.to_s + "]", month.id
           %td
             = user.first_name
           %td
             = user.last_name
           %td{:style => "text-align:center"}
-            = month.nil? ? 0 : month.get_num_approved_days()
+            - if month.nil? or month.get_num_approved_days() == 0
+            - else
+              = month.get_num_approved_days()
           %td{:style => "text-align:center"}
             = link_to "#{month.get_num_pending_days()}", admin_pending_path unless month.nil? or month.get_num_pending_days() == 0
   = submit_tag 'Print Selected', :class => "btn"
-
-:javascript
-  $('#selectAll').click(function() {
-     if (this.checked) {
-         $(':checkbox').each(function() {
-             this.checked = true;
-         });
-     } else {
-        $(':checkbox').each(function() {
-             this.checked = false;
-         });
-     }
-  });
