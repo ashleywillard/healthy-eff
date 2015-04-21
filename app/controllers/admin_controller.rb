@@ -10,7 +10,7 @@ class AdminController < ApplicationController
     @date = get_date()
     @user_months = Hash.new
     User.all.each do |user|
-      @user_months[user] = Month.get_or_create_month_model(user.id, get_month(@date), get_year(@date))
+      @user_months[user] = Month.get_month_model(user.id, get_month(@date), get_year(@date))
     end
     @user_months = sort(@user_months)
   end
