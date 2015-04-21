@@ -17,7 +17,7 @@ Scenario: Adding a past day
   And I fill in reason with: "On Vacation"
   And I write the captcha text in the textbox
   And I press “Submit”
-  Then I should be on my profile page
+  Then I should be on my calendar page
   And I should see activity "Swimming" and duration "100"
 
 Scenario: Adding a past day that has already been inputted

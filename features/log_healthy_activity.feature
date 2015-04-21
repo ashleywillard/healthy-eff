@@ -17,7 +17,7 @@ Scenario: Adding one exercise
   When I fill in activity with:Running 80
   And I write the captcha text in the textbox
   And I press “Submit”
-  Then I should be on my profile page
+  Then I should be on my calendar page
   And I should see activity "Running" and duration "80"
 
 @javascript
@@ -25,7 +25,7 @@ Scenario: Adding multiple exercises
   When I fill in activity with:Running 90,Lifting 100
   And I write the captcha text in the textbox
   And I press “Submit”
-  Then I should be on my profile page
+  Then I should be on my calendar page
   And I should see activity "Running" and duration "90"
   And I should see activity "Lifting" and duration "100"
 

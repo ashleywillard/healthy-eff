@@ -7,6 +7,14 @@ class Activity < ActiveRecord::Base
 
   belongs_to :day
 
+  def self.create_activity(activity, day)
+    name = activity[:name].lstrip
+    duration = activity[:duration]
+    day.total_time += duration.to_i
+    if name == "" then name = "A Healthy Activity" end
+    return Activity.new({:name => name, :duration => duration})
+  end
+
   def valid_duration
     if duration == nil
       errors.add(:duration, NOT_BLANK)

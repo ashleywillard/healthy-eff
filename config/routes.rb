@@ -27,7 +27,7 @@ Healthyeff::Application.routes.draw do
   match 'past_days' => 'days#past_days', :as => :past_days
   match 'add_today' => 'days#add_today', :as => :add_today
   match 'add_days' => 'days#add_days', :as => :add_days
-  match 'profile' => 'users#profile', :as => :profile
+  match 'calendar' => 'users#calendar', :as => :calendar
 
   # routing for admin views
   get 'admin' => 'admin#index', :as => :admin_list

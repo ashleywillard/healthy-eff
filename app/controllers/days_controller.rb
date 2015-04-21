@@ -6,10 +6,7 @@ class DaysController < ApplicationController
   def today
     restful_redirect
     @date = Date.today
-    @day = Day.new({:date => @date,
-                      :reason => "",
-                      :approved => true,
-                      :denied => false})
+    @day = Day.create_day(@date, true, "")
     @day.activities.append(Activity.new())
     month = Month.get_month_model(current_user.id, get_month(@date), get_year(@date))
     flash[:alert] = repeat_date(format_date(@date)) if month != nil && month.contains_date?(@date)
@@ -73,19 +70,13 @@ class DaysController < ApplicationController
     bad_captcha unless check_simple_captcha
     empty_fields_notice() if params[outer_sym] == nil || params[outer_sym][inner_sym] == nil
     if has_past_days then create_past_days() else create_single_day(params[outer_sym], true) end
-    redirect_to profile_path #success
+    redirect_to calendar_path #success
   end
 
   def create_single_day(day, approved)
-    @day = Day.new({:approved => approved,
-                  :total_time => 0,
-                  :denied => false,
-                  :reason => params[:days][:reason]})
-    unless approved
-      @day.date = Time.strptime(day[:date], "%m/%d/%Y")
-    else
-      @day.date = day[:date]
-    end
+    date = day[:date]
+    date = Time.strptime(date, "%m/%d/%Y") unless approved
+    @day = Day.create_day(date, approved, params[:days][:reason])
     save_single_day(validate_single_day(day[:activities_attributes], @day), @day)
     update_month(@day)
   end
@@ -101,11 +92,7 @@ class DaysController < ApplicationController
   def check_day(day)
     begin
       date = Time.strptime(day[:date], "%m/%d/%Y")
-      @day = Day.new({:date => date,
-                    :approved => false,
-                    :denied => false,
-                    :total_time => 0,
-                    :reason => params[:days][:reason]})
+      @day = Day.create_day(date, false, params[:days][:reason])
       validate_single_day(day[:activities_attributes], @day)
     rescue ArgumentError
       #case where Date.parse throws an ArgumentError for having invalid date field
@@ -124,20 +111,11 @@ class DaysController < ApplicationController
   def validate_single_day_activities(activity_list, day)
     activities = []
     activity_list.each do |id, activity|
-      new_activity = create_activity(activity, day)
+      new_activity = Activity.create_activity(activity, day)
       validate_model(new_activity)
       activities += [new_activity]
     end
     return activities
-  end
-
-  def create_activity(activity, day)
-    name = activity[:name].lstrip
-    duration = activity[:duration]
-    day.total_time += duration.to_i
-    if name == "" then name = "A Healthy Activity" end
-    @activity = Activity.new({:name => name,
-                              :duration => duration})
   end
 
   def save_past_days

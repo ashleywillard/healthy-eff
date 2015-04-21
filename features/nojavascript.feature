@@ -13,7 +13,7 @@ Background: users in database
   
 Scenario: Still see calendar without javascript
    Given I am logged in as a non-admin
-   When I visit my profile page
+   When I visit my calendar page
    Then I should see my name
    And I should see the weeks 
 

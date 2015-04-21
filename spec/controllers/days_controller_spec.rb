@@ -82,7 +82,7 @@ RSpec.describe DaysController do
       DaysController.any_instance.stub(:check_simple_captcha).and_return(true)
     end
     context 'All inputs are present and valid' do
-      it 'should successfully add today to database and redirect to profile page' do
+      it 'should successfully add today to database and redirect to calendar page' do
         allow(@user).to receive(:password_changed?).and_return(true)
         DaysController.any_instance.stub(:current_user).and_return(@user)
         today = Date.today
@@ -90,7 +90,7 @@ RSpec.describe DaysController do
         post :add_today, params
         #Check the database also
         expect(flash[:notice]).to eq(dummy_class.activity_recorded("swimming", "90", "#{today.strftime("%m/%d/%Y")}"))
-        response.should redirect_to(profile_path)
+        response.should redirect_to(calendar_path)
       end
     end
     context 'Today was already input' do
@@ -144,7 +144,7 @@ RSpec.describe DaysController do
       DaysController.any_instance.stub(:check_simple_captcha).and_return(true)
     end
     context 'Inputs are present and valid for multiple days and activities' do
-      it 'should successfully add days to database and redirect to profile page' do
+      it 'should successfully add days to database and redirect to calendar page' do
         date1 = Date.today.prev_day.strftime("%m/%d/%Y")
         date2 = Date.today.prev_day.prev_day.strftime("%m/%d/%Y")
         params = {:days => {:reason => "Vacation"}, :month => {:days_attributes =>
@@ -153,18 +153,18 @@ RSpec.describe DaysController do
         #Check the database also
         post :add_days, params
         expect(flash[:notice]).to eq(dummy_class.activity_recorded("running", "60", "#{date1}") + dummy_class.activity_recorded("running", "20", "#{date2}") + dummy_class.activity_recorded("swimming", "40", "#{date2}"))
-        response.should redirect_to(profile_path)
+        response.should redirect_to(calendar_path)
       end
     end
     context 'Inputs are present and valid for single day and activity' do
-      it 'should successfully add days to database and redirect to profile page' do
+      it 'should successfully add days to database and redirect to calendar page' do
         date = Date.today.prev_day.strftime("%m/%d/%Y")
         params = {:days => {:reason => "Vacation"}, :month => {:days_attributes =>
                               {"1" => {:date => "#{date}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         #Check the database also
         post :add_days, params
         expect(flash[:notice]).to eq(dummy_class.activity_recorded("running", "60", "#{date}"))
-        response.should redirect_to(profile_path)
+        response.should redirect_to(calendar_path)
       end
     end
     context 'day was already input' do

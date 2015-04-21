@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   before_filter :check_logged_in, :force_password_change
 
-  def profile
+  def calendar
     @name = set_name
     @date = Date.today
     earliest_month = Month.get_users_earliest_month(current_user.id)

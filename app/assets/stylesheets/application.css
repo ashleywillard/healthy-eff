@@ -206,14 +206,14 @@ a.admin_next {
   vertical-align: middle;
 }
 
-/* For Profile Page */
+/* For Calendar Page */
 
 #head{
   position: relative;
   height: 80px;
 }
 
-.profile_name{
+.calendar_name{
   font-size: 40px;
   float: left;
 }

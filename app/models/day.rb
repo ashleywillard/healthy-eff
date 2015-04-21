@@ -14,6 +14,14 @@ class Day < ActiveRecord::Base
 
   def user ; self.month.user ; end
 
+  def self.create_day(date, approved, reason)
+    return Day.new({:date => date,
+                    :approved => approved,
+                    :denied => false,
+                    :total_time => 0,
+                    :reason => reason})
+  end
+
   def valid_total
     if total_time < 60
       errors.add(:total, NOT_ENOUGH)

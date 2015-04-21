@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe UsersController do
 
-  describe "Profile method" do
+  describe "Calendar method" do
     before :each do
       user = double('user')
       user.stub(:first_name).and_return('first')
@@ -17,7 +17,7 @@ RSpec.describe UsersController do
       Month.stub(:get_users_earliest_month)
       UsersController.any_instance.stub(:get_money_earned)
       UsersController.any_instance.stub(:get_all_workouts).and_return([])
-      get :profile
+      get :calendar
       controller.instance_eval{@workouts}.should eql []
       response.should be_success
     end
@@ -28,7 +28,7 @@ RSpec.describe UsersController do
       UsersController.any_instance.stub(:get_money_earned)
       UsersController.any_instance.stub(:get_all_workouts).and_return(firstMonth + secondMonth)
       
-      get :profile
+      get :calendar
       controller.instance_eval{@workouts}.should eql firstMonth + secondMonth
       response.should be_success
     end
