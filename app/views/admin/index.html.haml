@@ -15,7 +15,7 @@
         %th
           = link_to "Last Name", admin_list_path(:sort => "last_name")
         %th{:style => "text-align:center"}
-          Days of Healthy Activity
+          = link_to "Days of Healthy Activity", admin_list_path(:sort => "days")
         %th{:style => "text-align:center"}
           Pending
     %tbody
