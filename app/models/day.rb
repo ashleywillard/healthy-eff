@@ -12,14 +12,25 @@ class Day < ActiveRecord::Base
     Day.count(:conditions => {:approved => false, :denied => false})
   end
 
-  def user ; self.month.user ; end
-
   def self.create_day(date, approved, reason)
     return Day.new({:date => date,
                     :approved => approved,
                     :denied => false,
                     :total_time => 0,
                     :reason => reason})
+  end
+
+  def user ; self.month.user ; end
+
+  def save_with_activities(activities)
+    notice = ""
+    self.save!
+    activities.each do |activity|
+      activity.day_id = self.id
+      activity.save!
+      notice += activity_recorded(activity.name, activity.duration, format_date(self.date))
+    end
+    return notice
   end
 
   def valid_total

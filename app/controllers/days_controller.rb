@@ -77,7 +77,8 @@ class DaysController < ApplicationController
     date = day[:date]
     date = Time.strptime(date, "%m/%d/%Y") unless approved
     @day = Day.create_day(date, approved, params[:days][:reason])
-    save_single_day(validate_single_day(day[:activities_attributes], @day), @day)
+    flash[:notice] = "" if flash[:notice] == nil
+    flash[:notice] += @day.save_with_activities(validate_single_day(day[:activities_attributes], @day))
     update_month(@day)
   end
 
@@ -122,17 +123,6 @@ class DaysController < ApplicationController
     params[:month][:days_attributes].each do |id, day|
       create_single_day(day, false)
     end
-  end
-
-  def save_single_day(activities, day)
-    notice = ""
-    activities.each do |activity|
-      day.save!
-      activity.day_id = day.id
-      activity.save!
-      notice += activity_recorded(activity.name, activity.duration, format_date(day.date))
-    end
-    if flash[:notice] == nil then flash[:notice] = notice else flash[:notice] = flash[:notice] + notice end
   end
 
   def validate_model(model)
