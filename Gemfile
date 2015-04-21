@@ -41,6 +41,7 @@ group :development, :test do
   gem 'poltergeist'
   gem 'launchy'
   gem 'factory_girl'
+  gem 'test-unit'
   # gem "better_errors"
 end
 
