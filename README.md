@@ -8,6 +8,8 @@ Reporting system for employees to record healthy activities daily, so management
 Group 17: Alex Ho, Allan Tang, Ashley Willard, Corinne Schafle, Michelle Lin, Sarah Hernandez
 
 ## Development
+[![Code Climate](https://codeclimate.com/github/ashleywillard/healthy-eff/badges/gpa.svg)](https://codeclimate.com/github/ashleywillard/healthy-eff)
+[![Test Coverage](https://codeclimate.com/github/ashleywillard/healthy-eff/badges/coverage.svg)](https://codeclimate.com/github/ashleywillard/healthy-eff)
 
 ##### Tools
 * [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/1282358)

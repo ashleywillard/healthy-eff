@@ -120,7 +120,7 @@ class AdminController < ApplicationController
       when "last_name"
         hash = hash.sort_by {|k, v| k.last_name}
       when "days"
-        hash = hash.sort_by {|k, v| v.get_num_approved_days()}.reverse
+        hash = hash.sort_by {|k, v| v.get_num_approved_days().to_i}.reverse
     end
     return hash
   end
