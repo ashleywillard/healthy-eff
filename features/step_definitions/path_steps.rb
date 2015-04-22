@@ -2,9 +2,7 @@
 
 # ====================== PATH DEFINITIONS ====================== #
 
-Given (/^I am on any page/) do
-  pass
-end
+Given (/^I am on any page/) do ; end
 
 Given (/^I (?:am on|visit|go to) (?:|my|the) (.*) (?:|page|view)/) do |view|
   case view
@@ -14,7 +12,7 @@ Given (/^I (?:am on|visit|go to) (?:|my|the) (.*) (?:|page|view)/) do |view|
       visit_path = new_user_session_path
     when "user settings"
       visit_path = edit_user_registration_path
-    when "my calendar"
+    when "calendar"
       visit_path = calendar_path
     when "past day input"
       visit_path = past_days_path
@@ -24,12 +22,11 @@ Given (/^I (?:am on|visit|go to) (?:|my|the) (.*) (?:|page|view)/) do |view|
       visit_path = new_user_invitation_path
     when "pending approval"
       visit_path = admin_pending_path
-    when "admin list", "admin"
+    when "admin list", "admin", "admin home"
       visit_path = admin_list_path
     when "forgot password"
       visit_path = new_user_password_path
     when "any"
-      pass
   end
   fail if visit_path.nil?
   visit visit_path

@@ -75,19 +75,18 @@ Given (/I have logged (.*) activities/) do |num|
 end
 
 Given (/^(.*) (?:pending|unapproved) (?:|activities|days) exist/) do |num|
-  if not num.casecmp("No")
-    u = User.create! :email => "blah@blah.com",
-                     :password => "?Ag0asdfasdf",
-                     :password_confirmation => "?Ag0asdfasdf"
-    m = Month.create! :user_id => u.id,
-                      :num_of_days => 0
-    num.to_i.times do
-      Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),
-                  :approved => false,
-                  :denied => false,
-                  :total_time => 60,
-                  :reason => 'Reason',
-                  :month_id => m.id
-    end
+  if num.casecmp("No") ; end
+  u = User.create! :email => "blah@blah.com",
+                   :password => "?Ag0asdfasdf",
+                   :password_confirmation => "?Ag0asdfasdf"
+  m = Month.create! :user_id => u.id,
+                    :num_of_days => 0
+  num.to_i.times do
+    Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),
+                :approved => false,
+                :denied => false,
+                :total_time => 60,
+                :reason => 'Reason',
+                :month_id => m.id
   end
 end
