@@ -9,7 +9,7 @@ class AdminController < ApplicationController
     navigate_months()
     @date = get_date()
     @user_months = Hash.new
-    User.all.each do |user|
+    User.includes(:months).all.each do |user|
       @user_months[user] = Month.get_month_model(user.id, get_month(@date), get_year(@date))
     end
     @user_months = sort(@user_months)
@@ -84,7 +84,7 @@ class AdminController < ApplicationController
   def audit
     @date = session[:months_ago].to_i.months.ago
     @user_months = []
-    User.all.each do |user|
+    User.includes(:months).all.each do |user|
       @user_months << Month.get_or_create_month_model(user.id, get_month(@date), get_year(@date))
     end
     @user_months = @user_months.sort_by {|m| m.user.last_name.to_s}
