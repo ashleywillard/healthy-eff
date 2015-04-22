@@ -56,6 +56,8 @@ gem 'bootstrap-glyphicons'
 gem 'wkhtmltopdf-binary'
 gem 'pdfkit'
 
+gem 'capistrano', '~> 3.4.0'
+
 group :test, :cucumber do
   gem 'pdf-reader'
 end
