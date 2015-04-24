@@ -1,5 +1,6 @@
 class Day < ActiveRecord::Base
   include ErrorMessages
+  include DateFormat
   attr_accessible :date, :total_time, :reason, :approved, :month_id, :denied
   validates :date, :reason, presence: true
   validate :valid_total, :valid_date

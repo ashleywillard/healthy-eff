@@ -53,7 +53,9 @@ class DaysController < ApplicationController
   def add_today
     begin
       add(false, :day, :activities_attributes)
-    rescue Exception
+    rescue Exception => e
+      flash[:notice] = nil
+      flash[:alert] = e.message if flash[:alert] == nil
       redirect_to today_path
     end
   end
@@ -61,7 +63,9 @@ class DaysController < ApplicationController
   def add_days
     begin
       add(true, :month, :days_attributes)
-    rescue Exception
+    rescue Exception => e
+      flash[:notice] = nil
+      flash[:alert] = e.message if flash[:alert] == nil
       redirect_to past_days_path
     end
   end
