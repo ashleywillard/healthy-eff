@@ -71,13 +71,6 @@ div.note {
 
 /* navbar formatting */
 
-.navbar {
-  font-family: Helvetica;
-  font-size:18px;
-  font-weight: 500;
-}
-
-
 .navbar-inner {
   background-image: none;
   background-color: #cc0000;
@@ -88,6 +81,7 @@ div.note {
   color: #fff;
 }
 
+.navbar, 
 .navbar .brand {
   font-family: Helvetica;
   text-shadow: none;
@@ -98,6 +92,7 @@ div.note {
 
 .navbar .divider-vertical {
   margin: 0px;
+  height: 45px;
 }
 
 .navbar .nav > .active > a,
