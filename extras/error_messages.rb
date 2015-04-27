@@ -83,5 +83,41 @@ module ErrorMessages
   def date_out_of_range(date)
     date + " is not within allowed range"
   end
+
+  WELCOME = "Welcome, new user! Please change your password."
+  def welcome
+    WELCOME
+  end
+
+  PAST_DAYS_SENT = "Activities for all past days will be sent to admin for approval."
+  def past_days_sent
+    PAST_DAYS_SENT
+  end
+
+  HEALTHY_ACTIVITY = "A Healthy Activity"
+  def healthy_activity
+    HEALTHY_ACTIVITY
+  end
+
+  LOWERCASE_MISSING = "must include at least one lowercase character"
+  def lowercase_missing
+    "Password " + LOWERCASE_MISSING
+  end
+
+  UPPERCASE_MISSING = "must include at least one uppercase character"
+  def uppercase_missing
+    "Password " + UPPERCASE_MISSING
+  end
+
+  NUMBER_MISSING = "must include at least one number"
+  def number_missing
+    "Password " + NUMBER_MISSING
+  end
+
+  SPECIAL_MISSING = "must include at least one special character"
+  def special_missing
+    "Password " + SPECIAL_MISSING
+  end
+
 end
 #World(ErrorMessages)

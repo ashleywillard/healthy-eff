@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   private
   def force_password_change
     if current_user.nil? or not current_user.password_changed?
-      flash[:notice] = "Welcome, new user! Please change your password."
+      flash[:notice] = WELCOME
       redirect_to edit_user_registration_path
     end
   end
