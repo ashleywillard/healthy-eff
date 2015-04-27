@@ -100,10 +100,6 @@ div.note {
   margin: 0px;
 }
 
-/*a.dropdown-toggle {
-  color: #ffffff;
-}
-*/
 .navbar .nav > .active > a,
 .navbar .nav > .active > a:hover {
   background-color: #cc0000;
@@ -112,32 +108,10 @@ div.note {
 
 .navbar .nav > li > a:hover,
 .navbar .nav > li > a:focus,
-.navbar .nav > li > li > a:hover,
-.navbar .nav > li.dropdown.open > a.dropdown-toggle {
+.navbar .nav > li > li > a:hover {
   color: #fff;
   background-color: #cc0000;
 }
-
-/*.dropdown-menu > li > a:hover,
-.dropdown-menu > li > a:focus,
-.dropdown-menu > .active > a:hover, 
-.dropdown-menu > .active > a:focus {
-  background-color: #ffffff !important;
-  background-image: linear-gradient(to bottom, #CC0010, #CC0000) !important;
-  background-repeat: repeat-x !important;
-  color: #ffffff;
-  outline: 0 none;
-  text-decoration: none;
-}
-
-.dropdown-menu > .active > a{
-  background-color: #ffffff !important;
-  background-image: linear-gradient(to bottom, #ffffff, #ffffff) !important;
-  background-repeat: repeat-x !important;
-  color: #333333;
-  outline: 0 none;
-  text-decoration: none;
-}*/
 
 label {
   cursor: default;
