@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
+  include ErrorMessages
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
@@ -26,25 +27,25 @@ class User < ActiveRecord::Base
 
   def includes_lowercase?(password)
     if not password.match(/^(?=.*[a-z]).+$/)
-      errors.add :password, "must include at least one lowercase character"
+      errors.add :password, LOWERCASE_MISSING
     end
   end
 
   def includes_uppercase?(password)
     if not password.match(/^(?=.*[A-Z]).+$/)
-      errors.add :password, "must include at least one uppercase character"
+      errors.add :password, UPPERCASE_MISSING
     end
   end
 
   def includes_number?(password)
     if not password.match(/^(?=.*\d).+$/)
-      errors.add :password, "must include at least one number"
+      errors.add :password, NUMBER_MISSING
     end
   end
 
   def includes_special_char?(password)
     if not password.match(/^(?=.*(_|[^\w])).+$/)
-      errors.add :password, "must include at least one special character"
+      errors.add :password, SPECIAL_MISSING
     end
   end
 
