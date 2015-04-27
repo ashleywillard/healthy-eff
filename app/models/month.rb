@@ -29,7 +29,7 @@ class Month < ActiveRecord::Base
     month2 = start_date.strftime("%m")
     previously_inputted = self.get_dates_list(user_id, month1, end_date.strftime("%Y"))
     previously_inputted += self.get_dates_list(user_id, month2, start_date.strftime("%Y")) unless month1 == month2
-    return previously_inputted
+    return previously_inputted.join(",")
   end
 
   def self.get_dates_list(user_id, month, year)

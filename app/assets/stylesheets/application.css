@@ -47,7 +47,9 @@ body {
 
 a,
 a:hover,
-a:active {
+a:active,
+a:focus,
+a:visited {
   color: #CC0000;
   text-decoration: none;
 }
@@ -71,13 +73,6 @@ div.note {
 
 /* navbar formatting */
 
-.navbar {
-  font-family: Helvetica;
-  font-size:18px;
-  font-weight: 500;
-}
-
-
 .navbar-inner {
   background-image: none;
   background-color: #cc0000;
@@ -88,8 +83,13 @@ div.note {
   color: #fff;
 }
 
+.navbar .nav > li {
+  padding-top: 4px;
+}
+
+.navbar, 
 .navbar .brand {
-  font-family: Helvetica;
+  font-family: "Roboto Condensed";
   text-shadow: none;
   color: #fff;
   font-size:18px;
@@ -98,6 +98,7 @@ div.note {
 
 .navbar .divider-vertical {
   margin: 0px;
+  height: 45px;
 }
 
 .navbar .nav > .active > a,

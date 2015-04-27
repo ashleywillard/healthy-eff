@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, :type => :model do
+  let(:dummy_class) { Class.new { extend ErrorMessages } }
   describe "user should not be able to create password" do
     it "with no uppercase character" do
       user = User.create(:email => "meow@meow.com", :password => '!fds3asdf', :password_confirmation => '!fds3asdf' )
@@ -21,9 +22,9 @@ RSpec.describe User, :type => :model do
     it "with multiple errors" do
       user = User.create(:email => "meow@meow.com", :password => "lol", :password_confirmation => 'lol')
       expect(user.errors.full_messages).to include("Password is too short (minimum is 8 characters)")
-      expect(user.errors.full_messages).to include("Password must include at least one number")
-      expect(user.errors.full_messages).to include("Password must include at least one uppercase character")
-      expect(user.errors.full_messages).to include("Password must include at least one special character")
+      expect(user.errors.full_messages).to include(dummy_class.number_missing)
+      expect(user.errors.full_messages).to include(dummy_class.uppercase_missing)
+      expect(user.errors.full_messages).to include(dummy_class.special_missing)
     end
   end
 end

@@ -81,13 +81,13 @@ RSpec.describe Month, :type => :model do
                         :total_time => 60,
                         :approved => true,
                         :denied => false})
-        expect(Month.get_inputted_dates(@user_id, start_date, @end_date)).to eq(["04/15/2015", "03/01/2015"])
+        expect(Month.get_inputted_dates(@user_id, start_date, @end_date)).to eq(["04/15/2015", "03/01/2015"].join(","))
       end
     end
     context 'Month of start date and end date are same' do
       it 'not implemented'do
         start_date = Time.strptime("04/01/2015", "%m/%d/%Y")
-        expect(Month.get_inputted_dates(@user_id, start_date, @end_date)).to eq(["04/15/2015"])
+        expect(Month.get_inputted_dates(@user_id, start_date, @end_date)).to eq(["04/15/2015"].join(","))
       end
     end
   end
