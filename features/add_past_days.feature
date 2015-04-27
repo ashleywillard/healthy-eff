@@ -11,6 +11,8 @@ Background:
   | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | true             |
   Given I am logged in as a non-admin
   And I am on the past day input page
+  Then I should see "Add Activity"
+  And I should see "Add Day"
 
 @javascript
 Scenario: Adding multiple exercises for past days

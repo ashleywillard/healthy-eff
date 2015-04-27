@@ -86,4 +86,7 @@ Then /I should not be able to click prev/ do
   assert(page.body.include? "fc-button fc-button-prev fc-state-default fc-corner-left fc-corner-right fc-state-disabled")
 end
 
+And /I follow Calendar/ do
+  page.find('.calendar_link').trigger('click')
+end
 

@@ -47,11 +47,11 @@ class UsersController < ApplicationController
   def retrieve_workout(activity, day)
     workout = [activity.name, activity.duration, day.date]
     if day.approved
-      workout += ['#3c763d', '#dff0d8', '#d6e9c6']
+      workout += ['#3c763d', '#dff0d8', '#d6e9c6', "Status: Approved"]
     elsif day.denied?
-      workout += ['#a94442', '#f2dede', '#ebccd1']
+      workout += ['#a94442', '#f2dede', '#ebccd1', "Status: Denied"]
     else
-      workout += ['#8a6d3b', '#fcf8e3', '#faebcc']
+      workout += ['#8a6d3b', '#fcf8e3', '#faebcc', "Status: Pending"]
     end
     return workout
   end

@@ -11,6 +11,8 @@ Background:
   | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | true             |
   Given I am logged in as a non-admin
   And I am on the past day input page
+  Then I should not see "Add Activity"
+  And I should not see "Add Day"
 
 Scenario: Adding a past day
   Given I fill in day and activity with:Yesterday,Swimming 100
@@ -44,7 +46,7 @@ Scenario: Submit blank form with only date filled in
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the past day input page
-  And I should see "Duration can't be blank"
+  And I should see "Reason can't be blank"
 
 Scenario: Submit valid form with bad date
   Given I fill in day and activity with:RAWR,Swimming 100
