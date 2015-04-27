@@ -127,6 +127,7 @@ class AdminController < ApplicationController
   end
 
   def navigate_months
+    session[:months_ago] ||= 0
     case params[:navigate]
       when nil then session[:months_ago] = 0
       when "Previous" then session[:months_ago] += 1
