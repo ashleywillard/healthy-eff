@@ -6,4 +6,12 @@ jQuery ->
     time = new Date().getTime()
     regexp = new RegExp($(this).data('id'), 'g')
     $(this).before($(this).data('fields').replace(regexp, time))
+    $('.remove_day').show()
+    $('.remove_activity').show()
+    $('.add_fields').show()
     event.preventDefault()
+
+  $(document).ready ->
+    $('.remove_day').show();
+    $('.remove_activity').show();
+    $('.add_fields').show();

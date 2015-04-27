@@ -145,7 +145,7 @@ label {
 
 /* today and past_day formatting */
 
-.activity_container:nth-child(2n) {
+.activity_container:nth-child(2n + 1) {
   background-color: rgb(249, 249, 249);
 }
 
@@ -195,6 +195,12 @@ a.remove_day {
 
 input#captcha {
   width: 125px;
+}
+
+a.remove_day,
+a.remove_activity,
+a.add_fields {
+  display: none;
 }
 
 /* admin formatting */

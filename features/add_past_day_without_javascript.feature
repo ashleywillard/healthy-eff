@@ -11,6 +11,8 @@ Background:
   | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | true             |
   Given I am logged in as a non-admin
   And I am on the past day input page
+  Then I should not see "Add Activity"
+  And I should not see "Add Day"
 
 Scenario: Adding a past day
   Given I fill in day and activity with:Yesterday,Swimming 100
