@@ -2,6 +2,6 @@
   %p.activity.field
     = f.label :name, 'Activity: ', :class => 'activity_label'
     = f.text_field :name, :placeholder  => '(optional) ex. Running', :value => (session[:name] != nil ? session[:name] : "")
-    = f.label :duration, 'Duration: ', :class => 'activity_label'
-    = f.number_field :duration, :placeholder => '(in minutes) ex. 30', :required => "required"
+    = f.label :duration, 'Duration (minutes): ', :class => 'activity_label'
+    = f.number_field :duration, :value => "60", :placeholder => '(in minutes) ex. 30', :required => "required"
     = link_to_function "<span class=\"glyphicon glyphicon-minus-sign\"></span>".html_safe, "remove_fields(this)", :class => "remove_activity"

@@ -7,7 +7,7 @@
       var workouts = #{raw @workouts.to_json}
       for(i=0;i<workouts.length;i++){
         workout = workouts[i]
-        random[i]={title: workout[0]+': '+workout[1], start: workout[2], backgroundColor: workout[4], textColor: workout[3], borderColor: workout[5]}
+        random[i]={title: workout[0]+': '+workout[1] + '\n'+ workout[6], start: workout[2], backgroundColor: workout[4], textColor: workout[3], borderColor: workout[5]}
       }
       $('#calendar').fullCalendar({
         header: {

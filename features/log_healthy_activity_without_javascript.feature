@@ -32,6 +32,7 @@ Scenario: Adding today multiple times
 
 Scenario: Adding one exercise without duration
   When I fill in activity with:Running
+  And I leave duration blank
   And I write the captcha text in the textbox
   And I press “Submit”
   Then I should be on the home page
@@ -60,6 +61,7 @@ Scenario: Adding one exercise with less than 60 minutes
 
 Scenario: Submitting a blank form
   When I write the captcha text in the textbox
+  And I leave duration blank
   And I press “Submit”
   Then I should be on the home page
   And I should see "Duration can't be blank"

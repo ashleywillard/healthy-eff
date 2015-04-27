@@ -22,8 +22,8 @@ RSpec.describe UsersController do
       response.should be_success
     end
     it "Returns all workout info for all previous months" do
-      firstMonth = [['swimming', 80, '03-01-2015', "#3c763d", "#dff0d8", "#d6e9c6"]]
-      secondMonth = [['running', 60, '04-01-2015', '#8a6d3b', '#fcf8e3', '#faebcc'],['climbing', 60, '04-02-2015', '#a94442', '#f2dede', '#ebccd1']]
+      firstMonth = [['swimming', 80, '03-01-2015', "#3c763d", "#dff0d8", "#d6e9c6", "Status: Approved"]]
+      secondMonth = [['running', 60, '04-01-2015', '#8a6d3b', '#fcf8e3', '#faebcc', "Status: Pending"],['climbing', 60, '04-02-2015', '#a94442', '#f2dede', '#ebccd1', "Status: Denied"]]
       Month.stub(:get_users_earliest_month)
       UsersController.any_instance.stub(:get_money_earned)
       UsersController.any_instance.stub(:get_all_workouts).and_return(firstMonth + secondMonth)
@@ -48,8 +48,8 @@ RSpec.describe UsersController do
     it "should call Retrieve workouts for certain number of months" do
       start = Date.new(2015,03,01)
       finish = Date.new(2015,04,15)
-      firstMonth = [['swimming', 80, '03-01-2015', "#3c763d", "#dff0d8", "#d6e9c6"]]
-      secondMonth = [['running', 60, '04-01-2015', '#8a6d3b', '#fcf8e3', '#faebcc'],['climbing', 60, '04-02-2015', '#a94442', '#f2dede', '#ebccd1']]
+      firstMonth = [['swimming', 80, '03-01-2015', "#3c763d", "#dff0d8", "#d6e9c6", "Status: Approved"]]
+      secondMonth = [['running', 60, '04-01-2015', '#8a6d3b', '#fcf8e3', '#faebcc', "Status: Pending"],['climbing', 60, '04-02-2015', '#a94442', '#f2dede', '#ebccd1', "Status: Denied"]]
       UsersController.any_instance.stub(:retrieve_workouts).and_return(firstMonth, secondMonth)
       controller.get_all_workouts(start, finish).should eql firstMonth + secondMonth
     end
@@ -82,9 +82,9 @@ RSpec.describe UsersController do
       month.should_receive(:days).and_return(days)
       days[0].should_receive(:activities).and_return(activities1)
       days[1].should_receive(:activities).and_return(activities2)
-      controller.retrieve_workouts(4, 2015).should eql [['running', 60, '04-01-2015', "#3c763d", "#dff0d8", "#d6e9c6"],
-                                                        ['jogging', 60, '04-01-2015', "#3c763d", "#dff0d8", "#d6e9c6"],
-                                                        ['hiking', 80, '04-02-2015', "#3c763d", "#dff0d8", "#d6e9c6"]]
+      controller.retrieve_workouts(4, 2015).should eql [['running', 60, '04-01-2015', "#3c763d", "#dff0d8", "#d6e9c6", "Status: Approved"],
+                                                        ['jogging', 60, '04-01-2015', "#3c763d", "#dff0d8", "#d6e9c6", "Status: Approved"],
+                                                        ['hiking', 80, '04-02-2015', "#3c763d", "#dff0d8", "#d6e9c6", "Status: Approved"]]
     end
     it "returns empty list if month is non-existent" do
       Month.stub_chain(:where, :first).and_return(nil)
@@ -100,7 +100,7 @@ RSpec.describe UsersController do
       month.should_receive(:days).and_return(days)
       days[0].should_receive(:activities).and_return(activities)
       days[0].should_receive(:denied?).and_return(true)
-      controller.retrieve_workouts(4, 2015).should eql [['hiking', 80, '04-01-2015', '#a94442', '#f2dede', '#ebccd1']]
+      controller.retrieve_workouts(4, 2015).should eql [['hiking', 80, '04-01-2015', '#a94442', '#f2dede', '#ebccd1', "Status: Denied"]]
     end
     it "marks pending workouts as yellow" do
       pending_activity = double('Activity', :name => 'jogging', :duration => 60)
@@ -112,7 +112,7 @@ RSpec.describe UsersController do
       month.should_receive(:days).and_return(days)
       days[0].should_receive(:activities).and_return(activities)
       days[0].should_receive(:denied?).and_return(false)
-      controller.retrieve_workouts(4, 2015).should eql [['jogging', 60, '04-01-2015', '#8a6d3b', '#fcf8e3', '#faebcc']]
+      controller.retrieve_workouts(4, 2015).should eql [['jogging', 60, '04-01-2015', '#8a6d3b', '#fcf8e3', '#faebcc', "Status: Pending"]]
     end
     it "marks approved workouts as green" do
       approved_activity = double('activity', :name => 'running', :duration => 60)
@@ -123,7 +123,7 @@ RSpec.describe UsersController do
       Month.stub_chain(:where, :first).and_return(month)
       month.should_receive(:days).and_return(days)
       days[0].should_receive(:activities).and_return(activities)
-      controller.retrieve_workouts(4, 2015).should eql [['running', 60, '04-01-2015', "#3c763d", "#dff0d8", "#d6e9c6"]]
+      controller.retrieve_workouts(4, 2015).should eql [['running', 60, '04-01-2015', "#3c763d", "#dff0d8", "#d6e9c6", "Status: Approved"]]
     end
   end
 
