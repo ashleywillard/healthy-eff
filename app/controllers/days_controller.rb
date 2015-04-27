@@ -40,6 +40,11 @@ class DaysController < ApplicationController
     end
   end
 
+  def error_recovery(error)
+    flash[:notice] = nil
+    flash[:alert] = error.message if flash[:alert] == nil
+  end
+
   def bad_captcha
     flash[:alert] = BAD_CAPTCHA
     raise Exception
@@ -54,8 +59,7 @@ class DaysController < ApplicationController
     begin
       add(false, :day, :activities_attributes)
     rescue Exception => e
-      flash[:notice] = nil
-      flash[:alert] = e.message if flash[:alert] == nil
+      error_recovery(e)
       redirect_to today_path
     end
   end
@@ -64,8 +68,7 @@ class DaysController < ApplicationController
     begin
       add(true, :month, :days_attributes)
     rescue Exception => e
-      flash[:notice] = nil
-      flash[:alert] = e.message if flash[:alert] == nil
+      error_recovery(e)
       redirect_to past_days_path
     end
   end

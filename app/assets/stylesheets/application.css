@@ -100,13 +100,13 @@ div.note {
   margin: 0px;
 }
 
-a.dropdown-toggle {
+/*a.dropdown-toggle {
   color: #ffffff;
 }
-
+*/
 .navbar .nav > .active > a,
 .navbar .nav > .active > a:hover {
-  background-color: #333333;
+  background-color: #cc0000;
   color: #ffffff;
 }
 
@@ -118,7 +118,7 @@ a.dropdown-toggle {
   background-color: #cc0000;
 }
 
-.dropdown-menu > li > a:hover,
+/*.dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus,
 .dropdown-menu > .active > a:hover, 
 .dropdown-menu > .active > a:focus {
@@ -137,7 +137,7 @@ a.dropdown-toggle {
   color: #333333;
   outline: 0 none;
   text-decoration: none;
-}
+}*/
 
 label {
   cursor: default;
@@ -145,7 +145,7 @@ label {
 
 /* today and past_day formatting */
 
-.activity_container:nth-child(2n + 1) {
+.activity_container:nth-child(2n) {
   background-color: rgb(249, 249, 249);
 }
 

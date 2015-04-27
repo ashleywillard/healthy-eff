@@ -30,7 +30,7 @@ Scenario: No pending activities
 Scenario: Pending activities
   Given 2 pending activities exist
   And I am logged in as an admin
-  And I follow "Admin Home"
+  And I follow "Admin"
   Then I should see "2 Pending"
   When I visit the pending approval page
   Then I should be on the pending approval page
