@@ -14,18 +14,22 @@
   %table#employee_list.table.table-striped
     %thead
       %tr
-        %th{:style => "text-align:center"}
+        %th{:style => "text-align:center; padding-left:20px; padding-right:20px"}
           %input#selectAll{:type => "checkbox", :value => "selectAll"}
         %th
           = link_to "First Name", admin_list_path(:sort => "first_name")
         %th
           = link_to "Last Name", admin_list_path(:sort => "last_name")
+        %th
         %th{:style => "text-align:center"}
           = link_to "Days of Healthy Activity", admin_list_path(:sort => "days")
         %th{:style => "text-align:center"}
           Pending
+        %th{:style => "text-align:center"}
+          Form Received?
     %tbody
-      = form_tag admin_accounting_path(:year => @date.year, :month => @date.month), :method => :get
+      -#= form_tag admin_accounting_path(:year => @date.year, :month => @date.month), :method => :get
+      = form_tag admin_forms_path(:year => @date.year, :month => @date.month)
       - @user_months.each do |user, month|
         %tr
           %td{:style => "text-align:center"}
@@ -37,9 +41,15 @@
           %td
             = user.last_name
           %td{:style => "text-align:center"}
+            = link_to "<span class =\"glyphicon glyphicon-calendar\"></span>".html_safe
+          %td{:style => "text-align:center"}
             - if month.nil? or month.get_num_approved_days() == 0
             - else
               = month.get_num_approved_days()
           %td{:style => "text-align:center"}
             = link_to "#{month.get_num_pending_days()}", admin_pending_path unless month.nil? or month.get_num_pending_days() == 0
+          %td{:style => "text-align:center"}
+            - if not month.nil? and month.received_form
+              ✓
   = submit_tag 'Print Selected', :class => "btn"
+  = submit_tag 'Mark Received', :class => "btn"

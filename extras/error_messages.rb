@@ -22,6 +22,8 @@ module ErrorMessages
     ACTION_COMPLETE + "#{action}."
   end
 
+  RECEIVED_FORM = "Forms marked as received."
+
   USER_DELETED = " has been deleted."
   def user_deleted(first_name, last_name)
     if (first_name == "")
