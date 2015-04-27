@@ -83,6 +83,10 @@ div.note {
   color: #fff;
 }
 
+.navbar .nav > li {
+  padding-top: 4px;
+}
+
 .navbar, 
 .navbar .brand {
   font-family: Helvetica;
