@@ -62,25 +62,11 @@ class UsersController < ApplicationController
     return "$" + (approved_cnt * amt_per_day).to_s
   end
 
-  def manage
+  def check_admin
     if !current_user.admin?
       flash[:alert] = deny_access get_current_page
       redirect_to today_path
     end
-    @users = User.find(:all, :conditions => ["id != ?", current_user.id])
-  end
-
-  def destroy
-    if !current_user.admin?
-      flash[:alert] = deny_access get_current_page
-      redirect_to root_path
-    else
-      @user = User.find(params[:id])
-      @user.destroy
-      flash[:notice] = user_deleted(@user.first_name, @user.last_name)
-      redirect_to manage_path
-    end
-
   end
 
   private

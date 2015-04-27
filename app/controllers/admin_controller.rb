@@ -129,6 +129,33 @@ class AdminController < ApplicationController
     session[:months_ago].to_i.months.ago
   end
 
+  def manage
+    @users = User.find(:all, :conditions => ["id != ?", current_user.id])
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    flash[:notice] = user_deleted(@user.first_name, @user.last_name)
+    redirect_to manage_path
+  end
+
+  def update
+    @user = User.find(params[:id])
+    user_hash = params[:user]
+    @user.first_name = user_hash[:first_name]
+    @user.last_name = user_hash[:last_name]
+    @user.email = user_hash[:email]
+    if @user.save!
+      flash[:notice] = "User settings successfully changed"
+      redirect_to manage_path
+    end
+  end
+
+  def edit
+    @user = User.find(params[:id])
+  end
+
   private
   def check_admin
     if not current_user.admin

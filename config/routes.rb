@@ -19,8 +19,11 @@ Healthyeff::Application.routes.draw do
   root to: 'days#today'
 
   #Managing employees
-  match 'admin/manage' => 'users#manage', :as => :manage
-  delete 'manage/:id', to: 'users#destroy', :as => :delete
+  match 'admin/manage' => 'admin#manage', :as => :manage
+  delete 'manage/:id', to: 'admin#destroy', :as => :delete
+  get 'manage/edit/:id', to: 'admin#edit', :as => :edit
+  post 'manage/edit/:id', to: 'admin#update', :as => :update
+
 
   #route for single activity -ashley
   match 'today' => 'days#today', :as => :today
