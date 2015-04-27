@@ -17,13 +17,6 @@ Scenario: Still see calendar without javascript
    Then I should see my name
    And I should see the weeks
 
-Scenario: Still can click menu tabs
-   Given I am logged in as an admin
-   Then I should see "Admin Home"
-   And I should see "Manage Employees"
-   And I should see "Edit"
-   And I should see "Sign Out"
-
 Scenario: Still can sort employees
    Given I am logged in as an admin
    When I visit the admin home page

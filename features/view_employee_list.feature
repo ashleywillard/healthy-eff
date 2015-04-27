@@ -23,7 +23,6 @@ Scenario: Privileged access
 Scenario: Admin list view - no records
   Given I am logged in as an admin
   When I follow "Admin"
-  And I follow "Admin Home"
   And I navigate to the next month
   Then I should see "No records"
 
@@ -31,7 +30,6 @@ Scenario: Admin list view - records
   Given Nick Herson has logged 3 activities
   And I am logged in as an admin
   When I follow "Admin"
-  And I follow "Admin Home"
   Then I should see a table of employee names
   And I should see "Days of Healthy Activity"
   And I should see "Pending"
