@@ -8,6 +8,7 @@ Background:
   Given the following admins exist:
   | email                       | password              | password_confirmation | password_changed |
   | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | true             |
+  And the current rate is 10
 #   And That Person1 has logged 4 activities
 #   And This Person2 has logged 1 activities
   And Nick Herson has logged 4 activities

@@ -79,6 +79,11 @@ class UsersController < ApplicationController
       redirect_to today_path
     end
     @users = User.find(:all, :conditions => ["id != ?", current_user.id])
+    @constants = Constant.get_constants
+  end
+
+  def update_current_rate
+    #do something
   end
 
   def destroy

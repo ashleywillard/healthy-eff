@@ -4,6 +4,7 @@ include DateFormat
 
 RSpec.describe Month, :type => :model do
   before :each do
+    Constant.create! :curr_rate => 10
     user = User.create!({:first_name => 'Will',
                     :last_name => 'Guo',
                     :email => '169.healthyeff@gmail.com',
@@ -17,10 +18,7 @@ RSpec.describe Month, :type => :model do
   end
   describe '#self.get_month_model' do
     before :each do
-      @month_model = Month.create!({:user_id => @user_id,
-                     :month => @month,
-                     :year => @year,
-                     :num_of_days => 0})
+      @month_model = Month.create_month_model(@user_id, @month, @year)
     end
     context 'Month already exists' do
       it 'should successfuly return the correct month' do
@@ -35,10 +33,7 @@ RSpec.describe Month, :type => :model do
   end
   describe '#self.get_or_create_month_model' do
     before :each do
-      @month_model = Month.create!({:user_id => @user_id,
-                     :month => @month,
-                     :year => @year,
-                     :num_of_days => 0})
+      @month_model = Month.create_month_model(@user_id, @month, @year)
     end
     context 'Month already exists' do
       it 'should successfully get the correct month' do
@@ -57,10 +52,9 @@ RSpec.describe Month, :type => :model do
   describe '#self.get_inputted_dates' do
     before :each do
       @end_date = Time.strptime("04/15/2015", "%m/%d/%Y")
-      @month1 = Month.create!({:user_id => @user_id,
-                     :month => 4,
-                     :year => 2015,
-                     :num_of_days => 1})
+      @month1 = Month.create_month_model(@user_id, 4, 2015)
+      @month1.num_of_days = 1
+      @month1.save!
       @day1 = Day.create!({:date => @end_date,
                         :reason => "none",
                         :month_id => @month1.id, 
@@ -71,10 +65,9 @@ RSpec.describe Month, :type => :model do
     context 'Month of start date and end date differ' do
       it 'not implemented' do
         start_date = Time.strptime("03/01/2015", "%m/%d/%Y")
-        month2 = Month.create!({:user_id => @user_id,
-                     :month => 3,
-                     :year => 2015,
-                     :num_of_days => 1})
+        month2 = Month.create_month_model(@user_id, 3, 2015)
+        month2.num_of_days = 1
+        month2.save!
         day2 = Day.create!({:date => start_date,
                         :reason => "none",
                         :month_id => month2.id, 
@@ -93,10 +86,9 @@ RSpec.describe Month, :type => :model do
   end
   describe '#self.get_dates_list' do
     before :each do
-      @month_model = Month.create!({:user_id => @user_id,
-                     :month => @month,
-                     :year => @year,
-                     :num_of_days => 1})
+      @month_model = Month.create_month_model(@user_id, @month, @year)
+      @month_model.num_of_days = 1
+      @month_model.save!
     end
     context 'Month does not exist' do
       it 'should return empty list' do
@@ -122,10 +114,9 @@ RSpec.describe Month, :type => :model do
   end
   describe '#self.get_approved_dates_list' do 
     before :each do
-      @month_model = Month.create!({:user_id => @user_id,
-                     :month => @month,
-                     :year => @year,
-                     :num_of_days => 1})
+      @month_model = Month.create_month_model(@user_id, @month, @year)
+      @month_model.num_of_days = 1
+      @month_model.save!
     end
     context 'Month does not exist' do
       it 'should return empty list' do
@@ -158,14 +149,8 @@ RSpec.describe Month, :type => :model do
   end
   describe '#self.get_users_earliest_month' do
     before :each do
-      @month1 = Month.create!({:user_id => @user_id,
-                       :month => @month,
-                       :year => @year,
-                       :num_of_days => 0})
-      @month2 = Month.create!({:user_id => @user_id,
-                       :month => @month,
-                       :year => 2014,
-                       :num_of_days => 0})
+      @month1 = Month.create_month_model(@user_id, @month, @year)
+      @month2 = Month.create_month_model(@user_id, @month, 2014)
     end
     context 'User has no months' do
       it 'should return nil' do
@@ -186,32 +171,19 @@ RSpec.describe Month, :type => :model do
     end
     context 'Months exist' do
       it 'should return the ones that fall in the earliest month recorded' do
-        month1 = Month.create!({:user_id => @user_id,
-                       :month => @month,
-                       :year => @year,
-                       :num_of_days => 0})
-        month2 = Month.create!({:user_id => @user_id,
-                       :month => @month,
-                       :year => 2014,
-                       :num_of_days => 0})
-        month3 = Month.create!({:user_id => @user_id + 1,
-                       :month => @month,
-                       :year => @year,
-                       :num_of_days => 0})
-        month4 = Month.create!({:user_id => @user_id + 1,
-                       :month => @month,
-                       :year => 2014,
-                       :num_of_days => 0})
+        month1 = Month.create_month_model(@user_id, @month, @year)
+        month2 = Month.create_month_model(@user_id, @month, 2014)
+        month3 = Month.create_month_model(@user_id + 1, @month, @year)
+        month4 = Month.create_month_model(@user_id + 1, @month, 2014)
         expect(Month.get_earliest_months).to eq([month2, month4])
       end
     end
   end
   describe '#contains_date?' do
     before :each do
-      @month_model = Month.create!({:user_id => @user_id,
-                     :month => @month,
-                     :year => @year,
-                     :num_of_days => 1})
+      @month_model = Month.create_month_model(@user_id, @month, @year)
+      @month_model.num_of_days = 1
+      @month_model.save!
       @day = Day.create!({:date => @today,
                         :reason => "none",
                         :month_id => @month_model.id, 

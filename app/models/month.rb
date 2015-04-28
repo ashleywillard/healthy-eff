@@ -1,5 +1,5 @@
 class Month < ActiveRecord::Base
-  attr_accessible :month, :num_of_days, :printed_form, :received_form, :user_id, :year
+  attr_accessible :month, :num_of_days, :printed_form, :received_form, :user_id, :year, :work_rate
   has_many :days, :dependent => :destroy
   belongs_to :user
   accepts_nested_attributes_for :days, :allow_destroy => true
@@ -16,11 +16,16 @@ class Month < ActiveRecord::Base
   def self.get_or_create_month_model(user_id, month, year)
     month_model = self.get_month_model(user_id, month, year)
     return month_model unless month_model == nil
+    return self.create_month_model(user_id, month, year)
+  end
+
+  def self.create_month_model(user_id, month, year)
     return self.create!({:user_id => user_id,
                    :month => month,
                    :year => year,
                    :printed_form => false,
                    :received_form => false,
+                   :work_rate => Constant.get_work_rate,
                    :num_of_days => 0})
   end
 

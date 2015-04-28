@@ -12,6 +12,7 @@ RSpec.describe PdfController do
   before :each do
     @user = mock_logged_in_admin()
     allow(controller).to receive(:current_user).and_return(@user)
+    Constant.create! :curr_rate => 10
   end
 
   describe "pdf#audit" do
@@ -66,10 +67,7 @@ RSpec.describe PdfController do
       it "updates the received_form? column of the Month table" do
         allow(@user).to receive(:last_name).and_return("last")
         allow(User).to receive(:find_by_last_name).and_return(@user)
-        month = Month.create! :month => Date.today.strftime("%m"),
-                              :year => Date.today.strftime("%Y"),
-                              :user_id => @user.id,
-                              :received_form => false
+        month = Month.create_month_model(@user.id, Date.today.strftime("%m"), Date.today.strftime("%Y"))
         allow(Month).to receive(:where).and_return([month])
         post :forms, :commit => "Mark Received", :selected => { @user.last_name => "1" },
                      :year => Date.today.year, :month => Date.today.month

@@ -10,7 +10,8 @@ Background: users in database
   And the following users exist:
   | email                       | password              | password_confirmation | last_name | password_changed |
   | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | Fox       | true             |
-
+  And the current rate is 10
+  
 Scenario: Still see calendar without javascript
    Given I am logged in as a non-admin
    When I visit my calendar page

@@ -20,6 +20,7 @@ Healthyeff::Application.routes.draw do
 
   #Managing employees
   match 'admin/manage' => 'users#manage', :as => :manage
+  match 'admin/update_current_rate' => 'users#update_current_rate', :as => :update_current_rate
   delete 'manage/:id', to: 'users#destroy', :as => :delete
 
   #route for single activity -ashley

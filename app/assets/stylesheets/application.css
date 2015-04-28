@@ -189,6 +189,15 @@ a.admin_next {
   vertical-align: middle;
 }
 
+.manage_content {
+  border: 2px;
+  border-style: solid;
+  border-color: #eaeaea;
+  padding: 15px;
+  padding-top: 5px;
+  border-radius: 25px;
+}
+
 /* For Calendar Page */
 
 #head{

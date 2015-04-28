@@ -5,6 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+Constant.create! :curr_rate => 10
 
 # ===== Admin account ===== #
 user = User.create! :first_name => 'Will',
@@ -72,12 +73,9 @@ Day.create! :date => Time.strptime("04/02/2015", "%m/%d/%Y"),
             :month_id => 1
 
 #Month to hold all the days
-Month.create! :user_id => 2,
-              :month => 4,
-              :year => 2015,
-              :num_of_days => 3,
-              :printed_form => false,
-              :received_form => false
+m1 = Month.create_month_model(2, 4, 2015)
+m1.num_of_days = 3
+m1.save!
 
 
 # ===== Approved day, non-admin ===== #
@@ -93,9 +91,6 @@ Day.create! :date => Time.strptime("03/31/2015", "%m/%d/%Y"),
                 :month_id => 2
 
 #Month to hold above day
-Month.create! :user_id => 2,
-              :month => 3,
-              :year => 2015,
-              :num_of_days => 1,
-              :printed_form => true,
-              :received_form => false
+m2 = Month.create_month_model(2, 3, 2015)
+m2.num_of_days = 1
+m2.save!

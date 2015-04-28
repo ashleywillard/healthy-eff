@@ -12,6 +12,7 @@ RSpec.describe AdminController do
   before :each do
     @user = mock_logged_in_admin()
     allow(controller).to receive(:current_user).and_return(@user)
+    Constant.create! :curr_rate => 10
   end
 
   # check_logged_in behavior tested in days_controller_spec
@@ -47,16 +48,13 @@ RSpec.describe AdminController do
       @user = User.create! :email => 'testuser@test.com',
                            :password => '?1234Abcedfg',
                            :password_confirmation => '?1234Abcedfg'
-      @cur_month = Month.create! :month => Date.today.strftime("%m"),
-                                 :year => Date.today.strftime("%Y"),
-                                 :user_id => @user.id
+      @cur_month = Month.create_month_model(@user.id, Date.today.strftime("%m"), Date.today.strftime("%Y"))
       Day.create! :date => Date.today - 1.day,
                   :approved => true,
                   :total_time => 60,
                   :reason => 'Reason',
                   :month_id => @cur_month.id
-      @prev_month = Month.create! :month => (Date.today - 1.month).strftime("%m"),
-                                  :year => Date.today.strftime("%Y")
+      @prev_month = Month.create_month_model(@user.id, (Date.today - 1.month).strftime("%m"), Date.today.strftime("%Y"))
     end
     it "generates a list of user-associated months for current month" do
       get :index
@@ -92,9 +90,7 @@ RSpec.describe AdminController do
   describe "admin#update_pending" do
     before :each do
       yesterday = Date.today.prev_day
-      @month = Month.create! :month => DateFormat.get_month(yesterday),
-                            :year => DateFormat.get_year(yesterday),
-                            :num_of_days => 0
+      @month = Month.create_month_model(@user.id, DateFormat.get_month(yesterday),  DateFormat.get_year(yesterday))
       @day1 = Day.create! :total_time => 60, :date => yesterday, :reason => "x",
                           :approved => false, :denied => false, :month_id => @month.id
       @day2 = Day.create! :total_time => 60, :date => yesterday, :reason => "x",
@@ -146,16 +142,13 @@ RSpec.describe AdminController do
       @user = User.create! :email => 'testuser@test.com',
                            :password => '?1234Abcedfg',
                            :password_confirmation => '?1234Abcedfg'
-      @cur_month = Month.create! :month => Date.today.strftime("%m"),
-                                 :year => Date.today.strftime("%Y"),
-                                 :user_id => @user.id
+      @cur_month = Month.create_month_model(@user.id, Date.today.strftime("%m"), Date.today.strftime("%Y"))
       Day.create! :date => Date.today - 1.day,
                   :approved => true,
                   :total_time => 60,
                   :reason => 'Reason',
                   :month_id => @cur_month.id
-      @prev_month = Month.create! :month => (Date.today - 1.month).strftime("%m"),
-                                  :year => Date.today.strftime("%Y")
+      @prev_month = Month.create_month_model(@user.id, (Date.today - 1.month).strftime("%m"), Date.today.strftime("%Y"))
     end
     it "stores the month being viewed in the session hash" do
       get :index

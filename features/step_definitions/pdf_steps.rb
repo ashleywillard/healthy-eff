@@ -82,11 +82,9 @@ Given (/^(.*) has logged (\d+) (?:activity|activities)/) do |name, num|
                      :last_name => full_name[1]
 #     u.first_name = full_name[0] ; u.last_name = full_name[1] ; u.save
   end
-  m = Month.create! :user_id => u.id,
-                    :month => Time.now.month,
-                    :year => Time.now.year,
-                    :num_of_days => num
-  m.save
+  m = Month.create_month_model(u.id, Time.now.month, Time.now.year)
+  m.num_of_days = num.to_i
+  m.save!
   # num.to_i.times do
   for i in 0..num.to_i - 1
     d = Day.create! :approved => true,

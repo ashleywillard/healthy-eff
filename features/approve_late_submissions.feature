@@ -11,7 +11,8 @@ Background:
   And the following users exist:
   | email                      | password        | password_confirmation | password_changed |
   | healthypotato@gmail.com    | ?Hotpotato169   | ?Hotpotato169         | true             |
-
+  And the current rate is 10
+  
 Scenario: Privileged access
   Given I am logged in as a non-admin
   Then I should not see "Pending"

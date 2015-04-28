@@ -9,6 +9,7 @@ Background:
   | email                       | password              | password_confirmation | password_changed |
   | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | true              |
   | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | true              |
+  And the current rate is 10
   Given I am logged in as a non-admin
   And I am on the home page
   Then I should not see "Add Activity"

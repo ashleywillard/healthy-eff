@@ -9,7 +9,8 @@ Background: users in database
   | email                       | password              | password_confirmation | password_changed |
   | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | true             |
   | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | true             |
-
+  And the current rate is 10
+  
 Scenario: Logging in with the correct credentials
   Given I am on the sign in page
   When I fill in my username and password
