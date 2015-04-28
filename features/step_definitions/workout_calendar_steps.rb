@@ -15,12 +15,9 @@ And /I set up the database with a few days/ do
               :total_time => 60,
               :reason => 'A legit reason',
               :month_id => 1})
-  Month.create!({:user_id => 2,
-              :month => today.month,
-              :year => today.year,
-              :num_of_days => 1,
-              :printed_form => true,
-              :received_form => false})
+  m = Month.create_month_model(2, today.month, today.year)
+  m.num_of_days = 1
+  m.save!
 
   Activity.create!({:duration => 25,
                  :name => 'hiking',
@@ -34,12 +31,9 @@ And /I set up the database with a few days/ do
               :total_time => 60,
               :reason => 'A legit reason',
               :month_id => 1})
-  Month.create!({:user_id => 2,
-              :month => date_last_month.month,
-              :year => date_last_month.year,
-              :num_of_days => 1,
-              :printed_form => true,
-              :received_form => false})
+  m2 = Month.create_month_model(2, date_last_month.month, date_last_month.year)
+  m2.num_of_days = 1
+  m2.save!
 end
 
 And /I should see a calendar with my logged activities/ do
@@ -86,4 +80,7 @@ Then /I should not be able to click prev/ do
   assert(page.body.include? "fc-button fc-button-prev fc-state-default fc-corner-left fc-corner-right fc-state-disabled")
 end
 
+And /I follow Calendar/ do
+  page.find('.calendar_link').trigger('click')
+end
 

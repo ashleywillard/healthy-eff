@@ -3,24 +3,33 @@ class UsersController < ApplicationController
   before_filter :check_logged_in, :force_password_change
 
   def calendar
+    if (params[:id] != nil && !current_user.admin)
+      redirect_to calendar_path
+    end
     @name = set_name
     @date = Date.today
-    earliest_month = Month.get_users_earliest_month(current_user.id)
-    @earliest_date = (earliest_month == nil) ? @date : Date.new(earliest_month.year,earliest_month.month, 1)   
+    earliest_month = Month.get_users_earliest_month(extract_id_for_calendar)
+    @earliest_date = (earliest_month == nil) ? @date : Date.new(earliest_month.year,earliest_month.month, 1)
     @workouts = get_all_workouts(@earliest_date, @date)
     @money = get_money_earned(@date.strftime("%m"), @date.strftime("%Y"))
   end
 
+  def extract_id_for_calendar
+    id = params[:id] != nil && User.find_by_id(params[:id]) != nil && current_user.admin ? params[:id] : current_user.id
+    return id
+  end
+
   def set_name
     name = 'No name'
-    if current_user.first_name != nil && current_user.last_name != nil
-      name = current_user.first_name + ' ' + current_user.last_name
+    target_user = User.find(extract_id_for_calendar)
+    if target_user.first_name != nil && target_user.last_name != nil
+      name = target_user.first_name + ' ' + target_user.last_name
     end
     return name
   end
 
   def get_all_workouts(start, finish)
-    workouts = [] 
+    workouts = []
     (1..num_of_months_to_retrieve(start, finish)).each do
       workouts += retrieve_workouts(finish.month, finish.year)
       finish = finish.at_beginning_of_month.prev_month
@@ -33,7 +42,8 @@ class UsersController < ApplicationController
   end
 
   def retrieve_workouts(month, year)
-    curr_month = Month.get_month_model(current_user.id, month, year)
+    id = extract_id_for_calendar
+    curr_month = Month.get_month_model(id, month, year)
     return [] if(curr_month == nil)
     workouts = []
     curr_month.days.each do |day|
@@ -47,40 +57,31 @@ class UsersController < ApplicationController
   def retrieve_workout(activity, day)
     workout = [activity.name, activity.duration, day.date]
     if day.approved
-      workout += ['#3c763d', '#dff0d8', '#d6e9c6']
+      workout += ['#3c763d', '#dff0d8', '#d6e9c6', "Status: Approved"]
     elsif day.denied?
-      workout += ['#a94442', '#f2dede', '#ebccd1']
+      workout += ['#a94442', '#f2dede', '#ebccd1', "Status: Denied"]
     else
-      workout += ['#8a6d3b', '#fcf8e3', '#faebcc']
+      workout += ['#8a6d3b', '#fcf8e3', '#faebcc', "Status: Pending"]
     end
     return workout
   end
 
   def get_money_earned(month, year)
+    id = extract_id_for_calendar
     amt_per_day = 10
-    approved_cnt = Month.get_approved_dates_list(current_user.id, month, year).length
+    approved_cnt = Month.get_approved_dates_list(id, month, year).length
     return "$" + (approved_cnt * amt_per_day).to_s
   end
 
-  def manage
+  def check_admin
     if !current_user.admin?
       flash[:alert] = deny_access get_current_page
       redirect_to today_path
     end
-    @users = User.find(:all, :conditions => ["id != ?", current_user.id])
   end
 
-  def destroy
-    if !current_user.admin?
-      flash[:alert] = deny_access get_current_page
-      redirect_to root_path
-    else
-      @user = User.find(params[:id])
-      @user.destroy
-      flash[:notice] = user_deleted(@user.first_name, @user.last_name)
-      redirect_to manage_path
-    end
-
+  def update_current_rate
+    #do something
   end
 
   private
@@ -89,5 +90,5 @@ class UsersController < ApplicationController
       redirect_to new_user_session_path
     end
   end
-
+  
 end

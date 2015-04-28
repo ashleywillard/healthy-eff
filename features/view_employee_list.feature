@@ -11,7 +11,8 @@ Background:
   And the following users exist:
   | email                      | password        | password_confirmation | password_changed |
   | healthypotato@gmail.com    | ?Hotpotato169   | ?Hotpotato169         | true             |
-
+  And the current rate is 10
+  
 Scenario: Privileged access
   Given I am logged in as a non-admin
   Then I should not see the "Admin" link
@@ -23,7 +24,6 @@ Scenario: Privileged access
 Scenario: Admin list view - no records
   Given I am logged in as an admin
   When I follow "Admin"
-  And I follow "Admin Home"
   And I navigate to the next month
   Then I should see "No records"
 
@@ -31,7 +31,21 @@ Scenario: Admin list view - records
   Given Nick Herson has logged 3 activities
   And I am logged in as an admin
   When I follow "Admin"
-  And I follow "Admin Home"
   Then I should see a table of employee names
   And I should see "Days of Healthy Activity"
   And I should see "Pending"
+
+Scenario: Admin list view - sorting
+  Given John Doe has logged 2 activities
+  And Armando Fox has logged 3 activities
+  And I am logged in as an admin
+
+  When I visit the admin list view
+  And I follow "First Name"
+  Then "Armando" should appear before "John"
+
+  When I follow "Last Name"
+  Then "Doe" should appear before "Fox"
+
+  When I follow "Days of Healthy Activity"
+  Then "Armando" should appear before "John"

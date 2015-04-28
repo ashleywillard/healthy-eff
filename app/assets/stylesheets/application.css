@@ -47,7 +47,9 @@ body {
 
 a,
 a:hover,
-a:active {
+a:active,
+a:focus,
+a:visited {
   color: #CC0000;
   text-decoration: none;
 }
@@ -70,14 +72,9 @@ div.note {
 }
 
 /* navbar formatting */
-
-.navbar {
-  font-family: Helvetica;
-  font-size:18px;
-  font-weight: 500;
+.logo {
+  height: 30px;
 }
-
-
 .navbar-inner {
   background-image: none;
   background-color: #cc0000;
@@ -88,8 +85,13 @@ div.note {
   color: #fff;
 }
 
+.navbar .nav > li {
+  padding-top: 4px;
+}
+
+.navbar, 
 .navbar .brand {
-  font-family: Helvetica;
+  font-family: "Roboto Condensed";
   text-shadow: none;
   color: #fff;
   font-size:18px;
@@ -98,45 +100,20 @@ div.note {
 
 .navbar .divider-vertical {
   margin: 0px;
-}
-
-a.dropdown-toggle {
-  color: #ffffff;
+  height: 45px;
 }
 
 .navbar .nav > .active > a,
 .navbar .nav > .active > a:hover {
-  background-color: #333333;
+  background-color: #cc0000;
   color: #ffffff;
 }
 
 .navbar .nav > li > a:hover,
 .navbar .nav > li > a:focus,
-.navbar .nav > li > li > a:hover,
-.navbar .nav > li.dropdown.open > a.dropdown-toggle {
+.navbar .nav > li > li > a:hover {
   color: #fff;
   background-color: #cc0000;
-}
-
-.dropdown-menu > li > a:hover,
-.dropdown-menu > li > a:focus,
-.dropdown-menu > .active > a:hover, 
-.dropdown-menu > .active > a:focus {
-  background-color: #ffffff !important;
-  background-image: linear-gradient(to bottom, #CC0010, #CC0000) !important;
-  background-repeat: repeat-x !important;
-  color: #ffffff;
-  outline: 0 none;
-  text-decoration: none;
-}
-
-.dropdown-menu > .active > a{
-  background-color: #ffffff !important;
-  background-image: linear-gradient(to bottom, #ffffff, #ffffff) !important;
-  background-repeat: repeat-x !important;
-  color: #333333;
-  outline: 0 none;
-  text-decoration: none;
 }
 
 label {
@@ -197,6 +174,12 @@ input#captcha {
   width: 125px;
 }
 
+a.remove_day,
+a.remove_activity,
+a.add_fields {
+  display: none;
+}
+
 /* admin formatting */
 
 a.admin_previous,
@@ -204,6 +187,15 @@ a.admin_next {
   text-decoration: none;
   font-size:28px;
   vertical-align: middle;
+}
+
+.manage_content {
+  border: 2px;
+  border-style: solid;
+  border-color: #eaeaea;
+  padding: 15px;
+  padding-top: 5px;
+  border-radius: 25px;
 }
 
 /* For Calendar Page */

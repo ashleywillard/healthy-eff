@@ -4,10 +4,13 @@ Feature: Force password change on first sign in
   So that I can ensure password security
   I want to have users change their password the first time they log in
 
+Background:
+  Given the current rate is 10
+  
 Scenario: User has not yet changed password
   Given that I sign in as a new user
   Then I should be on the user settings page
-  And I should see "Welcome, new user! Please change your password."
+  And I should be welcomed
 
 Scenario: User has already changed password
   Given that I sign in as a returning user
@@ -18,7 +21,7 @@ Scenario: User does not provide new password and presses "Update"
   When I provide my current password
   And I hit "Update"
   Then I should be on the user settings page
-  And I should see "Welcome, new user! Please change your password."
+  And I should be welcomed
 
 Scenario: User provides new password and presses "Update"
   Given that I sign in as a new user

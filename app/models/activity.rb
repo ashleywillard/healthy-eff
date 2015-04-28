@@ -11,7 +11,7 @@ class Activity < ActiveRecord::Base
     name = activity[:name].lstrip
     duration = activity[:duration]
     day.total_time += duration.to_i
-    if name == "" then name = "A Healthy Activity" end
+    if name == "" then name = HEALTHY_ACTIVITY end
     return Activity.new({:name => name, :duration => duration})
   end
 
