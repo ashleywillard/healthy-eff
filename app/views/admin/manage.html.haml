@@ -1,19 +1,28 @@
-%h1 Employees
-= link_to "<span class=\"glyphicon glyphicon-plus-sign\"></span> New employee".html_safe, new_user_invitation_path, :class => "add_new_employee"
-
-%table#movies.table.table-striped
-  %thead
-    %tr
-      %th Last Name
-      %th First Name
-      %th Email
-      %th Change?
-      %th Remove?
-  %tbody
-    - @users.each do |user|
+%h1 Manage
+%div.manage_content.settings
+  / %h2 Settings
+  / = form_for(@constants, url: update_current_rate(), :html => {class: "form-inline"}) do |f|
+  /   = f.label :curr_rate, 'Reimbursement Rate (dollars/day): ', :class => 'rate_label'
+  /   = f.number_field :curr_rate, :value => @constant.curr_rate
+  /   = f.submit 'Submit', :class => "btn"
+%br
+%div.manage_content.employees
+  %h2 Employees
+  = link_to "<span class=\"glyphicon glyphicon-plus-sign\"></span> New employee".html_safe, new_user_invitation_path, :class => "add_new_employee"
+  
+  %table#movies.table.table-striped
+    %thead
       %tr
-        %td= user.last_name
-        %td= user.first_name
-        %td= user.email
-        %td= link_to "<span class =\"glyphicon glyphicon-pencil\"></span> Edit".html_safe, edit_path(user), :class => 'edit_user'
-        %td= link_to "<span class =\"glyphicon glyphicon-trash\"></span> Delete".html_safe, delete_path(user),   :method => :delete, :confirm => "Are you sure you want to delete employee #{user.first_name} #{user.last_name}?"
+        %th Last Name
+        %th First Name
+        %th Email
+        %th Change?
+        %th Remove?
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= user.last_name
+          %td= user.first_name
+          %td= user.email
+          %td= link_to "<span class =\"glyphicon glyphicon-pencil\"></span> Edit".html_safe, edit_path(user), :class => 'edit_user'
+          %td= link_to "<span class =\"glyphicon glyphicon-trash\"></span> Delete".html_safe, delete_path(user),   :method => :delete, :confirm => "Are you sure you want to delete employee #{user.first_name} #{user.last_name}?"
