@@ -77,8 +77,10 @@ Given (/^(.*) has logged (\d+) (?:activity|activities)/) do |name, num|
   if u.nil?
     u = User.create! :email => full_name[0] + "@blah.com",
                      :password => "?1Asdfjkl;asdfjkl;",
-                     :password_confirmation => "?1Asdfjkl;asdfjkl;"
-    u.first_name = full_name[0] ; u.last_name = full_name[1] ; u.save
+                     :password_confirmation => "?1Asdfjkl;asdfjkl;",
+                     :first_name => full_name[0],
+                     :last_name => full_name[1]
+#     u.first_name = full_name[0] ; u.last_name = full_name[1] ; u.save
   end
   m = Month.create! :user_id => u.id,
                     :month => Time.now.month,

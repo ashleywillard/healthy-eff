@@ -142,9 +142,9 @@ class AdminController < ApplicationController
   def sort(hash)
     case session[:sort]
       when "first_name"
-        hash = hash.sort_by {|k, v| k.first_name}
+        hash = hash.sort_by {|k, v| k.first_name.to_s}
       when "last_name"
-        hash = hash.sort_by {|k, v| k.last_name}
+        hash = hash.sort_by {|k, v| k.last_name.to_s}
       when "days"
         hash = hash.sort_by {|k, v| v.nil? ? 0 : v.get_num_approved_days().to_i}.reverse
     end
