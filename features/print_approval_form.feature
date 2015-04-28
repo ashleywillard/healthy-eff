@@ -16,8 +16,8 @@ Background:
 
 @javascript
 Scenario: Selectively Printing Approval Forms
-Given I am logged in as an admin
-And I am on the admin view
-# When I check names: Person1, Person2
-When I check names: Nick Herson, Armando Fox
-And I hit "Print Selected"
+  Given I am logged in as an admin
+  And I am on the admin view
+  When I select all
+  And I hit "Print Selected"
+  Then I should see "Herson"

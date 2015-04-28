@@ -33,3 +33,18 @@ Scenario: Admin list view - records
   Then I should see a table of employee names
   And I should see "Days of Healthy Activity"
   And I should see "Pending"
+
+Scenario: Admin list view - sorting
+  Given John Doe has logged 2 activities
+  And Armando Fox has logged 3 activities
+  And I am logged in as an admin
+
+  When I visit the admin list view
+  And I follow "First Name"
+  Then "Armando" should appear before "John"
+
+  When I follow "Last Name"
+  Then "Doe" should appear before "Fox"
+
+  When I follow "Days of Healthy Activity"
+  Then "Armando" should appear before "John"
