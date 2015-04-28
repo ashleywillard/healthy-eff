@@ -8,6 +8,14 @@ class Month < ActiveRecord::Base
     Month.where(:month => month, :year => year)
   end
 
+  def self.update_month_rates(rate)
+    months = self.get_user_months(Date.today.strftime("%m").to_i, Date.today.strftime("%Y").to_i)
+    months.each do |month|
+      month.work_rate = rate
+      month.save!
+    end
+  end
+
   def self.get_month_model(user_id, month, year)
     month_model = self.where(user_id: user_id, month: month, year: year)
     return month_model == nil ? nil : month_model.first

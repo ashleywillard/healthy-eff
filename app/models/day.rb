@@ -46,7 +46,7 @@ class Day < ActiveRecord::Base
     unless approved
       today = Date.today
       start_date = today.beginning_of_month
-      start_date =  today.ago(1.month).beginning_of_month if today.strftime("%d").to_i < 6
+      start_date =  today.ago(1.month).beginning_of_month if get_day(today) < 6
       end_date = today.prev_day
       check_date_in_range(start_date, end_date)
     end
@@ -54,7 +54,7 @@ class Day < ActiveRecord::Base
 
   def check_date_in_range(start_date, end_date)
     unless ((start_date.to_date)..(end_date.to_date)) === (date.to_date)
-      errors.add(:date, date_out_of_range(date.strftime("%m/%d/%Y")))
+      errors.add(:date, date_out_of_range(format_date(date)))
     end
   end
 
