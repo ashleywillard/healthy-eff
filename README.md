@@ -17,7 +17,7 @@ Group 17: Alex Ho, Allan Tang, Ashley Willard, Corinne Schafle, Michelle Lin, Sa
 * [Code Climate](https://codeclimate.com/github/ashleywillard/healthy-eff)
 
 ##### Iteration 0
-* [Client Entry Interview](http://youtu.be/ptYHlSCjSQI)
+* [Client Entry Interview](https://youtu.be/ptYHlSCjSQI)
 * [Lo-Fi Mockups](https://docs.google.com/presentation/d/1BA3Nlz5kssVkdUxyb5F7JyZ38Xxe5iuyYH-JrsLVQzc/)
 
 ## Deadlines
