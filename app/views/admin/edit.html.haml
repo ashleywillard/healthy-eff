@@ -1,0 +1,15 @@
+%h2
+  Edit #{@user.first_name}'s account information
+= form_for :user do |f|
+  .field
+    = f.label :email
+    = f.email_field :email
+  .field
+    = f.label :first_name
+    = f.text_field :first_name
+  .field
+    = f.label :last_name
+    = f.text_field :last_name
+  .actions
+    = f.submit "Update", :class => "btn"
+= link_to "Back", :back

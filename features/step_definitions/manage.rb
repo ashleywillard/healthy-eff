@@ -7,3 +7,11 @@ end
 When (/I fill in email with "(.*)"/) do |email|
   fill_in "user_email", :with => email
 end
+
+When (/I fill in first name with "(.*)"/) do |name|
+  fill_in "user_first_name", :with => name
+end
+
+When (/I fill in last name with "(.*)"/) do |name|
+  fill_in "user_last_name", :with => name
+end
