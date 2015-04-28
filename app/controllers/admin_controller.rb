@@ -46,14 +46,19 @@ class AdminController < ApplicationController
   end
 
   def forms
+    redirect_to admin_list_path and return if params[:selected].nil?
     case params[:commit]
-      when "Print Selected" then accounting()
-      when "Mark Received" then mark_form_received()
-      else redirect_to admin_list_path
+      when "Print Selected"
+        accounting()
+      when "Mark Received"
+        mark_form_received()
+      else
+        redirect_to admin_list_path
     end
   end
 
   def mark_form_received
+    @date = get_date()
     params[:selected].each do |last_name, select|
       month = Month.where(:year => get_year(@date), :month => get_month(@date),
                           :user_id => User.find_by_last_name(last_name).id).first

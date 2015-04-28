@@ -39,7 +39,7 @@ Healthyeff::Application.routes.draw do
   get 'admin/:year/:month/accounting' => 'admin#accounting', :as => :admin_accounting
   get 'admin/:year/:month/audit' => 'admin#audit', :as => :admin_audit
 #   get 'admin/accounting' => 'admin#group_accounting', :as => :admin_group_accounting
-  match 'admin_forms' => 'admin#forms', :as => :admin_forms
+  post 'admin_forms' => 'admin#forms', :as => :admin_forms
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

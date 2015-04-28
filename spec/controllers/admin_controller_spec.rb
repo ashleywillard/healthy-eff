@@ -1,18 +1,17 @@
 require "rails_helper"
+require File.expand_path("../../users_helper", __FILE__)
+
+RSpec.configure do |c|
+  c.include UsersHelper
+end
 
 RSpec.describe AdminController do
 
   SUCCESS_CODE = 200
   REDIRECT_CODE = 302
 
-  # mock a logged-in admin
   before :each do
-    @user = double(User)
-    allow(@user).to receive(:id).and_return(1)
-    allow(@user).to receive(:admin).and_return(true)
-    allow(@user).to receive(:password_changed?).and_return(true)
-    allow_message_expectations_on_nil # suppress warnings on devise warden
-    allow(request.env['warden']).to receive(:authenticate!).and_return(@user)
+    @user = mock_logged_in_admin()
     allow(controller).to receive(:current_user).and_return(@user)
   end
 
@@ -223,6 +222,33 @@ RSpec.describe AdminController do
     it "updates the session hash" do
       get :index, :sort => "last_name"
       expect(session[:sort]).to_not eq(nil)
+    end
+  end
+
+  describe "admin#mark_form_received" do
+    context "when users are checked" do
+      it "updates the received_form? column of the Month table" do
+        allow(@user).to receive(:last_name).and_return("last")
+        allow(User).to receive(:find_by_last_name).and_return(@user)
+        month = Month.create! :month => Date.today.strftime("%m"),
+                              :year => Date.today.strftime("%Y"),
+                              :user_id => @user.id,
+                              :received_form => false
+        allow(Month).to receive(:where).and_return([month])
+        post :forms, :commit => "Mark Received", :selected => { @user.last_name => "1" },
+                     :year => Date.today.year, :month => Date.today.month
+        expect(month.received_form).to eq(true)
+      end
+    end
+    context "when no users are checked" do
+      it "makes no calls to the database" do
+        expect(Month).to receive(:find).exactly(0).times
+        expect(User).to receive(:find).exactly(0).times
+      end
+      it "redirects to the list view" do
+        post :forms
+        expect(response.status).to eq(REDIRECT_CODE)
+      end
     end
   end
 
