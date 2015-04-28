@@ -46,10 +46,14 @@ class AdminController < ApplicationController
   end
 
   def forms
+    redirect_to admin_list_path and return if params[:selected].nil?
     case params[:commit]
-      when "Print Selected" then accounting()
-      when "Mark Received" then mark_form_received()
-      else redirect_to admin_list_path
+      when "Print Selected"
+        accounting()
+      when "Mark Received"
+        mark_form_received()
+      else
+        redirect_to admin_list_path
     end
   end
 
@@ -138,9 +142,9 @@ class AdminController < ApplicationController
   def sort(hash)
     case session[:sort]
       when "first_name"
-        hash = hash.sort_by {|k, v| k.first_name}
+        hash = hash.sort_by {|k, v| k.first_name.to_s}
       when "last_name"
-        hash = hash.sort_by {|k, v| k.last_name}
+        hash = hash.sort_by {|k, v| k.last_name.to_s}
       when "days"
         hash = hash.sort_by {|k, v| v.nil? ? 0 : v.get_num_approved_days().to_i}.reverse
     end

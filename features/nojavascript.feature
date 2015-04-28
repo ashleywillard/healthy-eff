@@ -14,12 +14,14 @@ Background: users in database
 Scenario: Still see calendar without javascript
    Given I am logged in as a non-admin
    When I visit my calendar page
-   Then I should see my name
+   Then this is still not yet implemented
+   Then I should see "Fox"
    And I should see the weeks
 
 Scenario: Still can sort employees
    Given I am logged in as an admin
-   When I visit the admin home page
-   And I click "Last Name"
-   Then I should see "Fox" before "Guo"
-
+   And Armando Fox has logged 2 activities
+   And Will Guo has logged 3 activities
+   When I visit the admin list page
+   And I follow "Last Name"
+   Then "Fox" should appear before "Guo"

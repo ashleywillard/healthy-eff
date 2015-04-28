@@ -66,10 +66,8 @@ end
 
 When (/I select all/) do
   check 'selectAll'
-  find(:css, "input#selectAll[value='selectAll']").should be_checked
-  all('input[type=checkbox]').each do |checkbox|
-    expect(checkbox).to be_checked
-  end
+  find(:css, "input#selectAll[value='selectAll']").set(true)
+  expect(find(:css, "input#selectAll[value='selectAll']")).to be_checked
 end
 
 Given (/^(.*) has logged (\d+) (?:activity|activities)/) do |name, num|
@@ -79,8 +77,10 @@ Given (/^(.*) has logged (\d+) (?:activity|activities)/) do |name, num|
   if u.nil?
     u = User.create! :email => full_name[0] + "@blah.com",
                      :password => "?1Asdfjkl;asdfjkl;",
-                     :password_confirmation => "?1Asdfjkl;asdfjkl;"
-    u.first_name = full_name[0] ; u.last_name = full_name[1] ; u.save
+                     :password_confirmation => "?1Asdfjkl;asdfjkl;",
+                     :first_name => full_name[0],
+                     :last_name => full_name[1]
+#     u.first_name = full_name[0] ; u.last_name = full_name[1] ; u.save
   end
   m = Month.create! :user_id => u.id,
                     :month => Time.now.month,
@@ -99,8 +99,3 @@ Given (/^(.*) has logged (\d+) (?:activity|activities)/) do |name, num|
   end
   #Day.find_by_date(Time.now).activities.each { |a| puts ("the thing" + a.name)}
 end
-
-
-
-
-
