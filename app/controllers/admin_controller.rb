@@ -106,7 +106,7 @@ class AdminController < ApplicationController
 
   # :get for audit sheet PDF
   def audit
-    @date = session[:months_ago].to_i.months.ago
+    @date = get_date()
     @user_months = []
     User.includes(:months).all.each do |user|
       @user_months << Month.get_or_create_month_model(user.id, get_month(@date), get_year(@date))
