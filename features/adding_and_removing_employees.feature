@@ -29,7 +29,7 @@ Scenario: Adding an employee
 Scenario: Removing an employee
   Given I am logged in as an admin
   And I visit the manage employee page
-  And I press “Delete”
+  And I follow "Delete"
   Then I should be on the manage employee page
   And I should see that "" "Fox" has been deleted
 
