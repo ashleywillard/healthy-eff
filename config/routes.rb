@@ -24,7 +24,7 @@ Healthyeff::Application.routes.draw do
   get 'manage/edit/:id', to: 'admin#edit', :as => :edit
   post 'manage/edit/:id', to: 'admin#update', :as => :update
 
-  match 'admin/update_constants' => 'users#update_constants', :as => :admin_update_constants
+  match 'admin/update_constants' => 'admin#update_constants', :as => :admin_update_constants
 
   #route for single activity -ashley
   match 'today' => 'days#today', :as => :today

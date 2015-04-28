@@ -72,9 +72,9 @@ class AdminController < ApplicationController
 
   def manage
     @users = User.find(:all, :conditions => ["id != ?", current_user.id])
-    @constants = Constant.get_constants
+    @constant = Constant.get_constants
   end
-  
+
   def update_constants
     #do something
     redirect_to manage_path
