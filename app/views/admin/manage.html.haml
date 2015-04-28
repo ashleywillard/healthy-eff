@@ -1,7 +1,7 @@
 %h1 Manage
 %div.manage_content.settings
   %h2 Settings
-  = form_for(@constant, url: admin_update_constants_path, :html => {class: "form-inline"}) do |f|
+  = form_for(@constant, url: update_constants_path, :html => {class: "form-inline"}) do |f|
     %p
       = f.label :curr_rate, 'Reimbursement Rate: ', :class => 'rate_label'
       = f.number_field :curr_rate, :value => @constant.curr_rate, :class => "rate_input"

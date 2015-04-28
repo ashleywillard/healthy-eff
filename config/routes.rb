@@ -23,8 +23,7 @@ Healthyeff::Application.routes.draw do
   delete 'manage/:id', to: 'admin#destroy', :as => :delete
   get 'manage/edit/:id', to: 'admin#edit', :as => :edit
   post 'manage/edit/:id', to: 'admin#update', :as => :update
-
-  match 'admin/update_constants' => 'admin#update_constants', :as => :admin_update_constants
+  match 'manage/update_constants' => 'admin#update_constants', :as => :update_constants
 
   #route for single activity -ashley
   match 'today' => 'days#today', :as => :today
