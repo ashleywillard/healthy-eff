@@ -40,7 +40,7 @@
           %td
             = user.last_name
           %td{:style => "text-align:center"}
-            = link_to "<span class =\"glyphicon glyphicon-calendar\"></span>".html_safe
+            = link_to "<span class =\"glyphicon glyphicon-calendar\"></span>".html_safe, calendar_path(:id => user.id)
           %td{:style => "text-align:center"}
             - if month.nil? or month.get_num_approved_days() == 0
             - else
