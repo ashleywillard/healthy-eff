@@ -26,6 +26,8 @@ Given (/^I (?:am on|visit|go to) (?:|my|the) (.*) (?:|page|view)/) do |view|
       visit_path = admin_list_path
     when "forgot password"
       visit_path = new_user_password_path
+    when "employee edit"
+      visit_path = edit_path
     when "any"
   end
   fail if visit_path.nil?
@@ -56,6 +58,8 @@ Then (/^I should be on (?:the|my) (.*) (?:page|view)/) do |view|
       expected_path = admin_pending_path
     when "admin list", "admin"
       expected_path = admin_list_path
+    when "employee edit"
+      expected_path = edit_path
   end
   expect(page.current_path).to eq(expected_path)
 end
