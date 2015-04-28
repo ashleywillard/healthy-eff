@@ -3,19 +3,19 @@ class UsersController < ApplicationController
   before_filter :check_logged_in, :force_password_change
 
   def calendar
-    if(params[:id] != nil && !current_user.admin)
+    if (params[:id] != nil && !current_user.admin)
       redirect_to calendar_path
     end
     @name = set_name
     @date = Date.today
     earliest_month = Month.get_users_earliest_month(extract_id_for_calendar)
-    @earliest_date = (earliest_month == nil) ? @date : Date.new(earliest_month.year,earliest_month.month, 1)   
+    @earliest_date = (earliest_month == nil) ? @date : Date.new(earliest_month.year,earliest_month.month, 1)
     @workouts = get_all_workouts(@earliest_date, @date)
     @money = get_money_earned(@date.strftime("%m"), @date.strftime("%Y"))
   end
 
   def extract_id_for_calendar
-    id = params[:id] != nil && User.find(params[:id]) != nil && current_user.admin ? params[:id] : current_user.id
+    id = params[:id] != nil && User.find_by_id(params[:id]) != nil && current_user.admin ? params[:id] : current_user.id
     return id
   end
 
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   end
 
   def get_all_workouts(start, finish)
-    workouts = [] 
+    workouts = []
     (1..num_of_months_to_retrieve(start, finish)).each do
       workouts += retrieve_workouts(finish.month, finish.year)
       finish = finish.at_beginning_of_month.prev_month
