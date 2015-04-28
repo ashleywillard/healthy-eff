@@ -24,6 +24,8 @@ Healthyeff::Application.routes.draw do
   get 'manage/edit/:id', to: 'admin#edit', :as => :edit
   post 'manage/edit/:id', to: 'admin#update', :as => :update
 
+  # work in progress from sarah
+  match 'admin/update_current_rate' => 'users#update_current_rate', :as => :update_current_rate
 
   #route for single activity -ashley
   match 'today' => 'days#today', :as => :today
@@ -36,13 +38,11 @@ Healthyeff::Application.routes.draw do
   get 'admin' => 'admin#index', :as => :admin_list
   get 'admin/pending' => 'admin#pending', :as => :admin_pending
   put 'admin/update_pending' => 'admin#update_pending', :as => :admin_update_pending
+
   # pdf
-#   get 'admin/:id/tally' => 'admin#tally', :as => :admin_tally
-#   get 'admin/:year/:month/accounting/:id' => 'admin#accounting', :as => :admin_accounting
-  get 'admin/:year/:month/accounting' => 'admin#accounting', :as => :admin_accounting
-  get 'admin/:year/:month/audit' => 'admin#audit', :as => :admin_audit
-#   get 'admin/accounting' => 'admin#group_accounting', :as => :admin_group_accounting
-  match 'admin_forms' => 'admin#forms', :as => :admin_forms
+  get 'admin/:year/:month/accounting' => 'pdf#accounting', :as => :admin_accounting
+  get 'admin/:year/:month/audit' => 'pdf#audit', :as => :admin_audit
+  post 'admin_forms' => 'pdf#forms', :as => :admin_forms
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

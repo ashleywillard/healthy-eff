@@ -8,6 +8,7 @@ RSpec.describe UsersController do
       user.stub(:first_name).and_return('first')
       user.stub(:last_name).and_return('last')
       user.stub(:id).and_return(1)
+      User.stub(:find).and_return(user)
       allow(user).to receive(:password_changed?).and_return(true)
       allow_message_expectations_on_nil
       allow(request.env['warden']).to receive(:authenticate!).and_return(user)
@@ -17,6 +18,7 @@ RSpec.describe UsersController do
       Month.stub(:get_users_earliest_month)
       UsersController.any_instance.stub(:get_money_earned)
       UsersController.any_instance.stub(:get_all_workouts).and_return([])
+      
       get :calendar
       controller.instance_eval{@workouts}.should eql []
       response.should be_success
@@ -27,7 +29,7 @@ RSpec.describe UsersController do
       Month.stub(:get_users_earliest_month)
       UsersController.any_instance.stub(:get_money_earned)
       UsersController.any_instance.stub(:get_all_workouts).and_return(firstMonth + secondMonth)
-      
+
       get :calendar
       controller.instance_eval{@workouts}.should eql firstMonth + secondMonth
       response.should be_success

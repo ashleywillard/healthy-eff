@@ -28,7 +28,6 @@
         %th{:style => "text-align:center"}
           Form Received?
     %tbody
-      -#= form_tag admin_accounting_path(:year => @date.year, :month => @date.month), :method => :get
       = form_tag admin_forms_path(:year => @date.year, :month => @date.month)
       - @user_months.each do |user, month|
         %tr
@@ -41,7 +40,7 @@
           %td
             = user.last_name
           %td{:style => "text-align:center"}
-            = link_to "<span class =\"glyphicon glyphicon-calendar\"></span>".html_safe
+            = link_to "<span class =\"glyphicon glyphicon-calendar\"></span>".html_safe, calendar_path(:id => user.id)
           %td{:style => "text-align:center"}
             - if month.nil? or month.get_num_approved_days() == 0
             - else

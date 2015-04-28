@@ -72,7 +72,9 @@ div.note {
 }
 
 /* navbar formatting */
-
+.logo {
+  height: 30px;
+}
 .navbar-inner {
   background-image: none;
   background-color: #cc0000;
@@ -185,6 +187,15 @@ a.admin_next {
   text-decoration: none;
   font-size:28px;
   vertical-align: middle;
+}
+
+.manage_content {
+  border: 2px;
+  border-style: solid;
+  border-color: #eaeaea;
+  padding: 15px;
+  padding-top: 5px;
+  border-radius: 25px;
 }
 
 /* For Calendar Page */

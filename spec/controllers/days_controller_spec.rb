@@ -4,6 +4,7 @@ RSpec.describe DaysController do
   let(:dummy_class) { Class.new { extend ErrorMessages } }
 
   before :each do
+    Constant.create! :curr_rate => 10
     @user = double(User)
     allow(@user).to receive(:password_changed?).and_return(true)
     allow(@user).to receive(:id).and_return(1)

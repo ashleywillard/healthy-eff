@@ -7,6 +7,7 @@ Background:
   Given the following admins exist:
   | email                       | password              | password_confirmation | password_changed |
   | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | true             |
+  And the current rate is 10
   Given I am logged in as an admin
 
 # Happy path

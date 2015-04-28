@@ -7,7 +7,8 @@ Background: users in database
   Given the following users exist:
   | email                       | password              | password_confirmation | password_changed |   
   | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | true             |
-
+  And the current rate is 10
+  
 Scenario: Get email
   Given I am on the sign in page
   When I follow "Forgot your password?"

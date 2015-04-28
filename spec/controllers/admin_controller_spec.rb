@@ -1,19 +1,18 @@
 require "rails_helper"
+require File.expand_path("../../users_helper", __FILE__)
+
+RSpec.configure do |c|
+  c.include UsersHelper
+end
 
 RSpec.describe AdminController do
 
   SUCCESS_CODE = 200
-  REDIRECT_CODE = 302
 
-  # mock a logged-in admin
   before :each do
-    @user = double(User)
-    allow(@user).to receive(:id).and_return(1)
-    allow(@user).to receive(:admin).and_return(true)
-    allow(@user).to receive(:password_changed?).and_return(true)
-    allow_message_expectations_on_nil # suppress warnings on devise warden
-    allow(request.env['warden']).to receive(:authenticate!).and_return(@user)
+    @user = mock_logged_in_admin()
     allow(controller).to receive(:current_user).and_return(@user)
+    Constant.create! :curr_rate => 10
   end
 
   # check_logged_in behavior tested in days_controller_spec
@@ -49,16 +48,13 @@ RSpec.describe AdminController do
       @user = User.create! :email => 'testuser@test.com',
                            :password => '?1234Abcedfg',
                            :password_confirmation => '?1234Abcedfg'
-      @cur_month = Month.create! :month => Date.today.strftime("%m"),
-                                 :year => Date.today.strftime("%Y"),
-                                 :user_id => @user.id
+      @cur_month = Month.create_month_model(@user.id, Date.today.strftime("%m"), Date.today.strftime("%Y"))
       Day.create! :date => Date.today - 1.day,
                   :approved => true,
                   :total_time => 60,
                   :reason => 'Reason',
                   :month_id => @cur_month.id
-      @prev_month = Month.create! :month => (Date.today - 1.month).strftime("%m"),
-                                  :year => Date.today.strftime("%Y")
+      @prev_month = Month.create_month_model(@user.id, (Date.today - 1.month).strftime("%m"), Date.today.strftime("%Y"))
     end
     it "generates a list of user-associated months for current month" do
       get :index
@@ -94,9 +90,7 @@ RSpec.describe AdminController do
   describe "admin#update_pending" do
     before :each do
       yesterday = Date.today.prev_day
-      @month = Month.create! :month => DateFormat.get_month(yesterday),
-                            :year => DateFormat.get_year(yesterday),
-                            :num_of_days => 0
+      @month = Month.create_month_model(@user.id, DateFormat.get_month(yesterday),  DateFormat.get_year(yesterday))
       @day1 = Day.create! :total_time => 60, :date => yesterday, :reason => "x",
                           :approved => false, :denied => false, :month_id => @month.id
       @day2 = Day.create! :total_time => 60, :date => yesterday, :reason => "x",
@@ -143,67 +137,18 @@ RSpec.describe AdminController do
     end
   end
 
-  describe "admin#audit" do
-    it "makes a call to generate a printable PDF document" do
-      expect(controller).to receive(:generate_pdf)
-      get :audit, :month => Date.today.month, :year => Date.today.year, :id => 1
-    end
-  end
-
-  describe "admin#accounting" do
-    context "when the user has not logged anything this month" do
-      before :each do
-        allow(Month).to receive(:get_month_model).and_return(nil)
-        allow(@user).to receive(:first_name).and_return("first")
-        allow(@user).to receive(:last_name).and_return("last")
-        allow(User).to receive(:find_by_id).and_return(@user)
-      end
-      it "redirects to the list view when the user hasn't logged anything" do
-        get :accounting, :month => Date.today.month, :year => Date.today.year, :id => 1
-        expect(response.status).to eq(REDIRECT_CODE)
-      end
-      it "does not generate a PDF" do
-        get :accounting, :month => Date.today.month, :year => Date.today.year, :id => 1
-        expect(controller).to receive(:generate_pdf).exactly(0).times
-      end
-    end
-    context "when users have logged activities this month" do
-      before :each do
-        allow(@user).to receive(:id).and_return(1)
-        allow(@user).to receive(:first_name).and_return("first")
-        allow(@user).to receive(:last_name).and_return("first")
-        allow(User).to receive(:find_by_id).and_return(@user)
-        @month = double(Month)
-        allow(@month).to receive(:user).and_return(@user)
-        allow(Month).to receive(:find_by_id).and_return(@month)
-        Month.any_instance.stub(:get_num_approved_days).and_return(2)
-      end
-      it "makes a call to generate a printable PDF document" do
-        expect(controller).to receive(:generate_pdf).exactly(1).times
-        get :accounting, :month => Date.today.month, :year => Date.today.year, :id => @user.id, :selected => ["1"]
-      end
-      it "does not generate a PDF when no employees are checked" do
-        expect(controller).to receive(:generate_pdf).exactly(0).times
-        get :accounting, :month => Date.today.month, :year => Date.today.year, :id => @user.id
-      end
-    end
-  end
-
   describe "admin#navigate_months" do
     before :each do
       @user = User.create! :email => 'testuser@test.com',
                            :password => '?1234Abcedfg',
                            :password_confirmation => '?1234Abcedfg'
-      @cur_month = Month.create! :month => Date.today.strftime("%m"),
-                                 :year => Date.today.strftime("%Y"),
-                                 :user_id => @user.id
+      @cur_month = Month.create_month_model(@user.id, Date.today.strftime("%m"), Date.today.strftime("%Y"))
       Day.create! :date => Date.today - 1.day,
                   :approved => true,
                   :total_time => 60,
                   :reason => 'Reason',
                   :month_id => @cur_month.id
-      @prev_month = Month.create! :month => (Date.today - 1.month).strftime("%m"),
-                                  :year => Date.today.strftime("%Y")
+      @prev_month = Month.create_month_model(@user.id, (Date.today - 1.month).strftime("%m"), Date.today.strftime("%Y"))
     end
     it "stores the month being viewed in the session hash" do
       get :index
@@ -226,23 +171,23 @@ RSpec.describe AdminController do
     end
   end
 
-  describe 'non-admin' do
-    before :each do
-      @request.env["devise.mapping"] = Devise.mappings[:user]
-      @user = User.create(:email=>'meow@meow.com', :password=>'?Meowmeowbeans169', :password_confirmation=>'?Meowmeowbeans169')
-      sign_in @user
-      allow(@user).to receive(:password_changed?).and_return(true)
-      allow(@user).to receive(:admin).and_return(false)
-      UsersController.any_instance.should_receive(:current_user).at_least(1).and_return @user
-      allow(request.env['warden']).to receive(:authenticate!).and_return(@user)
-    end
-    it "should not be able to delete a user" do
-      extend ErrorMessages
-      allow(@user).to receive(:admin).and_return(false)
-      post :destroy, {:id => 1}
-      expect(response).to redirect_to(today_path)
-      flash[:alert].should eql(deny_access(""))
-    end
-  end
+  # describe 'non-admin' do
+  #   before :each do
+  #     @request.env["devise.mapping"] = Devise.mappings[:user]
+  #     @user = User.create(:email=>'meow@meow.com', :password=>'?Meowmeowbeans169', :password_confirmation=>'?Meowmeowbeans169')
+  #     sign_in @user
+  #     allow(@user).to receive(:password_changed?).and_return(true)
+  #     allow(@user).to receive(:admin).and_return(false)
+  #     UsersController.any_instance.should_receive(:current_user).at_least(1).and_return @user
+  #     allow(request.env['warden']).to receive(:authenticate!).and_return(@user)
+  #   end
+  #   it "should not be able to delete a user" do
+  #     extend ErrorMessages
+  #     allow(@user).to receive(:admin).and_return(false)
+  #     post :destroy, {:id => 1}
+  #     expect(response).to redirect_to(today_path)
+  #     flash[:alert].should eql(deny_access(""))
+  #   end
+  # end
 
 end
