@@ -72,7 +72,9 @@ div.note {
 }
 
 /* navbar formatting */
-
+.logo {
+  height: 30px;
+}
 .navbar-inner {
   background-image: none;
   background-color: #cc0000;

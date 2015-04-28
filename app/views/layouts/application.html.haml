@@ -8,7 +8,7 @@
     = javascript_include_tag "application"
     = favicon_link_tag 'favicon.ico'
     = csrf_meta_tags
-    = nav_bar fixed: :left, brand: "<img src=\"#{image_path('eff.png')}\">".html_safe, responsive: true do
+    = nav_bar fixed: :left, brand: "<img class=\"logo\" src=\"#{image_path('eff.png')}\">".html_safe, responsive: true do
       - if user_signed_in?
         = menu_group do
           = menu_divider
