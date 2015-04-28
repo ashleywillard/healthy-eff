@@ -45,6 +45,26 @@ class AdminController < ApplicationController
     flash[:notice] = activities_action(action)
   end
 
+  def forms
+    case params[:commit]
+      when "Print Selected" then accounting()
+      when "Mark Received" then mark_form_received()
+      else redirect_to admin_list_path
+    end
+  end
+
+  def mark_form_received
+    @date = get_date()
+    params[:selected].each do |last_name, select|
+      month = Month.where(:year => get_year(@date), :month => get_month(@date),
+                          :user_id => User.find_by_last_name(last_name).id).first
+      month.received_form = true
+      month.save
+    end
+    flash[:notice] = RECEIVED_FORM
+    redirect_to admin_list_path
+  end
+
   def accounting
     redirect_to admin_list_path and return if params[:selected].nil?
     @date = get_date()
@@ -108,19 +128,21 @@ class AdminController < ApplicationController
 
   def navigate_months
     session[:months_ago] ||= 0
-    session[:months_ago] += 1 if params[:navigate] == "Previous"
-    session[:months_ago] -= 1 if params[:navigate] == "Next"
+    case params[:navigate]
+      when nil then session[:months_ago] = 0
+      when "Previous" then session[:months_ago] += 1
+      when "Next" then session[:months_ago] -= 1
+    end
   end
 
   def sort(hash)
     case session[:sort]
-      when nil
       when "first_name"
         hash = hash.sort_by {|k, v| k.first_name}
       when "last_name"
         hash = hash.sort_by {|k, v| k.last_name}
       when "days"
-        hash = hash.sort_by {|k, v| v.get_num_approved_days().to_i}.reverse
+        hash = hash.sort_by {|k, v| v.nil? ? 0 : v.get_num_approved_days().to_i}.reverse
     end
     return hash
   end

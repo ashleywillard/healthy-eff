@@ -83,9 +83,13 @@ div.note {
   color: #fff;
 }
 
+.navbar .nav > li {
+  padding-top: 4px;
+}
+
 .navbar, 
 .navbar .brand {
-  font-family: Helvetica;
+  font-family: "Roboto Condensed";
   text-shadow: none;
   color: #fff;
   font-size:18px;
