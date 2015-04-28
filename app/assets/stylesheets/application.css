@@ -198,6 +198,10 @@ a.admin_next {
   border-radius: 25px;
 }
 
+.rate_input {
+  width: 35px;
+}
+
 /* For Calendar Page */
 
 #head{

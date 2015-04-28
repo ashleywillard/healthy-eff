@@ -1,10 +1,12 @@
 %h1 Manage
 %div.manage_content.settings
-  / %h2 Settings
-  / = form_for(@constants, url: update_current_rate(), :html => {class: "form-inline"}) do |f|
-  /   = f.label :curr_rate, 'Reimbursement Rate (dollars/day): ', :class => 'rate_label'
-  /   = f.number_field :curr_rate, :value => @constant.curr_rate
-  /   = f.submit 'Submit', :class => "btn"
+  %h2 Settings
+  = form_for(@constant, url: admin_update_constants_path, :html => {class: "form-inline"}) do |f|
+    %p
+      = f.label :curr_rate, 'Reimbursement Rate: ', :class => 'rate_label'
+      = f.number_field :curr_rate, :value => @constant.curr_rate, :class => "rate_input"
+      dollars per day
+    = f.submit 'Update', :confirm => "Are you sure you want to update the reimbursement rate?", :class => "btn"
 %br
 %div.manage_content.employees
   %h2 Employees

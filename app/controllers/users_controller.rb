@@ -79,11 +79,13 @@ class UsersController < ApplicationController
       redirect_to today_path
     end
     @users = User.find(:all, :conditions => ["id != ?", current_user.id])
-    @constants = Constant.get_constants
+    @constant = Constant.get_constants
+    puts @constant.to_yaml
   end
 
-  def update_current_rate
+  def update_constants
     #do something
+    redirect_to manage_path
   end
 
   def destroy
