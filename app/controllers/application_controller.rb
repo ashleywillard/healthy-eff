@@ -19,4 +19,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  private
+  def check_admin
+    if not current_user.admin
+      ###### changed to deny_access method
+      flash[:alert] = deny_access get_current_page
+      redirect_to today_path
+    end
+  end
+
 end
