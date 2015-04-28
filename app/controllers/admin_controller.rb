@@ -58,6 +58,7 @@ class AdminController < ApplicationController
   end
 
   def mark_form_received
+    @date = get_date()
     params[:selected].each do |last_name, select|
       month = Month.where(:year => get_year(@date), :month => get_month(@date),
                           :user_id => User.find_by_last_name(last_name).id).first
