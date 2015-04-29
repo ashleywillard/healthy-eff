@@ -38,5 +38,12 @@ When(/^I fill in rate with "(.*?)"$/) do |rate|
 end
 
 Then (/^the current rate should be "(.*?)"$/) do |rate|
-  find_field("rate_input").value.should == rate
+  expect(find_field("rate_input").value).to have_content(rate)
 end
+
+And (/^I update the rate to be "(.*?)"$/) do |rate|
+  step "I visit the manage employee page"
+  step "I fill in rate with \"15\""
+  step "I press \“Update\”"
+  step "the current rate should be \"15\""
+end 

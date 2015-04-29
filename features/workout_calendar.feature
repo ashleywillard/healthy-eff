@@ -18,12 +18,14 @@ Scenario: Visiting my user calendar page
   When I follow Calendar
   Then I should be on my calendar page
   And I should see a calendar with my logged activities
+  And I should see "$10 earned this month"
   And I should not see the previous months logged activities
 
 @javascript
 Scenario: Viewing previous months
   When I click on the calendar's previous arrow
   Then I should see a calendar with my last months logged activities
+  And I should see "$10 earned this month"
 
 @javascript
 Scenario: Cannot click arrow to see future months on calendar

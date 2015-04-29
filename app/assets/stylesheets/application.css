@@ -116,6 +116,11 @@ div.note {
   background-color: #cc0000;
 }
 
+.badge {
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+}
+
 label {
   cursor: default;
 }

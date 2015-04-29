@@ -7,7 +7,7 @@ Given (/^the following users exist/) do |users_table|
   end
 end
 
-Given /^the current rate is 10/ do
+Given (/^the current rate is 10/) do
   Constant.create! :curr_rate => 10
 end
 
