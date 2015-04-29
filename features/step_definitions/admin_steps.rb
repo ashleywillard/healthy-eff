@@ -32,3 +32,11 @@ end
 And(/^I navigate to the previous month$/) do
   visit admin_list_path(:navigate => "Previous")
 end
+
+When(/^I fill in rate with "(.*?)"$/) do |rate|
+  fill_in 'rate_input', :with => rate
+end
+
+Then (/^the current rate should be "(.*?)"$/) do |rate|
+  find_field("rate_input").value.should == rate
+end

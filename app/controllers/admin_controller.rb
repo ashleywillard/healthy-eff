@@ -78,7 +78,7 @@ class AdminController < ApplicationController
 
   def update_constants
     rate = params[:constant][:curr_rate].to_i
-    unless rate == 0 || rate == Constant.get_work_rate 
+    unless rate <= 0 || rate == Constant.get_work_rate 
       Constant.set_work_rate(rate)
       Month.update_month_rates(rate)
       flash[:notice] = UPDATE_SUCCESSFUL

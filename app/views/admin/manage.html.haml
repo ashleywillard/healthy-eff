@@ -4,7 +4,7 @@
   = form_for(@constant, url: update_constants_path, :html => {class: "form-inline"}) do |f|
     %p
       = f.label :curr_rate, 'Reimbursement Rate: ', :class => 'rate_label'
-      = f.number_field :curr_rate, :value => @constant.curr_rate, :class => "rate_input"
+      = f.number_field :curr_rate, :value => @constant.curr_rate, :class => "rate_input", :id => 'rate_input'
       dollars per day
     = f.submit 'Update', :confirm => "Are you sure you want to update the reimbursement rate?", :class => "btn"
 %br

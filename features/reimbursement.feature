@@ -13,23 +13,24 @@ Background:
 # Happy path
 Scenario: Change rate for this month
    Given I visit the manage employee page
-   When I fill in "15"
-   And I click "Change rate"
-   Then I should see "Rate changed to 15"
-   And I go to "Admin home" page
-   And I should see "15"
+   When I fill in rate with "15"
+   And I press “Update”
+   Then I should be on the manage employee page
+   And I should see "Settings were successfully updated."
+   And the current rate should be "15"
 
 # Sad path
 Scenario: Add negative rate
    Given I visit the manage employee page
-   When I fill in "-999"
-   And I click "Change rate"
-   Then I should see "Invalid rate"
+   When I fill in rate with "-999"
+   And I press “Update”
+   Then I should be on the manage employee page
+   Then the current rate should be "10"
 
 Scenario: Blank rate
 	Given I visit the manage employee page
-	When I click "Change rate"
-	Then I should see "Rate can't be blank"
+	And I press “Update”
+	Then the current rate should be "10"
 
 
 
