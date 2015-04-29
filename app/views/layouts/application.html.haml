@@ -13,18 +13,18 @@
         = menu_group do
           = menu_divider
           - if current_user.admin
-            = menu_item "Admin", admin_list_path
+            = menu_item "<span class=\"glyphicon glyphicon-user\"></span> Admin".html_safe, admin_list_path
             = menu_divider
-            = menu_item "Manage", manage_path
+            = menu_item "<span class=\"glyphicon glyphicon-paperclip\"></span> Manage".html_safe, manage_path
             = menu_divider
             - if Day.num_pending > 0
-              = menu_item "<span class=\"glyphicon glyphicon-envelope\"></span><span class=\"badge\">#{Day.num_pending}</span>".html_safe, admin_pending_path, :class => "pending_link"
+              = menu_item "<span class=\"glyphicon glyphicon-envelope\"></span><span class=\"badge\">#{Day.num_pending}</span> Pending".html_safe, admin_pending_path, :class => "pending_link"
               = menu_divider
-          = menu_item "<span class=\"glyphicon glyphicon-calendar\"></span>".html_safe, calendar_path, :class => "calendar_link"
+          = menu_item "<span class=\"glyphicon glyphicon-calendar\"></span> Calendar".html_safe, calendar_path, :class => "calendar_link"
           = menu_divider
         = menu_group pull: :right do
           = menu_divider
-          = menu_item "<span class=\"glyphicon glyphicon-cog\"></span>".html_safe, edit_user_registration_path, :class => "settings_link"
+          = menu_item "<span class=\"glyphicon glyphicon-cog\"></span> Settings".html_safe, edit_user_registration_path, :class => "settings_link"
           = menu_divider
           = menu_item "Sign Out", destroy_user_session_path, :method => :delete
   %body
