@@ -12,7 +12,7 @@ Background:
   | email                      | password        | password_confirmation | password_changed |
   | healthypotato@gmail.com    | ?Hotpotato169   | ?Hotpotato169         | true             |
   And the current rate is 10
-  
+
 Scenario: Privileged access
   Given I am logged in as a non-admin
   Then I should not see the "Admin" link
@@ -32,7 +32,12 @@ Scenario: Admin list view - records
   And I am logged in as an admin
   When I follow "Admin"
   Then I should see a table of employee names
+  And I should see "First Name"
+  And I should see "Nick"
+  And I should see "Last Name"
+  And I should see "Herson"
   And I should see "Days of Healthy Activity"
+  And I should see "3"
   And I should see "Pending"
 
 Scenario: Admin list view - sorting
