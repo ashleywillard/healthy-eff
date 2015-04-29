@@ -2,6 +2,10 @@
   page-break-before: always;
 }
 
+.inlineTable {
+  display: inline-block;
+}
+
 .pure-table {
   border-collapse:collapse;
   border-spacing:0;
