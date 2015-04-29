@@ -40,3 +40,18 @@
 #money
   %p.money_caption="earned this month"
 #calendar
+
+%noscript
+  %p= @no_js_workouts
+  %table
+    %tr
+      %td Day
+      %td Activity
+      %td Duration
+      %td Status
+    - @no_js_workouts.each do |workout|
+      %tr
+        %td= workout[2] 
+        %td= workout[0]
+        %td= workout[1]
+        %td= workout[6]
