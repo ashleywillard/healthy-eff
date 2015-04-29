@@ -15,6 +15,8 @@ jQuery ->
     $('.remove_day').show();
     $('.remove_activity').show();
     $('.add_fields').show();
+    $(".activity.field").remove();
+    $(".activity_link.add_fields").click();
 
   try $('.datepicker').datepicker({
         datesDisabled: $('.datepicker').data().dateDatesDisabled.split(",")
