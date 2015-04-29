@@ -31,13 +31,6 @@
       })
 
   });
-  $('body').on('click', 'button.fc-prev-button', function() {
-    alert("hey there prev");
-  });
-
-  $('body').on('click', 'button.fc-next-button', function() {
-    alert("hey there next");
-  });
 
 %noscript
   %p.alert 
@@ -55,8 +48,9 @@
 
 %noscript
   %p
+    %br
     %font{:size => "5"} Current Month
-    
+
   %table#nojstable.table.table-striped
     %tr
       %td Day
