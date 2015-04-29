@@ -56,3 +56,11 @@ Scenario: Submit valid form with bad date
   And I press “Submit”
   Then I should be on the past day input page
   And I should see that the date is invalid
+
+Scenario: Allow submitting more activities for days with denied activities
+  Given My activity yesterday was denied
+  Then I fill in day and activity with:Yesterday,Running 100
+  And I fill in reason with: "On Vacation"
+  And I write the captcha text in the textbox
+  And I press “Submit”
+  Then I should be on my calendar page
