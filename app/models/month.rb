@@ -1,11 +1,19 @@
 class Month < ActiveRecord::Base
-  attr_accessible :month, :num_of_days, :printed_form, :received_form, :user_id, :year
+  attr_accessible :month, :num_of_days, :printed_form, :received_form, :user_id, :year, :work_rate
   has_many :days, :dependent => :destroy
   belongs_to :user
   accepts_nested_attributes_for :days, :allow_destroy => true
 
   def self.get_user_months(month, year)
     Month.where(:month => month, :year => year)
+  end
+
+  def self.update_month_rates(rate)
+    months = self.get_user_months(Date.today.strftime("%m").to_i, Date.today.strftime("%Y").to_i)
+    months.each do |month|
+      month.work_rate = rate
+      month.save!
+    end
   end
 
   def self.get_month_model(user_id, month, year)
@@ -16,11 +24,16 @@ class Month < ActiveRecord::Base
   def self.get_or_create_month_model(user_id, month, year)
     month_model = self.get_month_model(user_id, month, year)
     return month_model unless month_model == nil
+    return self.create_month_model(user_id, month, year)
+  end
+
+  def self.create_month_model(user_id, month, year)
     return self.create!({:user_id => user_id,
                    :month => month,
                    :year => year,
                    :printed_form => false,
                    :received_form => false,
+                   :work_rate => Constant.get_work_rate,
                    :num_of_days => 0})
   end
 
@@ -29,7 +42,7 @@ class Month < ActiveRecord::Base
     month2 = start_date.strftime("%m")
     previously_inputted = self.get_dates_list(user_id, month1, end_date.strftime("%Y"))
     previously_inputted += self.get_dates_list(user_id, month2, start_date.strftime("%Y")) unless month1 == month2
-    return previously_inputted
+    return previously_inputted.join(",")
   end
 
   def self.get_dates_list(user_id, month, year)

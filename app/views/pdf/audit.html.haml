@@ -12,6 +12,8 @@
     - @user_months.each do |month|
       %tr
         %td #{month.user.last_name}, #{month.user.first_name}
-        %td
+        %td{:style => "text-align:center"}
+          - if month.received_form
+            ✓
         %td #{month.get_num_approved_days()}
         %td #{month.get_num_approved_days * 10}

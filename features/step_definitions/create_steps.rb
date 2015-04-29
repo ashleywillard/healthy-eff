@@ -7,6 +7,10 @@ Given (/^the following users exist/) do |users_table|
   end
 end
 
+Given (/^the current rate is 10/) do
+  Constant.create! :curr_rate => 10
+end
+
 Given(/^"(.*?)" exists as a user$/) do |name|
   u = User.create! :email => "blah@blah.com",
                    :password => "?1Asdfjkl;asdfjkl;",
@@ -59,10 +63,10 @@ Given (/I have logged (.*) activities/) do |num|
                      :password_confirmation => "?1Asdfjkl;asdfjkl;"
     u.first_name = "John" ; u.last_name = "Doe" ; u.save
   end
-  m = Month.create! :user_id => u.id,
-                    :month => Time.now.month,
-                    :year => Time.now.year,
-                    :num_of_days => num
+  m = Month.create_month_model(u.id, Time.now.month, Time.now.year)
+  m.num_of_days = num.to_i
+  m.save!
+
   # num.to_i.times do
   for i in 0..num.to_i - 1
     Day.create! :date => Time.now - i.days,
@@ -79,8 +83,9 @@ Given (/^(.*) (?:pending|unapproved) (?:|activities|days) exist/) do |num|
   u = User.create! :email => "blah@blah.com",
                    :password => "?Ag0asdfasdf",
                    :password_confirmation => "?Ag0asdfasdf"
-  m = Month.create! :user_id => u.id,
-                    :num_of_days => 0
+  m = Month.create_month_model(u.id, Time.now.month, Time.now.year)
+  m.num_of_days = num.to_i
+  m.save!
   num.to_i.times do
     Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),
                 :approved => false,

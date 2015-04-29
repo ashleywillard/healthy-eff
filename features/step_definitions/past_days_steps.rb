@@ -3,8 +3,7 @@
 When /I fill in day and activity with:(.*)/ do |input|
   date_entries = input.split('|')
   if date_entries.count > 1
-    page.find('.remove_day').trigger('click')
-    (date_entries.count).times do
+    (date_entries.count - 1).times do
       page.find('.day_link').trigger('click')
     end
 

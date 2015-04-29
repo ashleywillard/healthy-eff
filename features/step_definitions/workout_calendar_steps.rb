@@ -1,45 +1,39 @@
 # encoding: UTF-8
 
-And /I set up the database with a few days/ do
+And (/^I set up the database with a few days$/) do
   today = Date.today
   date_last_month = today.ago(1.month).beginning_of_month
+  m = Month.create_month_model(2, today.month, today.year)
+  m.num_of_days = 1
+  m.save!
+  d = Day.create!({:date => today,
+              :approved => true,
+              :denied => false,
+              :total_time => 60,
+              :reason => 'A legit reason',
+              :month_id => m.id})
   Activity.create!({:duration => 25,
                  :name => 'running',
-                 :day_id => 1})
+                 :day_id => d.id})
   Activity.create!({:duration => 35,
                    :name => 'swimming',
-                   :day_id => 1})
-  Day.create!({:date => today,
+                   :day_id => d.id})
+
+  m2 = Month.create_month_model(2, date_last_month.month, date_last_month.year)
+  m2.num_of_days = 1
+  m2.save!
+  d2 = Day.create!({:date => Time.strptime(date_last_month.strftime("%m/%d/%Y"), "%m/%d/%Y"),
               :approved => true,
               :denied => false,
               :total_time => 60,
               :reason => 'A legit reason',
-              :month_id => 1})
-  Month.create!({:user_id => 2,
-              :month => today.month,
-              :year => today.year,
-              :num_of_days => 1,
-              :printed_form => true,
-              :received_form => false})
-
+              :month_id => m2.id})
   Activity.create!({:duration => 25,
                  :name => 'hiking',
-                 :day_id => 2})
+                 :day_id => d2.id})
   Activity.create!({:duration => 35,
                    :name => 'biking',
-                   :day_id => 2})
-  Day.create!({:date => Time.strptime(date_last_month.strftime("%m/%d/%Y"), "%m/%d/%Y"),
-              :approved => true,
-              :denied => false,
-              :total_time => 60,
-              :reason => 'A legit reason',
-              :month_id => 1})
-  Month.create!({:user_id => 2,
-              :month => date_last_month.month,
-              :year => date_last_month.year,
-              :num_of_days => 1,
-              :printed_form => true,
-              :received_form => false})
+                   :day_id => d2.id})
 end
 
 And /I should see a calendar with my logged activities/ do
@@ -86,4 +80,7 @@ Then /I should not be able to click prev/ do
   assert(page.body.include? "fc-button fc-button-prev fc-state-default fc-corner-left fc-corner-right fc-state-disabled")
 end
 
+And /I follow Calendar/ do
+  page.find('.calendar_link').trigger('click')
+end
 
