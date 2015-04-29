@@ -1,7 +1,10 @@
 require "rails_helper"
 
 RSpec.describe UsersController do
-
+  before :each do
+    Constant.create! :curr_rate => 10
+  end
+  
   describe "Calendar method" do
     before :each do
       user = double('user')

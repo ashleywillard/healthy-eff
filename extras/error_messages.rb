@@ -24,6 +24,8 @@ module ErrorMessages
 
   RECEIVED_FORM ||= "Forms marked as received."
 
+  UPDATE_SUCCESSFUL ||= "Settings were successfully updated."
+
   USER_DELETED ||= " has been deleted."
   def user_deleted(first_name, last_name)
     if (first_name == "")
