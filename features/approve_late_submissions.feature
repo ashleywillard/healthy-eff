@@ -11,7 +11,8 @@ Background:
   And the following users exist:
   | email                      | password        | password_confirmation | password_changed |
   | healthypotato@gmail.com    | ?Hotpotato169   | ?Hotpotato169         | true             |
-
+  And the current rate is 10
+  
 Scenario: Privileged access
   Given I am logged in as a non-admin
   Then I should not see "Pending"
@@ -30,8 +31,6 @@ Scenario: No pending activities
 Scenario: Pending activities
   Given 2 pending activities exist
   And I am logged in as an admin
-  And I follow "Admin Home"
-  Then I should see "2 Pending"
   When I visit the pending approval page
   Then I should be on the pending approval page
   And there should be 2 activities pending approval

@@ -1,5 +1,11 @@
 # encoding: UTF-8
 
+Then(/^"(.*)" should appear before "(.*)"$/) do |str1, str2|
+  if not /#{str1}.*#{str2}.*/m.match(page.body)
+    flunk str1 + " and " + str2 + " occur in the wrong order"
+  end
+end
+
 Then(/^I should see "(.*)"$/) do |msg|
   expect(page).to have_content(msg)
 end
@@ -34,4 +40,8 @@ end
 
 Then(/^I should not see "(.*")$/) do |msg|
   expect(page).to_not have_content(msg)
+end
+
+Then(/^I should be welcomed$/) do
+  expect(page).to have_content(welcome)
 end

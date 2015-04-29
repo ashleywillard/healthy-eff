@@ -23,6 +23,11 @@ When /I fill in activity with:(.*)/ do |entry_list|
   end
 end
 
+And /I leave duration blank/ do
+  duration_ids = page.body.scan(/id="day_activities_attributes_.{0,20}_duration/m)
+  fill_in duration_ids.first[4..-1],  :with => nil
+end
+
 When /I write the captcha text in the textbox/ do
   fill_in "captcha", :with => "abc"
   #activities_controller.any_instance.should_receive(:check_simple_captcha).and_return(true)

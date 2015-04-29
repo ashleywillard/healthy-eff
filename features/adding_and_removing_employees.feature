@@ -11,7 +11,8 @@ Background: users in database
   Given the following users exist:
   | email                       | password              | password_confirmation | last_name | password_changed |
   | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | Fox       | true             |
-
+  And the current rate is 10
+  
 Scenario: Going to add employee page
   Given I am logged in as an admin
   And I visit the manage employee page
@@ -29,7 +30,7 @@ Scenario: Adding an employee
 Scenario: Removing an employee
   Given I am logged in as an admin
   And I visit the manage employee page
-  And I press “Delete”
+  And I follow "Delete"
   Then I should be on the manage employee page
   And I should see that "" "Fox" has been deleted
 
