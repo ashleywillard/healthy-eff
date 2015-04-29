@@ -143,6 +143,7 @@ label {
 
 .title_today {
   font-size: 24px;
+  margin-bottom: 25px;
 }
 
 a.remove_activity {

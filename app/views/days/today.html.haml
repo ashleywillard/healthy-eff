@@ -3,7 +3,6 @@
   %div.today.field
     %span.glyphicon.glyphicon-calendar.title_today
     = f.label :date, "Today #{@date.strftime("%m/%d/%Y")}", :class => "title_today"
-    %br
     = f.hidden_field :date, value: @date
     = f.fields_for :activities do |builder|
       = render "activity_fields", :f => builder
