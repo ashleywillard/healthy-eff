@@ -6,12 +6,9 @@ class PdfController < ApplicationController
   def forms
     redirect_to admin_list_path and return if params[:selected].nil?
     case params[:commit]
-      when "Print Selected"
-        accounting()
-      when "Mark Received"
-        mark_form_received()
-      else
-        redirect_to admin_list_path
+      when "Print Selected" then accounting()
+      when "Mark Received" then mark_form_received()
+      else redirect_to admin_list_path
     end
   end
 
@@ -46,6 +43,7 @@ class PdfController < ApplicationController
     return html
   end
 
+  # add informative names for PDF
   def generate_forms(html)
     if params[:selected].length == 1
       pdf_name = "acct-#{@user.last_name}-#{get_month_name(@date)}-#{get_year(@date)}.pdf"
