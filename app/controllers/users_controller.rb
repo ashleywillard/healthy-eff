@@ -13,6 +13,7 @@ class UsersController < ApplicationController
     @workouts = get_all_workouts(@earliest_date, @date)
     @money = get_money_earned(@date.strftime("%m"), @date.strftime("%Y"))
     @no_js_workouts = get_all_workouts(@date.at_beginning_of_month.prev_month, @date)
+    #@no_js_workouts[2] = @no_js_workouts[2][0..10]
   end
 
   def extract_id_for_calendar
