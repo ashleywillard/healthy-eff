@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   end
 
   def extract_id_for_calendar
-    id = params[:id] != nil && User.find(params[:id]) != nil && current_user.admin ? params[:id] : current_user.id
+    id = params[:id] != nil && User.find_by_id(params[:id]) != nil && current_user.admin ? params[:id] : current_user.id
     return id
   end
 
