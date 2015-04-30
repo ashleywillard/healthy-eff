@@ -1,19 +1,57 @@
 -#  app/views/admin/audit.html.haml
-%h1 Healthy EFF Checklist: #{get_month_name(@date)} #{get_year(@date)}
+%h4 Healthy EFF Checklist: #{get_month_name(@date)} #{get_year(@date)}
 
-%table#audit_checklist.pure-table.pure-table-bordered
-  %thead
-    %tr
-      %th Employee Name
-      %th Received?
-      %th{:style => "text-align:center"} #
-      %th{:style => "text-align:center"} $
-  %tbody
-    - @user_months.each do |month|
+- for i in 0..@user_months.length / 69
+  %table.pure-table.pure-table-bordered.inlineTable.tableFont
+    %thead
       %tr
-        %td #{month.user.last_name}, #{month.user.first_name}
-        %td{:style => "text-align:center"}
-          - if month.received_form
-            ✓
-        %td #{month.get_num_approved_days}
-        %td #{month.get_num_approved_days * Constant.get_work_rate}
+        %th Employee Name
+        %th Received?
+        %th{:style => "text-align:center"} #
+        %th{:style => "text-align:center"} $
+    %tbody
+      - for j in i * 69..(i * 69) + 22 ; month = @user_months[j]
+        %tr
+          - if not month.nil?
+            %td #{month.user.last_name}, #{month.user.first_name}
+            %td{:style => "text-align:center"}
+              - if month.received_form
+                ✓
+            %td #{month.get_num_approved_days}
+            %td #{month.get_num_approved_days * Constant.get_work_rate}
+  - if i == 0 or (i > 0 and @user_months.length % 69 > 23)
+    %table.pure-table.pure-table-bordered.inlineTable.tableFont
+      %thead
+        %tr
+          %th Employee Name
+          %th Received?
+          %th{:style => "text-align:center"} #
+          %th{:style => "text-align:center"} $
+      %tbody
+        - for k in (i * 69) + 23..(i * 69) + 45 ; month = @user_months[k]
+          %tr
+            - if not month.nil?
+              %td #{month.user.last_name}, #{month.user.first_name}
+              %td{:style => "text-align:center"}
+                - if month.received_form
+                  ✓
+              %td #{month.get_num_approved_days}
+              %td #{month.get_num_approved_days * Constant.get_work_rate}
+  - if i == 0 or (i > 0 and @user_months.length % 69 > 46)
+    %table.pure-table.pure-table-bordered.inlineTable.tableFont
+      %thead
+        %tr
+          %th Employee Name
+          %th Received?
+          %th{:style => "text-align:center"} #
+          %th{:style => "text-align:center"} $
+      %tbody
+        - for n in (i * 69) + 46..(i * 69) + 68 ; month = @user_months[n]
+          %tr
+            - if not month.nil?
+              %td #{month.user.last_name}, #{month.user.first_name}
+              %td{:style => "text-align:center"}
+                - if month.received_form
+                  ✓
+              %td #{month.get_num_approved_days}
+              %td #{month.get_num_approved_days * Constant.get_work_rate}
