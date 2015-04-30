@@ -5,7 +5,7 @@ class DaysController < ApplicationController
 
   def today
     restful_redirect
-    @date = Date.today
+    @date = get_today
     @day = Day.create_day(@date, true, "")
     @day.activities.append(Activity.new())
     month = Month.get_month_model(current_user.id, get_month(@date), get_year(@date))
@@ -18,7 +18,7 @@ class DaysController < ApplicationController
     day = Day.new()
     @month.days.append(day)
     day.activities.append(Activity.new())
-    today = Date.today
+    today = get_today
     @end_date = today.prev_day
     @start_date = get_day(today) < 6 ? today.ago(1.month).beginning_of_month : today.beginning_of_month
     @previously_inputted = Month.get_inputted_dates(current_user.id, @start_date, @end_date)

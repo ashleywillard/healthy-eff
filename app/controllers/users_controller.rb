@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-
+  include DateFormat
   before_filter :check_logged_in, :force_password_change
 
   def calendar
@@ -7,11 +7,11 @@ class UsersController < ApplicationController
       redirect_to calendar_path
     end
     @name = set_name
-    @date = Date.today
+    @date = get_today
     earliest_month = Month.get_users_earliest_month(extract_id_for_calendar)
     @earliest_date = (earliest_month == nil) ? @date : Date.new(earliest_month.year,earliest_month.month, 1)
     @workouts = get_all_workouts(@earliest_date, @date)
-    @money = get_money_earned(@date.strftime("%m"), @date.strftime("%Y"))
+    @money = get_money_earned(get_month(@date), get_year(@date))
     @no_js_curr_workouts = get_all_workouts(@date, @date)
     @no_js_prev_workouts = get_all_workouts(@date.at_beginning_of_month.prev_month, @date.at_beginning_of_month.prev_month)
   end

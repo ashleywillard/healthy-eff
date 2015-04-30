@@ -1,4 +1,5 @@
 class Month < ActiveRecord::Base
+  include DateFormat
   attr_accessible :month, :num_of_days, :printed_form, :received_form, :user_id, :year, :work_rate
   has_many :days, :dependent => :destroy
   belongs_to :user
@@ -9,7 +10,7 @@ class Month < ActiveRecord::Base
   end
 
   def self.update_month_rates(rate)
-    months = self.get_user_months(Date.today.strftime("%m").to_i, Date.today.strftime("%Y").to_i)
+    months = self.get_user_months(get_month(get_today), get_year(get_today))
     months.each do |month|
       month.work_rate = rate
       month.save!
