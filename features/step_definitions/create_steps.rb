@@ -56,6 +56,7 @@ Given (/^the following activities exist:/) do |activities_table|
 end
 
 Given (/I have logged (.*) activities/) do |num|
+  today = Date.today 
   u = User.find_by_email("blah@blah.com")
   if u.nil?
     u = User.create! :email => "blah@blah.com",
@@ -63,13 +64,13 @@ Given (/I have logged (.*) activities/) do |num|
                      :password_confirmation => "?1Asdfjkl;asdfjkl;"
     u.first_name = "John" ; u.last_name = "Doe" ; u.save
   end
-  m = Month.create_month_model(u.id, Time.now.month, Time.now.year)
+  m = Month.create_month_model(u.id, today.month, today.year)
   m.num_of_days = num.to_i
   m.save!
 
   # num.to_i.times do
   for i in 0..num.to_i - 1
-    Day.create! :date => Time.now - i.days,
+    Day.create! :date => today - i.days,
                 :approved => true,
                 :denied => false,
                 :total_time => 60,
@@ -80,14 +81,15 @@ end
 
 Given (/^(.*) (?:pending|unapproved) (?:|activities|days) exist/) do |num|
   if num.casecmp("No") ; end
+  today = Date.today
   u = User.create! :email => "blah@blah.com",
                    :password => "?Ag0asdfasdf",
                    :password_confirmation => "?Ag0asdfasdf"
-  m = Month.create_month_model(u.id, Time.now.month, Time.now.year)
+  m = Month.create_month_model(u.id, today.month, today.year)
   m.num_of_days = num.to_i
   m.save!
-  num.to_i.times do
-    Day.create! :date => Time.strptime("04/01/2015", "%m/%d/%Y"),
+  for i in 1..num.to_i
+    Day.create! :date => today - i.days,
                 :approved => false,
                 :denied => false,
                 :total_time => 60,
