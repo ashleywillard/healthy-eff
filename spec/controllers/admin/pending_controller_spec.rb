@@ -14,6 +14,31 @@ RSpec.describe Admin::PendingController do
     Constant.create! :curr_rate => 10
   end
 
+  describe "admin/pending#index" do
+    SUCCESS_CODE = 200
+    context "when there are activities pending approval" do
+      before :each do
+        @day = Day.create :id => 1, :total_time => 60, :date => Date.today.prev_day,
+                          :approved => false, :denied => false
+        allow(Day).to receive(:where).and_return([@day])
+      end
+      it "renders a list of pending activities" do
+        get :index
+        expect(response.status).to eq(SUCCESS_CODE)
+      end
+    end
+    context "when there are no activities pending approval" do
+      it "redirects to the list view" do
+        get :index
+        expect(response).to redirect_to admin_list_path
+      end
+      it "displays a message notifying the admin of such" do
+        get :index
+        expect(flash[:notice]).to_not eq(nil)
+      end
+    end
+  end
+
   describe "admin/pending#update" do
     before :each do
       yesterday = Date.today.prev_day
