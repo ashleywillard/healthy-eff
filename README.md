@@ -11,6 +11,7 @@ Group 17: Alex Ho, Allan Tang, Ashley Willard, Corinne Schafle, Michelle Lin, Sa
 
 Ruby **1.9.3**
 Rails **3.2.16**
+paragraph
 
 ## Development
 [![Code Climate](https://codeclimate.com/github/ashleywillard/healthy-eff/badges/gpa.svg)](https://codeclimate.com/github/ashleywillard/healthy-eff)
