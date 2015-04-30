@@ -56,6 +56,10 @@ Group 17: Alex Ho, Allan Tang, Ashley Willard, Corinne Schafle, Michelle Lin, Sa
 ## Interactions
 
 #### User Interactions
+* Log In Screen Restrictions: Upon logging in for the first time, user is forced to change there password.
+* Log Healthy Activity Home Page Restrictions: Activity may be left blank, however it should reflect a healthy activity, time exersized must be greater than 60 minutes, you may only submit one form per day (although you may submit multiple exersizes on this form), User must fill out the captcha to submit.
+*Input Past Days Restrictions: User must select a day, however they can add multiple when javaScript is enabled, Activity may be blank, time must again be greater than 60 minutes per each day entered, user must provide a reason for adding days late. 
+*User Calendar Page Restrictions: User can view their calendar without javaScript, however this will only allow them to see the past two months.
 
 #### Administrator Interactions
  
