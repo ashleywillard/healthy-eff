@@ -11,12 +11,12 @@
 %div.manage_content.employees
   %h2 Employees
   = link_to "<span class=\"glyphicon glyphicon-plus-sign\"></span> New employee".html_safe, new_user_invitation_path, :class => "add_new_employee"
-  
+
   %table#movies.table.table-striped
     %thead
       %tr
-        %th Last Name
-        %th First Name
+        %th= link_to "Last Name", manage_path(:sort => "last_name")
+        %th= link_to "First Name", manage_path(:sort => "first_name")
         %th Email
         %th Change?
         %th Remove?

@@ -1,7 +1,9 @@
 class Admin::ManageController < Admin::AdminController
 
   def index
+    session[:sort] = params[:sort] if not params[:sort].nil?
     @users = User.find(:all, :conditions => ["id != ?", current_user.id])
+    @users = sort(@users)
     @constant = Constant.get_constants
   end
 
