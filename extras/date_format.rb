@@ -20,6 +20,6 @@ module DateFormat
   end
 
   def get_today
-    return Date.today
+    return Date.current
   end
 end
