@@ -8,8 +8,8 @@ Reporting system for employees to record healthy activities daily, so management
 Group 17: Alex Ho, Allan Tang, Ashley Willard, Corinne Schafle, Michelle Lin, Sarah Hernandez
 
 ##### Dependencies: 
-Ruby **1.9.3**
 
+Ruby **1.9.3**
 Rails **3.2.16**
 
 ## Development
