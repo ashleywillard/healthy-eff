@@ -70,7 +70,7 @@ And /I fill out date/ do
 end
 
 Given /My activity yesterday was denied/ do
-  yesterday = Date.yesterday
+  yesterday = Date.today.yesterday
   date_last_month = yesterday.ago(1.month).beginning_of_month
   m = Month.create_month_model(1, yesterday.month, yesterday.year)
   m.num_of_days = 1

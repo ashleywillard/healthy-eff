@@ -27,10 +27,15 @@
           else { jQuery('.fc-button-next').removeClass("fc-state-disabled"); }
 
         },
-        events: random,
+        events: random
       })
 
   });
+
+%noscript
+  %p.alert 
+    %span.glyphicon.glyphicon-info-sign 
+    Since JavaScript is disabled, this page only shows the current and previous month
 
 #head
   %p.calendar
@@ -40,3 +45,37 @@
 #money
   %p.money_caption="earned this month"
 #calendar
+
+%noscript
+  %p
+    %br
+    %font{:size => "5"} Current Month
+
+  %table#nojstable.table.table-striped
+    %tr
+      %td Day
+      %td Activity
+      %td Duration (minutes)
+      %td Status
+    - @no_js_curr_workouts.each do |workout|
+      %tr
+        %td= workout[2].strftime("%m/%d/%Y")
+        %td= workout[0]
+        %td= workout[1] 
+        %td= workout[6][8..-1]
+  
+  %p
+    %font{:size => "5"} Previous Month
+
+  %table#nojstable.table.table-striped
+    %tr
+      %td Day
+      %td Activity
+      %td Duration (minutes)
+      %td Status
+    - @no_js_prev_workouts.each do |workout|
+      %tr
+        %td= workout[2].strftime("%m/%d/%Y")
+        %td= workout[0]
+        %td= workout[1] 
+        %td= workout[6][8..-1]

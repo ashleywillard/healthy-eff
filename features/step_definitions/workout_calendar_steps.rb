@@ -55,6 +55,16 @@ And /I should see a calendar with my last months logged activities/ do
   page.should have_content("biking: 35")
  end
 
+And /I should see a table with workouts from the current month/ do
+  page.should have_content("running")
+  page.should have_content("swimming")
+end
+
+And /I should see a table with workouts from the previous month/ do
+  page.should have_content("hiking")
+  page.should have_content("biking")
+end
+
 When /^(?:|I )click on the calendar's (.*) arrow$/ do |link|
   case link
   when "next"
