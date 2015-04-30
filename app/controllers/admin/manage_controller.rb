@@ -1,9 +1,11 @@
 class Admin::ManageController < Admin::AdminController
 
   def index
-    session[:sort] = params[:sort] if not params[:sort].nil?
     @users = User.where("id != ?", current_user.id)
-    @users = @users.order(session[:sort]) if ActiveRecord::Base.connection.column_exists?(:users, session[:sort])
+    if not params[:sort].nil? and ActiveRecord::Base.connection.column_exists?(:users, params[:sort])
+      @users = @users.order(params[:sort])
+      session[:sort] = params[:sort]
+    end
     @constant = Constant.get_constants
   end
 

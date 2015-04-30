@@ -15,7 +15,7 @@ RSpec.describe Admin::PendingController do
   end
 
   describe "admin/pending#index" do
-    SUCCESS_CODE = 200
+    SUCCESS_CODE ||= 200
     context "when there are activities pending approval" do
       before :each do
         @day = Day.create :id => 1, :total_time => 60, :date => Date.today.prev_day,

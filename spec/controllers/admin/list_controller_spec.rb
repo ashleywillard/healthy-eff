@@ -14,7 +14,7 @@ RSpec.describe Admin::ListController do
   end
 
   describe "user.admin" do
-    SUCCESS_CODE = 200
+    SUCCESS_CODE ||= 200
     context "when admin" do
       it "allows access to the employee list page" do
         get :index
@@ -91,6 +91,9 @@ RSpec.describe Admin::ListController do
     it "updates the session hash" do
       get :index, :sort => "last_name"
       expect(session[:sort]).to_not eq(nil)
+    end
+    it "guards against bogus sorting params" do
+      expect { get :index, :sort => "blah" }.to_not raise_error
     end
   end
 

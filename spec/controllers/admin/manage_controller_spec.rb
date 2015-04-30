@@ -13,6 +13,18 @@ RSpec.describe Admin::ManageController do
     Constant.create! :curr_rate => 10
   end
 
+  describe 'admin/manage#index' do
+    context "when sorting params are invalid" do
+      it "does not throw errors" do
+        expect{ get :index, :sort => "bogus" }.to_not raise_error
+      end
+      it "does not update the session hash" do
+        get :index, :sort => "bogus"
+        expect(session[:sort]).to eq(nil)
+      end
+    end
+  end
+
   describe 'admin/manage#delete' do
     context 'when non-admin' do
       before :each do
