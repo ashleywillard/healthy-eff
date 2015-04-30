@@ -1,4 +1,6 @@
 # [Healthy EFF](https://healthy-eff-169.herokuapp.com)
+[![Code Climate](https://codeclimate.com/github/ashleywillard/healthy-eff/badges/gpa.svg)](https://codeclimate.com/github/ashleywillard/healthy-eff)
+[![Test Coverage](https://codeclimate.com/github/ashleywillard/healthy-eff/badges/coverage.svg)](https://codeclimate.com/github/ashleywillard/healthy-eff)
 CS169, in partnership with EFF.
 
 ## Overview
@@ -14,8 +16,6 @@ Rails **3.2.16**
 
 
 ## Development
-[![Code Climate](https://codeclimate.com/github/ashleywillard/healthy-eff/badges/gpa.svg)](https://codeclimate.com/github/ashleywillard/healthy-eff)
-[![Test Coverage](https://codeclimate.com/github/ashleywillard/healthy-eff/badges/coverage.svg)](https://codeclimate.com/github/ashleywillard/healthy-eff)
 
 ##### Tools
 * [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/1282358)
