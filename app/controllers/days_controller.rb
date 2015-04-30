@@ -25,7 +25,7 @@ class DaysController < ApplicationController
   end
 
   def restful_redirect
-    #RESTFUL redirecting
+    # RESTful redirecting
     if request.fullpath != '/today'
       flash.keep
       redirect_to today_path

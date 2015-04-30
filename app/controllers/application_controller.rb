@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  include SimpleCaptcha::ControllerHelpers
-  ###### include error messages module
-  include ErrorMessages
+  include ErrorMessages, SimpleCaptcha::ControllerHelpers
 
   private
   def check_logged_in
@@ -22,8 +20,7 @@ class ApplicationController < ActionController::Base
   private
   def check_admin
     if not current_user.admin
-      ###### changed to deny_access method
-      flash[:alert] = deny_access get_current_page
+      flash[:alert] = deny_access(get_current_page())
       redirect_to today_path
     end
   end

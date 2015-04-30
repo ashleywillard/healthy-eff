@@ -1,7 +1,7 @@
 -#  app/views/admin/audit.html.haml
 %h1 Healthy EFF Checklist: #{get_month_name(@date)} #{get_year(@date)}
 
-%table#audit_checklist.pure-table.pure-table-bordered.inlineTable
+%table#audit_checklist.pure-table.pure-table-bordered
   %thead
     %tr
       %th Employee Name
@@ -16,4 +16,4 @@
           - if month.received_form
             ✓
         %td #{month.get_num_approved_days()}
-        %td #{month.get_num_approved_days() * 10}
+        %td #{month.get_num_approved_days * 10}

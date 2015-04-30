@@ -11,13 +11,13 @@
     - for i in 1..(@num_days + 1) / 2
       %tr
         %td= i.to_s
-        - if @records.contains_approved_date?(Date.parse(i.to_s + "-" + @records.month.to_s + "-" + @records.year.to_s))
+        - if @records.contains_approved_date?(get_record_as_date(i))
           %td X
         - else
           %td _______
         - if i <= 15
           %td= (i + (@num_days + 1) / 2).to_s
-          - if @records.contains_approved_date?(Date.parse((i + (@num_days + 1) / 2).to_s + "-" + @records.month.to_s + "-" + @records.year.to_s))
+          - if @records.contains_approved_date?(get_record_as_date(i + (@num_days + 1) / 2))
             %td X
           - else
             %td _______
@@ -26,8 +26,8 @@
   %strong Total number of days:
   #{@user_days}
 %p
-  %strong Reimbursable amount (days x $10):
-  $#{@user_days * 10}
+  %strong Reimbursable amount (days x $#{Constant.get_work_rate}):
+  $#{@user_days * Constant.get_work_rate}
 
 %br
 %p I certify that I spent at least one hour engaged in reimbursable personal health-focused behavior on each of the above dates.

@@ -1,13 +1,11 @@
 require "rails_helper"
-require File.expand_path("../../users_helper", __FILE__)
+require File.expand_path("../../../users_helper", __FILE__)
 
 RSpec.configure do |c|
   c.include UsersHelper
 end
 
-RSpec.describe PdfController do
-
-  REDIRECT_CODE = 302
+RSpec.describe Admin::PdfController do
 
   before :each do
     @user = mock_logged_in_admin()
@@ -15,14 +13,14 @@ RSpec.describe PdfController do
     Constant.create! :curr_rate => 10
   end
 
-  describe "pdf#audit" do
+  describe "admin/pdf#audit" do
     it "makes a call to generate a printable PDF document" do
       expect(controller).to receive(:generate_pdf)
       get :audit, :month => Date.today.month, :year => Date.today.year, :id => 1
     end
   end
 
-  describe "pdf#accounting" do
+  describe "admin/pdf#accounting" do
     context "when the user has not logged anything this month" do
       before :each do
         allow(Month).to receive(:get_month_model).and_return(nil)
@@ -32,7 +30,7 @@ RSpec.describe PdfController do
       end
       it "redirects to the list view" do
         get :accounting, :month => Date.today.month, :year => Date.today.year, :id => 1
-        expect(response).to redirect_to :controller => :admin,
+        expect(response).to redirect_to :controller => 'admin/list',
                                         :action => :index
       end
       it "does not generate a PDF" do
@@ -62,7 +60,7 @@ RSpec.describe PdfController do
     end
   end
 
-  describe "pdf#mark_form_received" do
+  describe "admin/pdf#mark_form_received" do
     context "when users are checked" do
       it "updates the received_form? column of the Month table" do
         allow(@user).to receive(:last_name).and_return("last")
@@ -81,7 +79,7 @@ RSpec.describe PdfController do
       end
       it "redirects to the list view" do
         post :forms
-        expect(response).to redirect_to :controller => :admin,
+        expect(response).to redirect_to :controller => 'admin/list',
                                         :action => :index
       end
     end

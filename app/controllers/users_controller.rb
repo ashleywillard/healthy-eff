@@ -74,18 +74,4 @@ class UsersController < ApplicationController
     return "$" + (approved_cnt * amt_per_day).to_s
   end
 
-  def check_admin
-    if !current_user.admin?
-      flash[:alert] = deny_access get_current_page
-      redirect_to today_path
-    end
-  end
-
-  private
-  def check_logged_in
-    if not user_signed_in?
-      redirect_to new_user_session_path
-    end
-  end
-  
 end

@@ -8,9 +8,7 @@ Healthyeff::Application.routes.draw do
   # Added :controllers => { :invitations => 'invitations' } for devise invitable
   devise_for :users, :skip => [:registrations], :controllers => {:invitations => 'invitations'}
   as :user do
-#     get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
     get 'users/edit' => 'registrations#edit', :as => 'edit_user_registration'
-#     put 'users/edit' => 'devise/registrations#update', :as => 'user_registration'
     put 'users/edit' => 'registrations#update', :as => 'user_registration'
   end
 
@@ -18,12 +16,12 @@ Healthyeff::Application.routes.draw do
   #change home#index to whatever need be -allan
   root to: 'days#today'
 
-  #Managing employees
-  match 'admin/manage' => 'admin#manage', :as => :manage
-  delete 'manage/:id', to: 'admin#destroy', :as => :delete
-  get 'manage/edit/:id', to: 'admin#edit', :as => :edit
-  post 'manage/edit/:id', to: 'admin#update', :as => :update
-  match 'manage/update_constants' => 'admin#update_constants', :as => :update_constants
+#   #Managing employees
+#   match 'admin/manage' => 'admin#manage', :as => :manage
+#   delete 'manage/:id', to: 'admin#destroy', :as => :delete
+#   get 'manage/edit/:id', to: 'admin#edit', :as => :edit
+#   post 'manage/edit/:id', to: 'admin#update', :as => :update
+#   match 'manage/update_constants' => 'admin#update_constants', :as => :update_constants
 
   #route for single activity -ashley
   match 'today' => 'days#today', :as => :today
@@ -32,15 +30,36 @@ Healthyeff::Application.routes.draw do
   match 'add_days' => 'days#add_days', :as => :add_days
   match 'calendar' => 'users#calendar', :as => :calendar
 
-  # routing for admin views
-  get 'admin' => 'admin#index', :as => :admin_list
-  get 'admin/pending' => 'admin#pending', :as => :admin_pending
-  put 'admin/update_pending' => 'admin#update_pending', :as => :admin_update_pending
 
-  # pdf
-  get 'admin/:year/:month/accounting' => 'pdf#accounting', :as => :admin_accounting
-  get 'admin/:year/:month/audit' => 'pdf#audit', :as => :admin_audit
-  post 'admin_forms' => 'pdf#forms', :as => :admin_forms
+  namespace :admin do
+    # list of records
+    get '' => 'list#index', :as => :list
+
+    # activities pending approval
+    get 'pending' => 'pending#index', :as => :pending
+    put 'update_pending' => 'pending#update', :as => :update_pending
+
+    # audit/accounting forms
+    get 'accounting/:year/:month' => 'pdf#accounting', :as => :accounting
+    get 'audit/:year/:month' => 'pdf#audit', :as => :audit
+    post 'forms' => 'pdf#forms', :as => :forms
+  end
+
+  match 'admin/manage' => 'admin/manage#index', :as => :manage
+  delete 'manage/:id', to: 'admin/manage#destroy', :as => :delete
+  get 'manage/edit/:id', to: 'admin/manage#edit', :as => :edit
+  post 'manage/edit/:id', to: 'admin/manage#update', :as => :update
+  match 'manage/update_constants' => 'admin/manage#update_constants', :as => :update_constants
+
+# routing for admin views
+#   get 'admin' => 'admin#index', :as => :admin_list
+#   get 'admin/pending' => 'admin#pending', :as => :admin_pending
+#   put 'admin/update_pending' => 'admin#update_pending', :as => :admin_update_pending
+#
+# pdf
+#   get 'admin/:year/:month/accounting' => 'pdf#accounting', :as => :admin_accounting
+#   get 'admin/:year/:month/audit' => 'pdf#audit', :as => :admin_audit
+#   post 'admin_forms' => 'pdf#forms', :as => :admin_forms
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

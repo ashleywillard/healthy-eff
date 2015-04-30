@@ -16,4 +16,9 @@ module AdminHelper
       end
     end
   end
+
+  def get_record_as_date(day_num)
+    Date.parse(day_num.to_s + "-" + @records.month.to_s + "-" + @records.year.to_s)
+  end
+
 end
