@@ -13,13 +13,11 @@
 - else
   %div{:style => "float: left; width: auto; display: inline-block;"}
     = button_to "Print Audit Sheet", admin_audit_path(:year => get_year(@date), :month => get_month(@date)), :method => :get, :class => "btn"
-  %div{:style => "float: right; width: auto; display: inline-block;"}
-    = link_to "Bottom", "#bottom"
 
   %table#employee_list.table.table-striped
     %thead
       %tr
-        %th{:style => "text-align:center; padding-left:20px; padding-right:20px"}
+        %th{:style => "text-align:center; padding-left:25px; padding-right:25px"}
           %input#selectAll{:type => "checkbox", :value => "selectAll"}
         %th
           = link_to "First Name", admin_list_path(:sort => "first_name")
@@ -55,11 +53,6 @@
           %td{:style => "text-align:center"}
             - if not month.nil? and month.received_form
               ✓
-
-  = submit_tag 'Print Selected', :class => "btn"
-  = submit_tag 'Mark Received', :class => "btn"
-
-  %div{:style => "float: right; width: auto; display: inline-block;"}
-    = link_to "Top", "#top"
-
-%div#bottom
+    %div{:style => "float: right; width: auto; display: inline-block;"}
+      = submit_tag 'Print Selected', :class => "btn"
+      = submit_tag 'Mark Received', :class => "btn"
