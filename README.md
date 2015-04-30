@@ -31,17 +31,31 @@ Group 17: Alex Ho, Allan Tang, Ashley Willard, Corinne Schafle, Michelle Lin, Sa
 ##### Iteration 1
 * Section Meeting: Thursday, 3/5/15
 * First deployment + 2 user stories: Wednesday, 3/11/15
+* Features: User Sign-in and allow users to change password, logging current and past healthy activities
 
 ##### Iteration 2
 * Section Meeting: Thursday, 3/17/15
+* Features: Calendar View, Admin workout approval (actually, all admin views), User security (recover password)
+
 
 ##### Iteration 3
 * Section Meeting: Thursday, 4/9/15
+* Features: PDF generation, UX and UI design, Enable users to both log current day and past days when javaScript is not enabled
 
 ##### Iteration 4
 * Section Meeting: Thursday, 4/23/15
 * Section Presentation: Thursday, 4/30/15
+* Features: Javascript-less, GitHub Documentation, Admin management, App security
+
 
 ##### Wrap-Up
 * Poster/Demo Fair: Monday, 5/4/15
 * Screencasts & Exit Interview: Wednesday, 5/6/15 @ 11:59 PM
+
+
+## Interactions
+
+#### User Interactions
+
+#### Administrator Interactions
+ 
