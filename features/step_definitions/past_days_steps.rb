@@ -69,6 +69,25 @@ And /I fill out date/ do
   fill_in date_ids[0][4..-1], :with => Date.today.prev_day.strftime("%m/%d/%Y")
 end
 
+Given /My activity yesterday was denied/ do
+  yesterday = Date.yesterday
+  date_last_month = yesterday.ago(1.month).beginning_of_month
+  m = Month.create_month_model(1, yesterday.month, yesterday.year)
+  m.num_of_days = 1
+  m.save!
+  d = Day.create!({:date => yesterday,
+              :approved => false,
+              :denied => true,
+              :total_time => 60,
+              :reason => 'I forgot',
+              :month_id => m.id})
+  Activity.create!({:duration => 25,
+                 :name => 'running',
+                 :day_id => d.id})
+  Activity.create!({:duration => 35,
+                   :name => 'swimming',
+                   :day_id => d.id})
+end
 # And /I should see a confirmation message for past days/ do
 #     assert page.has_content?("approve")
 # end

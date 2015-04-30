@@ -50,7 +50,7 @@ class Month < ActiveRecord::Base
     month_model = self.get_month_model(user_id, month, year)
     return dates if month_model == nil
     month_model.days.each do |day|
-      dates += [day.date.strftime("%m/%d/%Y")]
+      dates += [day.date.strftime("%m/%d/%Y")] unless day.denied == true
     end
     return dates
   end
@@ -77,7 +77,7 @@ class Month < ActiveRecord::Base
 
   def contains_date?(date)
   	self.days.each do |day|
-    	return true if day.date.strftime("%m/%d/%Y") == date.strftime("%m/%d/%Y")
+    	return true if day.date.strftime("%m/%d/%Y") == date.strftime("%m/%d/%Y") && day.denied == false
     end
     return false
   end

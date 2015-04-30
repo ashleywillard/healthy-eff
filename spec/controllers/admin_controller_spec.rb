@@ -171,23 +171,17 @@ RSpec.describe AdminController do
     end
   end
 
-  # describe 'non-admin' do
-  #   before :each do
-  #     @request.env["devise.mapping"] = Devise.mappings[:user]
-  #     @user = User.create(:email=>'meow@meow.com', :password=>'?Meowmeowbeans169', :password_confirmation=>'?Meowmeowbeans169')
-  #     sign_in @user
-  #     allow(@user).to receive(:password_changed?).and_return(true)
-  #     allow(@user).to receive(:admin).and_return(false)
-  #     UsersController.any_instance.should_receive(:current_user).at_least(1).and_return @user
-  #     allow(request.env['warden']).to receive(:authenticate!).and_return(@user)
-  #   end
-  #   it "should not be able to delete a user" do
-  #     extend ErrorMessages
-  #     allow(@user).to receive(:admin).and_return(false)
-  #     post :destroy, {:id => 1}
-  #     expect(response).to redirect_to(today_path)
-  #     flash[:alert].should eql(deny_access(""))
-  #   end
-  # end
+  describe 'non-admin' do
+    before :each do
+      allow(@user).to receive(:admin).and_return(false)
+      User.create(:email=>'meow@meow.com', :password=>'?Meowmeowbeans169', :password_confirmation=>'?Meowmeowbeans169')
+    end
+    it "should not be able to delete a user" do
+      extend ErrorMessages
+      post :destroy, {:id => 2}
+      expect(response).to redirect_to(today_path)
+      flash[:alert].should eql(deny_access(""))
+    end
+  end
 
 end
