@@ -8,8 +8,9 @@ Reporting system for employees to record healthy activities daily, so management
 Group 17: Alex Ho, Allan Tang, Ashley Willard, Corinne Schafle, Michelle Lin, Sarah Hernandez
 
 ##### Dependencies: 
-Ruby-1.9.3
-Rails 3.2.16
+Ruby **1.9.3**
+
+Rails **3.2.16**
 
 ## Development
 [![Code Climate](https://codeclimate.com/github/ashleywillard/healthy-eff/badges/gpa.svg)](https://codeclimate.com/github/ashleywillard/healthy-eff)
@@ -59,13 +60,13 @@ Rails 3.2.16
 
 ## Interactions
 
-#### User Restrictions
+##### User Restrictions
 * Log In Screen Restrictions: Password must fufill password requirements, user's password must contain one upper case letter, one lower case letter, a special character, a number, and has to be at least eight characters long. 
 * Log Healthy Activity Home Page Restrictions: Activity may be left blank, however it should reflect a healthy activity, time exersized must be greater than 60 minutes, you may only submit one form per day (although you may submit multiple exersizes on this form), User must fill out the captcha to submit.
 * Input Past Days Restrictions: User must select a day, however they can add multiple when javaScript is enabled, Activity may be blank, time must again be greater than 60 minutes per each day entered, user must provide a reason for adding days late. 
 * User Calendar Page Restrictions: User can view their calendar without javaScript, however this will only allow them to see the past two months.
 *General User restrictions: User cannot access the admin page or the manage page.
 
-#### Administrator Restrictions
+##### Administrator Restrictions
 * Admin Page Restrictions: Only employees who have submitted a healthy activity in the month selected will be available to select via checkbox, 
 * Manage Page Restrictions: Admin can only change the reimbursement rate by four numbers in length (not counting a period, so 1111 and 11.11 are both valid. 11111 is not). Admins cannot delete themselves, although other admins can delete other admins. 
