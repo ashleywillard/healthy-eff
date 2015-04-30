@@ -3,27 +3,16 @@ class Admin::AdminController < ApplicationController
 
   before_filter :check_logged_in, :check_admin, :force_password_change
 
-  def sort(h)
+  def sort(hash)
     case session[:sort]
       when "first_name"
-        if h.is_a?(Hash)
-          h = h.sort_by { |k, v| k.first_name.to_s }
-        else
-          h.sort_by! { |u| u.first_name.to_s }
-        end
+        hash = hash.sort_by {|k, v| k.first_name.to_s}
       when "last_name"
-        if h.is_a?(Hash)
-          h = h.sort_by {|k, v| k.last_name.to_s}
-        else
-          h.sort_by! { |u| u.last_name.to_s }
-        end
+        hash = hash.sort_by {|k, v| k.last_name.to_s}
       when "days"
-        if h.is_a?(Hash)
-          # sort by number of approved days, descending
-          h = h.sort_by { |k, v| v.nil? ? 0 : v.get_num_approved_days().to_i }.reverse
-        end
+        hash = hash.sort_by {|k, v| v.nil? ? 0 : v.get_num_approved_days().to_i}.reverse
     end
-    return h
+    return hash
   end
 
   def get_date
