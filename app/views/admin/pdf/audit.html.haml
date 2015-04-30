@@ -15,5 +15,5 @@
         %td{:style => "text-align:center"}
           - if month.received_form
             ✓
-        %td #{month.get_num_approved_days()}
-        %td #{month.get_num_approved_days * 10}
+        %td #{month.get_num_approved_days}
+        %td #{month.get_num_approved_days * Constant.get_work_rate}
