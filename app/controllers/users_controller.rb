@@ -12,6 +12,8 @@ class UsersController < ApplicationController
     @earliest_date = (earliest_month == nil) ? @date : Date.new(earliest_month.year,earliest_month.month, 1)
     @workouts = get_all_workouts(@earliest_date, @date)
     @money = get_money_earned(@date.strftime("%m"), @date.strftime("%Y"))
+    @no_js_curr_workouts = get_all_workouts(@date, @date)
+    @no_js_prev_workouts = get_all_workouts(@date.at_beginning_of_month.prev_month, @date.at_beginning_of_month.prev_month)
   end
 
   def extract_id_for_calendar

@@ -11,13 +11,13 @@ Background: users in database
   | email                       | password              | password_confirmation | last_name | password_changed |
   | healthypotato@gmail.com     | ?Hotpotato169         | ?Hotpotato169         | Fox       | true             |
   And the current rate is 10
+  And I set up the database with a few days
   
 Scenario: Still see calendar without javascript
    Given I am logged in as a non-admin
    When I visit my calendar page
-   Then this is still not yet implemented
-   Then I should see "Fox"
-   And I should see the weeks
+   Then I should see a table with workouts from the current month
+   And I should see a table with workouts from the previous month
 
 Scenario: Still can sort employees
    Given I am logged in as an admin
