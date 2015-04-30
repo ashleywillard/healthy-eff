@@ -1,7 +1,8 @@
 # encoding: UTF-8
+include DateFormat
 
 And (/^I set up the database with a few days$/) do
-  today = Date.today
+  today = get_today
   date_last_month = today.ago(1.month).beginning_of_month
   m = Month.create_month_model(2, today.month, today.year)
   m.num_of_days = 1
@@ -37,8 +38,8 @@ And (/^I set up the database with a few days$/) do
 end
 
 And /I should see a calendar with my logged activities/ do
-  today = Date.today
-  while (!page.has_content?("#{today.strftime("%B")} #{today.year}"))
+  today = get_today
+  while (!page.has_content?("#{get_month_name(today)} #{today.year}"))
     page.execute_script("$('#calendar').fullCalendar('prev')")
   end
   page.should have_content("running: 25")
