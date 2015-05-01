@@ -42,8 +42,7 @@ Scenario: Update rate and check that calendar reflects the change
   And I visit my calendar page
   Then I should see "$15 earned this month"
   When I click on the calendar's previous arrow
-  Then this is still not yet implemented
-  Then I should see "$10 earned this month"
+  Then I should see amount change to "$10 earned this month"
 
 
 

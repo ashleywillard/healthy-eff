@@ -74,6 +74,10 @@ When /^(?:|I )click on the calendar's (.*) arrow$/ do |link|
   end
 end
 
+Then /I should see amount change to "(.*)"$/ do |amt|
+  page.should have_content(amt)
+end
+
 Then /I should be able to click next/ do
   assert(!(page.body.include? "fc-button fc-button-next fc-state-default fc-corner-left fc-corner-right fc-state-disabled"))
 end
