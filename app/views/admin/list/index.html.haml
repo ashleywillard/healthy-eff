@@ -9,6 +9,8 @@
   No records yet for #{get_month_name(@date)} #{get_year(@date)}.
 - elsif beyond_earliest_records?
   No records from #{get_month_name(@date)} #{get_year(@date)}.
+- elsif no_records?
+  No records yet for this month.
 
 - else
   %div{:style => "float: right; width: auto; display: inline-block;"}

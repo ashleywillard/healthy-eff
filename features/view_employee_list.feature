@@ -58,3 +58,24 @@ Scenario: Admin list view - sorting
 
   When I follow "Days of Healthy Activity"
   Then "Armando" should appear before "John"
+
+@timecop
+Scenario: Admin list view - viewing and sorting previous months
+  Given I travel to 04-20-2015
+  And Armando Fox has logged 3 activities
+  And John Doe has logged 2 activities
+  And the date is 05-01-2015
+  And I am logged in as an admin
+
+  When I visit the admin list view
+  Then I should see "May 2015"
+  And I navigate to the previous month
+  Then I should see "April 2015"
+
+  When I follow "First Name"
+  Then I should see "April 2015"
+  And "Armando" should appear before "John"
+
+  When I follow "Last Name"
+  Then I should see "April 2015"
+  And "Doe" should appear before "Fox"
