@@ -1,5 +1,7 @@
--#  app/views/admin/index.html.haml
+-#  app/views/admin/list/index.html.haml
 = javascript_include_tag "admin/selectAll"
+
+%div#top
 
 %h1 #{link_to "<span class=\"glyphicon glyphicon-circle-arrow-left\"></span>".html_safe, admin_list_path(:navigate => "Previous"), :class => "admin_previous"} #{get_month_name(@date)} #{get_year(@date)} #{link_to "<span class=\"glyphicon glyphicon-circle-arrow-right\"></span>".html_safe, admin_list_path(:navigate => "Next"), :class => "admin_next"}
 
@@ -9,12 +11,13 @@
   No records from #{get_month_name(@date)} #{get_year(@date)}.
 
 - else
-  %p= button_to "Print Audit Sheet", admin_audit_path(:year => get_year(@date), :month => get_month(@date)), :method => :get, :class => "btn"
+  %div{:style => "float: right; width: auto; display: inline-block;"}
+    = button_to "Print Audit Sheet", admin_audit_path(:year => get_year(@date), :month => get_month(@date)), :method => :get, :class => "btn"
 
   %table#employee_list.table.table-striped
     %thead
       %tr
-        %th{:style => "text-align:center; padding-left:20px; padding-right:20px"}
+        %th{:style => "text-align:center; padding-left:25px; padding-right:25px"}
           %input#selectAll{:type => "checkbox", :value => "selectAll"}
         %th
           = link_to "First Name", admin_list_path(:sort => "first_name")
@@ -50,5 +53,6 @@
           %td{:style => "text-align:center"}
             - if not month.nil? and month.received_form
               ✓
-  = submit_tag 'Print Selected', :class => "btn"
-  = submit_tag 'Mark Received', :class => "btn"
+    %div{:style => "float: left; width: auto; display: inline-block;"}
+      = submit_tag 'Print Selected', :class => "btn"
+      = submit_tag 'Mark Received', :class => "btn"

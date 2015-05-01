@@ -1,4 +1,12 @@
+-#  app/views/admin/manage/index.html.haml
+
+%div#top
+
+%div{:style => "float: right; width: auto; display: inline-block;"}
+  = link_to "Bottom", "#bottom"
+
 %h1 Manage
+
 %div.manage_content.settings
   %h2 Settings
   = form_for(@constant, url: update_constants_path, :html => {class: "form-inline"}) do |f|
@@ -33,3 +41,9 @@
             %td= link_to "<span class =\"glyphicon glyphicon-plus\"></span>".html_safe, make_admin_path(user), :confirm => "Are you sure you want to make employee #{user.first_name} #{user.last_name} an admin?", :id => 'Make Admin', :method => :post  
           %td= link_to "<span class =\"glyphicon glyphicon-pencil\"></span>".html_safe, edit_path(user), :id => 'Edit'
           %td= link_to "<span class =\"glyphicon glyphicon-trash\"></span>".html_safe, delete_path(user), :method => :delete, :confirm => "Are you sure you want to delete employee #{user.first_name} #{user.last_name}?", :id => 'Delete'
+
+%p
+  %div{:style => "float: right; width: auto; display: inline-block;"}
+    = link_to "Top", "#top"
+
+%div#bottom

@@ -53,3 +53,7 @@ end
 When /^(?:|I )follow "([^"]*)"$/ do |link|
   click_link(link)
 end
+
+And /I save and open page/ do
+  save_and_open_page
+end

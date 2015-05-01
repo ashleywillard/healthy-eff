@@ -18,4 +18,8 @@ module DateFormat
   def get_day(date)
     return date.strftime("%d").to_i
   end
+
+  def get_today
+    return Date.today
+  end
 end
