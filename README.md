@@ -118,8 +118,13 @@ Check out [Heroku](https://www.heroku.com/) for easy deployment!
   * Only employees who have submitted a healthy activity in the month selected will be available to select via checkbox
 * To view a specific employee's calendar, click the calendar image in the row that corresponds to that employees name
 
-##### Manage Page Restrictions: Admin can only change the reimbursement rate by four numbers in length (not counting a period, so 1111 and 11.11 are both valid. 11111 is not). Admins cannot delete themselves, although other admins can delete other admins. 
+##### Manage Page: 
+* From this page, admin can edit employee information, such as adding new employees, editing current employee information, and deleting employees
+* While Admin can change the reimbursement rate, it is limited to four numbers in length (not counting a period, so 1111 and 11.11 are both valid. 11111 is not). 
+* Admins cannot delete themselves, although other admins can delete other admins. 
 
+##### Pending Page:
+* On the pending page Admin can approve or deny employees' past day inputs. Admin will be presented with the date the employee wants to add as well as the reason for inputing the day late.  
 
 ##License
 
