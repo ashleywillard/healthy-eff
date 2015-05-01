@@ -18,7 +18,7 @@ Scenario: Sad path; no users selected
    Then I should be on the admin list view
    And I should not see "✓"
 
-@javascript
+@javascript @timecop
 Scenario: Happy path; users selected
    Given I am logged in as an admin
    When I visit the admin home page

@@ -12,7 +12,6 @@ Background:
   | email                      | password        | password_confirmation | password_changed |
   | healthypotato@gmail.com    | ?Hotpotato169   | ?Hotpotato169         | true             |
   And the current rate is 10
-  And the date is 04-15-2015
 
 Scenario: Privileged access
   Given I am logged in as a non-admin
@@ -28,7 +27,9 @@ Scenario: Admin list view - no records
   And I navigate to the next month
   Then I should see "No records"
 
+@timecop
 Scenario: Admin list view - records
+  Given the date is 04-15-2015
   And Nick Herson has logged 3 activities
   And I am logged in as an admin
   When I follow "Admin"
@@ -41,8 +42,10 @@ Scenario: Admin list view - records
   And I should see "3"
   And I should see "Pending"
 
+@timecop
 Scenario: Admin list view - sorting
-  Given John Doe has logged 2 activities
+  Given the date is 04-15-2015
+  And John Doe has logged 2 activities
   And Armando Fox has logged 3 activities
   And I am logged in as an admin
 
