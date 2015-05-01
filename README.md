@@ -82,6 +82,7 @@ Check out [Heroku](https://www.heroku.com/) for easy deployment!
   * If javaScript is not enabled, you will only be able to add a single activity per page 
   * If javaScript is enabled: click Add Activity in order to add another exersize 
 * All input for exersize must be recorded in minutes
+* Activity may be left blank, but time must be filled in to submit
 * In order to submit, User must fill in captcha
 
 ![Diagram](http://i.imgur.com/FJvH28c.png)
@@ -91,6 +92,12 @@ Check out [Heroku](https://www.heroku.com/) for easy deployment!
 * For each day you want to add, click the date input box, if javaScript is enabled, an datepicker will appear, select what day you wish to add, otherwise type in the specific date.
 * Proceed to add activites in the same manner as inputing today's activities
 * If javaScript is not enabled, User will not be able to add multiple days on one form
+
+##### User Calendar Page:
+* After inputing either today or past day's healthy activity, User will be brought to the Calendar page
+  * User will see a standard calendar, for every day they worked out, they will see what they did and how long, as well as the status of that activity: either 'Approved', 'Rejected', or 'Pending'
+* If javaScript is not enabled User can still view their calendar, however this will only allow them to see the past two months. 
+* With javaScript enabled, User can navigate the calendar to see all months that they have submitted healty activities for
 
 ##### User Restrictions
 
