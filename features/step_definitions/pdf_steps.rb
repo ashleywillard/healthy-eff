@@ -81,7 +81,6 @@ Given (/^(.*) has logged (\d+) (?:activity|activities)/) do |name, num|
                      :password_confirmation => "?1Asdfjkl;asdfjkl;",
                      :first_name => full_name[0],
                      :last_name => full_name[1]
-#     u.first_name = full_name[0] ; u.last_name = full_name[1] ; u.save
   end
   today = get_today
   m = Month.create_month_model(u.id, today.month, today.year)
@@ -97,5 +96,4 @@ Given (/^(.*) has logged (\d+) (?:activity|activities)/) do |name, num|
                 :month_id => m.id
     d.save
   end
-  #Day.find_by_date(Date.today).activities.each { |a| puts ("the thing" + a.name)}
 end

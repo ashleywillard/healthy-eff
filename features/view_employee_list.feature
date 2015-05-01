@@ -12,6 +12,7 @@ Background:
   | email                      | password        | password_confirmation | password_changed |
   | healthypotato@gmail.com    | ?Hotpotato169   | ?Hotpotato169         | true             |
   And the current rate is 10
+  And the date is 04-15-2015
 
 Scenario: Privileged access
   Given I am logged in as a non-admin
@@ -28,7 +29,7 @@ Scenario: Admin list view - no records
   Then I should see "No records"
 
 Scenario: Admin list view - records
-  Given Nick Herson has logged 3 activities
+  And Nick Herson has logged 3 activities
   And I am logged in as an admin
   When I follow "Admin"
   Then I should see a table of employee names

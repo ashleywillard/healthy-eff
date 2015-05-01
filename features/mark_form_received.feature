@@ -8,6 +8,7 @@ Background:
   | email                       | password              | password_confirmation | password_changed |
   | 169.healthyeff@gmail.com    | ?Northsidepotato169   | ?Northsidepotato169   | true             |
   And the current rate is 10
+  And the date is 04-15-2015
   And Nick Herson has logged 4 activities
 
 Scenario: Sad path; no users selected

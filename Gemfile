@@ -42,6 +42,7 @@ group :development, :test do
   gem 'launchy'
   gem 'factory_girl'
   gem 'test-unit'
+  gem 'timecop'
   # gem "better_errors"
 end
 
