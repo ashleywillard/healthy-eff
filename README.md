@@ -70,6 +70,8 @@ Check out [Heroku](https://www.heroku.com/) for easy deployment!
 
 ## Interactions
 
+#### User Interactions
+
 ##### Log In Screen:
 * After receiving an email from admin, user can sign in
 * Passwords must fufill password requirements, user's password must contain one upper case letter, one lower case letter, a special character, a number, and has to be at least eight characters long. 
@@ -84,6 +86,7 @@ Check out [Heroku](https://www.heroku.com/) for easy deployment!
 * All input for exersize must be recorded in minutes
 * Activity may be left blank, but time must be filled in to submit
 * In order to submit, User must fill in captcha
+* Users can submit only one Healthy Activity for the current day
 
 ![Diagram](http://i.imgur.com/FJvH28c.png)
 
@@ -98,16 +101,11 @@ Check out [Heroku](https://www.heroku.com/) for easy deployment!
   * User will see a standard calendar, for every day they worked out, they will see what they did and how long, as well as the status of that activity: either 'Approved', 'Rejected', or 'Pending'
 * If javaScript is not enabled User can still view their calendar, however this will only allow them to see the past two months. 
 * With javaScript enabled, User can navigate the calendar to see all months that they have submitted healty activities for
+* The User Calendar Page will also show the amount earned this month at the top right of the page
 
-##### User Restrictions
+##### User Interface versus Admin Interface:
 
-* Log Healthy Activity Home Page Restrictions: Activity may be left blank, however it should reflect a healthy activity, time exercised must be greater than 60 minutes, you may only submit one form per day (although you may submit multiple exercises on this form), User must fill out the captcha to submit.
-
-* Input Past Days Restrictions: User must select a day, however they can add multiple when javaScript is enabled, Activity may be blank, time must again be greater than 60 minutes per each day entered, user must provide a reason for adding days late. 
-
-* User Calendar Page Restrictions: User can view their calendar without javaScript, however this will only allow them to see the past two months.
-
-*General User restrictions: User cannot access the admin page or the manage page.
+* General User restrictions: User cannot access the admin page or the manage page.
 
 
 
