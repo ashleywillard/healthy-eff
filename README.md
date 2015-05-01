@@ -107,16 +107,21 @@ Check out [Heroku](https://www.heroku.com/) for easy deployment!
 
 * General User restrictions: User cannot access the admin page or the manage page.
 
+#### Admin Interactions
 
+##### Admin Page:
+* To navigate to the Admin Page, select the Admin tab at the top left of your browswer. 
+* To select a specific month, use the arrow tabs
+  * Only months with employee data will appear 
+* To generat the pdf audit sheet or the monthly accounting sheet, first select employees, then selct either Print Audit Sheet or Print Selected
+  * Admin can either select all employees, or individually select employees.  
+  * Only employees who have submitted a healthy activity in the month selected will be available to select via checkbox
+* To view a specific employee's calendar, click the calendar image in the row that corresponds to that employees name
 
-##### Administrator Restrictions
+##### Manage Page Restrictions: Admin can only change the reimbursement rate by four numbers in length (not counting a period, so 1111 and 11.11 are both valid. 11111 is not). Admins cannot delete themselves, although other admins can delete other admins. 
 
-* Admin Page Restrictions: Only employees who have submitted a healthy activity in the month selected will be available to select via checkbox, 
-
-* Manage Page Restrictions: Admin can only change the reimbursement rate by four numbers in length (not counting a period, so 1111 and 11.11 are both valid. 11111 is not). Admins cannot delete themselves, although other admins can delete other admins. 
 
 ##License
-
 
 
 Copyright (c) 2015 Sarah Hernandez, Ashley Willard, Michelle Lin, Corinne Schafle, Allan Tang, Alex Ho. See LICENSE for details.
