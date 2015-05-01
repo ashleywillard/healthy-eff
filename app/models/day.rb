@@ -44,7 +44,7 @@ class Day < ActiveRecord::Base
 
   def valid_date
     unless approved
-      today = Date.today
+      today = get_today
       start_date = today.beginning_of_month
       start_date =  today.ago(1.month).beginning_of_month if get_day(today) < 6
       end_date = today.prev_day

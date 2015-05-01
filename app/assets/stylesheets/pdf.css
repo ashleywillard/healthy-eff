@@ -1,9 +1,11 @@
-.pagebreak {
-  page-break-before: always;
-}
-
 .inlineTable {
   display: inline-block;
+  vertical-align: top;
+  width: 33%
+}
+
+.tableFont {
+  font-size: 68%;
 }
 
 .pure-table {
@@ -14,10 +16,10 @@
 }
 
 .pure-table caption {
-color:#000;
-font:italic 85%/1 arial,sans-serif;
-padding:1em 0;
-text-align:center
+  color:#000;
+  font:italic 85%/1 arial,sans-serif;
+  padding:1em 0;
+  text-align:center
 }
 
 .pure-table td,.pure-table th {

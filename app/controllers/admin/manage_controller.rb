@@ -1,7 +1,11 @@
 class Admin::ManageController < Admin::AdminController
 
   def index
-    @users = User.find(:all, :conditions => ["id != ?", current_user.id])
+    @users = User.where("id != ?", current_user.id)
+    if not params[:sort].nil? and ActiveRecord::Base.connection.column_exists?(:users, params[:sort])
+      @users = @users.order(params[:sort])
+      session[:sort] = params[:sort]
+    end
     @constant = Constant.get_constants
   end
 
@@ -30,6 +34,15 @@ class Admin::ManageController < Admin::AdminController
     @user.email = user_hash[:email]
     if @user.save!
       flash[:notice] = "User settings successfully changed"
+      redirect_to manage_path
+    end
+  end
+
+  def make_admin
+    @user = User.find(params[:id])
+    @user.admin = true
+    if @user.save!
+      flash[:notice] = "Successfully made #{@user.first_name} an admin"
       redirect_to manage_path
     end
   end

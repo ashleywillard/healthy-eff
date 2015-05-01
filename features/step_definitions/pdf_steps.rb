@@ -1,3 +1,4 @@
+include DateFormat
 module PDF
   class PdfToText
     def initialize(pdf_file)
@@ -80,20 +81,19 @@ Given (/^(.*) has logged (\d+) (?:activity|activities)/) do |name, num|
                      :password_confirmation => "?1Asdfjkl;asdfjkl;",
                      :first_name => full_name[0],
                      :last_name => full_name[1]
-#     u.first_name = full_name[0] ; u.last_name = full_name[1] ; u.save
   end
-  m = Month.create_month_model(u.id, Time.now.month, Time.now.year)
+  today = get_today
+  m = Month.create_month_model(u.id, today.month, today.year)
   m.num_of_days = num.to_i
   m.save!
   # num.to_i.times do
   for i in 0..num.to_i - 1
     d = Day.create! :approved => true,
                 :denied => false,
-                :date => Time.now - i.days,
+                :date => today - i.days,
                 :total_time => 60,
                 :reason => 'none',
                 :month_id => m.id
     d.save
   end
-  #Day.find_by_date(Time.now).activities.each { |a| puts ("the thing" + a.name)}
 end

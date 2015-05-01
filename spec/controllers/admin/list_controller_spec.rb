@@ -14,7 +14,7 @@ RSpec.describe Admin::ListController do
   end
 
   describe "user.admin" do
-    SUCCESS_CODE = 200
+    SUCCESS_CODE ||= 200
     context "when admin" do
       it "allows access to the employee list page" do
         get :index
@@ -42,17 +42,24 @@ RSpec.describe Admin::ListController do
 
   describe "admin/list#index" do
     before :each do
+      @date = Date.parse("2-4-2015")
+      Timecop.freeze(@date)
       @user = User.create! :email => 'testuser@test.com',
                            :password => '?1234Abcedfg',
                            :password_confirmation => '?1234Abcedfg'
-      @cur_month = Month.create_month_model(@user.id, Date.today.strftime("%m"), Date.today.strftime("%Y"))
-      Day.create! :date => Date.today - 1.day,
+      @cur_month = Month.create_month_model(@user.id, @date.strftime("%m"), @date.strftime("%Y"))
+      Day.create! :date => @date - 1.day,
                   :approved => true,
                   :total_time => 60,
                   :reason => 'Reason',
                   :month_id => @cur_month.id
-      @prev_month = Month.create_month_model(@user.id, (Date.today - 1.month).strftime("%m"), Date.today.strftime("%Y"))
+      @prev_month = Month.create_month_model(@user.id, (@date - 1.month).strftime("%m"), @date.strftime("%Y"))
     end
+
+    after :each do
+      Timecop.return
+    end
+
     it "generates a list of user-associated months for current month" do
       get :index
       expect(assigns(:user_months)).to eq({@user => @cur_month})
@@ -91,6 +98,9 @@ RSpec.describe Admin::ListController do
     it "updates the session hash" do
       get :index, :sort => "last_name"
       expect(session[:sort]).to_not eq(nil)
+    end
+    it "guards against bogus sorting params" do
+      expect { get :index, :sort => "blah" }.to_not raise_error
     end
   end
 

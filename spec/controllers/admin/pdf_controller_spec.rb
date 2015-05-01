@@ -64,10 +64,9 @@ RSpec.describe Admin::PdfController do
     context "when users are checked" do
       it "updates the received_form? column of the Month table" do
         allow(@user).to receive(:last_name).and_return("last")
-        allow(User).to receive(:find_by_last_name).and_return(@user)
         month = Month.create_month_model(@user.id, Date.today.strftime("%m"), Date.today.strftime("%Y"))
-        allow(Month).to receive(:where).and_return([month])
-        post :forms, :commit => "Mark Received", :selected => { @user.last_name => "1" },
+        allow(Month).to receive(:find_by_id).and_return(month)
+        post :forms, :commit => "Mark Received", :selected => { @user.last_name => month.id },
                      :year => Date.today.year, :month => Date.today.month
         expect(month.received_form).to eq(true)
       end

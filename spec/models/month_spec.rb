@@ -3,7 +3,9 @@ require 'spec_helper'
 include DateFormat
 
 RSpec.describe Month, :type => :model do
+
   before :each do
+    Timecop.freeze(Date.parse("10-4-2015"))
     Constant.create! :curr_rate => 10
     user = User.create!({:first_name => 'Will',
                     :last_name => 'Guo',
@@ -16,6 +18,11 @@ RSpec.describe Month, :type => :model do
     @last_month = get_month(@today.ago(1.month))
     @year = get_year(@today)
   end
+
+  after :each do
+    Timecop.return
+  end
+
   describe '#self.get_month_model' do
     before :each do
       @month_model = Month.create_month_model(@user_id, @month, @year)
@@ -31,6 +38,7 @@ RSpec.describe Month, :type => :model do
       end
     end
   end
+
   describe '#self.get_or_create_month_model' do
     before :each do
       @month_model = Month.create_month_model(@user_id, @month, @year)
@@ -49,6 +57,7 @@ RSpec.describe Month, :type => :model do
       end
     end
   end
+
   describe '#self.get_inputted_dates' do
     before :each do
       @end_date = Time.strptime("04/15/2015", "%m/%d/%Y")
@@ -57,7 +66,7 @@ RSpec.describe Month, :type => :model do
       @month1.save!
       @day1 = Day.create!({:date => @end_date,
                         :reason => "none",
-                        :month_id => @month1.id, 
+                        :month_id => @month1.id,
                         :total_time => 60,
                         :approved => true,
                         :denied => false})
@@ -70,7 +79,7 @@ RSpec.describe Month, :type => :model do
         month2.save!
         day2 = Day.create!({:date => start_date,
                         :reason => "none",
-                        :month_id => month2.id, 
+                        :month_id => month2.id,
                         :total_time => 60,
                         :approved => true,
                         :denied => false})
@@ -84,6 +93,7 @@ RSpec.describe Month, :type => :model do
       end
     end
   end
+
   describe '#self.get_dates_list' do
     before :each do
       @month_model = Month.create_month_model(@user_id, @month, @year)
@@ -104,7 +114,7 @@ RSpec.describe Month, :type => :model do
       it 'should return list of days this month' do
         @day = Day.create!({:date => @today,
                         :reason => "none",
-                        :month_id => @month_model.id, 
+                        :month_id => @month_model.id,
                         :total_time => 60,
                         :approved => true,
                         :denied => false})
@@ -112,7 +122,8 @@ RSpec.describe Month, :type => :model do
       end
     end
   end
-  describe '#self.get_approved_dates_list' do 
+
+  describe '#self.get_approved_dates_list' do
     before :each do
       @month_model = Month.create_month_model(@user_id, @month, @year)
       @month_model.num_of_days = 1
@@ -131,7 +142,7 @@ RSpec.describe Month, :type => :model do
     it 'should return list of approved days this month' do
       @day=Day.create!({:date => @today,
                   :reason => "none",
-                  :month_id => @month_model.id, 
+                  :month_id => @month_model.id,
                   :total_time => 60,
                   :approved => true,
                   :denied => false})
@@ -140,13 +151,14 @@ RSpec.describe Month, :type => :model do
     it 'should not return non-approved days' do
       @today=Day.create!({:date => @today.at_beginning_of_month,
                   :reason => "none",
-                  :month_id => @month_model.id, 
+                  :month_id => @month_model.id,
                   :total_time => 60,
                   :approved => false,
                   :denied => false})
       expect(Month.get_approved_dates_list(@user_id, @month, @year)).to eq([])
     end
   end
+
   describe '#self.get_users_earliest_month' do
     before :each do
       @month1 = Month.create_month_model(@user_id, @month, @year)
@@ -163,6 +175,7 @@ RSpec.describe Month, :type => :model do
       end
     end
   end
+
   describe '#self.get_earliest_months' do
     context 'No months exist' do
       it 'should return nil' do
@@ -179,6 +192,7 @@ RSpec.describe Month, :type => :model do
       end
     end
   end
+
   describe '#contains_date?' do
     before :each do
       @month_model = Month.create_month_model(@user_id, @month, @year)
@@ -186,7 +200,7 @@ RSpec.describe Month, :type => :model do
       @month_model.save!
       @day = Day.create!({:date => @today,
                         :reason => "none",
-                        :month_id => @month_model.id, 
+                        :month_id => @month_model.id,
                         :total_time => 60,
                         :approved => true,
                         :denied => false})

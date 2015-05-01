@@ -13,10 +13,8 @@ class Admin::PdfController < Admin::AdminController
   # mark an employee's accounting form as received
   def mark_form_received
     @date = get_date()
-    params[:selected].each do |last_name, select|
-      month = Month.get_month_model(User.find_by_last_name(last_name).id,
-                                    get_month(@date),
-                                    get_year(@date))
+    params[:selected].each do |last_name, month_id|
+      month = Month.find_by_id(month_id)
       month.received_form = true
       month.save
     end
@@ -33,7 +31,7 @@ class Admin::PdfController < Admin::AdminController
     User.includes(:months).all.each do |user|
       @user_months << Month.get_or_create_month_model(user.id, get_month(@date), get_year(@date))
     end
-    @user_months = @user_months.sort_by {|m| m.user.last_name.to_s}
+    @user_months = @user_months.sort_by { |m| m.user.last_name.to_s }
     html = render_to_string(:layout => false, :action => 'audit')
     generate_pdf("audit", "audit-#{get_month_name(@date)}-#{get_year(@date)}.pdf", html)
   end
