@@ -34,4 +34,9 @@ Scenario: Changing email
   And I press “Update”
   Then I should see "meow@meow.com"
   And I should see "User settings successfully changed"
+
+Scenario: Making someone an admin
+  When I follow "Make Admin"
+  Then I should see "Successfully made an admin"
+  And I should be on the manage employee page
   

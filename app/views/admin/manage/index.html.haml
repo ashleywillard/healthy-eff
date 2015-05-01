@@ -12,19 +12,24 @@
   %h2 Employees
   = link_to "<span class=\"glyphicon glyphicon-plus-sign\"></span> New employee".html_safe, new_user_invitation_path, :class => "add_new_employee"
 
-  %table#movies.table.table-striped
+  %table#manage.table.table-striped
     %thead
       %tr
         %th= link_to "Last Name", manage_path(:sort => "last_name")
         %th= link_to "First Name", manage_path(:sort => "first_name")
         %th Email
-        %th Change?
-        %th Remove?
+        %th Admin?
+        %th Edit?
+        %th Delete?
     %tbody
       - @users.each do |user|
         %tr
           %td= user.last_name
           %td= user.first_name
           %td= user.email
-          %td= link_to "<span class =\"glyphicon glyphicon-pencil\"></span> Edit".html_safe, edit_path(user), :class => 'edit_user'
-          %td= link_to "<span class =\"glyphicon glyphicon-trash\"></span> Delete".html_safe, delete_path(user),   :method => :delete, :confirm => "Are you sure you want to delete employee #{user.first_name} #{user.last_name}?"
+          -if user.admin?
+            %td= "<span class =\"glyphicon glyphicon-user\"></span>".html_safe
+          - else
+            %td= link_to "<span class =\"glyphicon glyphicon-plus\"></span>".html_safe, make_admin_path(user), :confirm => "Are you sure you want to make employee #{user.first_name} #{user.last_name} an admin?", :id => 'Make Admin', :method => :post  
+          %td= link_to "<span class =\"glyphicon glyphicon-pencil\"></span>".html_safe, edit_path(user), :id => 'Edit'
+          %td= link_to "<span class =\"glyphicon glyphicon-trash\"></span>".html_safe, delete_path(user), :method => :delete, :confirm => "Are you sure you want to delete employee #{user.first_name} #{user.last_name}?", :id => 'Delete'
