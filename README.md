@@ -153,7 +153,7 @@ Remember to change config.action_mailer.default_url_options in the config/enviro
 * In order to submit, User must fill in captcha
 * Users can submit only once for each day
 
-![Diagram](http://i.imgur.com/FJvH28c.png)
+![Diagram](http://i.imgur.com/XFf35lZ.png)
 
 ##### Add Past Days:
 * To add previous days, click Input Past Days at the bottom of the Log Healthy Activity Home Page, this will redirect you to the Add Previous Days Page
@@ -164,6 +164,8 @@ Remember to change config.action_mailer.default_url_options in the config/enviro
 * A user may only input past days for the current month. However if the current date is on or before the 5th, a user may input past days for the previous month as well. All other dates, including the current day, which must be inputted on the today page, are considered out of range and will return an error.
 * Users can submit only once for each day, with the exception of the case where a pending request has been denied. Then the user may submit again for that day.
 
+![Diagram](http://i.imgur.com/QmmprIm.png)
+
 ##### User Calendar Page:
 * After inputting either today or past day's healthy activity, User will be brought to the Calendar page
   * User will see a standard calendar, for every day they worked out, they will see what they did and how long, as well as the status of that activity: either 'Approved', 'Rejected', or 'Pending'
@@ -171,8 +173,12 @@ Remember to change config.action_mailer.default_url_options in the config/enviro
 * With JavaScript enabled, User can navigate the calendar to see all months that they have submitted healthy activities for
 * The User Calendar Page will also show the amount earned each month at the top right of the page
 
+![Diagram](http://i.imgur.com/5HxhmCM.png)
+
 ##### Settings: 
 * On the Settings page, users can change their password and email address
+
+![Diagram](http://i.imgur.com/CenTdL8.png)
 
 ##### User Interface versus Admin Interface:
 
@@ -189,6 +195,8 @@ Remember to change config.action_mailer.default_url_options in the config/enviro
   * Only employees who have submitted a healthy activity in the month being viewed will be available to be selected via checkbox
 * To audit a specific employee's calendar, click the calendar image in the row that corresponds to that employee's name
 
+![Diagram](http://i.imgur.com/Hqcfqw0.png)
+
 ##### Manage Page: 
 * From this page, admin can edit employee information, such as adding new employees, editing current employee information, and deleting employees
 * While Admin can change the reimbursement rate, it is limited to four numbers in length (not counting a period, so 1111 and 11.11 are both valid. 11111 is not)
@@ -196,9 +204,12 @@ Remember to change config.action_mailer.default_url_options in the config/enviro
 * Admins can make any employee an admin
   * There is a confirmation window when you add or delete an admin
 
+![Diagram](http://i.imgur.com/T6Z3WQQ.png)
+
 ##### Pending Page:
 * On the pending page Admin can approve or deny employees' past day inputs. Admin will be presented with the date the employee wants to add as well as the reason for inputting the day late  
 
+![Diagram](http://i.imgur.com/vQmbQyf.png)
 
 ## Notes for further development
 
