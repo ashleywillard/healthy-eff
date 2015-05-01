@@ -67,12 +67,18 @@ Check out [Heroku](https://www.heroku.com/) for easy deployment!
 * [Code Climate](https://codeclimate.com/github/ashleywillard/healthy-eff)
 
 
+
 ## Interactions
+
+#### Sign In Screen:
+* After receiving an email from admin, user can sign in
+* Passwords must fufill password requirements, user's password must contain one upper case letter, one lower case letter, a special character, a number, and has to be at least eight characters long. 
+
+![Diagram](http://i.imgur.com/NkxC1PY.png)
+
 
 
 ##### User Restrictions
-
-* Log In Screen Restrictions: Password must fufill password requirements, user's password must contain one upper case letter, one lower case letter, a special character, a number, and has to be at least eight characters long. 
 
 * Log Healthy Activity Home Page Restrictions: Activity may be left blank, however it should reflect a healthy activity, time exercised must be greater than 60 minutes, you may only submit one form per day (although you may submit multiple exercises on this form), User must fill out the captcha to submit.
 
