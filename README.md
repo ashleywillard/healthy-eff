@@ -4,14 +4,16 @@
 [![Build Status](https://travis-ci.org/ashleywillard/healthy-eff.svg?branch=master)](https://travis-ci.org/ashleywillard/healthy-eff)
 
 ## Overview
-Reporting system for employees to record healthy activities daily, so management can track and reward employees monthly for a healthy lifestyle.
+Reporting system for employees to record healthy activities daily, so
+management can track and reward employees monthly for a healthy lifestyle.
 
 #### Dependencies:
 * Ruby **1.9.3**
 * Rails **3.2.16**
 
 #### Gems:
-All the gems used in this project are listed in the Gemfile, but notable ones include:
+All the gems used in this project are listed in the Gemfile, but notable ones
+include:
 
     gem 'devise' # Sign-in and user functionality
     gem 'devise_invitable', '~> 1.3.4' # Mailing functionality
@@ -34,16 +36,12 @@ Credits to [Glyphicons](http://glyphicons.com/) for the application icons.
 ### To run on your local machine
 
 Ensure that Rails and Ruby are installed on your machine. Check by running
-```
-ruby -v; rails -v
-```
+    ruby -v; rails -v
 which should display the current versions if installed correctly.
 
 Fork this repository to your own GitHub account.
 Run the following command to clone to your local machine. It should look something like this:
-```
-git clone https://github.com/<your username here>/healthy-eff
-```
+    git clone https://github.com/<your username here>/healthy-eff
 
 #### Generating secret keys
 
@@ -86,8 +84,8 @@ Open all three files in `config/environments/`. They all have somewhere near the
         :port => 587,
         :domain => "gmail.com", # Depends on email service
         :authentication => :login,
-        :user_name => "169.healthyeff", # Change this: Specify email account
-        :password => "northsidepotato" # Change this: Specify email account password
+        :user_name => "EMAILER", # Change this: Specify email account (everything before the @)
+        :password => "PASSWORD" # Change this: Specify email account password
     }
 
 You can specify which email to use depending on the environment (`development`, `test`, `production`). You can use the same email for all three, make each one different, or any other combination you see fit. Running the machine locally (covered in this section) will use the settings provided in `development.rb`; running our tests will use `test.rb`, and running the application on a deployed web server will use `production.rb`.
