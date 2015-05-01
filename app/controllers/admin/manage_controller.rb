@@ -38,6 +38,15 @@ class Admin::ManageController < Admin::AdminController
     end
   end
 
+  def make_admin
+    @user = User.find(params[:id])
+    @user.admin = true
+    if @user.save!
+      flash[:notice] = "Successfully made #{@user.first_name} an admin"
+      redirect_to manage_path
+    end
+  end
+
   def edit
     @user = User.find(params[:id])
   end

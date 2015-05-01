@@ -50,6 +50,7 @@ Healthyeff::Application.routes.draw do
   get 'manage/edit/:id', to: 'admin/manage#edit', :as => :edit
   post 'manage/edit/:id', to: 'admin/manage#update', :as => :update
   match 'manage/update_constants' => 'admin/manage#update_constants', :as => :update_constants
+  post 'manage/:id', to: 'admin/manage#make_admin', :as => :make_admin
 
 # routing for admin views
 #   get 'admin' => 'admin#index', :as => :admin_list
