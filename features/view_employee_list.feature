@@ -32,7 +32,6 @@ Scenario: Admin list view - records
   And I am logged in as an admin
   When I follow "Admin"
   Then I should see a table of employee names
-  And I save and open page
   And I should see "First Name"
   And I should see "Nick"
   And I should see "Last Name"
