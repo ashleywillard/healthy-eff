@@ -13,7 +13,6 @@ class Admin::ListController < Admin::AdminController
   def navigate_months
     session[:months_ago] ||= 0
     case params[:navigate]
-      when nil then session[:months_ago] = 0
       when "Previous" then session[:months_ago] += 1
       when "Next" then session[:months_ago] -= 1
     end
