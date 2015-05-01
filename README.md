@@ -103,6 +103,9 @@ Check out [Heroku](https://www.heroku.com/) for easy deployment!
 * With javaScript enabled, User can navigate the calendar to see all months that they have submitted healty activities for
 * The User Calendar Page will also show the amount earned this month at the top right of the page
 
+##### Settings: 
+* On the Settings page, users can change their password and email address
+
 ##### User Interface versus Admin Interface:
 
 * General User restrictions: User cannot access the admin page or the manage page.
