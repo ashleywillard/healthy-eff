@@ -74,11 +74,11 @@ You can to choose to generate your own strings if you'd like. Save the file once
 #### Mailing System
 
 We'll also need to set up a mailing system, which you'll need to provide
-"""
+```
 1. An email address 
 2. Password for the email. 
 3. The host URL when you deploy to your own website server
-"""
+```
 
 This is so that you can invite new users to the application. Open all three files in config/environments. They all have somewhere near the top something that looks like this:
 ```
@@ -117,7 +117,7 @@ Run the following to restart the database and add in the employees you specified
 .../healthy-eff$ rake db:reset
 ```
 
-Start a server and enjoy! Visit localhost:3000 on your favorite broswer to see application
+Start a server and enjoy! Visit localhost:3000 on your favorite browser to see application
 
 ``` 
 .../healthy-eff$ rails s
@@ -139,7 +139,7 @@ Remember to change config.action_mailer.default_url_options in the config/enviro
 
 ##### Log In Screen:
 * After receiving an email from admin, user can sign in
-* Passwords must fufill password requirements, user's password must contain one upper case letter, one lower case letter, a special character, a number, and has to be at least eight characters long. 
+* Passwords must fulfill password requirements, user's password must contain one upper case letter, one lower case letter, a special character, a number, and has to be at least eight characters long. 
 
 ![Diagram](http://i.imgur.com/NkxC1PY.png)
 
@@ -159,16 +159,16 @@ Remember to change config.action_mailer.default_url_options in the config/enviro
 * To add previous days, click Input Past Days at the bottom of the Log Healty Activity Home Page, this will redirect you to the Add Previous Days Page
 * Adding any activity on the Past Day input page will send a request to the administrator for approval.
 * For each day you want to add, click the date input box, if JavaScript is enabled, an datepicker will appear, select what day you wish to add, otherwise type in the specific date in the format mm/dd/yyyy.
-* Proceed to add activites in the same manner as inputing today's activities
+* Proceed to add activities in the same manner as inputting today's activities
 * If JavaScript is not enabled, User will not be able to add multiple days on one form
 * A user may only input past days for the current month. However if the current date is on or before the 5th, a user may input past days for the previous month as well.
 * Users can submit only once for each day, with the exception of the case where a pending request has been denied. Then the user may submit again for that day.
 
 ##### User Calendar Page:
-* After inputing either today or past day's healthy activity, User will be brought to the Calendar page
+* After inputting either today or past day's healthy activity, User will be brought to the Calendar page
   * User will see a standard calendar, for every day they worked out, they will see what they did and how long, as well as the status of that activity: either 'Approved', 'Rejected', or 'Pending'
 * If JavaScript is not enabled User can still view their calendar, however this will only allow them to see the past two months. 
-* With JavaScript enabled, User can navigate the calendar to see all months that they have submitted healty activities for
+* With JavaScript enabled, User can navigate the calendar to see all months that they have submitted healthy activities for
 * The User Calendar Page will also show the amount earned each month at the top right of the page
 
 ##### Settings: 
@@ -181,13 +181,13 @@ Remember to change config.action_mailer.default_url_options in the config/enviro
 #### Admin Interactions
 
 ##### Admin Page:
-* To navigate to the Admin Page, select the Admin tab at the top left of your browswer. 
+* To navigate to the Admin Page, select the Admin tab at the top left of your browser. 
 * To select a specific month, use the arrow tabs
   * Only months with employee data will appear 
-* To generate the pdf audit sheet or the monthly accounting sheet, first select employees, then selct either Print Audit Sheet or Print Selected
+* To generate the pdf audit sheet or the monthly accounting sheet, first select employees, then select either Print Audit Sheet or Print Selected
   * Admin can either select all employees, or individually select employees.  
   * Only employees who have submitted a healthy activity in the month being viewed will be available to be selected via checkbox
-* To audit a specific employee's calendar, click the calendar image in the row that corresponds to that employees name
+* To audit a specific employee's calendar, click the calendar image in the row that corresponds to that employee's name
 
 ##### Manage Page: 
 * From this page, admin can edit employee information, such as adding new employees, editing current employee information, and deleting employees
@@ -197,7 +197,7 @@ Remember to change config.action_mailer.default_url_options in the config/enviro
   * There is a confirmation window when you add or delete an admin
 
 ##### Pending Page:
-* On the pending page Admin can approve or deny employees' past day inputs. Admin will be presented with the date the employee wants to add as well as the reason for inputing the day late  
+* On the pending page Admin can approve or deny employees' past day inputs. Admin will be presented with the date the employee wants to add as well as the reason for inputting the day late  
 
 
 ## Notes for further development
