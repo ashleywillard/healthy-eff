@@ -58,21 +58,19 @@ Start a server and enjoy!
 rails s
 ```
 
-## To deploy onto a web server
+#### To deploy onto a web server
 Check out [Heroku](https://www.heroku.com/) for easy deployment!
 
-##### Tools
+## Tools
 * [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/1282358)
 * [Travis CI](https://travis-ci.org/ashleywillard/healthy-eff)
 * [Code Climate](https://codeclimate.com/github/ashleywillard/healthy-eff)
 
-##### Iteration 0
-* [Client Entry Interview](http://youtu.be/ptYHlSCjSQI)
-* [Lo-Fi Mockups](https://docs.google.com/presentation/d/1BA3Nlz5kssVkdUxyb5F7JyZ38Xxe5iuyYH-JrsLVQzc/)
-
 ## Deadlines
 
 ##### Iteration 0
+* [Client Entry Interview](http://youtu.be/ptYHlSCjSQI)
+* [Lo-Fi Mockups](https://docs.google.com/presentation/d/1BA3Nlz5kssVkdUxyb5F7JyZ38Xxe5iuyYH-JrsLVQzc/)
 * Schedule customer meeting: Wednesday, 2/11/15
 * Initial customer meeting report: Wednesday, 2/18/15
 * Lo-fi mockups: Wednesday, 2/25/15
@@ -105,7 +103,6 @@ Check out [Heroku](https://www.heroku.com/) for easy deployment!
 * Screencasts & Exit Interview: Wednesday, 5/6/15 @ 11:59 PM
 
 ## Interactions
-
 
 
 ##### User Restrictions
