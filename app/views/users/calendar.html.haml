@@ -2,7 +2,12 @@
 %link{:rel => "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css"}
 
 :javascript
+  var amts = #{raw @amt_list}
+  var index = 0
+  
   $(document).ready(function() {
+      setMoney();
+
       var random = []
       var workouts = #{raw @workouts.to_json}
       for(i=0;i<workouts.length;i++){
@@ -29,7 +34,32 @@
         },
         events: random
       })
+      
 
+  });
+  
+  function setMoney(){
+    document.getElementById("money_earned").innerHTML = amts[index];
+  };
+
+  $('body').on('click', 'span.fc-button.fc-button-today.fc-state-default.fc-corner-left.fc-corner-right.fc-state-hover', function() {
+    index = 0;
+    setMoney();
+  });
+
+  $('body').on('click', 'span.fc-button.fc-button-next.fc-state-default.fc-corner-left.fc-corner-right.fc-state-hover', function() {
+    if(index > 0){
+      index -= 1;
+      setMoney();
+    }
+  });
+
+  $('body').on('click', 'span.fc-button.fc-button-prev.fc-state-default.fc-corner-left.fc-corner-right.fc-state-hover', function() {
+    if(index < amts.length - 1){
+      index += 1;
+      setMoney();
+    }
+    
   });
 
 %noscript
@@ -40,7 +70,7 @@
 #head
   %p.calendar
     %span.calendar_name= @name
-    %span.money_earned=@money
+    %span.money_earned{:id => 'money_earned'}
 
 #money
   %p.money_caption="earned this month"

@@ -11,7 +11,8 @@ class UsersController < ApplicationController
     earliest_month = Month.get_users_earliest_month(extract_id_for_calendar)
     @earliest_date = (earliest_month == nil) ? @date : Date.new(earliest_month.year,earliest_month.month, 1)
     @workouts = get_all_workouts(@earliest_date, @date)
-    @money = get_money_earned(@date.strftime("%m"), @date.strftime("%Y"))
+    @amt_list = get_list_of_amt_per_month(@earliest_date, @date)
+
     @no_js_curr_workouts = get_all_workouts(@date, @date)
     @no_js_prev_workouts = get_all_workouts(@date.at_beginning_of_month.prev_month, @date.at_beginning_of_month.prev_month)
   end
@@ -28,6 +29,15 @@ class UsersController < ApplicationController
       name = target_user.first_name + ' ' + target_user.last_name
     end
     return name
+  end
+
+  def get_list_of_amt_per_month(start, finish)
+    amt_list = []
+    (1..num_of_months_to_retrieve(start, finish)).each do
+      amt_list.push(Month.get_money_for_month(extract_id_for_calendar, finish.month, finish.year))
+      finish = finish.at_beginning_of_month.prev_month
+    end
+    return amt_list
   end
 
   def get_all_workouts(start, finish)
@@ -67,13 +77,13 @@ class UsersController < ApplicationController
     end
     return workout
   end
-
+  """
   def get_money_earned(month, year)
     id = extract_id_for_calendar
     month_model = Month.get_month_model(id, month, year)
     amt_per_day = month_model != nil ? month_model.work_rate : Constant.get_work_rate
     approved_cnt = Month.get_approved_dates_list(id, month, year).length
-    return "$" + (approved_cnt * amt_per_day).to_s
+    return $ + (approved_cnt * amt_per_day).to_s
   end
-
+  """
 end
