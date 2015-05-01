@@ -156,12 +156,12 @@ Remember to change config.action_mailer.default_url_options in the config/enviro
 ![Diagram](http://i.imgur.com/FJvH28c.png)
 
 ##### Add Past Days:
-* To add previous days, click Input Past Days at the bottom of the Log Healty Activity Home Page, this will redirect you to the Add Previous Days Page
+* To add previous days, click Input Past Days at the bottom of the Log Healthy Activity Home Page, this will redirect you to the Add Previous Days Page
 * Adding any activity on the Past Day input page will send a request to the administrator for approval.
 * For each day you want to add, click the date input box, if JavaScript is enabled, an datepicker will appear, select what day you wish to add, otherwise type in the specific date in the format mm/dd/yyyy.
 * Proceed to add activities in the same manner as inputting today's activities
 * If JavaScript is not enabled, User will not be able to add multiple days on one form
-* A user may only input past days for the current month. However if the current date is on or before the 5th, a user may input past days for the previous month as well. All other dates, inlcuding the current day, which must be inputted on the today page, are considered out of range and will return an error.
+* A user may only input past days for the current month. However if the current date is on or before the 5th, a user may input past days for the previous month as well. All other dates, including the current day, which must be inputted on the today page, are considered out of range and will return an error.
 * Users can submit only once for each day, with the exception of the case where a pending request has been denied. Then the user may submit again for that day.
 
 ##### User Calendar Page:
