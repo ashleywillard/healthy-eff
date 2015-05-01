@@ -11,14 +11,14 @@ class Activity < ActiveRecord::Base
     name = activity[:name].lstrip
     duration = activity[:duration]
     day.total_time += duration.to_i
-    if name == "" then name = HEALTHY_ACTIVITY end
+    name = HEALTHY ACTIVITY if name == ""
     return Activity.new({:name => name, :duration => duration})
   end
 
   def valid_duration
     if duration == nil
       errors.add(:duration, NOT_BLANK)
-    elsif duration <= 0 
+    elsif duration <= 0
       errors.add(:duration, NOT_BELOW_ZERO)
     elsif duration > 1440
       errors.add(:duration, NOT_TOO_HIGH)

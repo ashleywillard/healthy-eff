@@ -1,3 +1,5 @@
+# 'Select all' checkbox used in the admin list view
+
 jQuery ->
   $('#selectAll').click ->
     if @checked

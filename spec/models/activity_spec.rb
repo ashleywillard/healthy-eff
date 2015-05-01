@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Activity, :type => :model do
+
   describe '#valid_duration' do
     context 'Duration is nil' do
       it 'Should raise error - duration cant be blank' do

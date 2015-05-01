@@ -17,6 +17,7 @@
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.en-GB.js
 //= require fullcalendar
+
 function remove_fields(link) {
   $(link).closest(".field").remove();
 }

@@ -14,4 +14,5 @@ class Constant < ActiveRecord::Base
     constant.curr_rate = rate
     constant.save!
   end
+
 end

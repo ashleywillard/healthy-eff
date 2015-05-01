@@ -42,7 +42,7 @@ body {
 }
 
 .glyphicon-minus-sign {
-  margin-left:5px !important; 
+  margin-left:5px !important;
 }
 
 a,
@@ -71,7 +71,8 @@ div.note {
   color: #31708F;
 }
 
-/* navbar formatting */
+                            /* navbar formatting */
+
 .logo {
   height: 30px;
 }
@@ -89,7 +90,7 @@ div.note {
   padding-top: 4px;
 }
 
-.navbar, 
+.navbar,
 .navbar .brand {
   font-family: "Roboto Condensed";
   text-shadow: none;
@@ -125,7 +126,7 @@ label {
   cursor: default;
 }
 
-/* today and past_day formatting */
+                      /* today and past_day formatting */
 
 .activity_container:nth-child(2n) {
   background-color: rgb(249, 249, 249);
@@ -186,7 +187,7 @@ a.add_fields {
   display: none;
 }
 
-/* admin formatting */
+                                /* admin formatting */
 
 a.admin_previous,
 a.admin_next {
@@ -208,7 +209,7 @@ a.admin_next {
   width: 35px;
 }
 
-/* For Calendar Page */
+                                /* For Calendar Page */
 
 #head{
   position: relative;

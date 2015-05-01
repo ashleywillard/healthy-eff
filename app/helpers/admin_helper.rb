@@ -5,17 +5,10 @@ module AdminHelper
   end
 
   def beyond_earliest_records?
-    earliest = Month.get_earliest_months()
-    if earliest.nil?
-      true
-    else
-      earliest = earliest.first
-      if earliest.year.nil? or earliest.month.nil?
-        true
-      else
-        earliest.year > @date.year or (earliest.year == @date.year and earliest.month > @date.month)
-      end
-    end
+    earliest = Month.get_earliest_months() ; return true if earliest.nil?
+    earliest = earliest.first
+    return true if earliest.year.nil? or earliest.month.nil?
+    earliest.year > @date.year or (earliest.year == @date.year and earliest.month > @date.month)
   end
 
   def no_records?

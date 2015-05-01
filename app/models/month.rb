@@ -1,5 +1,6 @@
 class Month < ActiveRecord::Base
   include DateFormat
+
   attr_accessible :month, :num_of_days, :printed_form, :received_form, :user_id, :year, :work_rate
   has_many :days, :dependent => :destroy
   belongs_to :user
