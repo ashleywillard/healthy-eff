@@ -178,7 +178,7 @@ Remember to change config.action_mailer.default_url_options in the config/enviro
 ##### Settings: 
 * On the Settings page, users can change their password and email address
 
-![Diagram](http://i.imgur.com/CenTdL8.png)
+![Diagram](http://i.imgur.com/CenTdL8.png?1)
 
 ##### User Interface versus Admin Interface:
 
