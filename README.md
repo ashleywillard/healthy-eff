@@ -78,7 +78,7 @@ We'll also need to set up a mailing system, which you'll need to provide
 1. An email address 
 2. Password for the email. 
 3. The host URL when you deploy to your own website server
-"
+"""
 
 This is so that you can invite new users to the application. Open all three files in config/environments. They all have somewhere near the top something that looks like this:
 ```
@@ -158,7 +158,7 @@ Remember to change config.action_mailer.default_url_options in the config/enviro
 ##### Add Past Days:
 * To add previous days, click Input Past Days at the bottom of the Log Healty Activity Home Page, this will redirect you to the Add Previous Days Page
 * Adding any activity on the Past Day input page will send a request to the administrator for approval.
-* For each day you want to add, click the date input box, if JavaScript is enabled, an datepicker will appear, select what day you wish to add, otherwise type in the specific date.
+* For each day you want to add, click the date input box, if JavaScript is enabled, an datepicker will appear, select what day you wish to add, otherwise type in the specific date in the format mm/dd/yyyy.
 * Proceed to add activites in the same manner as inputing today's activities
 * If JavaScript is not enabled, User will not be able to add multiple days on one form
 * A user may only input past days for the current month. However if the current date is on or before the 5th, a user may input past days for the previous month as well.
@@ -169,7 +169,7 @@ Remember to change config.action_mailer.default_url_options in the config/enviro
   * User will see a standard calendar, for every day they worked out, they will see what they did and how long, as well as the status of that activity: either 'Approved', 'Rejected', or 'Pending'
 * If JavaScript is not enabled User can still view their calendar, however this will only allow them to see the past two months. 
 * With JavaScript enabled, User can navigate the calendar to see all months that they have submitted healty activities for
-* The User Calendar Page will also show the amount earned this month at the top right of the page
+* The User Calendar Page will also show the amount earned each month at the top right of the page
 
 ##### Settings: 
 * On the Settings page, users can change their password and email address
@@ -184,17 +184,17 @@ Remember to change config.action_mailer.default_url_options in the config/enviro
 * To navigate to the Admin Page, select the Admin tab at the top left of your browswer. 
 * To select a specific month, use the arrow tabs
   * Only months with employee data will appear 
-* To generat the pdf audit sheet or the monthly accounting sheet, first select employees, then selct either Print Audit Sheet or Print Selected
+* To generate the pdf audit sheet or the monthly accounting sheet, first select employees, then selct either Print Audit Sheet or Print Selected
   * Admin can either select all employees, or individually select employees.  
-  * Only employees who have submitted a healthy activity in the month selected will be available to select via checkbox
-* To view a specific employee's calendar, click the calendar image in the row that corresponds to that employees name
+  * Only employees who have submitted a healthy activity in the month being viewed will be available to be selected via checkbox
+* To audit a specific employee's calendar, click the calendar image in the row that corresponds to that employees name
 
 ##### Manage Page: 
 * From this page, admin can edit employee information, such as adding new employees, editing current employee information, and deleting employees
 * While Admin can change the reimbursement rate, it is limited to four numbers in length (not counting a period, so 1111 and 11.11 are both valid. 11111 is not)
-* Admins cannot delete themselves, although other admins can delete other admins 
+* Admins cannot delete themselves, but can still delete other admins
 * Admins can make any employee an admin
-  * There is a confirmation window when you delete or add an admin
+  * There is a confirmation window when you add or delete an admin
 
 ##### Pending Page:
 * On the pending page Admin can approve or deny employees' past day inputs. Admin will be presented with the date the employee wants to add as well as the reason for inputing the day late  
