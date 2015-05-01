@@ -1,7 +1,7 @@
 class Admin::ListController < Admin::AdminController
 
   def index
-    navigate_months() if not params[:navigate].nil?
+    navigate_months()
     @date = get_date()
     @user_months = Hash.new
     User.includes(:months).all.each do |user|
