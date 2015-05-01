@@ -9,10 +9,18 @@ gem 'pg'
 gem 'devise'
 gem 'devise_invitable', '~> 1.3.4'
 gem "figaro"
-# gem "binding_of_caller"
-
 gem 'haml'
-# gem 'selenium-webdriver'
+
+gem 'jquery-rails'
+gem 'simple_captcha', :git => 'git://github.com/galetahub/simple-captcha.git'
+gem 'twitter-bootstrap-rails'
+gem 'fullcalendar-rails'
+gem 'bootstrap-datepicker-rails', '~> 1.4.0'
+gem 'bootstrap-glyphicons'
+
+# To generate PDF files
+gem 'wkhtmltopdf-binary'
+gem 'pdfkit'
 
 group :production do
   gem 'rails_12factor'
@@ -43,19 +51,8 @@ group :development, :test do
   gem 'factory_girl'
   gem 'test-unit'
   gem 'timecop'
-  # gem "better_errors"
+  gem "codeclimate-test-reporter", require: nil
 end
-
-gem 'jquery-rails'
-gem 'simple_captcha', :git => 'git://github.com/galetahub/simple-captcha.git'
-gem 'twitter-bootstrap-rails'
-gem 'fullcalendar-rails'
-gem 'bootstrap-datepicker-rails', '~> 1.4.0'
-gem 'bootstrap-glyphicons'
-
-# To generate PDF files
-gem 'wkhtmltopdf-binary'
-gem 'pdfkit'
 
 group :test, :cucumber do
   gem 'pdf-reader'

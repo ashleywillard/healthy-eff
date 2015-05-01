@@ -10,3 +10,6 @@ script:
   - bundle exec rake db:test:prepare
   - bundle exec rake spec
   - bundle exec rake cucumber
+addons:
+  code_climate:
+    repo_token: adf08323...
