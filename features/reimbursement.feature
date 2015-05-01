@@ -42,7 +42,8 @@ Scenario: Update rate and check that calendar reflects the change
   And I visit my calendar page
   Then I should see "$15 earned this month"
   When I click on the calendar's previous arrow
-  Then I should see amount change to "$10 earned this month"
+  And Cucumber needs to create click event so money changes
+  Then I should see "$10 earned this month"
 
 
 

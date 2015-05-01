@@ -497,20 +497,3 @@ User.create! :first_name => 'William',
              :password => 'Testing1?', 
              :password_confirmation => 'Testing1?',
              :password_changed => true
-
-#for testing locally only 
-Activity.create! :duration => 60,
-                 :name => 'swimming',
-                 :day_id => 1
-
-Day.create! :date => Time.strptime("03/31/2015", "%m/%d/%Y"),
-                :approved => true,
-                :denied => false,
-                :total_time => 60,
-                :reason => 'A legit reason',
-                :month_id => 1
-
-#Month to hold above day
-m2 = Month.create_month_model(2, 3, 2015)
-m2.num_of_days = 1
-m2.save!
