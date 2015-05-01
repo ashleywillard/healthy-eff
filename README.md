@@ -70,13 +70,21 @@ Check out [Heroku](https://www.heroku.com/) for easy deployment!
 
 ## Interactions
 
-#### Sign In Screen:
+##### Log In Screen:
 * After receiving an email from admin, user can sign in
 * Passwords must fufill password requirements, user's password must contain one upper case letter, one lower case letter, a special character, a number, and has to be at least eight characters long. 
 
 ![Diagram](http://i.imgur.com/NkxC1PY.png)
 
+##### Log Healthy Activity Home Page:
+* Upon logging in, the user will be brought to this page 
+* User can add as many activities as like wish, however in order to submit, time exersizing must be greater than or equal to 60 minutes. 
+  * In order to add another exersize click Add Activity
+* All input for exersize must be recorded in minutes
+* 
 
+
+![Diagram](http://i.imgur.com/FJvH28c.png)
 
 ##### User Restrictions
 
