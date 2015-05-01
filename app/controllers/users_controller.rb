@@ -77,13 +77,5 @@ class UsersController < ApplicationController
     end
     return workout
   end
-  """
-  def get_money_earned(month, year)
-    id = extract_id_for_calendar
-    month_model = Month.get_month_model(id, month, year)
-    amt_per_day = month_model != nil ? month_model.work_rate : Constant.get_work_rate
-    approved_cnt = Month.get_approved_dates_list(id, month, year).length
-    return $ + (approved_cnt * amt_per_day).to_s
-  end
-  """
+
 end
