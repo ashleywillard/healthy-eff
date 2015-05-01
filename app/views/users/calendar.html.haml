@@ -1,36 +1,15 @@
+= javascript_include_tag "users/calendar_setup"
 %script{:src => "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.min.js"}
 %link{:rel => "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css"}
 
+
 :javascript
-  $(document).ready(function() {
-      var random = []
-      var workouts = #{raw @workouts.to_json}
-      for(i=0;i<workouts.length;i++){
-        workout = workouts[i]
-        random[i]={title: workout[0]+': '+workout[1] + '\n'+ workout[6], start: workout[2], backgroundColor: workout[4], textColor: workout[3], borderColor: workout[5]}
-      }
-      $('#calendar').fullCalendar({
-        header: {
-          left: 'prev, today, next',
-          center: 'title',
-          right: ''
-        },
-        viewDisplay: function(view){
-          var end = '#{@date.month-1}' +'/'+ '#{@date.year}'
-          var begin = '#{@earliest_date.month-1}' +'/'+ '#{@earliest_date.year}'
-          var cal_date_string = view.start.getMonth() + '/' + view.start.getFullYear()
-
-          if(cal_date_string == begin) { jQuery('.fc-button-prev').addClass("fc-state-disabled"); }
-          else { jQuery('.fc-button-prev').removeClass("fc-state-disabled"); }
-
-          if(cal_date_string == end) { jQuery('.fc-button-next').addClass("fc-state-disabled"); }
-          else { jQuery('.fc-button-next').removeClass("fc-state-disabled"); }
-
-        },
-        events: random
-      })
-
-  });
+  var index = 0
+  var amts=#{raw @amt_list}
+  var workouts = #{raw @workouts.to_json}
+  var end = '#{@date.month-1}' +'/'+ '#{@date.year}'
+  var begin = '#{@earliest_date.month-1}' +'/'+ '#{@earliest_date.year}'
+  load()
 
 %noscript
   %p.alert 
@@ -40,10 +19,11 @@
 #head
   %p.calendar
     %span.calendar_name= @name
-    %span.money_earned=@money
+    %span.money_earned{:id => 'money_earned'}
 
 #money
   %p.money_caption="earned this month"
+
 #calendar
 
 %noscript
