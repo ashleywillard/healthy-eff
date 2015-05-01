@@ -2,6 +2,7 @@
 [![Code Climate](https://codeclimate.com/github/ashleywillard/healthy-eff/badges/gpa.svg)](https://codeclimate.com/github/ashleywillard/healthy-eff)
 [![Test Coverage](https://codeclimate.com/github/ashleywillard/healthy-eff/badges/coverage.svg)](https://codeclimate.com/github/ashleywillard/healthy-eff)
 [![Build Status](https://travis-ci.org/ashleywillard/healthy-eff.svg?branch=master)](https://travis-ci.org/ashleywillard/healthy-eff)
+
 CS169, in partnership with EFF.
 
 ## Overview
