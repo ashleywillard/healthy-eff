@@ -81,7 +81,7 @@ module ErrorMessages
   NOT_ENOUGH ||= "can't be less than 60 mins"
 
   def date_out_of_range(date)
-    date + " is not within allowed range"
+    date + " is not within allowed range. Note: You only have until the 5th of the month to input days for the previous month."
   end
 
   WELCOME ||= "Welcome, new user! Please change your password."

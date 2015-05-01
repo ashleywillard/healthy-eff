@@ -233,7 +233,7 @@ RSpec.describe DaysController do
         params = {:days => {:reason => "Vacation"}, :month => {:days_attributes =>
                               {"1" => {:date => "#{date}", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
-        expect(flash[:alert]).to eq("Date #{date} is not within allowed range")
+        expect(flash[:alert]).to eq("Date #{date} is not within allowed range. Note: You only have until the 5th of the month to input days for the previous month.")
         response.should redirect_to(past_days_path)
       end
     end
