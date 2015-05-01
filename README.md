@@ -79,12 +79,18 @@ Check out [Heroku](https://www.heroku.com/) for easy deployment!
 ##### Log Healthy Activity Home Page:
 * Upon logging in, the user will be brought to this page 
 * User can add as many activities as like wish, however in order to submit, time exersizing must be greater than or equal to 60 minutes. 
-  * In order to add another exersize click Add Activity
+  * If javaScript is not enabled, you will only be able to add a single activity per page 
+  * If javaScript is enabled: click Add Activity in order to add another exersize 
 * All input for exersize must be recorded in minutes
-* 
-
+* In order to submit, User must fill in captcha
 
 ![Diagram](http://i.imgur.com/FJvH28c.png)
+
+##### Add Previous Days:
+* To add previous days, click Input Past Days at the bottom of the Log Healty Activity Home Page, this will redirect you to the Add Previous Days Page
+* For each day you want to add, click the date input box, if javaScript is enabled, an datepicker will appear, select what day you wish to add, otherwise type in the specific date.
+* Proceed to add activites in the same manner as inputing today's activities
+* If javaScript is not enabled, User will not be able to add multiple days on one form
 
 ##### User Restrictions
 
