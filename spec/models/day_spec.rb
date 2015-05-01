@@ -57,7 +57,7 @@ RSpec.describe Day, :type => :model do
                       :total_time => 60,
                       :reason => "Vacation"})
           assert !day.valid?
-          expect(day.errors.full_messages[0]).to eq("Date 02/02/2015 is not within allowed range")
+          expect(day.errors.full_messages[0]).to eq("Date 02/02/2015 is not within allowed range. Note: You only have until the 5th of the month to input days for the previous month.")
         end
       end
       context 'date too far in past' do
@@ -68,7 +68,7 @@ RSpec.describe Day, :type => :model do
                       :total_time => 60,
                       :reason => "Vacation"})
           assert !day.valid?
-          expect(day.errors.full_messages[0]).to eq("Date 12/31/2014 is not within allowed range")
+          expect(day.errors.full_messages[0]).to eq("Date 12/31/2014 is not within allowed range. Note: You only have until the 5th of the month to input days for the previous month.")
         end
       end
       context 'date is today' do
@@ -79,7 +79,7 @@ RSpec.describe Day, :type => :model do
                       :total_time => 60,
                       :reason => "Vacation"})
           assert !day.valid?
-          expect(day.errors.full_messages[0]).to eq("Date 01/07/2015 is not within allowed range")
+          expect(day.errors.full_messages[0]).to eq("Date 01/07/2015 is not within allowed range. Note: You only have until the 5th of the month to input days for the previous month.")
         end
       end
       context 'date in range' do
@@ -106,7 +106,7 @@ RSpec.describe Day, :type => :model do
                       :total_time => 60,
                       :reason => "Vacation"})
           assert !day.valid?
-          expect(day.errors.full_messages[0]).to eq("Date 02/02/2015 is not within allowed range")
+          expect(day.errors.full_messages[0]).to eq("Date 02/02/2015 is not within allowed range. Note: You only have until the 5th of the month to input days for the previous month.")
         end
       end
       context 'date too far in past' do
@@ -117,7 +117,7 @@ RSpec.describe Day, :type => :model do
                       :total_time => 60,
                       :reason => "Vacation"})
           assert !day.valid?
-          expect(day.errors.full_messages[0]).to eq("Date 11/20/2014 is not within allowed range")
+          expect(day.errors.full_messages[0]).to eq("Date 11/20/2014 is not within allowed range. Note: You only have until the 5th of the month to input days for the previous month.")
         end
       end
       context 'date is today' do
@@ -128,7 +128,7 @@ RSpec.describe Day, :type => :model do
                       :total_time => 60,
                       :reason => "Vacation"})
           assert !day.valid?
-          expect(day.errors.full_messages[0]).to eq("Date 01/04/2015 is not within allowed range")
+          expect(day.errors.full_messages[0]).to eq("Date 01/04/2015 is not within allowed range. Note: You only have until the 5th of the month to input days for the previous month.")
         end
       end
       context 'date in range' do

@@ -19,7 +19,7 @@ RSpec.describe UsersController do
     end
     it "Returns empty when user has not worked out ever" do
       Month.stub(:get_users_earliest_month)
-      UsersController.any_instance.stub(:get_money_earned)
+      UsersController.any_instance.stub(:get_list_of_amt_per_month).and_return([])
       UsersController.any_instance.stub(:get_all_workouts).and_return([])
       
       get :calendar
@@ -30,7 +30,7 @@ RSpec.describe UsersController do
       firstMonth = [['swimming', 80, '03-01-2015', "#3c763d", "#dff0d8", "#d6e9c6", "Status: Approved"]]
       secondMonth = [['running', 60, '04-01-2015', '#8a6d3b', '#fcf8e3', '#faebcc', "Status: Pending"],['climbing', 60, '04-02-2015', '#a94442', '#f2dede', '#ebccd1', "Status: Denied"]]
       Month.stub(:get_users_earliest_month)
-      UsersController.any_instance.stub(:get_money_earned)
+      UsersController.any_instance.stub(:get_list_of_amt_per_month).and_return([])
       UsersController.any_instance.stub(:get_all_workouts).and_return(firstMonth + secondMonth)
 
       get :calendar
@@ -112,7 +112,7 @@ RSpec.describe UsersController do
       month = double('Month', :month => 4, :year => 2015, :num_of_days => 1)
       days = [double('Day', :date => '04-01-2015', :approved => false, :denied => false)]
       activities = [pending_activity]
-
+      
       Month.stub_chain(:where, :first).and_return(month)
       month.should_receive(:days).and_return(days)
       days[0].should_receive(:activities).and_return(activities)
@@ -144,8 +144,13 @@ RSpec.describe UsersController do
       allow(controller).to receive(:current_user).and_return(user)
     end
     it 'computes amount of money earned from approved days this month' do 
-      Month.stub_chain(:get_approved_dates_list, :length).and_return(2)
-      controller.get_money_earned(3,2015).should eql '$20'
+      start = Date.new(2015,03,01)
+      finish = Date.new(2015,04,15)
+
+      UsersController.any_instance.stub(:num_of_months_to_retrieve).and_return(2)
+      Month.stub(:get_money_for_month).and_return('$10', '$20')
+      
+      controller.get_list_of_amt_per_month(start, finish).should eql ['$10', '$20']
     end
   end
 

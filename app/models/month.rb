@@ -66,6 +66,13 @@ class Month < ActiveRecord::Base
     return dates
   end
 
+  def self.get_money_for_month(user_id, month, year)
+    month_model = Month.get_month_model(user_id, month, year)
+    amt_per_day = month_model != nil ? month_model.work_rate : Constant.get_work_rate
+    approved_cnt = Month.get_approved_dates_list(user_id, month, year).length
+    return "$" + (approved_cnt * amt_per_day).to_s
+  end
+
   def self.get_users_earliest_month(user_id)
     months = self.where(user_id: user_id, year: Month.minimum(:year))
     return months == nil ? nil : months.where(month: months.minimum(:month)).first
