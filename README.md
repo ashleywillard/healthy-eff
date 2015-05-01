@@ -90,11 +90,12 @@ Check out [Heroku](https://www.heroku.com/) for easy deployment!
 
 ![Diagram](http://i.imgur.com/FJvH28c.png)
 
-##### Add Previous Days:
+##### Add Past Days:
 * To add previous days, click Input Past Days at the bottom of the Log Healty Activity Home Page, this will redirect you to the Add Previous Days Page
 * For each day you want to add, click the date input box, if javaScript is enabled, an datepicker will appear, select what day you wish to add, otherwise type in the specific date.
 * Proceed to add activites in the same manner as inputing today's activities
 * If javaScript is not enabled, User will not be able to add multiple days on one form
+* A user may only input past days for the current month. However if the current date is on or before the 5th, a user may input past days for the previous month as well.
 
 ##### User Calendar Page:
 * After inputing either today or past day's healthy activity, User will be brought to the Calendar page
