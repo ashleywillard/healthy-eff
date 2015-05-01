@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe DaysController do
+
   let(:dummy_class) { Class.new { extend ErrorMessages } }
 
   before :each do
