@@ -123,11 +123,13 @@ Check out [Heroku](https://www.heroku.com/) for easy deployment!
 
 ##### Manage Page: 
 * From this page, admin can edit employee information, such as adding new employees, editing current employee information, and deleting employees
-* While Admin can change the reimbursement rate, it is limited to four numbers in length (not counting a period, so 1111 and 11.11 are both valid. 11111 is not). 
-* Admins cannot delete themselves, although other admins can delete other admins. 
+* While Admin can change the reimbursement rate, it is limited to four numbers in length (not counting a period, so 1111 and 11.11 are both valid. 11111 is not)
+* Admins cannot delete themselves, although other admins can delete other admins 
+* Admins can make any employee an admin
+  * There is a confirmation window when you delete or add an admin
 
 ##### Pending Page:
-* On the pending page Admin can approve or deny employees' past day inputs. Admin will be presented with the date the employee wants to add as well as the reason for inputing the day late.  
+* On the pending page Admin can approve or deny employees' past day inputs. Admin will be presented with the date the employee wants to add as well as the reason for inputing the day late  
 
 ##License
 
