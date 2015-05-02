@@ -52,6 +52,7 @@ gem 'twitter-bootstrap-rails'
 gem 'fullcalendar-rails'
 gem 'bootstrap-datepicker-rails', '~> 1.4.0'
 gem 'bootstrap-glyphicons'
+gem "codeclimate-test-reporter", group: :test, require: nil
 
 # To generate PDF files
 gem 'wkhtmltopdf-binary'
