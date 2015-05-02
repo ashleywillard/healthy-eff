@@ -78,7 +78,8 @@ RSpec.describe DaysController do
                     :last_name => 'Guo',
                     :email => '169.healthyeff@gmail.com',
                     :password => 'NewBaconings2day.',
-                    :password_confirmation => 'NewBaconings2day.'})
+                    :password_confirmation => 'NewBaconings2day.',
+                    :current_timezone => 'Pacific Time (US & Canada)'})
       DaysController.any_instance.stub(:current_user).and_return(@user)
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(true)
@@ -139,7 +140,8 @@ RSpec.describe DaysController do
                     :last_name => 'Guo',
                     :email => '169.healthyeff@gmail.com',
                     :password => 'Sushi5evar!',
-                    :password_confirmation => 'Sushi5evar!'})
+                    :password_confirmation => 'Sushi5evar!',
+                    :current_timezone => 'Pacific Time (US & Canada)'})
       allow(@user).to receive(:password_changed?).and_return(true)
       DaysController.any_instance.stub(:current_user).and_return(@user)
       DaysController.any_instance.stub(:check_logged_in)

@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   validate :password_complexity
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :name
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :current_timezone
   # attr_accessible :title, :body
 
   has_many :months, :dependent => :destroy

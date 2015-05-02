@@ -7,7 +7,9 @@
     = f.fields_for :activities do |builder|
       = render "activity_fields", :f => builder
       = link_to_add_fields "<span class=\"glyphicon glyphicon-plus-sign\"></span> Add Activity".html_safe, f, :activities
-
+    %br
+    = f.label "Select Your Timezone"
+    = f.time_zone_select :timezone, nil, {:default => @user_timezone}
       
   %p 
     = show_simple_captcha(:label => "Enter before submitting", :placeholder => "", :refresh_button_text => "Refresh text")
