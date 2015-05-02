@@ -36,15 +36,6 @@ Scenario: Blank rate
 	And I press “Update”
 	Then the current rate should be "10"
 
-@javascript
-Scenario: Update rate and check that calendar reflects the change
-  And I update the rate to be "15"
-  And I visit my calendar page
-  Then I should see "$15 earned this month"
-  When I click on the calendar's previous arrow
-  And Cucumber needs to create click event so money changes
-  Then I should see "$10 earned this month"
-
 
 
 
