@@ -215,7 +215,7 @@ Passwords must fulfill the following requirements:
 
 You'll need to install Phantom JS on your machine.
 
-For Macs (with [Homebrew](http://brew.sh):
+For Macs (with [Homebrew](http://brew.sh)):
 
     .../healthy-eff$ brew install phantomjs
 
