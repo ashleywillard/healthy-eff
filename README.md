@@ -234,4 +234,4 @@ After you have PhantomJS installed, you can run our test suites. We used [Cucumb
 
 Developed through UC Berkeley's CS 169, in partnership with EFF.
 
-Copyright (c) 2015 Sarah Hernandez, Alex Ho, Michelle Lin, Corinee Schafle, Allan Tang, Ashley Willard. See LICENSE for details.
+Copyright (c) 2015 Sarah Hernandez, Alex Ho, Michelle Lin, Corinne Schafle, Allan Tang, Ashley Willard. See LICENSE for details.
