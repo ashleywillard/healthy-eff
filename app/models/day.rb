@@ -1,7 +1,7 @@
 class Day < ActiveRecord::Base
   include ErrorMessages, DateFormat
 
-  attr_accessible :date, :total_time, :reason, :approved, :month_id, :denied
+  attr_accessible :date, :total_time, :reason, :approved, :month_id, :denied, :timezone
   validates :date, :reason, presence: true
   validate :valid_total, :valid_date
   belongs_to :month
@@ -66,4 +66,7 @@ class Day < ActiveRecord::Base
     month.save!
   end
 
+  def get_date_in_correct_timezone
+    return self.date.in_time_zone(self.timezone)
+  end
 end

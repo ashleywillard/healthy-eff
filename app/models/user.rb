@@ -49,4 +49,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.get_current_timezone(id)
+    return User.find_by_id(id).current_timezone
+  end
+
 end
