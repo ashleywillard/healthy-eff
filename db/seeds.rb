@@ -10,8 +10,8 @@
 Constant.create! :curr_rate => 10
 
 # ===== Admin account ===== #
-user = User.create! :first_name => 'Admin',
-                    :last_name => 'Test',
+user = User.create! :first_name => 'Alex',
+                    :last_name => 'Ho',
                     :email => '169.healthyeff@gmail.com',
                     :password => '?Northsidepotato169',
                     :password_confirmation => '?Northsidepotato169',
@@ -21,8 +21,8 @@ user.admin = true
 user.save
 
 # ===== Non-admin account ===== #
-User.create! :first_name => 'User',
-             :last_name => 'Test',
+User.create! :first_name => 'Allan',
+             :last_name => 'Tang',
              :email => 'healthypotato@gmail.com', 
              :password => '?Hotpotato169', 
              :password_confirmation => '?Hotpotato169',
@@ -114,7 +114,7 @@ User.create! :first_name => 'Cooper',
              :password_changed => true
 
 User.create! :first_name => 'Cory',
-             :last_name => 'Not Online',
+             :last_name => 'Missing',
              :email => 'cory@eff.org', 
              :password => 'Testing1?', 
              :password_confirmation => 'Testing1?',
@@ -197,8 +197,8 @@ User.create! :first_name => 'Mark',
              :password_confirmation => 'Testing1?',
              :password_changed => true
 
-User.create! :first_name => 'Not',
-             :last_name => 'Online',
+User.create! :first_name => 'Missing',
+             :last_name => 'Missing',
              :email => 'jcb@eff.org', 
              :password => 'Testing1?', 
              :password_confirmation => 'Testing1?',
@@ -239,8 +239,8 @@ User.create! :first_name => 'Jacob',
              :password_confirmation => 'Testing1?',
              :password_changed => true
 
-User.create! :first_name => 'Not',
-             :last_name => 'Online',
+User.create! :first_name => 'Missing',
+             :last_name => 'Missing',
              :email => 'jstyre@eff.org', 
              :password => 'Testing1?', 
              :password_confirmation => 'Testing1?',
@@ -352,7 +352,7 @@ User.create! :first_name => 'Mark',
              :password_changed => true
 
 User.create! :first_name => 'Michael',
-             :last_name => 'Not Online',
+             :last_name => 'Missing',
              :email => 'michael@eff.org', 
              :password => 'Testing1?', 
              :password_confirmation => 'Testing1?',
@@ -470,8 +470,8 @@ User.create! :first_name => 'Tammy',
              :password_confirmation => 'Testing1?',
              :password_changed => true
 
-User.create! :first_name => 'Not',
-             :last_name => 'Online',
+User.create! :first_name => 'Missing',
+             :last_name => 'Missing',
              :email => 'tien@eff.org', 
              :password => 'Testing1?', 
              :password_confirmation => 'Testing1?',
