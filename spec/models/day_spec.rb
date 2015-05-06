@@ -1,14 +1,16 @@
 require 'rails_helper'
+include DateFormat
 
 RSpec.describe Day, :type => :model do
 
   describe ".num_pending" do
     it "returns the total number of days pending approval" do
+      today = get_today
       expect(Day.num_pending).to eq(0)
-      pending = Day.create! :id => 1, :total_time => 60, :date => Date.today.prev_day,
+      pending = Day.create! :id => 1, :total_time => 60, :date => get_today.prev_day,
                             :approved => false, :denied => false, :reason => "r"
        expect(Day.num_pending).to eq(1)
-      logged = Day.create! :id => 2, :total_time => 60, :date => Date.today,
+      logged = Day.create! :id => 2, :total_time => 60, :date => get_today,
                            :approved => true, :denied => false, :reason => "r"
        expect(Day.num_pending).to eq(1)
     end
@@ -17,7 +19,7 @@ RSpec.describe Day, :type => :model do
   describe '#valid_total' do
     context 'Total time is less than 1 hour' do
       it 'Should raise error - total cant be less than 60 mins' do
-        today = Date.today
+        today = get_today
         day = Day.new({:date => today,
                     :approved => true,
                     :denied => false,
@@ -29,7 +31,7 @@ RSpec.describe Day, :type => :model do
     end
     context 'Total time is greater than 1 day' do
       it 'should raise error - total cant be more than 24 hours' do
-        today = Date.today
+        today = get_today
         day = Day.new({:date => today,
                     :approved => true,
                     :denied => false,

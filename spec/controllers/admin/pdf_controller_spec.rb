@@ -1,5 +1,6 @@
 require "rails_helper"
 require File.expand_path("../../../users_helper", __FILE__)
+include DateFormat
 
 RSpec.configure do |c|
   c.include UsersHelper
@@ -16,7 +17,8 @@ RSpec.describe Admin::PdfController do
   describe "admin/pdf#audit" do
     it "makes a call to generate a printable PDF document" do
       expect(controller).to receive(:generate_pdf)
-      get :audit, :month => Date.today.month, :year => Date.today.year, :id => 1
+      today = get_today
+      get :audit, :month => today.month, :year => today.year, :id => 1
     end
   end
 
@@ -29,12 +31,14 @@ RSpec.describe Admin::PdfController do
         allow(User).to receive(:find_by_id).and_return(@user)
       end
       it "redirects to the list view" do
-        get :accounting, :month => Date.today.month, :year => Date.today.year, :id => 1
+        today = get_today
+        get :accounting, :month => today.month, :year => today.year, :id => 1
         expect(response).to redirect_to :controller => 'admin/list',
                                         :action => :index
       end
       it "does not generate a PDF" do
-        get :accounting, :month => Date.today.month, :year => Date.today.year, :id => 1
+        today = get_today
+        get :accounting, :month => today.month, :year => today.year, :id => 1
         expect(controller).to receive(:generate_pdf).exactly(0).times
       end
     end
@@ -51,11 +55,13 @@ RSpec.describe Admin::PdfController do
       end
       it "makes a call to generate a printable PDF document" do
         expect(controller).to receive(:generate_pdf).exactly(1).times
-        get :accounting, :month => Date.today.month, :year => Date.today.year, :id => @user.id, :selected => ["1"]
+        today = get_today
+        get :accounting, :month => today.month, :year => today.year, :id => @user.id, :selected => ["1"]
       end
       it "does not generate a PDF when no employees are checked" do
         expect(controller).to receive(:generate_pdf).exactly(0).times
-        get :accounting, :month => Date.today.month, :year => Date.today.year, :id => @user.id
+        today = get_today
+        get :accounting, :month => today.month, :year => today.year, :id => @user.id
       end
     end
   end
@@ -64,10 +70,11 @@ RSpec.describe Admin::PdfController do
     context "when users are checked" do
       it "updates the received_form? column of the Month table" do
         allow(@user).to receive(:last_name).and_return("last")
-        month = Month.create_month_model(@user.id, Date.today.strftime("%m"), Date.today.strftime("%Y"))
+        today = get_today
+        month = Month.create_month_model(@user.id, today.strftime("%m"), today.strftime("%Y"))
         allow(Month).to receive(:find_by_id).and_return(month)
         post :forms, :commit => "Mark Received", :selected => { @user.last_name => month.id },
-                     :year => Date.today.year, :month => Date.today.month
+                     :year => today.year, :month => today.month
         expect(month.received_form).to eq(true)
       end
     end

@@ -1,9 +1,9 @@
 require "rails_helper"
 require File.expand_path("../../../users_helper", __FILE__)
+include DateFormat
 
 RSpec.configure do |c|
   c.include UsersHelper
-  c.include DateFormat
 end
 
 RSpec.describe Admin::PendingController do
@@ -18,7 +18,7 @@ RSpec.describe Admin::PendingController do
     SUCCESS_CODE ||= 200
     context "when there are activities pending approval" do
       before :each do
-        @day = Day.create :id => 1, :total_time => 60, :date => Date.today.prev_day,
+        @day = Day.create :id => 1, :total_time => 60, :date => get_today.prev_day,
                           :approved => false, :denied => false
         allow(Day).to receive(:where).and_return([@day])
       end
@@ -41,7 +41,7 @@ RSpec.describe Admin::PendingController do
 
   describe "admin/pending#update" do
     before :each do
-      yesterday = Date.today.prev_day
+      yesterday = get_today.prev_day
       @month = Month.create_month_model(@user.id,
                                         get_month(yesterday),
                                         get_year(yesterday))

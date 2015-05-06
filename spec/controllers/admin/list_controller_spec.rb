@@ -1,5 +1,6 @@
 require "rails_helper"
 require File.expand_path("../../../users_helper", __FILE__)
+include DateFormat
 
 RSpec.configure do |c|
   c.include UsersHelper
@@ -72,13 +73,13 @@ RSpec.describe Admin::ListController do
       @user = User.create! :email => 'testuser@test.com',
                            :password => '?1234Abcedfg',
                            :password_confirmation => '?1234Abcedfg'
-      @cur_month = Month.create_month_model(@user.id, Date.today.strftime("%m"), Date.today.strftime("%Y"))
-      Day.create! :date => Date.today - 1.day,
+      @cur_month = Month.create_month_model(@user.id, get_today.strftime("%m"), get_today.strftime("%Y"))
+      Day.create! :date => get_today - 1.day,
                   :approved => true,
                   :total_time => 60,
                   :reason => 'Reason',
                   :month_id => @cur_month.id
-      @prev_month = Month.create_month_model(@user.id, (Date.today - 1.month).strftime("%m"), Date.today.strftime("%Y"))
+      @prev_month = Month.create_month_model(@user.id, (get_today - 1.month).strftime("%m"), get_today.strftime("%Y"))
     end
     it "stores the month being viewed in the session hash" do
       get :index
