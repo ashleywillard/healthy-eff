@@ -10,8 +10,8 @@
 Constant.create! :curr_rate => 10
 
 # ===== Admin account ===== #
-user = User.create! :first_name => 'Admin',
-                    :last_name => 'Test',
+user = User.create! :first_name => 'Alex',
+                    :last_name => 'Ho',
                     :email => '169.healthyeff@gmail.com',
                     :password => '?Northsidepotato169',
                     :password_confirmation => '?Northsidepotato169',
@@ -21,8 +21,8 @@ user.admin = true
 user.save
 
 # ===== Non-admin account ===== #
-User.create! :first_name => 'User',
-             :last_name => 'Test',
+User.create! :first_name => 'Allan',
+             :last_name => 'Tang',
              :email => 'healthypotato@gmail.com', 
              :password => '?Hotpotato169', 
              :password_confirmation => '?Hotpotato169',
@@ -113,13 +113,6 @@ User.create! :first_name => 'Cooper',
              :password_confirmation => 'Testing1?',
              :password_changed => true
 
-User.create! :first_name => 'Cory',
-             :last_name => 'Not Online',
-             :email => 'cory@eff.org', 
-             :password => 'Testing1?', 
-             :password_confirmation => 'Testing1?',
-             :password_changed => true
-
 User.create! :first_name => 'Corynne',
              :last_name => 'McSherry',
              :email => 'corynne@eff.org', 
@@ -197,13 +190,6 @@ User.create! :first_name => 'Mark',
              :password_confirmation => 'Testing1?',
              :password_changed => true
 
-User.create! :first_name => 'Not',
-             :last_name => 'Online',
-             :email => 'jcb@eff.org', 
-             :password => 'Testing1?', 
-             :password_confirmation => 'Testing1?',
-             :password_changed => true
-
 User.create! :first_name => 'Jeremy',
              :last_name => 'Gillula',
              :email => 'jeremy@eff.org', 
@@ -235,13 +221,6 @@ User.create! :first_name => 'Joanna',
 User.create! :first_name => 'Jacob',
              :last_name => 'Hoffman-Andrews',
              :email => 'jsha@eff.org', 
-             :password => 'Testing1?', 
-             :password_confirmation => 'Testing1?',
-             :password_changed => true
-
-User.create! :first_name => 'Not',
-             :last_name => 'Online',
-             :email => 'jstyre@eff.org', 
              :password => 'Testing1?', 
              :password_confirmation => 'Testing1?',
              :password_changed => true
@@ -347,13 +326,6 @@ User.create! :first_name => 'Max',
 User.create! :first_name => 'Mark',
              :last_name => 'Burdett',
              :email => 'mfb@eff.org', 
-             :password => 'Testing1?', 
-             :password_confirmation => 'Testing1?',
-             :password_changed => true
-
-User.create! :first_name => 'Michael',
-             :last_name => 'Not Online',
-             :email => 'michael@eff.org', 
              :password => 'Testing1?', 
              :password_confirmation => 'Testing1?',
              :password_changed => true
@@ -470,8 +442,8 @@ User.create! :first_name => 'Tammy',
              :password_confirmation => 'Testing1?',
              :password_changed => true
 
-User.create! :first_name => 'Not',
-             :last_name => 'Online',
+User.create! :first_name => 'Lee',
+             :last_name => 'Tien',
              :email => 'tien@eff.org', 
              :password => 'Testing1?', 
              :password_confirmation => 'Testing1?',
