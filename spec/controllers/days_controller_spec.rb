@@ -7,6 +7,7 @@ RSpec.describe DaysController do
   before :each do
     Constant.create! :curr_rate => 10
     @user = double(User)
+    @user.stub(:current_timezone).and_return("Pacific Time (US & Canada)")
     allow(@user).to receive(:password_changed?).and_return(true)
     allow(@user).to receive(:id).and_return(1)
     allow_message_expectations_on_nil # suppress warnings on devise warden
@@ -78,10 +79,12 @@ RSpec.describe DaysController do
                     :last_name => 'Guo',
                     :email => '169.healthyeff@gmail.com',
                     :password => 'NewBaconings2day.',
-                    :password_confirmation => 'NewBaconings2day.'})
+                    :password_confirmation => 'NewBaconings2day.',
+                    :current_timezone => 'Pacific Time (US & Canada)'})
       DaysController.any_instance.stub(:current_user).and_return(@user)
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(true)
+      DaysController.any_instance.stub(:update_user_timezone)
     end
     context 'All inputs are present and valid' do
       it 'should successfully add today to database and redirect to calendar page' do
@@ -139,7 +142,8 @@ RSpec.describe DaysController do
                     :last_name => 'Guo',
                     :email => '169.healthyeff@gmail.com',
                     :password => 'Sushi5evar!',
-                    :password_confirmation => 'Sushi5evar!'})
+                    :password_confirmation => 'Sushi5evar!',
+                    :current_timezone => 'Pacific Time (US & Canada)'})
       allow(@user).to receive(:password_changed?).and_return(true)
       DaysController.any_instance.stub(:current_user).and_return(@user)
       DaysController.any_instance.stub(:check_logged_in)
@@ -244,6 +248,7 @@ RSpec.describe DaysController do
     it "add_today should fail because captcha is bad" do
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(false)
+      DaysController.any_instance.stub(:update_user_timezone)
       post :add_today
       flash[:alert].should eql(dummy_class.bad_captcha)
       response.should redirect_to(today_path)
@@ -252,6 +257,7 @@ RSpec.describe DaysController do
     it "add_days should fail because captcha is bad" do
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(false)
+      DaysController.any_instance.stub(:update_user_timezone)
       post :add_days
       flash[:alert].should eql(dummy_class.bad_captcha)
       response.should redirect_to(past_days_path)

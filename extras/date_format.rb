@@ -20,6 +20,8 @@ module DateFormat
   end
 
   def get_today
+    #Should only call this to get local time
     return Date.today
+    #return DateTime.now.in_time_zone(User.get_current_timezone(id)).to_date
   end
 end
