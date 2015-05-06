@@ -7,7 +7,7 @@ class UsersController < ApplicationController
       redirect_to calendar_path
     end
     @name = set_name
-    @date = get_today
+    @date = get_today(current_user.current_timezone)
     earliest_month = Month.get_users_earliest_month(extract_id_for_calendar)
     @earliest_date = (earliest_month == nil) ? @date : Date.new(earliest_month.year,earliest_month.month, 1)
     @workouts = get_all_workouts(@earliest_date, @date)

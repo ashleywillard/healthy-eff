@@ -6,8 +6,8 @@ class DaysController < ApplicationController
   def today
     restful_redirect
     @user_timezone = current_user.current_timezone
-    @date = get_today
-    @day = Day.create_day(@date, true, "")
+    @date = get_today(current_user.current_timezone)
+    @day = Day.create_day(@date, true, "", current_user.current_timezone)
     @day.activities.append(Activity.new())
     month = Month.get_month_model(current_user.id, get_month(@date), get_year(@date))
     flash[:alert] = repeat_date(format_date(@date)) if month != nil && month.contains_date?(@date)
@@ -19,7 +19,7 @@ class DaysController < ApplicationController
     day = Day.new()
     @month.days.append(day)
     day.activities.append(Activity.new())
-    today = get_today
+    today = get_today(current_user.current_timezone)
     @end_date = today.prev_day
     @start_date = get_day(today) < 6 ? today.ago(1.month).beginning_of_month : today.beginning_of_month
     @previously_inputted = Month.get_inputted_dates(current_user.id, @start_date, @end_date)
@@ -84,7 +84,7 @@ class DaysController < ApplicationController
   def create_single_day(day, approved)
     date = day[:date]
     date = Time.strptime(date, "%m/%d/%Y") unless approved
-    @day = Day.create_day(date, approved, params[:days][:reason])
+    @day = Day.create_day(date, approved, params[:days][:reason], params[:day][:timezone])
     flash[:notice] = "" if flash[:notice] == nil
     flash[:notice] += @day.save_with_activities(validate_single_day(day[:activities_attributes], @day))
     update_month(@day)
@@ -101,7 +101,7 @@ class DaysController < ApplicationController
   def check_day(day)
     begin
       date = Time.strptime(day[:date], "%m/%d/%Y")
-      @day = Day.create_day(date, false, params[:days][:reason])
+      @day = Day.create_day(date, false, params[:days][:reason], params[:day][:timezone])
       validate_single_day(day[:activities_attributes], @day)
     rescue ArgumentError
       #case where Date.parse throws an ArgumentError for having invalid date field

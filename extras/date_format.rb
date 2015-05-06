@@ -19,9 +19,9 @@ module DateFormat
     return date.strftime("%d").to_i
   end
 
-  def get_today
+  def get_today(timezone)
     #Should only call this to get local time
-    return Date.today
-    #return DateTime.now.in_time_zone(User.get_current_timezone(id)).to_date
+    timezone = "Pacific Time (US & Canada)" if timezone == "" || timezone == nil
+    return Time.now.utc.to_datetime.in_time_zone(timezone).to_date
   end
 end
