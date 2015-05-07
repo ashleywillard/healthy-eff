@@ -29,7 +29,7 @@ include the following:
     gem 'bootstrap-datepicker-rails', '~> 1.4.0' # Date selection pops up a nice calendar
     gem 'bootstrap-glyphicons' # Provides icons through app
 
-Credits to [Glyphicons](http://glyphicons.com/) for the application icons.
+Credits to [Glyphicons](http://glyphicons.com/) for the icons used throughout the application.
 
 ## Set-up and Deployment
 
