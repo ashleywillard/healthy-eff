@@ -12,7 +12,7 @@ Background:
   And the current rate is 10
   Given I am logged in as a non-admin
   And I am on the home page
-  Then I should see "Your Current Timezone is set to Pacific Time (US & Canada)."
+  Then I should see "Pacific Time (US & Canada)"
 
 @javascript
 Scenario: Changing Timezone on Settings Page
@@ -20,4 +20,4 @@ Scenario: Changing Timezone on Settings Page
   And I select timezone "Tijuana"
   Then I should see "Settings were successfully updated."
   When I am on the home page
-  Then I should see "Your Current Timezone is set to Tijuana."
+  Then I should see "Tijuana"

@@ -12,7 +12,7 @@ class Month < ActiveRecord::Base
 
   def self.update_month_rates(timezone, rate)
     today = get_today(timezone)
-    months = self.get_user_months(get_month(today), get_year(today))
+    months = self.get_user_months(today.strftime("%m").to_i, today.strftime("%Y").to_i)
     months.each do |month|
       month.work_rate = rate
       month.save!
@@ -41,10 +41,10 @@ class Month < ActiveRecord::Base
   end
 
   def self.get_inputted_dates(user_id, start_date, end_date)
-    month1 = end_date.strftime("%m")
-    month2 = start_date.strftime("%m")
-    previously_inputted = self.get_dates_list(user_id, month1, end_date.strftime("%Y"))
-    previously_inputted += self.get_dates_list(user_id, month2, start_date.strftime("%Y")) unless month1 == month2
+    month1 = end_date.strftime("%m").to_i
+    month2 = start_date.strftime("%m").to_i
+    previously_inputted = self.get_dates_list(user_id, month1, end_date.strftime("%Y").to_i)
+    previously_inputted += self.get_dates_list(user_id, month2, start_date.strftime("%Y").to_i) unless month1 == month2
     return previously_inputted.join(",")
   end
 
@@ -86,7 +86,7 @@ class Month < ActiveRecord::Base
   end
 
   def self.update_month(user_id, day)
-    month_model = Month.get_or_create_month_model(user_id, get_month(day.date), get_year(day.date))
+    month_model = Month.get_or_create_month_model(user_id, day.date.strftime("%m").to_i, day.date.strftime("%Y").to_i)
     month_model.num_of_days += 1 if day.approved
     month_model.save!
     day.update_attributes(:month_id => month_model.id)

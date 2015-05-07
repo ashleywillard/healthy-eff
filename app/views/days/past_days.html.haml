@@ -1,3 +1,7 @@
+%p.notice 
+  %span.glyphicon.glyphicon-info-sign
+  Your Current Timezone is set to #{current_user.current_timezone}. 
+  = link_to "Update Timezone", edit_user_registration_path
 = form_for(@month, url: add_days_path(), :html => {class: "form-inline"})  do |f|
   %p.form
   = f.fields_for :days do |builder|
@@ -12,8 +16,5 @@
   
   %p 
     = show_simple_captcha(:label => "Enter before submitting", :placeholder => "", :refresh_button_text => "Refresh text")
-    %p.notice 
-      %span.glyphicon.glyphicon-info-sign
-      Your Current Timezone is set to #{current_user.current_timezone}. To update this visit the Settings page.
 
     = f.submit 'Submit', :class => 'submit btn'
