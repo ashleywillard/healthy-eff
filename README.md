@@ -98,15 +98,9 @@ We've already added most of the employees, but feel free to change `db/seeds.rb`
 
 #### Final set-up
 
-Run the following to set up the gems we've used for this project.
+Run the setup script to install gems and set up the database.
 
-    .../healthy-eff$ bundle install
-
-Run the following to restart the database and add in the employees you specified in the `db/seeds.rb`.
-
-*** Note: this will wipe the current database and start from only the seeds. All previous activities and database transactions will be deleted. You'll probably only want to run this once for setup. ***
-
-    .../healthy-eff$ rake db:reset
+    .../healthy-eff$ ./bin/setup
 
 Start a server and enjoy!
 
