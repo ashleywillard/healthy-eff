@@ -35,33 +35,18 @@ module ErrorMessages
   end
 
   INVITE_REFUSED ||= "You are not authorized to invite other users."
-  def invite_refused
-    INVITE_REFUSED
-  end
 
   NOTHING_PENDING ||= "No activities pending approval."
-  def nothing_pending
-    NOTHING_PENDING
-  end
 
   def action_complete(action)
     ACTION_COMPLETE + " #{action}."
   end
 
   BAD_CAPTCHA ||= "Incorrect captcha."
-  def bad_captcha
-    BAD_CAPTCHA
-  end
 
   EMPTY_FIELDS ||= "Some required fields were left blank."
-  def empty_fields
-    EMPTY_FIELDS
-  end
 
   INVALID_DATE ||= "Invalid date."
-  def invalid_date
-    INVALID_DATE
-  end
 
   def activity_recorded(name, duration, date)
     if date == ""
@@ -85,14 +70,8 @@ module ErrorMessages
   end
 
   WELCOME ||= "Welcome, new user! Please change your password."
-  def welcome
-    WELCOME
-  end
 
   HEALTHY_ACTIVITY ||= "A Healthy Activity"
-  def healthy_activity
-    HEALTHY_ACTIVITY
-  end
 
   LOWERCASE_MISSING ||= "must include at least one lowercase character"
   def lowercase_missing

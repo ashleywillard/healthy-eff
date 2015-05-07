@@ -1,10 +1,10 @@
 require "rails_helper"
 include DateFormat
+include ErrorMessages
 
 RSpec.describe DaysController do
 
   let(:dummy_class) { Class.new { extend ErrorMessages } }
-  let(:dummy_date_class) { Class.new {extend DateFormat} }
 
   before :each do
     Constant.create! :curr_rate => 10
@@ -193,7 +193,7 @@ RSpec.describe DaysController do
         params = {:days => {:reason => "Vacation"}, :month => {:days_attributes =>
                               {"1" => {:date => "RAWR", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
-        expect(flash[:alert]).to eq(dummy_class.invalid_date)
+        expect(flash[:alert]).to eq(INVALID_DATE)
         response.should redirect_to(past_days_path)
       end
     end
@@ -212,7 +212,7 @@ RSpec.describe DaysController do
         params = {:days => {:reason => "Vacation"}, :month => {:days_attributes =>
                               {"1" => {:date => "", :activities_attributes => {"2" => {:name => "running", :duration => "60"}}}}}}
         post :add_days, params
-        expect(flash[:alert]).to eq(dummy_class.invalid_date)
+        expect(flash[:alert]).to eq(INVALID_DATE)
         response.should redirect_to(past_days_path)
       end
     end
@@ -220,7 +220,7 @@ RSpec.describe DaysController do
       it 'should flash Fields are empty and redirect to past days path' do
         params = {:month => {}}
         post :add_days
-        expect(flash[:alert]).to eq(dummy_class.empty_fields)
+        expect(flash[:alert]).to eq(EMPTY_FIELDS)
         response.should redirect_to(past_days_path)
       end
     end
@@ -229,7 +229,7 @@ RSpec.describe DaysController do
         date = get_today.prev_day.strftime("%m/%d/%Y")
         params = {:month => {:days_attributes => {"1" => {:date => "#{date}"}}}}
         post :add_days
-        expect(flash[:alert]).to eq(dummy_class.empty_fields)
+        expect(flash[:alert]).to eq(EMPTY_FIELDS)
         response.should redirect_to(past_days_path)
       end
     end
@@ -250,7 +250,7 @@ RSpec.describe DaysController do
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(false)
       post :add_today
-      flash[:alert].should eql(dummy_class.bad_captcha)
+      flash[:alert].should eql(BAD_CAPTCHA)
       response.should redirect_to(today_path)
     end
 
@@ -258,7 +258,7 @@ RSpec.describe DaysController do
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(false)
       post :add_days
-      flash[:alert].should eql(dummy_class.bad_captcha)
+      flash[:alert].should eql(BAD_CAPTCHA)
       response.should redirect_to(past_days_path)
     end
   end
@@ -267,7 +267,7 @@ RSpec.describe DaysController do
     it "get_today converts utc to client datetime" do
       datetime = DateTime.new(2015, 5, 7)
       Time.stub_chain(:now, :utc, :to_datetime).and_return(datetime)
-      dummy_date_class.get_today.should eql(Date.new(2015,5,6))
+      get_today.should eql(Date.new(2015,5,6))
     end
   end
 

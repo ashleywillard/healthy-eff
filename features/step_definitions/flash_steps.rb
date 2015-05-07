@@ -1,4 +1,5 @@
 # encoding: UTF-8
+include ErrorMessages
 
 Then(/^"(.*)" should appear before "(.*)"$/) do |str1, str2|
   if not /#{str1}.*#{str2}.*/m.match(page.body)
@@ -15,7 +16,7 @@ Then(/^I should see activity "(.*)" and duration "(.*)"$/) do |activity, duratio
 end
 
 Then(/^I should see that the date is invalid$/) do
-	expect(page).to have_content(invalid_date)
+	expect(page).to have_content(INVALID_DATE)
 end
 
 Then(/^I should see that this date has already been inputted$/) do
@@ -31,7 +32,7 @@ Then(/^I should see that I cannot access this page$/) do
 end
 
 Then(/^I should see that no activities are pending approval$/) do
-  expect(page).to have_content(nothing_pending)
+  expect(page).to have_content(NOTHING_PENDING)
 end
 
 Then(/^I should see that "(.*)" was successful$/) do |action|
@@ -43,5 +44,5 @@ Then(/^I should not see "(.*")$/) do |msg|
 end
 
 Then(/^I should be welcomed$/) do
-  expect(page).to have_content(welcome)
+  expect(page).to have_content(WELCOME)
 end

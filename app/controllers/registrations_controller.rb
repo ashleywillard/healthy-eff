@@ -15,15 +15,14 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def update_user_timezone
-    form_timezone = current_user.current_timezone
-    if params[:user] != nil && params[:user][:current_timezone] != nil
-      form_timezone = params[:user][:current_timezone]
+    unless params[:user] == nil
+      timezone = params[:user][:current_timezone]
+      if current_user.current_timezone != timezone
+        current_user.update_attributes(:current_timezone => timezone)
+        flash[:notice] = UPDATE_SUCCESSFUL
+      end
     end
-    if current_user.current_timezone != form_timezone
-      current_user.update_attributes(:current_timezone => form_timezone)
-      flash[:notice] = UPDATE_SUCCESSFUL
-    end
-    redirect_to  edit_user_registration_path
+    redirect_to edit_user_registration_path
   end
 
 end

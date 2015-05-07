@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'spec_helper'
+include ErrorMessages
 
 RSpec.describe InvitationsController, :type => :controller do
 
@@ -17,7 +18,7 @@ RSpec.describe InvitationsController, :type => :controller do
       extend ErrorMessages
       post :new
       expect(response).to redirect_to(root_path)
-      flash[:alert].should eql(invite_refused)
+      flash[:alert].should eql(INVITE_REFUSED)
     end
   end
 
