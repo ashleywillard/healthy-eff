@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   validate :password_complexity
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :name
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :current_timezone
   # attr_accessible :title, :body
 
   has_many :months, :dependent => :destroy
@@ -47,6 +47,10 @@ class User < ActiveRecord::Base
     if not password.match(/^(?=.*(_|[^\w])).+$/)
       errors.add :password, SPECIAL_MISSING
     end
+  end
+
+  def self.get_current_timezone(id)
+    return User.find_by_id(id).current_timezone
   end
 
 end

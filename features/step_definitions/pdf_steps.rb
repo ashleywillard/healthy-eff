@@ -82,7 +82,7 @@ Given (/^(.*) has logged (\d+) (?:activity|activities)/) do |name, num|
                      :first_name => full_name[0],
                      :last_name => full_name[1]
   end
-  today = get_today
+  today = get_today("Pacific Time (US & Canada)")
   m = Month.create_month_model(u.id, today.month, today.year)
   m.num_of_days = num.to_i
   m.save!

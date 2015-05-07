@@ -26,9 +26,9 @@ When /I fill in day and activity with:(.*)/ do |input|
     date_field = act_durs.shift
     target_date = date_field
     if date_field == "Yesterday"
-      target_date = format_date(get_today.prev_day)
+      target_date = format_date(get_today("Pacific Time (US & Canada)").prev_day)
     elsif date_field == "2 Days Ago"
-      target_date = format_date(get_today.prev_day.prev_day)
+      target_date = format_date(get_today("Pacific Time (US & Canada)").prev_day.prev_day)
     end
     fill_in date_id[4..-1], :with => target_date
 
@@ -67,11 +67,11 @@ end
 
 And /I fill out date/ do
   date_ids = page.body.scan(/id="month_days_attributes_.{0,20}_date/m)
-  fill_in date_ids[0][4..-1], :with => format_date(get_today.prev_day)
+  fill_in date_ids[0][4..-1], :with => format_date(get_today("Pacific Time (US & Canada)").prev_day)
 end
 
 Given /My activity yesterday was denied/ do
-  yesterday = get_today.yesterday
+  yesterday = get_today("Pacific Time (US & Canada)").yesterday
   date_last_month = yesterday.ago(1.month).beginning_of_month
   m = Month.create_month_model(1, yesterday.month, yesterday.year)
   m.num_of_days = 1

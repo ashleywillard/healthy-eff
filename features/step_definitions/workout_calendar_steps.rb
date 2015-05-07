@@ -2,7 +2,7 @@
 include DateFormat
 
 And (/^I set up the database with a few days$/) do
-  today = get_today
+  today = get_today("Pacific Time (US & Canada)")
   date_last_month = today.ago(1.month).beginning_of_month
   m = Month.create_month_model(2, today.month, today.year)
   m.num_of_days = 1
@@ -23,7 +23,7 @@ And (/^I set up the database with a few days$/) do
   m2 = Month.create_month_model(2, date_last_month.month, date_last_month.year)
   m2.num_of_days = 1
   m2.save!
-  d2 = Day.create!({:date => Time.strptime(date_last_month.strftime("%m/%d/%Y"), "%m/%d/%Y"),
+  d2 = Day.create!({:date => get_date(format_date(date_last_month)),
               :approved => true,
               :denied => false,
               :total_time => 60,
@@ -38,7 +38,7 @@ And (/^I set up the database with a few days$/) do
 end
 
 And /I should see a calendar with my logged activities/ do
-  today = get_today
+  today = get_today("Pacific Time (US & Canada)")
   while (!page.has_content?("#{get_month_name(today)} #{today.year}"))
     page.execute_script("$('#calendar').fullCalendar('prev')")
   end

@@ -10,6 +10,7 @@ Healthyeff::Application.routes.draw do
   as :user do
     get 'users/edit' => 'registrations#edit', :as => 'edit_user_registration'
     put 'users/edit' => 'registrations#update', :as => 'user_registration'
+    match 'users/edit/update_timezone' => 'registrations#update_user_timezone', :as => :update_timezone
   end
 
   #required for devise to work, redirects to path below after user logs in
@@ -23,7 +24,6 @@ Healthyeff::Application.routes.draw do
 #   post 'manage/edit/:id', to: 'admin#update', :as => :update
 #   match 'manage/update_constants' => 'admin#update_constants', :as => :update_constants
 
-  #route for single activity -ashley
   match 'today' => 'days#today', :as => :today
   match 'past_days' => 'days#past_days', :as => :past_days
   match 'add_today' => 'days#add_today', :as => :add_today

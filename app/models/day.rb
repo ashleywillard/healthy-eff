@@ -1,7 +1,7 @@
 class Day < ActiveRecord::Base
   include ErrorMessages, DateFormat
 
-  attr_accessible :date, :total_time, :reason, :approved, :month_id, :denied
+  attr_accessible :date, :total_time, :reason, :approved, :month_id, :denied, :timezone
   validates :date, :reason, presence: true
   validate :valid_total, :valid_date
   belongs_to :month
@@ -13,12 +13,13 @@ class Day < ActiveRecord::Base
     Day.count(:conditions => {:approved => false, :denied => false})
   end
 
-  def self.create_day(date, approved, reason)
+  def self.create_day(date, approved, reason, timezone="Pacific Time (US & Canada)")
     return Day.new({:date => date,
                     :approved => approved,
                     :denied => false,
                     :total_time => 0,
-                    :reason => reason})
+                    :reason => reason,
+                    :timezone => timezone})
   end
 
   def user ; self.month.user ; end
@@ -29,7 +30,7 @@ class Day < ActiveRecord::Base
     activities.each do |activity|
       activity.day_id = self.id
       activity.save!
-      notice += activity_recorded(activity.name, activity.duration, format_date(self.date))
+      notice += activity_recorded(activity.name, activity.duration, format_date(date))
     end
     return notice
   end
@@ -44,7 +45,7 @@ class Day < ActiveRecord::Base
 
   def valid_date
     unless approved
-      today = get_today
+      today = get_today(self.timezone)
       start_date = today.beginning_of_month
       start_date =  today.ago(1.month).beginning_of_month if get_day(today) < 6
       end_date = today.prev_day

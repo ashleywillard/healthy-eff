@@ -89,11 +89,6 @@ module ErrorMessages
     WELCOME
   end
 
-  PAST_DAYS_SENT ||= "Activities for all past days will be sent to admin for approval."
-  def past_days_sent
-    PAST_DAYS_SENT
-  end
-
   HEALTHY_ACTIVITY ||= "A Healthy Activity"
   def healthy_activity
     HEALTHY_ACTIVITY

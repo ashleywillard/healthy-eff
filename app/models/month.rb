@@ -10,8 +10,9 @@ class Month < ActiveRecord::Base
     Month.where(:month => month, :year => year)
   end
 
-  def self.update_month_rates(rate)
-    months = self.get_user_months(get_month(get_today), get_year(get_today))
+  def self.update_month_rates(timezone, rate)
+    today = get_today(timezone)
+    months = self.get_user_months(get_month(today), get_year(today))
     months.each do |month|
       month.work_rate = rate
       month.save!
@@ -105,5 +106,7 @@ class Month < ActiveRecord::Base
   def get_num_pending_days
     self.days.count(:conditions => {:approved => false, :denied => false})
   end
+
+
 
 end

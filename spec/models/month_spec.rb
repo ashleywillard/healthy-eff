@@ -13,7 +13,7 @@ RSpec.describe Month, :type => :model do
                     :password => '?Northsidepotato169',
                     :password_confirmation => '?Northsidepotato169'})
     @user_id = user.id
-    @today = Date.today
+    @today = get_today
     @month = get_month(@today)
     @last_month = get_month(@today.ago(1.month))
     @year = get_year(@today)
@@ -60,7 +60,7 @@ RSpec.describe Month, :type => :model do
 
   describe '#self.get_inputted_dates' do
     before :each do
-      @end_date = Time.strptime("04/15/2015", "%m/%d/%Y")
+      @end_date = get_date("04/15/2015")
       @month1 = Month.create_month_model(@user_id, 4, 2015)
       @month1.num_of_days = 1
       @month1.save!
@@ -73,7 +73,7 @@ RSpec.describe Month, :type => :model do
     end
     context 'Month of start date and end date differ' do
       it 'not implemented' do
-        start_date = Time.strptime("03/01/2015", "%m/%d/%Y")
+        start_date = get_date("03/01/2015")
         month2 = Month.create_month_model(@user_id, 3, 2015)
         month2.num_of_days = 1
         month2.save!
@@ -88,7 +88,7 @@ RSpec.describe Month, :type => :model do
     end
     context 'Month of start date and end date are same' do
       it 'not implemented'do
-        start_date = Time.strptime("04/01/2015", "%m/%d/%Y")
+        start_date = get_date("04/01/2015")
         expect(Month.get_inputted_dates(@user_id, start_date, @end_date)).to eq(["04/15/2015"].join(","))
       end
     end

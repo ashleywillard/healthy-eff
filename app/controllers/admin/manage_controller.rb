@@ -13,7 +13,7 @@ class Admin::ManageController < Admin::AdminController
     rate = params[:constant][:curr_rate].to_i
     unless rate <= 0 || rate == Constant.get_work_rate
       Constant.set_work_rate(rate)
-      Month.update_month_rates(rate)
+      Month.update_month_rates(current_user.current_timezone, rate)
       flash[:notice] = UPDATE_SUCCESSFUL
     end
     redirect_to manage_path

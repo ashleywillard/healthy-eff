@@ -19,7 +19,12 @@ module DateFormat
     return date.strftime("%d").to_i
   end
 
-  def get_today
-    return Date.today
+  def get_date(date)
+    return Date.strptime(date, "%m/%d/%Y")
+  end
+
+  def get_today(timezone="Pacific Time (US & Canada)")
+    #Should only call this to get local time
+    return Time.now.utc.to_datetime.in_time_zone(timezone).to_date
   end
 end

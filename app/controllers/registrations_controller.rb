@@ -14,4 +14,15 @@ class RegistrationsController < Devise::RegistrationsController
     not params[:user][:password].blank?
   end
 
+  def update_user_timezone
+    form_timezone = current_user.current_timezone
+    if params[:user] != nil && params[:user][:current_timezone] != nil
+      form_timezone = params[:user][:current_timezone]
+    end
+    if current_user.current_timezone != form_timezone
+      current_user.update_attributes(:current_timezone => form_timezone)
+    end
+    redirect_to  edit_user_registration_path
+  end
+
 end

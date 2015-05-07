@@ -12,6 +12,7 @@ RSpec.describe UsersController do
       user.stub(:first_name).and_return('first')
       user.stub(:last_name).and_return('last')
       user.stub(:id).and_return(1)
+      user.stub(:current_timezone).and_return("Pacific Time (US & Canada)")
       User.stub(:find).and_return(user)
       allow(user).to receive(:password_changed?).and_return(true)
       allow_message_expectations_on_nil

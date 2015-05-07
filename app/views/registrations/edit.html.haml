@@ -1,24 +1,33 @@
-%h2
-  Edit #{resource_name.to_s.humanize}
-= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
-  = devise_error_messages!
-  .field
-    = f.label :email
-    = f.email_field :email, autofocus: true
-  - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-    %div
-      Currently waiting confirmation for: #{resource.unconfirmed_email}
-  .field
-    = f.label "New #{:password}"
-    = f.password_field :password, autocomplete: "off"
-  .field
-    = f.label "New #{:password_confirmation}"
-    = f.password_field :password_confirmation, autocomplete: "off"
-  .field
-    = f.label "#{:current_password} (to confirm your changes)"
-    = f.password_field :current_password, autocomplete: "off"
-  .actions
-    = f.submit "Update", :class => "btn"
+%h1 Edit #{resource_name.to_s.humanize}
+%div.settings_content.timezone
+  %h2 Timezone Settings
+  = form_for(resource, url: update_timezone_path, :html => {class: "form-inline"}) do |f|
+    %p
+      = f.label "Select Your Current Timezone"
+      = f.time_zone_select :current_timezone, nil, {:default => current_user.current_timezone}
+    = f.submit 'Update Timezone', :class => "btn"
+%br
+%div.settings_content.password
+  %h2 Password Settings
+  = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+    = devise_error_messages!
+    .field
+      = f.label :email
+      = f.email_field :email, autofocus: true
+    - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+      %div
+        Currently waiting confirmation for: #{resource.unconfirmed_email}
+    .field
+      = f.label "New #{:password}"
+      = f.password_field :password, autocomplete: "off"
+    .field
+      = f.label "New #{:password_confirmation}"
+      = f.password_field :password_confirmation, autocomplete: "off"
+    .field
+      = f.label "#{:current_password} (to confirm your changes)"
+      = f.password_field :current_password, autocomplete: "off"
+    .actions
+      = f.submit "Update", :class => "btn"
 / %h3 Cancel my account
 / %p
 /   Unhappy? #{button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete}
