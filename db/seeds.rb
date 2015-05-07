@@ -9,26 +9,6 @@
 # ===== Seed the Reimbursement Rate - THIS MUST BE HERE OR APP WILL FAIL === #
 Constant.create! :curr_rate => 10
 
-# ===== Admin account ===== #
-user = User.create! :first_name => 'Alex',
-                    :last_name => 'Ho',
-                    :email => '169.healthyeff@gmail.com',
-                    :password => '?Northsidepotato169',
-                    :password_confirmation => '?Northsidepotato169',
-                    :password_changed => true
-# Manually give admin privileges, since attr_protected
-user.admin = true
-user.save
-
-# ===== Non-admin account ===== #
-User.create! :first_name => 'Allan',
-             :last_name => 'Tang',
-             :email => 'healthypotato@gmail.com', 
-             :password => '?Hotpotato169', 
-             :password_confirmation => '?Hotpotato169',
-             :password_changed => true
-
-
 # ===== EFF Admin Below ===== #
 
 admin = User.create! :first_name => 'Maggie',
