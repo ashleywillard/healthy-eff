@@ -21,6 +21,7 @@ class RegistrationsController < Devise::RegistrationsController
     end
     if current_user.current_timezone != form_timezone
       current_user.update_attributes(:current_timezone => form_timezone)
+      flash[:notice] = UPDATE_SUCCESSFUL
     end
     redirect_to  edit_user_registration_path
   end
