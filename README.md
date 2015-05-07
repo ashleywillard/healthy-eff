@@ -37,6 +37,7 @@ Credits to [Glyphicons](http://glyphicons.com/) for the application icons.
 
 Fork this repository to your own GitHub account.
 Run the following command to clone to your local machine. It should look something like this:
+
     git clone https://github.com/<your username here>/healthy-eff
 
 #### Generating secret keys
