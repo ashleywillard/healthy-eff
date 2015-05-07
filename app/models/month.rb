@@ -85,6 +85,13 @@ class Month < ActiveRecord::Base
     return months.first == nil ? nil : months.where(month: months.minimum(:month))
   end
 
+  def self.update_month(user_id, day)
+    month_model = Month.get_or_create_month_model(user_id, get_month(day.date), get_year(day.date))
+    month_model.num_of_days += 1 if day.approved
+    month_model.save!
+    day.update_attributes(:month_id => month_model.id)
+  end
+
   def contains_date?(date)
   	self.days.each do |day|
     	return true if day.date.strftime("%m/%d/%Y") == date.strftime("%m/%d/%Y") && day.denied == false

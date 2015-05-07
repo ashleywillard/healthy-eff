@@ -84,7 +84,7 @@ class DaysController < ApplicationController
     @day = Day.create_day(date, approved, params[:days][:reason], current_user.current_timezone)
     flash[:notice] = "" if flash[:notice] == nil
     flash[:notice] += @day.save_with_activities(validate_single_day(day[:activities_attributes], @day))
-    update_month(@day)
+    Month.update_month(current_user.id, @day)
   end
 
   def create_past_days
@@ -142,15 +142,6 @@ class DaysController < ApplicationController
     return unless month != nil && month.contains_date?(date)
     flash[:alert] = repeat_date format_date(date)
     raise Exception
-  end
-
-  def update_month(day)
-    correct_day = day.date
-    month_model = Month.get_or_create_month_model(current_user.id, get_month(correct_day), get_year(correct_day))
-    month_model.num_of_days += 1 if day.approved
-    month_model.save!
-    day.month_id = month_model.id
-    day.save!
   end
 
 end
