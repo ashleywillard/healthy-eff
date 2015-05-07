@@ -167,8 +167,10 @@ Passwords must fulfill the following requirements:
 
 ##### Settings:
 * Users can change their password and email address on the Settings page.
+* Users can also change their Timezone Settings from this page. 
+    * Default Timezone is Pacific Time
 
-![Diagram](http://i.imgur.com/CenTdL8.png?1)
+![Diagram](http://i.imgur.com/HyryXpA.png)
 
 ##### User Interface versus Admin Interface:
 
