@@ -40,30 +40,19 @@ Run the following command to clone to your local machine. It should look somethi
 
     git clone https://github.com/<your username here>/healthy-eff
 
-#### Generating secret keys
+Now run the setup script:
 
-In order for Devise and our application to properly perform authentication, a few secret keys must be generated. It's best that you generate your own keys, put them in a file, and place that file on your own local machine. With [Figaro](https://github.com/laserlemon/figaro), these keys will be hidden from the public, and excluded from future pushes (e.g., from updates) to GitHub, as long as the file is part of the `.gitignore` file.
+    ./bin/setup
 
-We've already set up Figaro and the `.gitignore`, so an easy and safe way to do generate your secret keys is to perform the following:
+Remember to [configure the mailing system](#mailing-system) to invite new users.
 
-    .../healthy-eff$ rake secret
-    e19fd9b63ab682ffa4f33677b8fb742423db788df4d256cbbb7c5...
-
-Save the entire string somewhere, and repeat this three more times to obtain **4 strings in total**.
-
-Create a new blank file called `application.yml` and place it directly inside the `config/` folder. Format the file as follows:
-
-    cookie_token: <insert first string here>
-    devise_token: <insert second string here>
-    production:
-        cookie_token: <insert third string here>
-        devise_token: <insert fourth string here>
-
-You can to choose to generate your own strings if you'd like. Save the file once you're done.
+Optionally, you can also [modify the initial database](#optional-modify-your-initial-database)
+or [manually generate secret keys](#optional-generating-secret-keys) for authentication;
+however, by default, this is automatically done through the script.
 
 #### Mailing System
 
-We'll also need to set up a mailing system to invite new users to the application. You'll need to provide the following:
+We'll need to set up a mailing system to invite new users to the application. You'll need to provide the following:
 
 1. An email address
 2. Password for the email
@@ -91,13 +80,42 @@ Check out the current setup on these files for a concrete example. The current e
 
 #### (Optional) Modify your initial database
 
-We've already added most of the employees, but feel free to change `db/seeds.rb` to configure the starting database of the application. If you want to add a new person (admin or user) before deploying, follow the examples on the `db/seeds.rb` file.
+We've already added most of the employees, but feel free to change `db/seeds.rb`
+to configure the starting database of the application.
+If you want to add a new person (admin or user) before deploying, follow the
+examples on the `db/seeds.rb` file.
+
+#### (Optional) Generating secret keys
+
+Devise and our application make use of a few secret keys to properly perform
+authentication. To do this manually, you can generate them and place them in a
+configuration file on your local machine.
+
+We've already set up [Figaro](https://github.com/laserlemon/figaro) and
+`.gitignore` to exclude this file from future GitHub pushes and thus hide these
+keys from the public.
+
+By default, this is done through the setup script (`./bin/setup`) in the call to
+`./bin/keys`, but if you'd like to manually generate your own secret keys,
+use the following:
+
+    .../healthy-eff$ rake secret
+    e19fd9b63ab682ffa4f33677b8fb742423db788df4d256cbbb7c5...
+
+Save the entire string somewhere; repeat this three more times to obtain
+**4 strings in total**.
+
+Format `config/application.yml` (create it if it doesn't exist yet) as follows:
+
+    cookie_token: # First secret key
+    devise_token: # Second secret key
+    production:
+        cookie_token: # Third secret key
+        devise_token: # Fourth secret key
+
+Save this file once you're done.
 
 #### Final set-up
-
-Run the setup script to install the required gems and set up the database.
-
-    .../healthy-eff$ ./bin/setup
 
 Start a server and enjoy!
 
@@ -167,7 +185,7 @@ Passwords must fulfill the following requirements:
 
 ##### Settings:
 * Users can change their password and email address on the Settings page.
-* Users can also change their Timezone Settings from this page. 
+* Users can also change their Timezone Settings from this page.
     * Default Timezone is Pacific Time
 
 ![Diagram](http://i.imgur.com/HyryXpA.png)

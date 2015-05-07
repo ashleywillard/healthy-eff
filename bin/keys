@@ -1,0 +1,11 @@
+#!/bin/sh
+
+APPFILE=config/application.yml
+
+printf "cookie_token: $(rake secret)\n" >> $APPFILE;
+printf "devise_token: $(rake secret)\n" >> $APPFILE;
+
+# Keys for production environment
+printf "production:\n" >> $APPFILE;
+printf "\tcookie_token: $(rake secret)\n" >> $APPFILE;
+printf "\tdevise_token: $(rake secret)\n" >> $APPFILE;

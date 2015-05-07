@@ -9,5 +9,9 @@ command -v ruby >/dev/null 2>&1 || {
 # Set up application dependencies
 bundle install
 
+# Generate secret keys for Devise authentication
+#   Alternatively, comment out this line to generate your own keys differently
+./bin/keys
+
 # Set up database
 bundle exec rake db:setup
