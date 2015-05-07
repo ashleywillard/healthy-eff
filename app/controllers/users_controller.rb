@@ -67,7 +67,7 @@ class UsersController < ApplicationController
   end
 
   def retrieve_workout(activity, day)
-    workout = [activity.name, activity.duration, day.get_date_in_correct_timezone]
+    workout = [activity.name, activity.duration, day.date]
     if day.approved
       workout += ['#3c763d', '#dff0d8', '#d6e9c6', "Status: Approved"]
     elsif day.denied?

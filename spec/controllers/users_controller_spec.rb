@@ -89,8 +89,6 @@ RSpec.describe UsersController do
       month.should_receive(:days).and_return(days)
       days[0].should_receive(:activities).and_return(activities1)
       days[1].should_receive(:activities).and_return(activities2)
-      days[0].stub(:get_date_in_correct_timezone).and_return(days[0].date)
-      days[1].stub(:get_date_in_correct_timezone).and_return(days[1].date)
       controller.retrieve_workouts(4, 2015).should eql [['running', 60, '04-01-2015', "#3c763d", "#dff0d8", "#d6e9c6", "Status: Approved"],
                                                         ['jogging', 60, '04-01-2015', "#3c763d", "#dff0d8", "#d6e9c6", "Status: Approved"],
                                                         ['hiking', 80, '04-02-2015', "#3c763d", "#dff0d8", "#d6e9c6", "Status: Approved"]]
@@ -109,7 +107,6 @@ RSpec.describe UsersController do
       month.should_receive(:days).and_return(days)
       days[0].should_receive(:activities).and_return(activities)
       days[0].should_receive(:denied?).and_return(true)
-      days[0].stub(:get_date_in_correct_timezone).and_return(days[0].date)
       controller.retrieve_workouts(4, 2015).should eql [['hiking', 80, '04-01-2015', '#a94442', '#f2dede', '#ebccd1', "Status: Denied"]]
     end
     it "marks pending workouts as yellow" do
@@ -122,7 +119,6 @@ RSpec.describe UsersController do
       month.should_receive(:days).and_return(days)
       days[0].should_receive(:activities).and_return(activities)
       days[0].should_receive(:denied?).and_return(false)
-      days[0].stub(:get_date_in_correct_timezone).and_return(days[0].date)
       controller.retrieve_workouts(4, 2015).should eql [['jogging', 60, '04-01-2015', '#8a6d3b', '#fcf8e3', '#faebcc', "Status: Pending"]]
     end
     it "marks approved workouts as green" do
@@ -134,7 +130,6 @@ RSpec.describe UsersController do
       Month.stub_chain(:where, :first).and_return(month)
       month.should_receive(:days).and_return(days)
       days[0].should_receive(:activities).and_return(activities)
-      days[0].stub(:get_date_in_correct_timezone).and_return(days[0].date)
       controller.retrieve_workouts(4, 2015).should eql [['running', 60, '04-01-2015', "#3c763d", "#dff0d8", "#d6e9c6", "Status: Approved"]]
     end
   end

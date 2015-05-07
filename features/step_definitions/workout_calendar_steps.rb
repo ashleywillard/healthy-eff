@@ -23,7 +23,7 @@ And (/^I set up the database with a few days$/) do
   m2 = Month.create_month_model(2, date_last_month.month, date_last_month.year)
   m2.num_of_days = 1
   m2.save!
-  d2 = Day.create!({:date => Time.strptime(date_last_month.strftime("%m/%d/%Y"), "%m/%d/%Y"),
+  d2 = Day.create!({:date => get_date(format_date(date_last_month)),
               :approved => true,
               :denied => false,
               :total_time => 60,

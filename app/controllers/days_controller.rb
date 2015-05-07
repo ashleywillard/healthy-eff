@@ -13,7 +13,6 @@ class DaysController < ApplicationController
   end
 
   def past_days
-    flash[:notice] = PAST_DAYS_SENT
     @month = Month.new()
     day = Day.new()
     @month.days.append(day)
@@ -81,7 +80,7 @@ class DaysController < ApplicationController
 
   def create_single_day(day, approved)
     date = day[:date]
-    date = Time.strptime(date, "%m/%d/%Y") unless approved
+    date = get_date(date) unless approved
     @day = Day.create_day(date, approved, params[:days][:reason], current_user.current_timezone)
     flash[:notice] = "" if flash[:notice] == nil
     flash[:notice] += @day.save_with_activities(validate_single_day(day[:activities_attributes], @day))
@@ -98,7 +97,7 @@ class DaysController < ApplicationController
 
   def check_day(day)
     begin
-      date = Time.strptime(day[:date], "%m/%d/%Y")
+      date = get_date(day[:date])
       @day = Day.create_day(date, false, params[:days][:reason], current_user.current_timezone)
       validate_single_day(day[:activities_attributes], @day)
     rescue ArgumentError
@@ -111,7 +110,7 @@ class DaysController < ApplicationController
   def validate_single_day(activity_list, day)
     activities = validate_single_day_activities(activity_list, day)
     validate_model(day)
-    check_date_already_input(day.get_date_in_correct_timezone)
+    check_date_already_input(day.date)
     return activities
   end
 
@@ -146,7 +145,7 @@ class DaysController < ApplicationController
   end
 
   def update_month(day)
-    correct_day = day.get_date_in_correct_timezone
+    correct_day = day.date
     month_model = Month.get_or_create_month_model(current_user.id, get_month(correct_day), get_year(correct_day))
     month_model.num_of_days += 1 if day.approved
     month_model.save!

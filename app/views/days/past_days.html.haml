@@ -6,8 +6,14 @@
     = link_to_add_fields "<span class=\"glyphicon glyphicon-plus-sign\"></span> Add Day".html_safe, f, :days
   = label :days, :reason, 'Reason for inputting past days:'
   = text_field :days, :reason, :required => "required"
+  %p.notice 
+    %span.glyphicon.glyphicon-info-sign
+    Activities for all past days will be sent to admin for approval.
   
   %p 
     = show_simple_captcha(:label => "Enter before submitting", :placeholder => "", :refresh_button_text => "Refresh text")
-    %br
+    %p.notice 
+      %span.glyphicon.glyphicon-info-sign
+      Your Current Timezone is set to #{current_user.current_timezone}. To update this visit the Settings page.
+
     = f.submit 'Submit', :class => 'submit btn'

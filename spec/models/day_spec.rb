@@ -44,16 +44,14 @@ RSpec.describe Day, :type => :model do
   end
 
   describe '#valid_date' do
-    before :each do
-      #something
-    end
     context 'Date is later than the 5th of the month and approved is false' do
       before :each do
-        Date.stub(:today).and_return(Date.new(2015, 01, 07))
+        date = Time.strptime('01/07/2015', "%m/%d/%Y")
+        Time.stub(:now).and_return(date)
       end
       context 'date in future' do
         it 'should not be valid and should give an error' do
-          day = Day.new({:date => Time.strptime("02/02/2015", "%m/%d/%Y"),
+          day = Day.new({:date => get_date("02/02/2015"),
                       :approved => false,
                       :denied => false,
                       :total_time => 60,
@@ -64,7 +62,7 @@ RSpec.describe Day, :type => :model do
       end
       context 'date too far in past' do
         it 'should not be valid and should give an error' do
-          day = Day.new({:date => Time.strptime("12/31/2014", "%m/%d/%Y"),
+          day = Day.new({:date => get_date("12/31/2014"),
                       :approved => false,
                       :denied => false,
                       :total_time => 60,
@@ -75,7 +73,7 @@ RSpec.describe Day, :type => :model do
       end
       context 'date is today' do
         it 'should not be valid and should give an error' do
-          day = Day.new({:date => Time.strptime("01/07/2015", "%m/%d/%Y"),
+          day = Day.new({:date => get_date("01/07/2015"),
                       :approved => false,
                       :denied => false,
                       :total_time => 60,
@@ -86,7 +84,7 @@ RSpec.describe Day, :type => :model do
       end
       context 'date in range' do
         it 'should be valid and have no errors' do
-          day = Day.new({:date => Time.strptime("01/02/2015", "%m/%d/%Y"),
+          day = Day.new({:date => get_date("01/02/2015"),
                       :approved => false,
                       :denied => false,
                       :total_time => 60,
@@ -98,11 +96,12 @@ RSpec.describe Day, :type => :model do
     end
     context 'Date is on or before the 5th of the month and approved is false' do
       before :each do
-        Date.stub(:today).and_return(Date.new(2015, 01, 04))
+        date = Time.strptime('01/04/2015', "%m/%d/%Y")
+        Time.stub(:now).and_return(date)
       end
       context 'date in future' do
         it 'should not be valid and should give an error' do
-          day = Day.new({:date => Time.strptime("02/02/2015", "%m/%d/%Y"),
+          day = Day.new({:date => get_date("02/02/2015"),
                       :approved => false,
                       :denied => false,
                       :total_time => 60,
@@ -113,7 +112,7 @@ RSpec.describe Day, :type => :model do
       end
       context 'date too far in past' do
         it 'should not be valid and should give an error' do
-          day = Day.new({:date => Time.strptime("11/20/2014", "%m/%d/%Y"),
+          day = Day.new({:date => get_date("11/20/2014"),
                       :approved => false,
                       :denied => false,
                       :total_time => 60,
@@ -124,7 +123,7 @@ RSpec.describe Day, :type => :model do
       end
       context 'date is today' do
         it 'should not be valid and should give an error' do
-          day = Day.new({:date => Time.strptime("01/04/2015", "%m/%d/%Y"),
+          day = Day.new({:date => get_date("01/04/2015"),
                       :approved => false,
                       :denied => false,
                       :total_time => 60,
@@ -135,7 +134,7 @@ RSpec.describe Day, :type => :model do
       end
       context 'date in range' do
         it 'should be valid and have no errors' do
-          day = Day.new({:date => Time.strptime("12/30/2014", "%m/%d/%Y"),
+          day = Day.new({:date => get_date("12/30/2014"),
                       :approved => false,
                       :denied => false,
                       :total_time => 60,

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150502004224) do
+ActiveRecord::Schema.define(:version => 20150507024440) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(:version => 20150502004224) do
   end
 
   create_table "days", :force => true do |t|
-    t.datetime "date"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "total_time"
@@ -38,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20150502004224) do
     t.integer  "month_id"
     t.boolean  "denied"
     t.string   "timezone"
+    t.date     "date"
   end
 
   create_table "months", :force => true do |t|

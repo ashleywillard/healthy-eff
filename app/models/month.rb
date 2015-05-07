@@ -53,7 +53,7 @@ class Month < ActiveRecord::Base
     month_model = self.get_month_model(user_id, month, year)
     return dates if month_model == nil
     month_model.days.each do |day|
-      dates += [day.get_date_in_correct_timezone.strftime("%m/%d/%Y")] unless day.denied == true
+      dates += [day.date.strftime("%m/%d/%Y")] unless day.denied == true
     end
     return dates
   end
@@ -63,7 +63,7 @@ class Month < ActiveRecord::Base
     month_model = self.get_month_model(user_id, month, year)
     return dates if month_model == nil
     month_model.days.each do |day|
-      dates += [day.get_date_in_correct_timezone.strftime("%m/%d/%Y")] if day.approved
+      dates += [day.date.strftime("%m/%d/%Y")] if day.approved
     end
     return dates
   end
@@ -87,14 +87,14 @@ class Month < ActiveRecord::Base
 
   def contains_date?(date)
   	self.days.each do |day|
-    	return true if day.get_date_in_correct_timezone.strftime("%m/%d/%Y") == date.strftime("%m/%d/%Y") && day.denied == false
+    	return true if day.date.strftime("%m/%d/%Y") == date.strftime("%m/%d/%Y") && day.denied == false
     end
     return false
   end
 
   def contains_approved_date?(date)
   	self.days.each do |day|
-    	return true if day.get_date_in_correct_timezone.strftime("%m/%d/%Y") == date.strftime("%m/%d/%Y") and day.approved
+    	return true if day.date.strftime("%m/%d/%Y") == date.strftime("%m/%d/%Y") and day.approved
     end
     return false
   end
