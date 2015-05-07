@@ -5,6 +5,9 @@ rvm:
   - 1.9.3
 env:
   - DB=postgresql
+addons:
+  code_climate:
+    repo_token: '586962cadc4c1e0392f10eb98e1dce9517e3af12ccff0ec7cc2ac1a35d73091a'
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - bundle exec rake db:test:prepare
