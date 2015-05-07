@@ -196,7 +196,8 @@ a.admin_next {
   vertical-align: middle;
 }
 
-.manage_content {
+.manage_content,
+.settings_content {
   border: 2px;
   border-style: solid;
   border-color: #eaeaea;

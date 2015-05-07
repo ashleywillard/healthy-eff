@@ -85,7 +85,6 @@ RSpec.describe DaysController do
       DaysController.any_instance.stub(:current_user).and_return(@user)
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(true)
-      DaysController.any_instance.stub(:update_user_timezone)
     end
     context 'All inputs are present and valid' do
       it 'should successfully add today to database and redirect to calendar page' do
@@ -249,7 +248,6 @@ RSpec.describe DaysController do
     it "add_today should fail because captcha is bad" do
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(false)
-      DaysController.any_instance.stub(:update_user_timezone)
       post :add_today
       flash[:alert].should eql(dummy_class.bad_captcha)
       response.should redirect_to(today_path)
@@ -258,7 +256,6 @@ RSpec.describe DaysController do
     it "add_days should fail because captcha is bad" do
       DaysController.any_instance.stub(:check_logged_in)
       DaysController.any_instance.stub(:check_simple_captcha).and_return(false)
-      DaysController.any_instance.stub(:update_user_timezone)
       post :add_days
       flash[:alert].should eql(dummy_class.bad_captcha)
       response.should redirect_to(past_days_path)

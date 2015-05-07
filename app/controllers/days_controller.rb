@@ -5,7 +5,6 @@ class DaysController < ApplicationController
 
   def today
     restful_redirect
-    @user_timezone = current_user.current_timezone
     @date = get_today(current_user.current_timezone)
     @day = Day.create_day(@date, true, "", current_user.current_timezone)
     @day.activities.append(Activity.new())
@@ -57,7 +56,6 @@ class DaysController < ApplicationController
 
   def add_today
     begin
-      update_user_timezone
       add(false, :day, :activities_attributes)
     rescue Exception => e
       error_recovery(e)
@@ -67,7 +65,6 @@ class DaysController < ApplicationController
 
   def add_days
     begin
-      update_user_timezone
       add(true, :month, :days_attributes)
     rescue Exception => e
       error_recovery(e)
@@ -157,13 +154,4 @@ class DaysController < ApplicationController
     day.save!
   end
 
-  def update_user_timezone()
-    form_timezone = current_user.current_timezone
-    if params[:day] != nil && params[:day][:timezone] != nil
-      form_timezone = params[:day][:timezone]
-    end
-    if current_user.current_timezone != form_timezone
-      current_user.update_attributes(:current_timezone => form_timezone)
-    end
-  end
 end
