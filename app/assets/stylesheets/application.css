@@ -238,3 +238,13 @@ a.admin_next {
 .fc-state-highlight {
   background: none repeat scroll 0% 0% #d9edf7;
 }
+
+@media screen and (max-width: 450px) {
+  .content {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 1px;
+    margin-left: 3px;
+    margin-right: 3px;
+  }
+}
