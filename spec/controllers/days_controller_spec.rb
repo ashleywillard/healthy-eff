@@ -4,6 +4,7 @@ include DateFormat
 RSpec.describe DaysController do
 
   let(:dummy_class) { Class.new { extend ErrorMessages } }
+  let(:dummy_date_class) { Class.new {extend DateFormat} }
 
   before :each do
     Constant.create! :curr_rate => 10
@@ -261,5 +262,14 @@ RSpec.describe DaysController do
       response.should redirect_to(past_days_path)
     end
   end
+
+  describe "get_today returns proper date for client" do
+    it "get_today converts utc to client datetime" do
+      datetime = DateTime.new(2015, 5, 7)
+      Time.stub_chain(:now, :utc, :to_datetime).and_return(datetime)
+      dummy_date_class.get_today.should eql(Date.new(2015,5,6))
+    end
+  end
+
 
 end
