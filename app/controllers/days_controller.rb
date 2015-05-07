@@ -67,6 +67,7 @@ class DaysController < ApplicationController
 
   def add_days
     begin
+      update_user_timezone
       add(true, :month, :days_attributes)
     rescue Exception => e
       error_recovery(e)
@@ -84,7 +85,7 @@ class DaysController < ApplicationController
   def create_single_day(day, approved)
     date = day[:date]
     date = Time.strptime(date, "%m/%d/%Y") unless approved
-    @day = Day.create_day(date, approved, params[:days][:reason], params[:day][:timezone])
+    @day = Day.create_day(date, approved, params[:days][:reason], current_user.current_timezone)
     flash[:notice] = "" if flash[:notice] == nil
     flash[:notice] += @day.save_with_activities(validate_single_day(day[:activities_attributes], @day))
     update_month(@day)
@@ -101,7 +102,7 @@ class DaysController < ApplicationController
   def check_day(day)
     begin
       date = Time.strptime(day[:date], "%m/%d/%Y")
-      @day = Day.create_day(date, false, params[:days][:reason], params[:day][:timezone])
+      @day = Day.create_day(date, false, params[:days][:reason], current_user.current_timezone)
       validate_single_day(day[:activities_attributes], @day)
     rescue ArgumentError
       #case where Date.parse throws an ArgumentError for having invalid date field
@@ -113,7 +114,7 @@ class DaysController < ApplicationController
   def validate_single_day(activity_list, day)
     activities = validate_single_day_activities(activity_list, day)
     validate_model(day)
-    check_date_already_input(day.date)
+    check_date_already_input(day.get_date_in_correct_timezone)
     return activities
   end
 
@@ -148,7 +149,8 @@ class DaysController < ApplicationController
   end
 
   def update_month(day)
-    month_model = Month.get_or_create_month_model(current_user.id, get_month(day.date), get_year(day.date))
+    correct_day = day.get_date_in_correct_timezone
+    month_model = Month.get_or_create_month_model(current_user.id, get_month(correct_day), get_year(correct_day))
     month_model.num_of_days += 1 if day.approved
     month_model.save!
     day.month_id = month_model.id
@@ -156,7 +158,10 @@ class DaysController < ApplicationController
   end
 
   def update_user_timezone()
-    form_timezone = params[:day][:timezone]
+    form_timezone = current_user.current_timezone
+    if params[:day] != nil && params[:day][:timezone] != nil
+      form_timezone = params[:day][:timezone]
+    end
     if current_user.current_timezone != form_timezone
       current_user.update_attributes(:current_timezone => form_timezone)
     end

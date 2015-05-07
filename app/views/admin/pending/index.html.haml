@@ -16,7 +16,7 @@
         %td{:style => "text-align:center"}= check_box_tag "selected[]", day.id
         %td= day.user.first_name
         %td= day.user.last_name
-        %td= day.date.strftime("%m/%d/%Y")
+        %td= day.get_date_in_correct_timezone.strftime("%m/%d/%Y")
         %td= day.reason
 
 %p

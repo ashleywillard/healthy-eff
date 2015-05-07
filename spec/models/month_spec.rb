@@ -212,7 +212,7 @@ RSpec.describe Month, :type => :model do
     end
     context 'Month does contain a specific date' do
       it 'should return true' do
-        assert @month_model.contains_date?(@day.date)
+        assert @month_model.contains_date?(@day.get_date_in_correct_timezone)
       end
     end
   end

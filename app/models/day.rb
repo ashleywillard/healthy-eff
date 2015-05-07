@@ -30,7 +30,7 @@ class Day < ActiveRecord::Base
     activities.each do |activity|
       activity.day_id = self.id
       activity.save!
-      notice += activity_recorded(activity.name, activity.duration, format_date(self.date))
+      notice += activity_recorded(activity.name, activity.duration, format_date(get_date_in_correct_timezone))
     end
     return notice
   end

@@ -56,7 +56,7 @@ Given (/^the following activities exist:/) do |activities_table|
 end
 
 Given (/I have logged (.*) activities/) do |num|
-  today = get_today
+  today = get_today("Pacific Time (US & Canada)")
   u = User.find_by_email("blah@blah.com")
   if u.nil?
     u = User.create! :email => "blah@blah.com",
@@ -81,7 +81,7 @@ end
 
 Given (/^(.*) (?:pending|unapproved) (?:|activities|days) exist/) do |num|
   if num.casecmp("No") ; end
-  today = get_today
+  today = get_today("Pacific Time (US & Canada)")
   u = User.create! :email => "blah@blah.com",
                    :password => "?Ag0asdfasdf",
                    :password_confirmation => "?Ag0asdfasdf"
