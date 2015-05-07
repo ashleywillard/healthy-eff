@@ -1,12 +1,8 @@
 #!/bin/sh
 
-# Ensure that RoR is installed
+# Ensure that Ruby is installed
 command -v ruby >/dev/null 2>&1 || {
   echo >&2 "ERROR: Ruby is not installed.";
-  exit 1;
-}
-command -v rails >/dev/null 2>&1 || {
-  echo >&2 "ERROR: Rails is not installed.";
   exit 1;
 }
 
