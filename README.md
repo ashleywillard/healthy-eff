@@ -13,7 +13,7 @@ management can track and reward employees monthly for a healthy lifestyle.
 
 #### Gems:
 All the gems used in this project are listed in the Gemfile, but notable ones
-include:
+include the following:
 
     gem 'devise' # Sign-in and user functionality
     gem 'devise_invitable', '~> 1.3.4' # Mailing functionality
@@ -34,10 +34,6 @@ Credits to [Glyphicons](http://glyphicons.com/) for the application icons.
 ## Set-up and Deployment
 
 ### To run on your local machine
-
-Ensure that Rails and Ruby are installed on your machine. Check by running
-    ruby -v; rails -v
-which should display the current versions if installed correctly.
 
 Fork this repository to your own GitHub account.
 Run the following command to clone to your local machine. It should look something like this:
@@ -92,13 +88,13 @@ You can specify which email to use depending on the environment (`development`, 
 
 Check out the current setup on these files for a concrete example. The current email is just a random email we've made for the sole purpose of sending emails, which you can use if you would like.
 
-#### Set up your initial database
+#### (Optional) Modify your initial database
 
 We've already added most of the employees, but feel free to change `db/seeds.rb` to configure the starting database of the application. If you want to add a new person (admin or user) before deploying, follow the examples on the `db/seeds.rb` file.
 
 #### Final set-up
 
-Run the setup script to install gems and set up the database.
+Run the setup script to install the required gems and set up the database.
 
     .../healthy-eff$ ./bin/setup
 
