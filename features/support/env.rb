@@ -4,7 +4,6 @@
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
 require 'codeclimate-test-reporter'
-ENV['CODECLIMATE_REPO_TOKEN'] = '586962cadc4c1e0392f10eb98e1dce9517e3af12ccff0ec7cc2ac1a35d73091a'
 CodeClimate::TestReporter.start
 
 require 'simplecov'
