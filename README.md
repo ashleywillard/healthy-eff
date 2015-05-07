@@ -96,8 +96,8 @@ We've already set up [Figaro](https://github.com/laserlemon/figaro) and
 keys from the public.
 
 By default, this is done through the setup script (`./bin/setup`) in the call to
-`./bin/keys`, but if you'd like to manually generate your own secret keys,
-use the following:
+`./bin/keys`, but if you'd like to manually generate your own secret keys, you
+can comment out that line and use the following:
 
     .../healthy-eff$ rake secret
     e19fd9b63ab682ffa4f33677b8fb742423db788df4d256cbbb7c5...
