@@ -12,8 +12,8 @@ Healthyeff::Application.configure do
     :port => 587,
     :domain => "gmail.com",
     :authentication => :login,
-    :user_name => "169.healthyeff",
-    :password => "northsidepotato"
+    :user_name => "USERNAME",
+    :password => "PASSWORD"
   }
 
   # The test environment is used exclusively to run your application's
